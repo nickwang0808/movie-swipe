@@ -10,7 +10,7 @@ a micro service that look at Rapid api and find movies to load into database gen
 
 ### Micro Service for watching for matches
 
-a service that looks for any matches on the database, if found, then update the match pool which then inform user about the match
+a services that look though the liked movies in the groups and find duplicates, once found, inform all parties that liked the duplicates
 
 ### Database Design
 
@@ -18,11 +18,29 @@ NoSQL firestore, each user gets own collections, in the collections, there shoul
 
 - Users
 
-  - liked movies []
-  - friends []
+  - info: id, {first_name, last_name}
+  - liked-movies: movie_title[]
+  - Groups: group_id[]
+
+- Group
+
+  - Groupid
+    - users: user_id[]
+    - liked_movies: Array<user_id[], movie_title>
 
 - Movies
   - genre A movies []
   - genre B movies []
   - genre C movies []
   - ...More
+
+# TODO
+
+- setup user group
+- query user to see if user is in any groups
+
+# Note
+
+- when liked a movie, add it to the group, then check if it's the first person to like it, if not create pop up that indicates a match.
+
+everytime
