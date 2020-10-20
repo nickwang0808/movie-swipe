@@ -40,6 +40,9 @@ export const UpdateLikeToDB = (
               }),
             });
           } else {
+            /* TODO: also need to trigger the cloud function to inform other users
+            who liked the movie about the match */
+
             // modify existing liked_movies and add the user in it
             const index = docData.liked_movies.indexOf(
               docData.liked_movies.find(findMovie)
