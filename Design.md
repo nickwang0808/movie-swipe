@@ -36,8 +36,7 @@ NoSQL firestore, each user gets own collections, in the collections, there shoul
 
 # TODO
 
-- setup user group
-- query user to see if user is in any groups
+- click on like and update database complete
 
 # Note
 
