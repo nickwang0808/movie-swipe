@@ -10,7 +10,10 @@ export default function useGetMovies() {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          setMovieList(doc.data());
+          const data = doc.data();
+          if (data) {
+            setMovieList(data.movieList.results.slice(0, 10));
+          }
         } else {
           console.log("document does not exist");
         }

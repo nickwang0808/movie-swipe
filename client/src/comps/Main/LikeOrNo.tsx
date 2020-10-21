@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DownVote from "../ButtonComps/DownVote";
 import FilterButton from "../ButtonComps/FilterButton";
 import UpVote from "../ButtonComps/UpVote";
 import Logo from "../Decorators/Logo";
+import useGetMovies from "../../db-operations/useGetMovies";
+import useGetUser from "../../db-operations/useGetUser";
+import useWatchForMatches from "../../db-operations/useWatchForMatches";
+import Deck from "./Deck";
 
 interface ImovieInfo {
   imageurl: string[];
@@ -16,18 +20,30 @@ interface ImovieInfo {
 
 interface ICompProps {
   movieInfo: ImovieInfo;
-  handleLike: () => void;
 }
 
-export default function LikeOrNo({ movieInfo, handleLike }: ICompProps) {
+export default function LikeOrNo() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const { movieList } = useGetMovies();
+  const user = useGetUser("user1");
+  // const groups = useWatchForMatches(user);
+
+  const handleLike = () => {
+    // TODO: will need to rewrite this as well
+    // const movieTitle: string = movieList.movieList.results[currentIndex].title;
+    if (user) {
+      // UpdateLikeToDB(user, movieTitle);
+      setCurrentIndex((prev) => prev + 1);
+    } else {
+      console.error("Update like to db failed");
+    }
+  };
+
   const backgroundStyle = {
-    background: `linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url(${movieInfo?.imageurl[0]})`,
+    background: `linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url(${
+      movieList && movieList[currentIndex].imageurl[0]
+    })`,
   };
-
-  const posterStyle = {
-    backgroundImage: `linear-gradient(25.4deg, rgba(255, 255, 255, 0) 51.03%, rgba(255, 255, 255, 0.3) 58.85%, rgba(255, 255, 255, 0.3) 99.3%), linear-gradient(360deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 20%), url(${movieInfo?.imageurl[0]})`,
-  };
-
   return (
     <>
       <div className="background" style={backgroundStyle} />
@@ -36,16 +52,12 @@ export default function LikeOrNo({ movieInfo, handleLike }: ICompProps) {
           <Logo />
           <FilterButton />
         </div>
-        <div className="container_poster">
-          <div className="poster_vote" id="poster_3" />
-          <div className="poster_vote" id="poster_2" />
-          <div className="poster_vote" id="poster_1" style={posterStyle}>
-            <h3 className="poster_overview">
-              {/* PG-13 | 2h 3min | Adventure, Crime, Drama | 2020 (USA) */}
-              {` ${movieInfo?.genre.join(", ")} | ${movieInfo?.released}`}
-            </h3>
-          </div>
-        </div>
+        <div className="container_poster"></div>
+
+        {movieList && (
+          <Deck movieList={movieList} setCurrentIndex={setCurrentIndex} />
+        )}
+
         <div className="container_vote">
           <DownVote />
           <div className="btn btn_details">Details</div>
