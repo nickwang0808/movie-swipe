@@ -39,9 +39,15 @@ export default function Deck({ movieList, setCurrentIndex }) {
       const trigger = velocity > 0.2; // If you flick hard enough it should trigger the card to fly out
       const dir = xDir < 0 ? -1 : 1; // Direction should either point left or right
       if (!down && trigger) {
+        if (dir > 0) {
+          console.log("like", movieList[index].title);
+        } else {
+          console.log("dislike", movieList[index].title);
+        }
         setCurrentIndex(index);
         gone.add(index);
       } // If button/finger's up and trigger velocity is reached, we flag the card ready to fly out
+      // TODO: if index < N, fetch and append more movies
       set((i) => {
         if (index !== i) return; // We're only interested in changing spring-data for the current spring
         const isGone = gone.has(index);
@@ -72,7 +78,7 @@ export default function Deck({ movieList, setCurrentIndex }) {
             style={{
               transform: interpolate(
                 [x, y],
-                (x, y) => `translate3d(${x}px,${y}px, 0)` // continious scaling here
+                (x, y) => `translate3d(${x}px,${y}px, ${y * 10}px)` // continious scaling here
               ),
             }}
           >
