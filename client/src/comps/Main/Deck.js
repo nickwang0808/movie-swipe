@@ -5,14 +5,9 @@ import style from "./poster.module.css";
 import converHDimg from "../../HelperFunctions/converHDimg";
 
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
-const to = (i) => ({
-  x: 0,
-  y: i * -4,
-  scale: 1,
-  rot: -10 + Math.random() * 20,
-  delay: i * 100,
-});
-const from = (i) => ({ x: 0, rot: 0, scale: 1.5, y: -1000 });
+const to = (i) => ({ x: 0, y: 0, scale: 1 });
+const from = (i) => ({ x: 0, rot: 0, scale: 1 });
+
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
 const trans = (r, s) => ` rotateX(30deg) rotateY(${r / 10}deg) scale(${s})`;
 // const trans = (r, s) =>
