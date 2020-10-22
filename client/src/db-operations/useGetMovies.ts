@@ -12,7 +12,7 @@ export default function useGetMovies() {
         if (doc.exists) {
           const data = doc.data();
           if (data) {
-            setMovieList(data.movieList.results.slice(0, 10));
+            setMovieList(data.movieList.results);
           }
         } else {
           console.log("document does not exist");
