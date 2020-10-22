@@ -58,7 +58,7 @@ export default function LikeOrNo() {
           <Deck movieList={movieList} setCurrentIndex={setCurrentIndex} />
         )}
 
-        <div className="container_vote">
+        <div className="container_vote" style={{ zIndex: 998 }}>
           <DownVote />
           <div className="btn btn_details">Details</div>
           <UpVote handleLike={handleLike} />

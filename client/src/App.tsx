@@ -9,6 +9,7 @@ function App() {
   return (
     <>
       <Router>
+        <Nav />
         <Switch>
           <Route exact path="/">
             <LikeOrNo />
@@ -16,9 +17,11 @@ function App() {
           <Route exact path="/mylist">
             <MyListMain />
           </Route>
+          <Route exact path="/settings">
+            <h1>Setting page</h1>
+          </Route>
         </Switch>
       </Router>
-      <Nav />
     </>
   );
 }

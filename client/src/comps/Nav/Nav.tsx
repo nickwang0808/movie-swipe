@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import style from "./nav.module.css";
 
 export default function Nav() {
   return (
-    <div>
-      <div className="container_nav">
+    <div className="container_nav" style={{ zIndex: 999 }}>
+      <Link className={style.link} to="/mylist">
         <div className="nav_item">
           <svg
             className="nav_icon list"
@@ -24,6 +25,8 @@ export default function Nav() {
           <br />
           My List
         </div>
+      </Link>
+      <Link className={style.link} to="/">
         <div className="nav_item">
           <svg
             className="nav_icon find"
@@ -42,6 +45,8 @@ export default function Nav() {
           <br />
           Find Media
         </div>
+      </Link>
+      <Link to="/settings" className={style.link}>
         <div className="nav_item">
           <svg
             className="nav_icon settings"
@@ -60,7 +65,7 @@ export default function Nav() {
           <br />
           Settings
         </div>
-      </div>
+      </Link>
     </div>
   );
 }
