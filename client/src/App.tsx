@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./styles/style.css";
 import LikeOrNo from "./comps/Main/LikeOrNo";
 import Nav from "./comps/Nav/Nav";
 import MyListMain from "./comps/MyList/MyListMain";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import CleanUpMovieList from "./db-operations/CleanUpMovieList";
 import useGetMovies from "./db-operations/useGetMovies";
 import useGetUser from "./db-operations/useGetUser";
 

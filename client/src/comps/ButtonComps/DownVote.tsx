@@ -1,8 +1,12 @@
 import React from "react";
 
-export default function DownVote() {
+interface IDownVote {
+  handleDislike: () => void;
+}
+
+export default function DownVote({ handleDislike }: IDownVote) {
   return (
-    <div className="btn btn_down" /* onclick="anim_poster_down()" */>
+    <div className="btn btn_down" onClick={handleDislike}>
       <svg
         width={24}
         height={24}
