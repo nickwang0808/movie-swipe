@@ -5,14 +5,14 @@ import LikedMovieInMyList from "./LikedMovieInMyList";
 export default function MyListMain() {
   const likedMoviesInfos = useGetLikedMovies("user1");
 
-  useEffect(() => {
-    if (likedMoviesInfos) {
-      console.log(
-        "MyListMain, likedMovieInfos.length: ",
-        likedMoviesInfos.length
-      );
-    }
-  }, [likedMoviesInfos]);
+  // useEffect(() => {
+  //   if (likedMoviesInfos) {
+  //     console.log(
+  //       "MyListMain, likedMovieInfos.length: ",
+  //       likedMoviesInfos.length
+  //     );
+  //   }
+  // }, [likedMoviesInfos]);
 
   return (
     <>
@@ -21,14 +21,14 @@ export default function MyListMain() {
       </div>
 
       <div>
-        {/* {likedMoviesInfos &&
+        {likedMoviesInfos &&
           likedMoviesInfos.map((likedMovieInfo) => (
             <LikedMovieInMyList
               key={likedMovieInfo.id}
               id={likedMovieInfo.id}
-              movie={likedMovieInfo.movie}
+              movie={likedMovieInfo.movie.movie}
             />
-          ))} */}
+          ))}
       </div>
     </>
   );
