@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useSprings, animated, interpolate } from "react-spring";
 import { useGesture } from "react-use-gesture";
 import style from "./poster.module.css";
-import converHDimg from "../../HelperFunctions/converHDimg";
-// import Filters from "../Filters";
+import convertHDimg from "../../HelperFunctions/convertHDimg";
 
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
 const to = (i) => ({ x: 0, y: 0, scale: 1 });
@@ -11,14 +10,16 @@ const from = (i) => ({ x: 0, rot: 0, scale: 1 });
 
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
 const trans = (r, s) => ` rotateX(30deg) rotateY(${r / 10}deg) scale(${s})`;
-// const trans = (r, s) =>
-//   `perspective(1500px) rotateX(30deg) rotateY(${
-//     r / 10
-//   }deg) rotateZ(${r}deg) scale(${s})`;
 
 export default function Deck({ movieList, setCurrentIndex }) {
+  // const [start, setStart] = useState(0);
+  // const [end, setEnd] = useState(4);
+  let start = 0;
+  let end = 4;
+  const [localList, setLocalList] = useState(movieList.slice(0, 4));
+
   const [gone] = useState(() => new Set()); // The set flags all the cards that are flicked out
-  const [props, set] = useSprings(movieList ? movieList.length : 10, (i) => ({
+  const [props, set] = useSprings(localList ? localList.length : 10, (i) => ({
     ...to(i),
     from: from(i),
   })); // Create a bunch of springs using the helpers above
@@ -36,9 +37,9 @@ export default function Deck({ movieList, setCurrentIndex }) {
       const dir = xDir < 0 ? -1 : 1; // Direction should either point left or right
       if (!down && trigger) {
         if (dir > 0) {
-          console.log("like", movieList[index].title);
+          // console.log("like", movieList[index].title);
         } else {
-          console.log("dislike", movieList[index].title);
+          // console.log("dislike", movieList[index].title);
         }
         setCurrentIndex(index);
         gone.add(index);
@@ -58,9 +59,29 @@ export default function Deck({ movieList, setCurrentIndex }) {
           config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 },
         };
       });
-      if (!down && gone.size === movieList.length) {
-        setTimeout(() => gone.clear() || set((i) => to(i)), 600);
+
+      if (gone.has(index)) {
+        setTimeout(() => {
+          // console.log(movieList.slice(end + 1, end + 10));
+          // console.log(localList[index].imageurl[0]);
+          const newList = movieList.slice(11, 12);
+          setLocalList((prev) => [...newList, ...prev]);
+          end += 1;
+        }, 1000);
       }
+
+      // if (!down && gone.size === movieList.length) {
+      //   setTimeout(() => gone.clear() || set((i) => to(i)), 600);
+      // }
+
+      // if (!down && localList.length - gone.size === 1) {
+      //   console.log("empty");
+      //   setStart((prev) => prev + 4);
+      //   setEnd((prev) => prev + 4);
+      //   setLocalList(movieList.slice(start, end));
+      //   // setTimeout(() => gone.clear() || set((i) => to(i)), 200);
+      //   gone.clear();
+      // }
     }
   );
   // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
@@ -86,7 +107,7 @@ export default function Deck({ movieList, setCurrentIndex }) {
               style={{
                 transform: interpolate([rot, scale], trans),
                 backgroundImage: `linear-gradient(25.4deg, rgba(255, 255, 255, 0) 51.03%, rgba(255, 255, 255, 0.3) 58.85%, rgba(255, 255, 255, 0.3) 99.3%), linear-gradient(360deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 20%), url(${
-                  movieList && converHDimg(movieList[i].imageurl[0])
+                  localList && converHDimg(localList[i].imageurl[0])
                 })`,
               }}
             />

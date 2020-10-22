@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { db } from "../../firebase/config";
 import LikedMovieInMyList from "./LikedMovieInMyList";
 
 export default function MyListMain() {
+  // useEffect(() => {
+  //   db;
+  // }, []);
+
   return (
     <>
       <div>

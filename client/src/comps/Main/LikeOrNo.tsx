@@ -7,6 +7,9 @@ import useGetMovies from "../../db-operations/useGetMovies";
 import useGetUser from "../../db-operations/useGetUser";
 import useWatchForMatches from "../../db-operations/useWatchForMatches";
 import Deck from "./Deck";
+import MainPoster from "./MainPoster";
+import { firestore } from "firebase";
+import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 
 interface ImovieInfo {
   imageurl: string[];
@@ -18,21 +21,33 @@ interface ImovieInfo {
   released: number;
 }
 
-interface ICompProps {
-  movieInfo: ImovieInfo;
+interface ImovieItem {
+  id: string;
+  movie: ImovieInfo;
 }
 
-export default function LikeOrNo() {
+interface I_User {
+  id: string;
+  info: {
+    first_name: string;
+    last_name: string;
+  };
+  liked_movies: Array<string>;
+  groups: string[];
+}
+
+interface ICompProps {
+  movieList: ImovieItem[];
+  user: firestore.DocumentData;
+}
+
+export default function LikeOrNo({ movieList, user }: ICompProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { movieList } = useGetMovies();
-  const user = useGetUser("user1");
-  // const groups = useWatchForMatches(user);
 
   const handleLike = () => {
-    // TODO: will need to rewrite this as well
-    // const movieTitle: string = movieList.movieList.results[currentIndex].title;
+    const movieID: string = movieList[currentIndex].id;
     if (user) {
-      // UpdateLikeToDB(user, movieTitle);
+      UpdateLikeToDB(user, movieID);
       setCurrentIndex((prev) => prev + 1);
     } else {
       console.error("Update like to db failed");
@@ -41,7 +56,7 @@ export default function LikeOrNo() {
 
   const backgroundStyle = {
     background: `linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url(${
-      movieList && movieList[currentIndex].imageurl[0]
+      movieList && movieList[currentIndex].movie.imageurl[0]
     })`,
   };
   return (
@@ -52,11 +67,16 @@ export default function LikeOrNo() {
           <Logo />
           <FilterButton />
         </div>
-        <div className="container_poster"></div>
 
-        {movieList && (
-          <Deck movieList={movieList} setCurrentIndex={setCurrentIndex} />
-        )}
+        <div className="container_poster">
+          {movieList && (
+            <MainPoster
+              imgUrl_1={movieList[currentIndex].movie.imageurl[0]}
+              imgUrl_2={movieList[currentIndex + 1].movie.imageurl[0]}
+              imgUrl_3={movieList[currentIndex + 2].movie.imageurl[0]}
+            />
+          )}
+        </div>
 
         <div className="container_vote">
           <DownVote />
