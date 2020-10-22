@@ -9,6 +9,7 @@ function App() {
   return (
     <>
       <Router>
+        <Nav />
         <Switch>
           <Route exact path="/">
             <LikeOrNo />
@@ -18,7 +19,6 @@ function App() {
           </Route>
         </Switch>
       </Router>
-      <Nav />
     </>
   );
 }
