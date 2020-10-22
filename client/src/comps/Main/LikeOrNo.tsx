@@ -3,10 +3,6 @@ import DownVote from "../ButtonComps/DownVote";
 import FilterButton from "../ButtonComps/FilterButton";
 import UpVote from "../ButtonComps/UpVote";
 import Logo from "../Decorators/Logo";
-import useGetMovies from "../../db-operations/useGetMovies";
-import useGetUser from "../../db-operations/useGetUser";
-import useWatchForMatches from "../../db-operations/useWatchForMatches";
-import Deck from "./Deck";
 import MainPoster from "./MainPoster";
 import { firestore } from "firebase";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
@@ -79,7 +75,7 @@ export default function LikeOrNo({ movieList, user }: ICompProps) {
         </div>
 
         <div className="container_vote">
-          <DownVote />
+          <DownVote handleDislike={() => setCurrentIndex((prev) => prev + 1)} />
           <div className="btn btn_details">Details</div>
           <UpVote handleLike={handleLike} />
         </div>

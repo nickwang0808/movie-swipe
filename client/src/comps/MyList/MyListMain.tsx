@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
-import { db } from "../../firebase/config";
+import useGetLikedMovies from "../../db-operations/useGetLikedMovies";
 import LikedMovieInMyList from "./LikedMovieInMyList";
 
 export default function MyListMain() {
-  // useEffect(() => {
-  //   db;
-  // }, []);
+  const likedMoviesInfos = useGetLikedMovies("user1");
+
+  useEffect(() => {
+    if (likedMoviesInfos) {
+      console.log(
+        "MyListMain, likedMovieInfos.length: ",
+        likedMoviesInfos.length
+      );
+    }
+  }, [likedMoviesInfos]);
 
   return (
     <>
@@ -14,14 +21,14 @@ export default function MyListMain() {
       </div>
 
       <div>
-        <LikedMovieInMyList />
-        <LikedMovieInMyList />
-        <LikedMovieInMyList />
-        <LikedMovieInMyList />
-        <LikedMovieInMyList />
-        <LikedMovieInMyList />
-        <LikedMovieInMyList />
-        <LikedMovieInMyList />
+        {/* {likedMoviesInfos &&
+          likedMoviesInfos.map((likedMovieInfo) => (
+            <LikedMovieInMyList
+              key={likedMovieInfo.id}
+              id={likedMovieInfo.id}
+              movie={likedMovieInfo.movie}
+            />
+          ))} */}
       </div>
     </>
   );

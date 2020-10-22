@@ -1,4 +1,3 @@
-import { firestore } from "firebase";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 
@@ -35,7 +34,7 @@ export default function useGetMovies() {
         } else {
           console.log("can no find docs");
         }
-        return;
+        // return;
       });
       setMovieList(tempArray);
     };
