@@ -74,7 +74,7 @@ export default function LikeOrNo({ movieList, user }: ICompProps) {
           )}
         </div>
 
-        <div className="container_vote" style={{ zIndex: 998 }}>
+        <div className="container_vote">
           <DownVote handleDislike={() => setCurrentIndex((prev) => prev + 1)} />
           <div className="btn btn_details">Details</div>
           <UpVote handleLike={handleLike} />

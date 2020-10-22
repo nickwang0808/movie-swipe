@@ -88,6 +88,7 @@ export default function Deck({ movieList, setCurrentIndex }) {
 
   return (
     <>
+     {/* <Filters /> */}
       <div className={style.poster}>
         {props.map(({ x, y, rot, scale }, i) => (
           <animated.div
