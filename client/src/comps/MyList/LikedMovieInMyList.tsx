@@ -1,3 +1,4 @@
+import { join } from "path";
 import React, { useEffect } from "react";
 import style from "./LikedMovieInMylist.module.css";
 
@@ -10,7 +11,9 @@ export default function LikedMovieInMyList({ id, movie }: ILikedMovieInMyList) {
   const matched = true;
 
   useEffect(() => {
-    console.log(movie);
+    if (movie) {
+      console.log(movie);
+    }
   }, []);
 
   return (
@@ -24,10 +27,10 @@ export default function LikedMovieInMyList({ id, movie }: ILikedMovieInMyList) {
             </div>
           </div>
           <div className={style.details_likedtitle}>
-            <h2>Movie Title</h2>
+            <h2>{movie.title}</h2>
           </div>
           <div className={style.flex_row_rating}>
-            <h3 className="heavy">6.7</h3>
+            <h3 className="heavy">{movie.imdbrating}</h3>
             <div className="star">
               <svg
                 width="15"
@@ -40,7 +43,11 @@ export default function LikedMovieInMyList({ id, movie }: ILikedMovieInMyList) {
             </div>
           </div>
           <div className={style.details_tags}>
-            <h3>PG-13 | 2h 3min | Adventure, Crime, Drama | 2020 (USA)</h3>
+            {/* <h3>PG-13 | 2h 3min | Adventure, Crime, Drama | 2020 (USA)</h3> */}
+            <h3>
+              {`PG-13 | 2h 3min | ${movie?.genre.join(", ")} | ${movie.released}
+              (USA)`}
+            </h3>
           </div>
         </div>
       </div>
