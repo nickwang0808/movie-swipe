@@ -40,6 +40,6 @@ NoSQL firestore, each user gets own collections, in the collections, there shoul
 
 # Note
 
-- when liked a movie, add it to the group, then check if it's the first person to like it, if not create pop up that indicates a match.
-
-everytime
+- temp store 4 movies
+- after swipe remove and add 1 more movie
+- prefetch 10 movies

@@ -7,6 +7,7 @@ import useGetMovies from "../../db-operations/useGetMovies";
 import useGetUser from "../../db-operations/useGetUser";
 import useWatchForMatches from "../../db-operations/useWatchForMatches";
 import Deck from "./Deck";
+import MainPoster from "./MainPoster";
 
 interface ImovieInfo {
   imageurl: string[];
@@ -52,11 +53,20 @@ export default function LikeOrNo() {
           <Logo />
           <FilterButton />
         </div>
-        <div className="container_poster"></div>
 
-        {movieList && (
+        {/* {movieList && (
           <Deck movieList={movieList} setCurrentIndex={setCurrentIndex} />
-        )}
+        )} */}
+
+        <div className="container_poster">
+          {movieList && (
+            <MainPoster
+              imgUrl_1={movieList[currentIndex].imageurl[0]}
+              imgUrl_2={movieList[currentIndex + 1].imageurl[0]}
+              imgUrl_3={movieList[currentIndex + 2].imageurl[0]}
+            />
+          )}
+        </div>
 
         <div className="container_vote" style={{ zIndex: 998 }}>
           <DownVote />
