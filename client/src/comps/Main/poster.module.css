@@ -1,5 +1,6 @@
 .poster {
   position: fixed;
+  transform: perspective (100px);
 }
 
 .poster > div {

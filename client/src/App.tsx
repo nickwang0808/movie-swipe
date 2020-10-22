@@ -8,8 +8,8 @@ function App() {
   return (
     <>
       <Nav />
-      {/* <LikeOrNo /> */}
-      <MyListMain />
+      <LikeOrNo />
+      {/* <MyListMain /> */}
     </>
   );
 }

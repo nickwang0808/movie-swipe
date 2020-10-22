@@ -36,16 +36,20 @@ ul {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 2.5em;
   font-weight: 900;
+  padding: 2rem 0 2rem 2rem;
+  background-color: var(--light);
+  color: var(--highlight);
 }
 
 h2 {
-  font-size: 2em;
+  font-size: 2.1em;
+  font-weight: 900;
 }
 
 h3 {
-  font-size: 2em;
+  font-size: 1.6em;
 }
 
 ol,
@@ -70,6 +74,7 @@ li {
   --light: #ffffff;
   --highlight: #da0f3f;
   --bright: #f6c700;
+  --positive: #11ee9e;
   --poster-height: calc(100vh - var(--header) - var(--vote) - var(--nav) - 3em);
   --poster-width: calc(var(--poster-height) * 0.65);
 }
@@ -381,7 +386,7 @@ li {
   margin-bottom: 0.5em;
 }
 
-#star {
+.star {
   margin: 0 0.5em;
   fill: var(--bright);
 }
@@ -392,14 +397,9 @@ li {
   padding: 0 1em;
 }
 
-#details_title {
+.details_title {
   padding: 1em 0;
   font-weight: 900;
-}
-
-#details_tags {
-  opacity: 0.8;
-  letter-spacing: 0.5px;
 }
 
 .container_moviedetails {
