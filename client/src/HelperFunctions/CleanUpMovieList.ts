@@ -1,5 +1,6 @@
 import { db } from "../firebase/config";
 
+// this is only one time function to clean up movielist collection in db
 export default async function CleanUpMovieList() {
   const testListRef = db.collection("test-list").doc("list-doc");
   const oldCollection = await testListRef.get();
