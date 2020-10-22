@@ -79,22 +79,6 @@ li {
   --poster-width: calc(var(--poster-height) * 0.65);
 }
 
-.nav_item {
-  cursor: pointer;
-  margin: 0.5em 1em;
-  text-align: center;
-  font-size: 2em;
-  font-weight: 900;
-}
-
-.nav_item:hover,
-.nav_item:active,
-.nav_item:hover > .nav_icon,
-.nav_item:active > .nav_icon {
-  color: var(--highlight);
-  fill: var(--highlight);
-}
-
 /* FIND MEDIA*/
 
 .content {
@@ -277,19 +261,6 @@ li {
   justify-content: space-evenly;
   align-items: stretch;
   padding: 1em;
-}
-
-.container_nav {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-evenly;
-  align-items: center;
-  background-color: #ffffff;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 .btn {

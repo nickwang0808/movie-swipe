@@ -4,9 +4,9 @@ import style from "./nav.module.css";
 
 export default function Nav() {
   return (
-    <div className="container_nav" style={{ zIndex: 999 }}>
+    <div className={style.container_nav}>
       <Link className={style.link} to="/mylist">
-        <div className="nav_item">
+        <div className={style.nav_item}>
           <svg
             className="nav_icon list"
             width={25}
@@ -27,7 +27,7 @@ export default function Nav() {
         </div>
       </Link>
       <Link className={style.link} to="/">
-        <div className="nav_item">
+        <div className={style.nav_item}>
           <svg
             className="nav_icon find"
             width={30}
@@ -47,7 +47,7 @@ export default function Nav() {
         </div>
       </Link>
       <Link to="/settings" className={style.link}>
-        <div className="nav_item">
+        <div className={style.nav_item}>
           <svg
             className="nav_icon settings"
             width={26}
