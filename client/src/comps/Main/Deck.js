@@ -3,6 +3,7 @@ import { useSprings, animated, interpolate } from "react-spring";
 import { useGesture } from "react-use-gesture";
 import style from "./poster.module.css";
 import converHDimg from "../../HelperFunctions/converHDimg";
+// import Filters from "../Filters";
 
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
 const to = (i) => ({ x: 0, y: 0, scale: 1 });
@@ -66,6 +67,7 @@ export default function Deck({ movieList, setCurrentIndex }) {
 
   return (
     <>
+     {/* <Filters /> */}
       <div className={style.poster}>
         {props.map(({ x, y, rot, scale }, i) => (
           <animated.div
