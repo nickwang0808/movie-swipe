@@ -9,6 +9,7 @@ interface I_User {
     last_name: string;
   };
   liked_movies: Array<string>;
+  groups: string[];
 }
 
 // so every time a like happens, just look thought the group the user is in

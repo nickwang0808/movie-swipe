@@ -7,15 +7,15 @@ const arrayUnion = firestore.FieldValue.arrayUnion;
 this code add the liked movie into the Groups and Users collection.
 */
 
-export const UpdateLikeToDB = (
+export default function UpdateLikeToDB(
   user: firestore.DocumentData,
-  movieTitle: string
-) => {
+  movieID: string
+) {
   const userRef = db.collection("Users").doc(user.id);
   const userCurrentGroups: string[] = user.groups;
 
   userRef.update({
-    liked_movies: arrayUnion(movieTitle),
+    liked_movies: arrayUnion(movieID),
   });
 
   userCurrentGroups.forEach((group) => {
@@ -28,14 +28,14 @@ export const UpdateLikeToDB = (
         const docData = groupDoc.data();
         if (docData) {
           const findMovie = (likedMovie: any) => {
-            return likedMovie.movie_title === movieTitle;
+            return likedMovie.movie_title === movieID;
           };
           // use find to make sure the movie is not already liked by other group member
           // if ok, add the movie and current user in
           if (!docData.liked_movies.find(findMovie)) {
             transaction.update(groupRef, {
               liked_movies: arrayUnion({
-                movie_title: movieTitle,
+                movie_title: movieID,
                 users: [user.id],
               }),
             });
@@ -61,4 +61,4 @@ export const UpdateLikeToDB = (
       });
     });
   });
-};
+}
