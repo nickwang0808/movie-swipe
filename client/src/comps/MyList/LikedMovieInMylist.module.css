@@ -6,7 +6,7 @@
 }
 
 .matched {
-  padding: 0.3em 1.3em;
+  padding: 0.3em 1em;
   background-color: var(--positive);
   font-size: 1.3em;
   font-weight: 900;
