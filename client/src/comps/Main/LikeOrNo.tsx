@@ -43,12 +43,13 @@ export default function LikeOrNo({ movieList, userId }: ICompProps) {
 
   const handleLike = () => {
     const movieID: string = movieList[currentIndex].id;
-    if (userId) {
-      UpdateLikeToDB(userId, movieID);
-      setCurrentIndex((prev) => prev + 1);
-    } else {
-      console.error("Update like to db failed");
-    }
+    UpdateLikeToDB(userId, movieID, true);
+    setCurrentIndex((prev) => prev + 1);
+  };
+  const handleDislike = () => {
+    const movieID: string = movieList[currentIndex].id;
+    UpdateLikeToDB(userId, movieID, false);
+    setCurrentIndex((prev) => prev + 1);
   };
 
   const backgroundStyle = {
@@ -77,7 +78,7 @@ export default function LikeOrNo({ movieList, userId }: ICompProps) {
         </div>
 
         <div className="container_vote">
-          <DownVote handleDislike={() => setCurrentIndex((prev) => prev + 1)} />
+          <DownVote handleDislike={handleDislike} />
           <div className="btn btn_details">Details</div>
           <UpVote handleLike={handleLike} />
         </div>
