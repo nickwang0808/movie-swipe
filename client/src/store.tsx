@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import useGetUser from "./db-operations/useGetUser";
 import { auth } from "./firebase/config";
 
 interface IUser {
@@ -6,30 +7,31 @@ interface IUser {
   userInfo: firebase.User | null;
 }
 
-export const UserContext = React.createContext({} as IUser | undefined);
+const defaultUser = { isLoggedIn: false, userInfo: null };
+export const UserContext = React.createContext({} as any);
 const UserProvider = UserContext.Provider;
-const UserConsumer = UserContext.Consumer;
 
 export default function StoreProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState<IUser>();
-
-  const defaultUser = { isLoggedIn: false, userInfo: null };
+  const [userAuth, setUserAuth] = useState<IUser>(defaultUser);
+  const userProfile = useGetUser(userAuth.userInfo?.uid as string);
 
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
       if (user) {
-        setUser({ isLoggedIn: true, userInfo: user });
+        setUserAuth({ isLoggedIn: true, userInfo: user });
         console.log("This is the user: ", user);
       } else {
-        setUser(defaultUser);
+        setUserAuth(defaultUser);
         console.log("There is no logged in user");
       }
     });
   }, []);
 
-  return <UserProvider value={user}>{children}</UserProvider>;
+  return (
+    <UserProvider value={{ userAuth, userProfile }}>{children}</UserProvider>
+  );
 }

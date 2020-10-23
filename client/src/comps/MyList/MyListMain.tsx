@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import useGetLikedMovies from "../../db-operations/useGetLikedMovies";
+import { UserContext } from "../../store";
 import LikedMovieInMyList from "./LikedMovieInMyList";
 
 export default function MyListMain() {
-  const likedMoviesInfos = useGetLikedMovies("user1");
+  const { userAuth } = useContext(UserContext);
+  const likedMoviesInfos = useGetLikedMovies(userAuth.userInfo.uid as string);
 
   return (
     <>
