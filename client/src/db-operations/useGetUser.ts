@@ -17,10 +17,10 @@ export default function useGetUser(user_id: string) {
           .get();
         if (doc.exists) {
           // TODO: get groups
-          console.log("user exist");
+          // console.log("user exist");
         } else if (!doc.exists) {
           // if no user found in db, create empty docs for them
-          console.log("init user create");
+          // console.log("init user create");
           userRef
             .collection("User_Details")
             .doc("Liked_Movies")

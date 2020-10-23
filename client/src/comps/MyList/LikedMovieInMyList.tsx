@@ -1,5 +1,4 @@
-import { join } from "path";
-import React, { useEffect } from "react";
+import React from "react";
 import style from "./LikedMovieInMylist.module.css";
 
 interface ILikedMovieInMyList {

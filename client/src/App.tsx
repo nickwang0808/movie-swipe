@@ -11,7 +11,7 @@ import { UserContext } from "./store";
 function App() {
   const { userAuth } = useContext(UserContext);
 
-  const { movieList } = useGetMovies();
+  const { movieList } = useGetMovies(userAuth?.userInfo?.uid as string);
 
   if (userAuth?.isLoggedIn === false) {
     return <Redirect exact to="/auth" />;
@@ -24,7 +24,7 @@ function App() {
             {movieList && userAuth && (
               <LikeOrNo
                 movieList={movieList}
-                userId={userAuth.userInfo.uid as string}
+                userId={userAuth?.userInfo.uid as string}
               />
             )}
           </Route>
