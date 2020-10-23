@@ -35,16 +35,16 @@ interface I_User {
 
 interface ICompProps {
   movieList: ImovieItem[];
-  user: firestore.DocumentData;
+  userId: string;
 }
 
-export default function LikeOrNo({ movieList, user }: ICompProps) {
+export default function LikeOrNo({ movieList, userId }: ICompProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleLike = () => {
     const movieID: string = movieList[currentIndex].id;
-    if (user) {
-      UpdateLikeToDB(user, movieID);
+    if (userId) {
+      UpdateLikeToDB(userId, movieID);
       setCurrentIndex((prev) => prev + 1);
     } else {
       console.error("Update like to db failed");

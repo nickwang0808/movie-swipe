@@ -2,34 +2,31 @@ import { firestore } from "firebase";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 
-interface I_User {
-  id: string;
-  info: {
-    first_name: string;
-    last_name: string;
-  };
-  liked_movies: Array<string>;
-  groups: string[];
-}
-
-// so every time a like happens, just look thought the group the user is in
-// and perform the match check
 export default function useGetUser(user_id: string) {
-  const [user, setUser] = useState<firestore.DocumentData>();
-
-  // TODO: make this real time
+  const [userProfile, setUserProfile] = useState<firestore.DocumentData>();
 
   useEffect(() => {
-    const dbRef = db.collection("Users").doc(user_id);
-    dbRef.get().then((doc) => {
-      if (doc.exists) {
-        // console.log("User", doc.data());
-        setUser(doc.data());
-      } else {
-        console.log("document does not exist");
+    (async function () {
+      if (user_id) {
+        const userRef = db.collection("Users").doc(user_id);
+        const doc = await userRef.get();
+        if (!doc.exists) {
+          // if no user found in db, create empty doc for them
+          const newUserDbRef = db.collection("Users").doc(user_id);
+          db.batch().set(
+            newUserDbRef.collection("User_Details").doc("Liked_Movies"),
+            { liked_movies: [] }
+          );
+          db.batch().set(
+            newUserDbRef.collection("User_Details").doc("Groups"),
+            { groups: [] }
+          );
+        } else if (doc.exists) {
+          // TODO: get groups
+        }
       }
-    });
+    })();
   }, [user_id]);
 
-  return user;
+  return userProfile;
 }

@@ -18,9 +18,9 @@ NoSQL firestore, each user gets own collections, in the collections, there shoul
 
 - Users
 
-  - info: id, {first_name, last_name}
-  - liked-movies: movie_title[]
-  - Groups: group_id[]
+  - Collection: User_Details
+    - liked-movies: movie_title[]
+    - Groups: group_id[]
 
 - Group
 

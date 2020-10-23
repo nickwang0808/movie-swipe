@@ -10,24 +10,27 @@ import SignInScreen from "./comps/auth/SignInScreen";
 import { UserContext } from "./store";
 
 function App() {
-  const user = useContext(UserContext);
+  const { userAuth } = useContext(UserContext);
 
   const { movieList } = useGetMovies();
 
-  if (user?.isLoggedIn === false) {
+  if (userAuth?.isLoggedIn === false) {
     return <Redirect exact to="/auth" />;
-  } else if (user?.isLoggedIn) {
+  } else if (userAuth?.isLoggedIn) {
     return (
       <>
         <Nav />
         <Switch>
           <Route exact path="/">
-            {movieList && user && (
-              <LikeOrNo movieList={movieList} user={user} />
+            {movieList && userAuth && (
+              <LikeOrNo
+                movieList={movieList}
+                userId={userAuth.userInfo.uid as string}
+              />
             )}
           </Route>
           <Route exact path="/auth">
-            {user.isLoggedIn ? <Redirect exact to="/" /> : <SignInScreen />}
+            {userAuth.isLoggedIn ? <Redirect exact to="/" /> : <SignInScreen />}
           </Route>
           <Route exact path="/mylist">
             <MyListMain />
