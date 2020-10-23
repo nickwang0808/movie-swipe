@@ -10,12 +10,6 @@ interface ILikedMovieInMyList {
 export default function LikedMovieInMyList({ id, movie }: ILikedMovieInMyList) {
   const matched = true;
 
-  useEffect(() => {
-    if (movie) {
-      console.log(movie);
-    }
-  }, []);
-
   return (
     <>
       <div className={style.flex_row}>
