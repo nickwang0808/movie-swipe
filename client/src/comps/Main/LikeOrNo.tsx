@@ -4,6 +4,7 @@ import FilterButton from "../ButtonComps/FilterButton";
 import UpVote from "../ButtonComps/UpVote";
 import Logo from "../Decorators/Logo";
 import MainPoster from "./MainPoster";
+import Filters from "../Filters";
 import { firestore } from "firebase";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 
@@ -57,6 +58,7 @@ export default function LikeOrNo({ movieList, user }: ICompProps) {
   };
   return (
     <>
+      {/* {<Filters />} */}
       <div className="background" style={backgroundStyle} />
       <div className="content">
         <div className="container_header">
