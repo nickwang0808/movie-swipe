@@ -5,7 +5,7 @@ import LikedMovieInMyList from "./LikedMovieInMyList";
 
 export default function MyListMain() {
   const { userAuth } = useContext(UserContext);
-  const likedMoviesInfos = useGetLikedMovies(userAuth.userInfo.uid as string);
+  const likedMoviesInfos = useGetLikedMovies(userAuth?.userInfo.uid as string);
 
   return (
     <>

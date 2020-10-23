@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DownVote from "../ButtonComps/DownVote";
 import FilterButton from "../ButtonComps/FilterButton";
 import UpVote from "../ButtonComps/UpVote";
 import Logo from "../Decorators/Logo";
 import MainPoster from "./MainPoster";
-import Filters from "../Filters";
-import { firestore } from "firebase";
+// import Filters from "../Filters";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 
 interface ImovieInfo {
@@ -21,16 +20,6 @@ interface ImovieInfo {
 interface ImovieItem {
   id: string;
   movie: ImovieInfo;
-}
-
-interface I_User {
-  id: string;
-  info: {
-    first_name: string;
-    last_name: string;
-  };
-  liked_movies: Array<string>;
-  groups: string[];
 }
 
 interface ICompProps {
