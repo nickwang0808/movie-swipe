@@ -7,14 +7,15 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import useGetMovies from "./db-operations/useGetMovies";
 import SignInScreen from "./comps/auth/SignInScreen";
 import { UserContext } from "./store";
+import { auth } from "./firebase/config";
 
 function App() {
   const { userAuth } = useContext(UserContext);
 
   const { movieList } = useGetMovies(userAuth?.userInfo?.uid as string);
 
-  if (userAuth?.isLoggedIn === false) {
-    return <Redirect exact to="/auth" />;
+  if (userAuth?.isLoggedIn === false || !userAuth) {
+    return <SignInScreen />;
   } else if (userAuth?.isLoggedIn) {
     return (
       <>
@@ -28,14 +29,12 @@ function App() {
               />
             )}
           </Route>
-          <Route exact path="/auth">
-            {userAuth.isLoggedIn ? <Redirect exact to="/" /> : <SignInScreen />}
-          </Route>
           <Route exact path="/mylist">
             <MyListMain />
           </Route>
           <Route exact path="/settings">
             <h1>Setting page</h1>
+            <button onClick={() => auth.signOut()}>Sign Out</button>
           </Route>
         </Switch>
       </>

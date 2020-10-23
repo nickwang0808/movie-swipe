@@ -14,14 +14,13 @@ export default function MyListMain() {
       </div>
 
       <div>
-        {likedMoviesInfos &&
-          likedMoviesInfos.map((likedMovieInfo) => (
-            <LikedMovieInMyList
-              key={likedMovieInfo.id}
-              id={likedMovieInfo.id}
-              movie={likedMovieInfo.movie.movie}
-            />
-          ))}
+        {likedMoviesInfos.map((likedMovieInfo) => (
+          <LikedMovieInMyList
+            key={likedMovieInfo.id}
+            id={likedMovieInfo.id}
+            movie={likedMovieInfo.movie.movie}
+          />
+        ))}
       </div>
     </>
   );
