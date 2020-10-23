@@ -32,10 +32,17 @@ h1 {
 .streaming_list {
   margin-bottom: 3em;
 }
+
 .streaming_item {
   height: 44px;
   width: 96px;
-  background-color: red;
-  border: 2px solid black;
   margin: 1em 1em 1em 0;
+}
+
+.streaming_item .active {
+  border: 2px solid var(--dark);
+}
+
+.streaming_item .inactive {
+  border: 2px solid rgba(0, 0, 0, 0);
 }

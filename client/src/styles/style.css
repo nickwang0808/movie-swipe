@@ -11,6 +11,7 @@ html,
 body {
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: hidden;
   position: relative;
 }
 
@@ -71,6 +72,7 @@ ul {
   --highlight: #da0f3f;
   --bright: #f6c700;
   --positive: #11ee9e;
+  --negative: #ff0f00;
   --poster-height: calc(100vh - var(--header) - var(--vote) - var(--nav) - 3em);
   --poster-width: calc(var(--poster-height) * 0.65);
 }
@@ -133,14 +135,6 @@ ul {
 }
 
 #poster_1 {
-  background-image: linear-gradient(
-      25.4deg,
-      rgba(255, 255, 255, 0) 51.03%,
-      rgba(255, 255, 255, 0.3) 58.85%,
-      rgba(255, 255, 255, 0.3) 99.3%
-    ),
-    linear-gradient(360deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 20%),
-    url(poster_1.jpg);
   box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12),
     0px 16px 16px -4px rgba(24, 39, 75, 0.2);
   filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));
@@ -262,7 +256,7 @@ ul {
 
 .btn {
   height: 44px;
-  border: 2px solid #000000;
+  border: 2px solid var(--dark);
   text-align: center;
   border-radius: 3px;
   color: #000000;
@@ -274,9 +268,28 @@ ul {
 
 .btn_up,
 .btn_down {
-  background-color: #000000;
+  background-color: var(--dark);
   min-width: 25%;
   padding-top: 1em;
+}
+
+.btn_up svg {
+  fill: var(--positive);
+}
+
+.btn_down svg {
+  fill: var(--negative);
+}
+
+.btn_up:active,
+.btn_down:active {
+  background-color: var(--highlight);
+  border-color: var(--highlight);
+}
+
+.btn_up:active svg,
+.btn_down:active svg {
+  fill: var(--dark);
 }
 
 .btn_details {
@@ -286,7 +299,6 @@ ul {
   font-size: 2em;
 }
 
-.btn_details:hover,
 .btn_details:active {
   border-color: var(--highlight);
   color: var(--highlight);
@@ -295,6 +307,12 @@ ul {
 .btn_filter {
   margin: 1em;
   cursor: pointer;
+  fill: var(--dark);
+}
+
+.btn_filter:active {
+  fill: var(--highlight);
+  color: var(--highlight);
 }
 
 .btn_close {
