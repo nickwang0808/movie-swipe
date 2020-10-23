@@ -1,18 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import useGetLikedMovies from "../../db-operations/useGetLikedMovies";
 import LikedMovieInMyList from "./LikedMovieInMyList";
 
 export default function MyListMain() {
   const likedMoviesInfos = useGetLikedMovies("user1");
-
-  // useEffect(() => {
-  //   if (likedMoviesInfos) {
-  //     console.log(
-  //       "MyListMain, likedMovieInfos.length: ",
-  //       likedMoviesInfos.length
-  //     );
-  //   }
-  // }, [likedMoviesInfos]);
 
   return (
     <>
