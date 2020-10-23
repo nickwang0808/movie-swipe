@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import "./styles/style.css";
 import LikeOrNo from "./comps/Main/LikeOrNo";
 import Nav from "./comps/Nav/Nav";
 import MyListMain from "./comps/MyList/MyListMain";
 import { Switch, Route, Redirect } from "react-router-dom";
 import useGetMovies from "./db-operations/useGetMovies";
-import useGetUser from "./db-operations/useGetUser";
 import SignInScreen from "./comps/auth/SignInScreen";
 import { UserContext } from "./store";
 
