@@ -11,7 +11,6 @@ html,
 body {
   max-width: 100%;
   overflow-x: hidden;
-  overflow-y: hidden;
   position: relative;
 }
 
@@ -77,6 +76,26 @@ ul {
   --poster-width: calc(var(--poster-height) * 0.65);
 }
 
+.loader {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  margin: 0 auto;
+  border-top: 2px solid #ff0000;
+  border-right: 2px solid transparent;
+  animation: loader 650ms linear infinite;
+  z-index: 10;
+  position: absolute;
+  top: calc(50% - 40px);
+  left: calc(50% - 40px);
+}
+
+@keyframes loader {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* FIND MEDIA*/
 
 .content {
@@ -91,6 +110,17 @@ ul {
   flex-direction: column;
 }
 
+.background_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
 .background {
   background: linear-gradient(
       0deg,

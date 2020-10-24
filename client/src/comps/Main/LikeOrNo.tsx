@@ -49,13 +49,15 @@ export default function LikeOrNo({ movieList, userId }: ICompProps) {
   return (
     <>
       {/* {<Filters />} */}
-      <div className="background" style={backgroundStyle} />
+      <div className="background_container">
+        <div className="background" style={backgroundStyle} />
+      </div>
       <div className="content">
         <div className="container_header">
           <Logo />
           <FilterButton />
         </div>
-
+        {/* <div className="loader"></div> */}
         <div className="container_poster">
           {movieList && (
             <MainPoster
