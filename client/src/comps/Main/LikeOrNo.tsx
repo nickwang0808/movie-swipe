@@ -29,6 +29,7 @@ interface ICompProps {
 
 export default function LikeOrNo({ movieList, userId }: ICompProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [filterOn, setFilterOn] = useState(false);
 
   const handleLike = () => {
     const movieID: string = movieList[currentIndex].id;
@@ -46,16 +47,17 @@ export default function LikeOrNo({ movieList, userId }: ICompProps) {
       movieList && movieList[currentIndex].movie.imageurl[0]
     })`,
   };
+
   return (
     <>
-      {/* {<Filters />} */}
+      {filterOn && <Filters setFilterOn={setFilterOn} />}
       <div className="background_container">
         <div className="background" style={backgroundStyle} />
       </div>
       <div className="content">
         <div className="container_header">
           <Logo />
-          <FilterButton />
+          <FilterButton setFilterOn={setFilterOn} />
         </div>
         {/* <div className="loader"></div> */}
         <div className="container_poster">
