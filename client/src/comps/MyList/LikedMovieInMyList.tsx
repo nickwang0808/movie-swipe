@@ -14,11 +14,11 @@ export default function LikedMovieInMyList({ id, movie }: ILikedMovieInMyList) {
       <div className={style.flex_row}>
         <img className={style.poster} src={movie.imageurl[0]} alt="img" />
         <div className="details_rating">
-          <div className={style.matched}>
+          {/* <div className={style.matched}>
             <div className={style.forceSkew}>
               {matched && <div>MATCHED!</div>}
             </div>
-          </div>
+          </div> */}
           <div className={style.details_likedtitle}>
             <h2>{movie.title}</h2>
           </div>
