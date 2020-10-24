@@ -4,7 +4,7 @@ import FilterButton from "../ButtonComps/FilterButton";
 import UpVote from "../ButtonComps/UpVote";
 import Logo from "../Decorators/Logo";
 import MainPoster from "./MainPoster";
-// import Filters from "../Filters";
+import Filters from "../Filters";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 
 interface ImovieInfo {

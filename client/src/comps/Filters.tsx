@@ -1,4 +1,6 @@
 import React from "react";
+import StreamingServiceButton from "./ButtonComps/StreamingService";
+import CheckboxButton from "./ButtonComps/Checkbox";
 import style from "./Filters.module.css";
 
 
@@ -10,23 +12,38 @@ export default function Filters() {
 			<div className={style.header}><h1>Refine Suggestions</h1></div>
 			<div className={style.title}><h2>Streaming Services</h2></div>
 			<div className={style.streaming_list}>
-				<div className={style.streaming_item}></div>
-				<div className={style.streaming_item}></div>
-				<div className={style.streaming_item}></div>
-				<div className={style.streaming_item}></div>
-				<div className={style.streaming_item}></div>
+			<StreamingServiceButton />
+			<StreamingServiceButton />
+			<StreamingServiceButton />
+			<StreamingServiceButton />
+			<StreamingServiceButton />
+			<StreamingServiceButton />
+			<StreamingServiceButton />
+			<StreamingServiceButton />
+			<StreamingServiceButton />
+			<StreamingServiceButton />
 			</div>
 			<div className={style.title}><h2>Types</h2></div>
 			<div className={style.types_list}>
-				<div><input type="checkbox" id="type_movies" name="type_movies"/><label>Movies</label></div>
-				<div><input type="checkbox" id="type_tvshow" name="type_tvshow"/><label>TV Shows</label></div>
+			<CheckboxButton />
+			<CheckboxButton />
 			</div>
 			<div className={style.title}><h2>Genres</h2></div>
 			<div className={style.genres_list}>
-				<div><input type="checkbox" id="genre_action" name="genre_action"/><label>Action</label></div>
-				<div><input type="checkbox" id="genre_adventure" name="genre_adventure"/><label>Adventure</label></div>
-				<div><input type="checkbox" id="genre_comedy" name="genre_comedy"/><label>Comedy</label></div>
-
+			<CheckboxButton />
+			<CheckboxButton />
+			<CheckboxButton />
+			<CheckboxButton />
+			<CheckboxButton />
+			<CheckboxButton />
+			<CheckboxButton />
+			<CheckboxButton />
+			<CheckboxButton />
+			<CheckboxButton />
+			<CheckboxButton />
+			<CheckboxButton />
+			<CheckboxButton />
+			<CheckboxButton />
 			</div>
 		</div>
     </>
