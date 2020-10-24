@@ -34,3 +34,8 @@
   color: var(--highlight);
   fill: var(--highlight);
 }
+
+.active_link {
+  color: var(--highlight);
+  fill: var(--highlight);
+}
