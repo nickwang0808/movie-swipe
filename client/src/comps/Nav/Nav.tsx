@@ -1,11 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import style from "./nav.module.css";
 
 export default function Nav() {
   return (
     <div className={style.container_nav}>
-      <Link className={style.link} to="/mylist">
+      <NavLink
+        className={style.link}
+        activeClassName={style.active_link}
+        to="/mylist"
+      >
         <div className={style.nav_item}>
           <svg
             className="nav_icon list"
@@ -25,8 +29,13 @@ export default function Nav() {
           <br />
           My List
         </div>
-      </Link>
-      <Link className={style.link} to="/">
+      </NavLink>
+      <NavLink
+        className={style.link}
+        activeClassName={style.active_link}
+        exact
+        to="/"
+      >
         <div className={style.nav_item}>
           <svg
             className="nav_icon find"
@@ -45,8 +54,12 @@ export default function Nav() {
           <br />
           Find Media
         </div>
-      </Link>
-      <Link to="/settings" className={style.link}>
+      </NavLink>
+      <NavLink
+        to="/settings"
+        className={style.link}
+        activeClassName={style.active_link}
+      >
         <div className={style.nav_item}>
           <svg
             className="nav_icon settings"
@@ -65,7 +78,7 @@ export default function Nav() {
           <br />
           Settings
         </div>
-      </Link>
+      </NavLink>
     </div>
   );
 }

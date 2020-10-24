@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import useGetLikedMovies from "../../db-operations/useGetLikedMovies";
 import { UserContext } from "../../store";
 import LikedMovieInMyList from "./LikedMovieInMyList";
+import style from "./mylistmain.module.css";
 
 export default function MyListMain() {
   const { userAuth } = useContext(UserContext);
@@ -13,7 +14,7 @@ export default function MyListMain() {
         <h1>My Saved List</h1>
       </div>
 
-      <div>
+      <div className={style.container}>
         {likedMoviesInfos.map((likedMovieInfo) => (
           <LikedMovieInMyList
             key={likedMovieInfo.id}
