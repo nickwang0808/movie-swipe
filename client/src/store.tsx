@@ -27,10 +27,8 @@ export default function StoreProvider({
     auth.onAuthStateChanged(function (user) {
       if (user) {
         setUserAuth({ isLoggedIn: true, userInfo: user });
-        // console.log("This is the user: ", user);
       } else {
         setUserAuth(null);
-        // console.log("There is no logged in user");
       }
     });
   }, []);
