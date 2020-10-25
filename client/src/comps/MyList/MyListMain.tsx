@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import useGetLikedMovies from "../../db-operations/useGetLikedMovies";
 import { UserContext } from "../../store";
 import LikedMovieInMyList from "./LikedMovieInMyList";
 import style from "./mylistmain.module.css";

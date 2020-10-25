@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 
 export default function useGetUser(user_id: string) {
+  // eslint-disable-next-line
   const [userProfile, setUserProfile] = useState<firestore.DocumentData>();
 
   useEffect(() => {
