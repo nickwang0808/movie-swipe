@@ -1,3 +1,4 @@
+import { promises } from "fs";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 
@@ -30,16 +31,18 @@ export interface OriginalLanguage {
 }
 
 export default function useGetMovies(userId: string) {
-  const [movieList, setMovieList] = useState<IPopularMovies>(); // TODO: need to fix the type here
+  const [movieList, setMovieList] = useState<Result[]>(); // TODO: need to fix the type here
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [pageNum, setPageNum] = useState(1);
 
-  const trimVotedMoviesOnLocal = () => {
-    const unTrimmedResults = movieList?.results;
-    unTrimmedResults?.shift();
-    const trimmedMovieListData = {
-      ...movieList,
-      results: unTrimmedResults,
-    };
-  };
+  // const trimVotedMoviesOnLocal = () => {
+  //   const unTrimmedResults = movieList?.results;
+  //   unTrimmedResults?.shift();
+  //   const trimmedMovieListData = {
+  //     ...movieList,
+  //     results: unTrimmedResults,
+  //   };
+  // };
 
   const getVotedMoviesIds = async () => {
     let votedMoviesIds: number[] = []; // TODO: this should be number
@@ -62,19 +65,17 @@ export default function useGetMovies(userId: string) {
     return votedMoviesIds;
   };
 
-  const fetchPopularMovies = async (pageNum: number) => {
+  const fetchPopularMovies = async () => {
     const REACT_APP_TMDB_KEY = process.env.REACT_APP_TMDB_KEY;
     const url = `https://api.themoviedb.org/3/movie/popular?api_key=${REACT_APP_TMDB_KEY}&language=en-US&page=${pageNum}`;
     const response: IPopularMovies = await fetch(url).then((res) => res.json());
     return response;
   };
 
-  const getMovie = async () => {
+  async function getMovie() {
+    console.log("getMovie()");
     const votedMovies = await getVotedMoviesIds();
-    const pageNum: number =
-      typeof movieList?.page === "number" ? movieList?.page : 1;
-
-    const movieListUnfiltered = await fetchPopularMovies(pageNum);
+    const movieListUnfiltered = await fetchPopularMovies();
     const filteredMovieList = () => {
       let newResults: Result[] = []; // TODO: fix type here
       // filter voted movies out
@@ -87,18 +88,36 @@ export default function useGetMovies(userId: string) {
       });
       return newResults;
     };
-    const movieListData = {
-      ...movieListUnfiltered,
-      results: filteredMovieList(),
-    };
-    setMovieList(movieListData);
-  };
+
+    /* results need sto be atleast 3 to render the stack, if no, just return setPageNum + 1 and 
+    the function will rerun until it finds at least 3  */
+    if (filteredMovieList().length < 3) {
+      return setPageNum((prev) => prev + 1);
+    }
+
+    setMovieList((prev) => {
+      if (prev) {
+        return [...prev, ...filteredMovieList()];
+      } else {
+        return filteredMovieList();
+      }
+    });
+    setPageNum(movieListUnfiltered.page);
+  }
 
   useEffect(() => {
     if (userId) {
       getMovie();
     }
-  }, [userId]);
+  }, [userId, pageNum]);
 
-  return { movieList, trimVotedMoviesOnLocal };
+  useEffect(() => {
+    console.log("useGetMovies -> currentIndex", currentIndex);
+    console.log("results lenght: ", movieList?.length);
+    if ((movieList?.length as number) - currentIndex < 4) {
+      setPageNum((prev) => prev + 1);
+    }
+  }, [currentIndex]);
+
+  return { movieList, currentIndex, setCurrentIndex };
 }

@@ -40,7 +40,7 @@ export default function LikeOrNo({
   const baseUrl = "https://image.tmdb.org/t/p/w500";
   const backgroundStyle = {
     background: `linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url(${
-      movieList && baseUrl + movieList[currentIndex].poster_path
+      movieList ? baseUrl + movieList[currentIndex].poster_path : ""
     })`,
   };
 
