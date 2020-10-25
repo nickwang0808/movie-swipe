@@ -12,8 +12,10 @@ import style from "./App.module.css";
 import ListViewButton from "./comps/ButtonComps/ListViewButton";
 
 function App() {
-  const { userAuth, movieList } = useContext(UserContext);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const { userAuth } = useContext(UserContext);
+  const { movieList, currentIndex, setCurrentIndex } = useGetMovies(
+    userAuth?.userInfo?.uid as string
+  );
 
   if (userAuth?.isLoggedIn === false || !userAuth) {
     return <SignInScreen />;
@@ -25,7 +27,7 @@ function App() {
           <Route exact path="/">
             {movieList && userAuth && (
               <LikeOrNo
-                movieList={movieList.results}
+                movieList={movieList}
                 userId={userAuth?.userInfo.uid as string}
                 currentIndex={currentIndex}
                 setCurrentIndex={setCurrentIndex}
