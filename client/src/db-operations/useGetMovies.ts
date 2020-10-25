@@ -35,15 +35,6 @@ export default function useGetMovies(userId: string) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pageNum, setPageNum] = useState(1);
 
-  // const trimVotedMoviesOnLocal = () => {
-  //   const unTrimmedResults = movieList?.results;
-  //   unTrimmedResults?.shift();
-  //   const trimmedMovieListData = {
-  //     ...movieList,
-  //     results: unTrimmedResults,
-  //   };
-  // };
-
   const getVotedMoviesIds = async () => {
     let votedMoviesIds: number[] = []; // TODO: this should be number
     const votedMoviesRef = db
@@ -89,8 +80,9 @@ export default function useGetMovies(userId: string) {
       return newResults;
     };
 
-    /* results need sto be atleast 3 to render the stack, if no, just return setPageNum + 1 and 
-    the function will rerun until it finds at least 3  */
+    /* results need to be at least 3 in length to render the stack, if no,
+     just return setPageNum + 1 and 
+    the function will re-run until it finds at least 3  */
     if (filteredMovieList().length < 3) {
       return setPageNum((prev) => prev + 1);
     }
