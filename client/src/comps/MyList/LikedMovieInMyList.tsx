@@ -1,9 +1,11 @@
 import React from "react";
+import { MovieDetail } from "../../db-operations/useGetLikedMovies";
+import getGenres from "../../HelperFunctions/getGenres";
 import style from "./LikedMovieInMylist.module.css";
 
 interface ILikedMovieInMyList {
-  id: string;
-  movie: firebase.firestore.DocumentData;
+  id: number;
+  movie: MovieDetail;
 }
 
 export default function LikedMovieInMyList({ id, movie }: ILikedMovieInMyList) {
@@ -12,7 +14,11 @@ export default function LikedMovieInMyList({ id, movie }: ILikedMovieInMyList) {
   return (
     <>
       <div className={style.flex_row}>
-        <img className={style.poster} src={movie.imageurl[0]} alt="img" />
+        <img
+          className={style.poster}
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt="img"
+        />
         <div className="details_rating">
           {/* <div className={style.matched}>
             <div className={style.forceSkew}>
@@ -23,7 +29,7 @@ export default function LikedMovieInMyList({ id, movie }: ILikedMovieInMyList) {
             <h2>{movie.title}</h2>
           </div>
           <div className={style.flex_row_rating}>
-            <h3 className="heavy">{movie.imdbrating}</h3>
+            <h3 className="heavy">{movie.vote_average}</h3>
             <div className="star">
               <svg
                 width="15"
@@ -38,8 +44,9 @@ export default function LikedMovieInMyList({ id, movie }: ILikedMovieInMyList) {
           <div className={style.details_tags}>
             {/* <h3>PG-13 | 2h 3min | Adventure, Crime, Drama | 2020 (USA)</h3> */}
             <h3>
-              {`PG-13 | 2h 3min | ${movie?.genre.join(", ")} | ${movie.released}
-              (USA)`}
+              {`PG-13 | ${movie.runtime}min | ${getGenres(movie)} | ${
+                movie.release_date
+              }`}
             </h3>
           </div>
         </div>

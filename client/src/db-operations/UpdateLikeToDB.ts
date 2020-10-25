@@ -8,7 +8,7 @@ this code add the liked movie into the Groups and Users collection.
 
 export default function UpdateLikeToDB(
   userId: string,
-  movieID: string,
+  movieID: number,
   isLike: boolean
 ) {
   const userRef = db.collection("Users").doc(userId).collection("User_Details");
