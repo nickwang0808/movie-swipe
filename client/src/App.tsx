@@ -26,7 +26,7 @@ function App() {
           <Route exact path="/">
             {movieList && userAuth && (
               <LikeOrNo
-                movieList={movieList}
+                movieList={movieList.results}
                 userId={userAuth?.userInfo.uid as string}
               />
             )}
