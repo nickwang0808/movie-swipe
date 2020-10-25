@@ -14,7 +14,7 @@ export default function useGetLikedMovies(userID: string) {
         if (doc.exists) {
           const id = doc.id;
           const movie = doc.data();
-          setLikedMoviesInfos((prev) => [...prev, { id, movie }]);
+          setLikedMoviesInfos((prev) => [{ id, movie }, ...prev]);
         } else {
           console.log("no doc found");
         }
