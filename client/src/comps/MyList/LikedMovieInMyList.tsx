@@ -9,8 +9,6 @@ interface ILikedMovieInMyList {
 }
 
 export default function LikedMovieInMyList({ id, movie }: ILikedMovieInMyList) {
-  const matched = true;
-
   return (
     <>
       <div className={style.flex_row}>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import useGetLikedMovies, {
   MovieDetail,
 } from "./db-operations/useGetLikedMovies";
-import useGetMovies, { IPopularMovies } from "./db-operations/useGetMovies";
 import useGetUser from "./db-operations/useGetUser";
 import { auth } from "./firebase/config";
 
