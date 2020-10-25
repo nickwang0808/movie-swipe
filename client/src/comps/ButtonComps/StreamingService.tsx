@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./StreamingService.module.css";
+import style from "./ButtonComps.module.css";
 
 export default function StreamingServiceButton() {
   return (

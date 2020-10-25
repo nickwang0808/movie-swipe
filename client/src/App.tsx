@@ -8,6 +8,8 @@ import useGetMovies from "./db-operations/useGetMovies";
 import SignInScreen from "./comps/auth/SignInScreen";
 import { UserContext } from "./store";
 import { auth } from "./firebase/config";
+import style from "./App.module.css";
+import ListViewButton from "./comps/ButtonComps/ListViewButton";
 
 function App() {
   const { userAuth } = useContext(UserContext);
@@ -33,7 +35,9 @@ function App() {
             <MyListMain />
           </Route>
           <Route exact path="/settings">
-            <h1>Setting page</h1>
+            <h1>My Profile</h1>
+            <div className={style.settings_container}></div>
+            <ListViewButton name="Sign Out"/>
             <button onClick={() => auth.signOut()}>Sign Out</button>
           </Route>
         </Switch>

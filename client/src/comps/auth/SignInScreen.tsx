@@ -25,9 +25,9 @@ export default class SignInScreen extends React.Component {
   render() {
     return (
       <>
-        <h1>Login in</h1>
-        <div className={styles.container}>
-          {/* <div className={styles.caption}>Login</div> */}
+        <div className={styles.login_container}>
+          <h1>Find something to watch together, finally.</h1>
+          <p className={styles.intro}>Get advanced recommendations and notices when you and your friends both like a movie!</p>
           <div>
             <StyledFirebaseAuth
               className={styles.firebaseUi}

@@ -2,6 +2,8 @@ import React from "react";
 import StreamingServiceButton from "../ButtonComps/StreamingService";
 import CheckboxButton from "../ButtonComps/Checkbox";
 import style from "./Filters.module.css";
+import sharedstyle from "../ButtonComps/ButtonComps.module.css";
+
 
 export default function Filters({
   setFilterOn,
@@ -11,10 +13,11 @@ export default function Filters({
   return (
     <>
       <div className={style.container_filter}>
-        <div className="btn_close" onClick={() => setFilterOn(false)}>
-          <svg width="30px" height="30px" viewBox="0 0 512.001 512.001">
-            <path d="M284.286 256.002L506.143 34.144c7.811-7.811 7.811-20.475 0-28.285-7.811-7.81-20.475-7.811-28.285 0L256 227.717 34.143 5.859c-7.811-7.811-20.475-7.811-28.285 0-7.81 7.811-7.811 20.475 0 28.285l221.857 221.857L5.858 477.859c-7.811 7.811-7.811 20.475 0 28.285 3.905 3.905 9.024 5.857 14.143 5.857 5.119 0 10.237-1.952 14.143-5.857L256 284.287l221.857 221.857c3.905 3.905 9.024 5.857 14.143 5.857s10.237-1.952 14.143-5.857c7.811-7.811 7.811-20.475 0-28.285L284.286 256.002z" />
-          </svg>
+        <div className={sharedstyle.btn_close} onClick={() => setFilterOn(false)}>
+        <svg width="20" height="19" viewBox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M9.98531 10.9853L2.00003 18.9706L0.58582 17.5563L8.57109 9.57108L1.00002 2L2.41423 0.585786L9.98531 8.15686L17.5564 0.585786L18.9706 2L11.3995 9.57108L19.3848 17.5563L17.9706 18.9706L9.98531 10.9853Z"/>
+</svg>
+
         </div>
         <div className={style.header}>
           <h1>Refine Suggestions</h1>
@@ -38,27 +41,29 @@ export default function Filters({
           <h2>Types</h2>
         </div>
         <div className={style.types_list}>
-          <CheckboxButton />
-          <CheckboxButton />
+          <CheckboxButton name="Movies"/>
+          <CheckboxButton name="TV Shows"/>
         </div>
         <div className={style.title}>
           <h2>Genres</h2>
         </div>
         <div className={style.genres_list}>
-          <CheckboxButton />
-          <CheckboxButton />
-          <CheckboxButton />
-          <CheckboxButton />
-          <CheckboxButton />
-          <CheckboxButton />
-          <CheckboxButton />
-          <CheckboxButton />
-          <CheckboxButton />
-          <CheckboxButton />
-          <CheckboxButton />
-          <CheckboxButton />
-          <CheckboxButton />
-          <CheckboxButton />
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
+        <CheckboxButton name="Genre"/>
         </div>
       </div>
     </>

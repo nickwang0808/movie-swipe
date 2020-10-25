@@ -1,6 +1,6 @@
 .link {
   text-decoration: none;
-  color: #000000;
+  color: var(--dark);
 }
 
 .container_nav {
@@ -10,7 +10,7 @@
   flex-wrap: nowrap;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #ffffff;
+  background-color: var(--light);
   position: fixed;
   bottom: 0;
   left: 0;
