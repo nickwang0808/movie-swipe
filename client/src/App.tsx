@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./styles/style.css";
 import LikeOrNo from "./comps/Main/LikeOrNo";
 import Nav from "./comps/Nav/Nav";
@@ -12,9 +12,8 @@ import style from "./App.module.css";
 import ListViewButton from "./comps/ButtonComps/ListViewButton";
 
 function App() {
-  const { userAuth } = useContext(UserContext);
-
-  const { movieList } = useGetMovies(userAuth?.userInfo?.uid as string);
+  const { userAuth, movieList } = useContext(UserContext);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   if (userAuth?.isLoggedIn === false || !userAuth) {
     return <SignInScreen />;
@@ -28,6 +27,8 @@ function App() {
               <LikeOrNo
                 movieList={movieList.results}
                 userId={userAuth?.userInfo.uid as string}
+                currentIndex={currentIndex}
+                setCurrentIndex={setCurrentIndex}
               />
             )}
           </Route>

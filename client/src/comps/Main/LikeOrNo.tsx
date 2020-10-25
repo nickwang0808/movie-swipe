@@ -7,43 +7,33 @@ import MainPoster from "./MainPoster";
 import Filters from "../filter/Filters";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 import style from "../ButtonComps/ButtonComps.module.css";
-
-interface ImovieInfo {
-  popularity: number;
-  vote_count: number;
-  video: boolean;
-  poster_path: string;
-  id: number;
-  adult: boolean;
-  backdrop_path: string;
-  original_language: string;
-  original_title: string;
-  genre_ids: number[];
-  title: string;
-  vote_average: number;
-  overview: string;
-  release_date: Date;
-}
+import { Result } from "../../db-operations/useGetMovies";
 
 interface ICompProps {
-  movieList: ImovieInfo[];
+  movieList: Result[];
   userId: string;
+  setCurrentIndex: (arg: (arg: number) => number) => void;
+  currentIndex: number;
 }
 
-export default function LikeOrNo({ movieList, userId }: ICompProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+export default function LikeOrNo({
+  movieList,
+  userId,
+  currentIndex,
+  setCurrentIndex,
+}: ICompProps) {
   const [filterOn, setFilterOn] = useState(false);
 
   const handleLike = () => {
-    // const movieID: string = movieList[currentIndex].id;
-    // UpdateLikeToDB(userId, movieID, true);
-    // setCurrentIndex((prev) => prev + 1);
+    const movieID: number = movieList[currentIndex].id;
+    UpdateLikeToDB(userId, movieID, true);
+    setCurrentIndex((prev) => prev + 1);
     console.log("liked");
   };
   const handleDislike = () => {
-    // const movieID: string = movieList[currentIndex].id;
-    // UpdateLikeToDB(userId, movieID, false);
-    // setCurrentIndex((prev) => prev + 1);
+    const movieID: number = movieList[currentIndex].id;
+    UpdateLikeToDB(userId, movieID, false);
+    setCurrentIndex((prev) => prev + 1);
     console.log("disliked");
   };
 
