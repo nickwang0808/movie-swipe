@@ -34,10 +34,10 @@ function App() {
           <Route exact path="/mylist">
             <MyListMain />
           </Route>
-          <Route exact path="/settings">
+          <Route exact path="/profile">
             <h1>My Profile</h1>
             <div className={style.settings_container}></div>
-            <ListViewButton name="Sign Out"/>
+            <ListViewButton name="Sign Out" />
             <button onClick={() => auth.signOut()}>Sign Out</button>
           </Route>
         </Switch>
