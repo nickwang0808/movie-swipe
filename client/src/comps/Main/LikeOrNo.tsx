@@ -6,6 +6,8 @@ import Logo from "../Decorators/Logo";
 import MainPoster from "./MainPoster";
 import Filters from "../filter/Filters";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
+import style from "../ButtonComps/ButtonComps.module.css";
+
 
 interface ImovieInfo {
   imageurl: string[];
@@ -72,7 +74,7 @@ export default function LikeOrNo({ movieList, userId }: ICompProps) {
 
         <div className="container_vote">
           <DownVote handleDislike={handleDislike} />
-          <div className="btn btn_details">Details</div>
+          <div className={`${style.btn} ${style.btn_details}`}>Details</div>
           <UpVote handleLike={handleLike} />
         </div>
       </div>

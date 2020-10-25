@@ -12,10 +12,11 @@
   overflow-y: auto;
 }
 
-h1 {
+.header h1 {
   padding-left: 2rem;
   padding-top: 0;
 }
+
 .types_list,
 .genres_list {
   display: flex;
@@ -43,6 +44,6 @@ h1 {
   padding-right: 2em;
 }
 
-h2 {
+.title h2 {
   padding: 1rem 0 1em 1em;
 }

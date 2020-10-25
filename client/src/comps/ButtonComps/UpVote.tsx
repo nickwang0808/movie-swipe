@@ -1,4 +1,5 @@
 import React from "react";
+import style from "./ButtonComps.module.css";
 
 interface IProps {
   handleLike: () => void;
@@ -6,7 +7,7 @@ interface IProps {
 
 export default function UpVote({ handleLike }: IProps) {
   return (
-    <div className="btn btn_up" onClick={handleLike}>
+    <div className={`${style.btn} ${style.btn_up}`} onClick={handleLike}>
       <svg
         width={24}
         height={24}

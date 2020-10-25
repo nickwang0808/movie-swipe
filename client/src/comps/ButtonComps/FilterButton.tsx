@@ -1,4 +1,5 @@
 import React from "react";
+import style from "./ButtonComps.module.css";
 
 export default function FilterButton({
   setFilterOn,
@@ -6,7 +7,7 @@ export default function FilterButton({
   setFilterOn: (arg: boolean) => void;
 }) {
   return (
-    <div className="btn_filter" onClick={() => setFilterOn(true)}>
+    <div className={style.btn_filter} onClick={() => setFilterOn(true)}>
       <svg
         width={24}
         height={24}

@@ -12,6 +12,14 @@ body {
   max-width: 100%;
   overflow-x: hidden;
   position: relative;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  outline: none !important;
 }
 
 *,
@@ -32,9 +40,11 @@ ol,
 ul {
   margin: 0;
   padding: 0;
-  font-weight: normal;
 }
 
+p {
+  font-size: 2em;
+}
 h1 {
   font-size: 2.5em;
   font-weight: 900;
@@ -63,11 +73,12 @@ ul {
   font-weight: 900;
 }
 :root {
-  --header: 48px;
+  --header: 54px;
   --vote: 76px;
   --nav: 56px;
-  --dark: #000000;
+  --dark: #111111;
   --light: #ffffff;
+  --gray: #e9e9e9;
   --highlight: #da0f3f;
   --bright: #f6c700;
   --positive: #11ee9e;
@@ -96,6 +107,11 @@ ul {
   to {
     transform: rotate(360deg);
   }
+}
+
+.logo {
+  position: absolute;
+  left: calc(50% - 31px);
 }
 
 /* FIND MEDIA*/
@@ -147,7 +163,7 @@ ul {
 .container_header {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 1em;
 }
 .container_poster {
@@ -284,79 +300,6 @@ ul {
   align-items: stretch;
   padding: 1em;
   z-index: 998;
-}
-
-.btn {
-  height: 44px;
-  border: 2px solid var(--dark);
-  text-align: center;
-  border-radius: 3px;
-  color: #000000;
-  cursor: pointer;
-  margin: auto;
-  line-height: 2.5em;
-  font-weight: 900;
-}
-
-.btn_up,
-.btn_down {
-  background-color: var(--dark);
-  min-width: 25%;
-  padding-top: 1em;
-}
-
-.btn_up svg {
-  fill: var(--positive);
-}
-
-.btn_down svg {
-  fill: var(--negative);
-}
-
-.btn_up:active,
-.btn_down:active {
-  background-color: var(--highlight);
-  border-color: var(--highlight);
-}
-
-.btn_up:active svg,
-.btn_down:active svg {
-  fill: var(--dark);
-}
-
-.btn_details {
-  width: 100%;
-  margin-left: 1em;
-  margin-right: 1em;
-  font-size: 2em;
-}
-
-.btn_details:active {
-  border-color: var(--highlight);
-  color: var(--highlight);
-}
-
-.btn_filter {
-  margin: 1em;
-  cursor: pointer;
-  fill: var(--dark);
-}
-
-.btn_filter:active {
-  fill: var(--highlight);
-  color: var(--highlight);
-}
-
-.btn_close {
-  height: 6em;
-  width: 6em;
-  fill: var(--highlight);
-  position: absolute;
-  right: 0;
-  top: 0;
-  margin: 1em;
-  padding-left: 1em;
-  padding-top: 1em;
 }
 
 /* MOVIE DETAILS */

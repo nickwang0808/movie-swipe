@@ -1,4 +1,5 @@
 import React from "react";
+import style from "./ButtonComps.module.css";
 
 interface IDownVote {
   handleDislike: () => void;
@@ -6,7 +7,7 @@ interface IDownVote {
 
 export default function DownVote({ handleDislike }: IDownVote) {
   return (
-    <div className="btn btn_down" onClick={handleDislike}>
+    <div className={`${style.btn} ${style.btn_down}`} onClick={handleDislike}>
       <svg
         width={24}
         height={24}
