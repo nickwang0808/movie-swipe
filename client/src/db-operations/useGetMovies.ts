@@ -30,13 +30,15 @@ export interface OriginalLanguage {
 }
 
 export default function useGetMovies(userId: string) {
-  const [movieList, setMovieList] = useState<Result[]>(); // TODO: need to fix the type here
+  const [movieList, setMovieList] = useState<Result[]>();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pageNum, setPageNum] = useState(1);
 
+  let tempStorage: Result[] = [];
+
   useEffect(() => {
     const getVotedMoviesIds = async () => {
-      let votedMoviesIds: number[] = []; // TODO: this should be number
+      let votedMoviesIds: number[] = [];
       const votedMoviesRef = db
         .collection("Users")
         .doc(userId)
@@ -72,7 +74,7 @@ export default function useGetMovies(userId: string) {
       const votedMovies = await getVotedMoviesIds();
       const movieListUnfiltered = await fetchPopularMovies();
       const filteredMovieList = () => {
-        let newResults: Result[] = []; // TODO: fix type here
+        let newResults: Result[] = [];
         // filter voted movies out
         movieListUnfiltered.results.forEach((result) => {
           if (votedMovies.includes(result.id)) {
@@ -93,9 +95,9 @@ export default function useGetMovies(userId: string) {
 
       setMovieList((prev) => {
         if (prev) {
-          return [...prev, ...filteredMovieList()];
+          return [...prev, ...tempStorage, ...filteredMovieList()];
         } else {
-          return filteredMovieList();
+          return [...tempStorage, ...filteredMovieList()];
         }
       });
       setPageNum(movieListUnfiltered.page);
