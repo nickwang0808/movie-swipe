@@ -3,7 +3,7 @@ import "./styles/style.css";
 import LikeOrNo from "./comps/Main/LikeOrNo";
 import Nav from "./comps/Nav/Nav";
 import MyListMain from "./comps/MyList/MyListMain";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import useGetMovies from "./db-operations/useGetMovies";
 import SignInScreen from "./comps/auth/SignInScreen";
 import { UserContext } from "./store";
@@ -13,8 +13,9 @@ import ListViewButton from "./comps/ButtonComps/ListViewButton";
 
 function App() {
   const { userAuth } = useContext(UserContext);
-
-  const { movieList } = useGetMovies(userAuth?.userInfo?.uid as string);
+  const { movieList, currentIndex, setCurrentIndex } = useGetMovies(
+    userAuth?.userInfo?.uid as string
+  );
 
   if (userAuth?.isLoggedIn === false || !userAuth) {
     return <SignInScreen />;
@@ -28,16 +29,18 @@ function App() {
               <LikeOrNo
                 movieList={movieList}
                 userId={userAuth?.userInfo.uid as string}
+                currentIndex={currentIndex}
+                setCurrentIndex={setCurrentIndex}
               />
             )}
           </Route>
           <Route exact path="/mylist">
             <MyListMain />
           </Route>
-          <Route exact path="/settings">
+          <Route exact path="/profile">
             <h1>My Profile</h1>
             <div className={style.settings_container}></div>
-            <ListViewButton name="Sign Out"/>
+            <ListViewButton name="Sign Out" />
             <button onClick={() => auth.signOut()}>Sign Out</button>
           </Route>
         </Switch>
