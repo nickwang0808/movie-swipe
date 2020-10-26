@@ -7,9 +7,8 @@ import { Switch, Route } from "react-router-dom";
 import useGetMovies from "./db-operations/useGetMovies";
 import SignInScreen from "./comps/auth/SignInScreen";
 import { UserContext } from "./store";
-import { auth } from "./firebase/config";
-import style from "./App.module.css";
-import ListViewButton from "./comps/ButtonComps/ListViewButton";
+
+import MyProfile from "./comps/profile/MyProfile";
 
 function App() {
   const { userAuth } = useContext(UserContext);
@@ -38,14 +37,7 @@ function App() {
             <MyListMain />
           </Route>
           <Route exact path="/profile">
-            <h1>My Profile</h1>
-            <div className={style.settings_container}></div>
-            <ListViewButton name="Invites and Groups" />
-            <ListViewButton name="Disliked Media" />
-            <ListViewButton name="About MediaSync" />            
-            <ListViewButton name="Sign Out" />
-            <ListViewButton name="Delete Account" />
-            <button onClick={() => auth.signOut()}>Sign Out</button>
+            <MyProfile />
           </Route>
         </Switch>
       </>

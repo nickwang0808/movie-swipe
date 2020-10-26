@@ -1,26 +1,32 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../../store";
+import MovieDetails from "../movieDetails/MovieDetails";
 import LikedMovieInMyList from "./LikedMovieInMyList";
 import style from "./mylistmain.module.css";
 
 export default function MyListMain() {
   const { likedMoviesInfos } = useContext(UserContext);
+  const [idTPshowDetails, setIdTPShowDetails] = useState<number>();
 
-  return (
-    <>
-      <div>
-        <h1>My Watch List</h1>
-      </div>
+  if (idTPshowDetails) {
+    return <MovieDetails movieID={idTPshowDetails} />;
+  } else {
+    return (
+      <>
+        <div>
+          <h1>My Watch List</h1>
+        </div>
 
-      <div className={style.mylistmain}>
-        {likedMoviesInfos.map((likedMovieInfo) => (
-          <LikedMovieInMyList
-            key={likedMovieInfo.id}
-            id={likedMovieInfo.id}
-            movie={likedMovieInfo}
-          />
-        ))}
-      </div>
-    </>
-  );
+        <div className={style.mylistmain}>
+          {likedMoviesInfos.map((likedMovieInfo) => (
+            <LikedMovieInMyList
+              key={likedMovieInfo.id}
+              movie={likedMovieInfo}
+              setIdTPShowDetails={setIdTPShowDetails}
+            />
+          ))}
+        </div>
+      </>
+    );
+  }
 }

@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { MovieDetail } from "../../db-operations/useGetLikedMovies";
 import getGenres from "../../HelperFunctions/getGenres";
 import style from "./LikedMovieInMylist.module.css";
 
 interface ILikedMovieInMyList {
-  id: number;
   movie: MovieDetail;
+  setIdTPShowDetails: (arg: number) => void;
 }
 
-export default function LikedMovieInMyList({ id, movie }: ILikedMovieInMyList) {
+export default function LikedMovieInMyList({
+  movie,
+  setIdTPShowDetails,
+}: ILikedMovieInMyList) {
   return (
     <>
-      <div className={style.flex_row}>
+      <div
+        className={style.flex_row}
+        onClick={() => setIdTPShowDetails(movie.id)}
+      >
         <img
           className={style.poster}
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
