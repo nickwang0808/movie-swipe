@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import DownVote from "../ButtonComps/DownVote";
 import FilterButton from "../ButtonComps/FilterButton";
 import UpVote from "../ButtonComps/UpVote";
@@ -11,6 +11,8 @@ import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 
 import { Result } from "../../db-operations/useGetMovies";
 import MovieDetails from "./movieDetails/MovieDetails";
+import baseUrl from "../../HelperFunctions/ImgBaseUrl";
+import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 
 interface ICompProps {
   movieList: Result[];
@@ -26,6 +28,7 @@ export default function LikeOrNo({
   setCurrentIndex,
 }: ICompProps) {
   const [filterOn, setFilterOn] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   const handleLike = () => {
     const movieID: number = movieList[currentIndex].id;
@@ -40,49 +43,50 @@ export default function LikeOrNo({
     console.log("disliked");
   };
 
-  const scrollTargetRef = useRef<any>(null);
-  const handleDetails = () => {
-    window.scrollTo(0, scrollTargetRef.current?.offsetTop);
-    // console.log("handleDetails -> scrollTargetRef", scrollTargetRef);
-  };
-
-  const baseUrl = "https://image.tmdb.org/t/p/w500";
-  const backgroundStyle = {
-    background: `linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url(${
-      movieList ? baseUrl + movieList[currentIndex].poster_path : ""
-    })`,
-  };
-
-  return (
-    <>
-      {filterOn && <Filters setFilterOn={setFilterOn} />}
-      <div className="background_container">
-        <div className="background" style={backgroundStyle} />
-      </div>
-      <div className="content">
-        <div className="container_header">
-          <Logo />
-          <FilterButton setFilterOn={setFilterOn} />
+  if (showDetails) {
+    return <MovieDetails movieID={movieList[currentIndex].id} />;
+  } else
+    return (
+      <>
+        {filterOn && <Filters setFilterOn={setFilterOn} />}
+        <div className="background_container">
+          <div
+            className="background"
+            style={backgroundStyle(
+              movieList ? baseUrl + movieList[currentIndex].poster_path : ""
+            )}
+          />
         </div>
-        {/* <div className="loader"></div> */}
-        {/* <NotificationMatched /> */}
-        <div className="container_poster">
-          {movieList && (
-            <MainPoster
-              imgUrl_1={baseUrl + movieList[currentIndex].poster_path}
-              imgUrl_2={baseUrl + movieList[currentIndex + 1].poster_path}
-              imgUrl_3={baseUrl + movieList[currentIndex + 2].poster_path}
-            />
-          )}
+        <div className="content">
+          <div className="container_header">
+            <Logo />
+            <FilterButton setFilterOn={setFilterOn} />
+          </div>
+          {/* <div className="loader"></div> */}
+          {/* <NotificationMatched /> */}
+          <div
+            className="container_poster"
+            onClick={() => setShowDetails(true)}
+          >
+            {movieList && (
+              <MainPoster
+                imgUrl_1={baseUrl + movieList[currentIndex].poster_path}
+                imgUrl_2={baseUrl + movieList[currentIndex + 1].poster_path}
+                imgUrl_3={baseUrl + movieList[currentIndex + 2].poster_path}
+              />
+            )}
+          </div>
+          <div className="container_vote">
+            <DownVote handleDislike={handleDislike} />
+            <div
+              className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}
+              onClick={() => setShowDetails(true)}
+            >
+              Details
+            </div>
+            <UpVote handleLike={handleLike} />
+          </div>
         </div>
-        <div className="container_vote">
-          <DownVote handleDislike={handleDislike} />
-          <div className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}>Details</div>
-          <UpVote handleLike={handleLike} />
-        </div>
-        <MovieDetails />
-        <div ref={scrollTargetRef} /> {/* dummy target div, dont remove it */}
-      </div>
-    </>
-  );
+      </>
+    );
 }

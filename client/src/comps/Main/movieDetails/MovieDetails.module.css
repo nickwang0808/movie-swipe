@@ -1,6 +1,6 @@
 .details_trailer {
   width: 100%;
-  background-image: url("https://img.youtube.com/vi/2wcj6SrX4zw/maxresdefault.jpg");
+  /* background-image: url("https://img.youtube.com/vi/2wcj6SrX4zw/maxresdefault.jpg"); */
   padding-top: 56.25%;
   background-size: cover;
   height: 100px;
@@ -58,13 +58,14 @@
   left: 1.5em;
   top: -3em;
   right: 0;
-  background-image: linear-gradient(
+  /* TODO: style here wont show up */
+  background-color: linear-gradient(
       25.4deg,
       rgba(255, 255, 255, 0) 51.03%,
       rgba(255, 255, 255, 0.3) 58.85%,
       rgba(255, 255, 255, 0.3) 99.3%
     ),
-    linear-gradient(360deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 20%);
+    linear-gradient(360deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 20%) !important;
   box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12),
     0px 16px 16px -4px rgba(24, 39, 75, 0.2);
   filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));
