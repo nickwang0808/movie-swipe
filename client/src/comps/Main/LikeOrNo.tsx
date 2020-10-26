@@ -10,7 +10,7 @@ import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 
 import { Result } from "../../db-operations/useGetMovies";
-import MovieDetails from "./movieDetails/MovieDetails";
+import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 

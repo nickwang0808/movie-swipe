@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import getGenres from "../../../HelperFunctions/getGenres";
+import getGenres from "../../HelperFunctions/getGenres";
 import style from "./MovieDetails.module.css";
-import searchMovieByID from "../../../APICalls/searchMovieByID";
-import { MovieDetail } from "../../../db-operations/useGetLikedMovies";
-import baseUrl from "../../../HelperFunctions/ImgBaseUrl";
-import posterStyleMaker from "../../../HelperFunctions/posterStyleMaker";
-import getMovieTrailers from "../../../APICalls/getMovieTrailers";
+import searchMovieByID from "../../APICalls/searchMovieByID";
+import { MovieDetail } from "../../db-operations/useGetLikedMovies";
+import baseUrl from "../../HelperFunctions/ImgBaseUrl";
+import posterStyleMaker from "../../HelperFunctions/posterStyleMaker";
+import getMovieTrailers from "../../APICalls/getMovieTrailers";
 
 interface IMovieDetails {
   movieID: number;
