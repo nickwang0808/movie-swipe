@@ -3,7 +3,6 @@
   background-image: url("https://img.youtube.com/vi/2wcj6SrX4zw/maxresdefault.jpg");
   padding-top: 56.25%;
   background-size: cover;
-  height: 100px;
 }
 
 .details_rating {
@@ -25,9 +24,6 @@
   font-weight: 900;
 }
 
-.details_title h1 {
-  padding-left: 0;
-}
 .details_tags {
   opacity: 0.8;
   letter-spacing: 0.5px;
@@ -64,7 +60,8 @@
       rgba(255, 255, 255, 0.3) 58.85%,
       rgba(255, 255, 255, 0.3) 99.3%
     ),
-    linear-gradient(360deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 20%);
+    linear-gradient(360deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 20%),
+    url(poster_1.jpg);
   box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12),
     0px 16px 16px -4px rgba(24, 39, 75, 0.2);
   filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));

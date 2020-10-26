@@ -1,4 +1,7 @@
 import React from "react";
+import style from "./MainPoster.module.css";
+import VoteUp from "./VoteLarge_Up";
+import VoteDown from "./VoteLarge_Down";
 
 interface IMainPosterProps {
   imgUrl_1: string;
@@ -36,7 +39,11 @@ export default function MainPoster({
           {/* PG-13 | 2h 3min | Adventure, Crime, Drama | 2020 (USA) */}
           {/* {` ${movieInfo?.genre.join(", ")} | ${movieInfo?.released}`} */}
         </h3>
+
       </div>
+      {/* <div className={style.voted_thumb}>
+        <VoteUp />
+      </div> */}
     </>
   );
 }

@@ -9,7 +9,7 @@ export default function MyListMain() {
   return (
     <>
       <div>
-        <h1>My Saved List</h1>
+        <h1>My Watch List</h1>
       </div>
 
       <div className={style.mylistmain}>
