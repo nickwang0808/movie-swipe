@@ -43,7 +43,8 @@ ul {
 }
 
 p {
-  font-size: 2em;
+  font-size: 2rem;
+  line-height: 2.5rem;
 }
 h1 {
   font-size: 2.5em;
@@ -60,6 +61,7 @@ h2 {
 
 h3 {
   font-size: 1.6em;
+  font-weight: 400;
 }
 
 ol,
@@ -302,84 +304,7 @@ ul {
   z-index: 998;
 }
 
-/* MOVIE DETAILS */
-
-.details_trailer {
-  width: 100%;
-  background-image: url("https://img.youtube.com/vi/2wcj6SrX4zw/maxresdefault.jpg");
-  padding-top: 56.25%;
-  background-size: cover;
-}
-
-.details_rating {
-  font-size: 1em;
-  font-weight: 900;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  margin-bottom: 0.5em;
-}
-
 .star {
   margin: 0 0.5em;
   fill: var(--bright);
-}
-
-.container_moviedetails,
-.container_description,
-.container_available {
-  padding: 0 1em;
-}
-
-.details_title {
-  padding: 1em 0;
-  font-weight: 900;
-}
-
-.container_moviedetails {
-  position: relative;
-  padding-left: calc(130px + 3em);
-  min-height: calc(200px - 1em);
-}
-
-.container_description {
-  font-size: 1.5em;
-  line-height: 1.3em;
-  padding-bottom: 1em;
-}
-
-.container_info {
-  flex-grow: 1;
-}
-
-.poster_1_inline {
-  width: 130px;
-  height: 200px;
-  background-size: cover;
-  background-position: center;
-  position: absolute;
-  left: 1.5em;
-  top: -3em;
-  right: 0;
-  background-image: linear-gradient(
-      25.4deg,
-      rgba(255, 255, 255, 0) 51.03%,
-      rgba(255, 255, 255, 0.3) 58.85%,
-      rgba(255, 255, 255, 0.3) 99.3%
-    ),
-    linear-gradient(360deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 20%),
-    url(poster_1.jpg);
-  box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12),
-    0px 16px 16px -4px rgba(24, 39, 75, 0.2);
-  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));
-  z-index: 5;
-}
-
-.container_available {
-  font-size: 1.5em;
-  font-weight: 900;
-}
-
-.container_available img {
-  margin: 0.5em 0.5em 0.5em 0;
 }

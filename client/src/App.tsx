@@ -40,7 +40,11 @@ function App() {
           <Route exact path="/profile">
             <h1>My Profile</h1>
             <div className={style.settings_container}></div>
+            <ListViewButton name="Invites and Groups" />
+            <ListViewButton name="Disliked Media" />
+            <ListViewButton name="About MediaSync" />            
             <ListViewButton name="Sign Out" />
+            <ListViewButton name="Delete Account" />
             <button onClick={() => auth.signOut()}>Sign Out</button>
           </Route>
         </Switch>

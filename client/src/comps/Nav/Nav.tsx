@@ -28,7 +28,7 @@ export default function Nav() {
             />
           </svg>
           <br />
-          My List
+          Watch List
         </div>
       </NavLink>
       <NavLink

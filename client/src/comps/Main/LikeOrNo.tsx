@@ -5,8 +5,10 @@ import UpVote from "../ButtonComps/UpVote";
 import Logo from "../Decorators/Logo";
 import MainPoster from "./MainPoster";
 import Filters from "../filter/Filters";
+// import NotificationMatched from "./NotificationMatched";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
-import style from "../ButtonComps/ButtonComps.module.css";
+import sharedstyle from "../ButtonComps/ButtonComps.module.css";
+
 import { Result } from "../../db-operations/useGetMovies";
 import MovieDetails from "./movieDetails/MovieDetails";
 
@@ -63,6 +65,7 @@ export default function LikeOrNo({
           <FilterButton setFilterOn={setFilterOn} />
         </div>
         {/* <div className="loader"></div> */}
+        {/* <NotificationMatched /> */}
         <div className="container_poster">
           {movieList && (
             <MainPoster
@@ -74,12 +77,7 @@ export default function LikeOrNo({
         </div>
         <div className="container_vote">
           <DownVote handleDislike={handleDislike} />
-          <div
-            className={`${style.btn} ${style.btn_details}`}
-            onClick={handleDetails}
-          >
-            Details
-          </div>
+          <div className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}>Details</div>
           <UpVote handleLike={handleLike} />
         </div>
         <MovieDetails />
