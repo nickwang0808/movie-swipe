@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import DownVote from "../ButtonComps/DownVote";
 import FilterButton from "../ButtonComps/FilterButton";
 import UpVote from "../ButtonComps/UpVote";
@@ -8,6 +8,7 @@ import Filters from "../filter/Filters";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 import style from "../ButtonComps/ButtonComps.module.css";
 import { Result } from "../../db-operations/useGetMovies";
+import MovieDetails from "./movieDetails/MovieDetails";
 
 interface ICompProps {
   movieList: Result[];
@@ -35,6 +36,12 @@ export default function LikeOrNo({
     UpdateLikeToDB(userId, movieID, false);
     setCurrentIndex((prev) => prev + 1);
     console.log("disliked");
+  };
+
+  const scrollTargetRef = useRef<any>(null);
+  const handleDetails = () => {
+    window.scrollTo(0, scrollTargetRef.current?.offsetTop);
+    // console.log("handleDetails -> scrollTargetRef", scrollTargetRef);
   };
 
   const baseUrl = "https://image.tmdb.org/t/p/w500";
@@ -65,12 +72,18 @@ export default function LikeOrNo({
             />
           )}
         </div>
-
         <div className="container_vote">
           <DownVote handleDislike={handleDislike} />
-          <div className={`${style.btn} ${style.btn_details}`}>Details</div>
+          <div
+            className={`${style.btn} ${style.btn_details}`}
+            onClick={handleDetails}
+          >
+            Details
+          </div>
           <UpVote handleLike={handleLike} />
         </div>
+        <MovieDetails />
+        <div ref={scrollTargetRef} /> {/* dummy target div, dont remove it */}
       </div>
     </>
   );

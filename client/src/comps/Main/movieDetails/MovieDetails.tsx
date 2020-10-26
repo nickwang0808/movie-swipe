@@ -2,8 +2,8 @@ import React from "react";
 
 export default function MovieDetails() {
   return (
-    <div>
-      <div />
-    </div>
+    <>
+      <div className="details_content" />
+    </>
   );
 }
