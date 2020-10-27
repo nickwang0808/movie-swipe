@@ -21,11 +21,11 @@
 .genres_list {
   display: flex;
   flex-direction: column;
-  padding-bottom: 3em;
 }
 
 .types_list {
   border-bottom: var(--border-bottom);
+  padding-bottom: 3em;
 }
 
 .streaming_list {
