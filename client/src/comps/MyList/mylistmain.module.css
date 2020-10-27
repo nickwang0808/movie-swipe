@@ -1,3 +1,4 @@
 .mylistmain {
   padding-bottom: var(--nav);
+  overflow-y: auto;
 }

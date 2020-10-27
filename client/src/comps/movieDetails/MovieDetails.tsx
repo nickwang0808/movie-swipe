@@ -66,7 +66,7 @@ export default function MovieDetails({ movieID }: IMovieDetails) {
         <div className={style.container_available}>
           Available on
           <div className={style.available_icons}>
-            < StreamingServiceButton />
+            <StreamingServiceButton />
           </div>
         </div>
       </div>
