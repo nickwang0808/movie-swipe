@@ -46,9 +46,9 @@ export default function LikedMovieInMyList({
             </div>
           </div>
           <div className={style.details_tags}>
-            {/* <h3>PG-13 | 2h 3min | Adventure, Crime, Drama | 2020 (USA)</h3> */}
+            <h3>{getGenres(movie)}</h3>
             <h3>
-              {`PG-13 | ${movie.runtime}min | ${getGenres(movie)} | ${
+              {`PG-13 | ${movie.runtime}min | ${
                 movie.release_date
               }`}
             </h3>
