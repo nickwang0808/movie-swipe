@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { User } from "firebase/app";
 import { auth } from "../../firebase/config";
 import { cfaSignIn } from "capacitor-firebase-auth";
+import sharedstyle from "../ButtonComps/ButtonComps.module.css";
+import style from "./auth.module.css"
+
 
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
@@ -60,27 +63,24 @@ export default function SignInScreen() {
           }}
         >
           {isSignUp
-            ? "Already have an account? SignIn instead"
-            : "Don't have an account? SignUp"}
+            ? "Already a MovieSync friend? Sign-in instead"
+            : "Need an account? Sign up"}
         </button>
       </form>
     </>
   );
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <button style={{ fontSize: 32 }} onClick={handleSignInGoogle}>
-        SignInWithGoogle
-      </button>
-      {emailAuthSignIn}
-      {error && <div>{error}</div>} {/* log any login err below everything */}
+    <div className={style.login_container}>
+        <h2>Create a MovieSync account to enable friend matching, so you can finally find watch something, together!</h2>
+        <button className={`${sharedstyle.btn} ${style.btn_login_google}`} onClick={handleSignInGoogle}>
+        Sign in with Google
+        </button>
+      <p>-or-</p>
+      <div className={style.email}>
+        {emailAuthSignIn}
+        {error && <div>{error}</div>} {/* log any login err below everything */}
+       </div>
     </div>
   );
 }

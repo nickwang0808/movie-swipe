@@ -20,6 +20,8 @@ body {
   -ms-user-select: none;
   user-select: none;
   outline: none !important;
+  background-color: var(--light);
+  color: var(--dark);
 }
 
 *,
@@ -300,11 +302,18 @@ ul {
   flex-wrap: nowrap;
   justify-content: space-evenly;
   align-items: stretch;
-  padding: 1em;
   z-index: 998;
+  position: absolute;
+  bottom: calc(var(--nav) + 2rem);
+  left: 2rem;
+  right: 2rem;
 }
 
 .star {
   margin: 0 0.5em;
   fill: var(--bright);
+}
+
+.ion-page .hydrated {
+  overflow-y: auto;
 }
