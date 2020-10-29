@@ -21,5 +21,9 @@ export default async function getMovieTrailers(movieId: number) {
     res.json()
   );
 
-  return `https://www.youtube.com/embed/${movieTrailers.results[0].key}`;
+  try {
+    return `https://www.youtube.com/embed/${movieTrailers.results[0].key}?rel=0&amp;controls=1&amp&amp;showinfo=0&amp;modestbranding=1`;
+  } catch {
+    return null;
+  }
 }

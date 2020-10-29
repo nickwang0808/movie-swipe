@@ -15,7 +15,7 @@ interface IMovieDetails {
 
 export default function MovieDetails({ movieID }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
-  const [trailerUrl, setTrailerUrl] = useState("");
+  const [trailerUrl, setTrailerUrl] = useState<string | null>();
   useEffect(() => {
     (async () => {
       const movieDetails = await searchMovieByID(movieID);
@@ -25,10 +25,28 @@ export default function MovieDetails({ movieID }: IMovieDetails) {
     })();
   }, []);
 
+  const trailerDisplay = (
+    <>
+      {trailerUrl === null ? (
+        <div
+          style={{
+            backgroundImage: `url(${baseUrl + movieDetails?.backdrop_path})`,
+          }}
+        />
+      ) : (
+        <iframe
+          allowFullScreen={true}
+          src={trailerUrl ? trailerUrl : movieDetails?.backdrop_path}
+        />
+      )}
+    </>
+  );
+
   return (
     <div className={style.details_content}>
       <div className={style.details_trailer}>
-        <iframe src={trailerUrl} />
+        {trailerUrl === undefined ? <div className="loader" /> : trailerDisplay}
+        {/* <div className="loader" />  */} {/* use this for testing  */}
       </div>
       <div className={style.container_moviedetails}>
         <div

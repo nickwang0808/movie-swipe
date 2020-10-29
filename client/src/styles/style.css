@@ -103,6 +103,9 @@ ul {
   animation: loader 650ms linear infinite;
   z-index: 10;
   position: absolute;
+}
+
+.loader_center {
   top: calc(50% - 40px);
   left: calc(50% - 40px);
 }

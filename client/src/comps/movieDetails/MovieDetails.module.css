@@ -18,12 +18,17 @@
   background-size: cover;
 }
 
+.details_trailer .loader {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
 .details_trailer iframe {
   position: absolute;
   top: 0;
   width: 100%;
   height: calc(56vw);
-  border: 0;
 }
 
 .details_rating {
