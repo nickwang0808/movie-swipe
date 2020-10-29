@@ -53,7 +53,12 @@ export default function SignInScreen() {
         >
           {isSignUp ? "SignUp" : "SignIn"}
         </button>
-        <button onClick={() => setIsSignUp((prev) => !prev)}>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            return setIsSignUp((prev) => !prev);
+          }}
+        >
           {isSignUp
             ? "Already have an account? SignIn instead"
             : "Don't have an account? SignUp"}
