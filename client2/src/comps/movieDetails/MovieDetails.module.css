@@ -1,0 +1,126 @@
+:root {
+  --poster_height: 170px;
+  --poster_width: calc(var(--poster_height) * 0.665);
+}
+
+.details_content {
+  margin-bottom: calc(var(--nav) + 3em);
+}
+
+.details_title h1 {
+  padding: 1rem 0;
+  color: var(--dark);
+}
+
+.details_trailer {
+  width: 100%;
+  padding-top: 56.25%;
+  background-size: cover;
+}
+
+.details_trailer iframe {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: calc(56vw);
+  border: 0;
+}
+
+.details_rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75em;
+}
+
+.container_moviedetails,
+.container_description,
+.container_available {
+  padding: 0 2rem;
+}
+
+.details_title {
+  padding: 1em 0;
+  font-weight: 900;
+}
+
+.details_title h1 {
+  padding-left: 0;
+}
+
+.details_tags {
+  opacity: 0.8;
+  letter-spacing: 0.5px;
+}
+
+.container_moviedetails {
+  position: relative;
+  padding-left: calc(var(--poster_width) + 4rem);
+  padding-bottom: 4rem;
+  min-height: calc(var(--poster_height) - 4rem);
+}
+
+.container_description {
+  padding-bottom: 4rem;
+}
+
+.poster_1_inline {
+  width: var(--poster_width);
+  height: var(--poster_height);
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  left: 2rem;
+  top: -4em;
+  right: 0;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3), 0px 10px 20px rgba(0, 0, 0, 0.3);
+  z-index: 5;
+}
+
+.container_available {
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.container_available img {
+  margin: 0.5em 0.5em 0.5em 0;
+}
+
+.container_details_matched {
+  padding-bottom: 4rem;
+}
+.who_matched {
+  height: 56px;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 100%;
+  align-items: center;
+  border-radius: 3px;
+  margin-bottom: 2rem;
+  border: 2px solid var(--positive);
+  background-color: var(--light);
+  position: relative;
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
+  fill: var(--positive);
+}
+
+.matched {
+  padding: 0.3em 1em;
+  background-color: var(--positive);
+  font-size: 1.3rem;
+  font-weight: 900;
+  border-radius: 0.3em;
+  transform: skewX(-15deg);
+  position: absolute;
+  top: -11px;
+  left: 2rem;
+}
+
+.forceSkew {
+  transform: skewX(15deg);
+}
+
+.container_description .btn {
+  margin-bottom: 3em;
+}
