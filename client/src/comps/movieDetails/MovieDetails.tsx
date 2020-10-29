@@ -9,6 +9,7 @@ import StreamingServiceButton from "../ButtonComps/StreamingService";
 import style from "./MovieDetails.module.css";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import VotingActions from "../Main/VotingActions";
+import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 
 interface IMovieDetails {
   movieID: number;
@@ -55,6 +56,12 @@ export default function MovieDetails({
 
   return (
     <div className={style.details_content}>
+      <div className="background_container">
+        <div
+          className="background"
+          style={backgroundStyle(baseUrl + movieDetails?.poster_path)}
+        />
+      </div>
       <div className={style.details_trailer}>
         {trailerUrl === undefined ? <div className="loader" /> : trailerDisplay}
         {/* <div className="loader" />  */} {/* use this for testing  */}
