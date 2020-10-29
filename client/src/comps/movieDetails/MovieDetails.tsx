@@ -11,9 +11,13 @@ import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 
 interface IMovieDetails {
   movieID: number;
+  setShowDetails: (arg: undefined) => void;
 }
 
-export default function MovieDetails({ movieID }: IMovieDetails) {
+export default function MovieDetails({
+  movieID,
+  setShowDetails,
+}: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
   const [trailerUrl, setTrailerUrl] = useState<string | null>();
   useEffect(() => {
@@ -52,6 +56,7 @@ export default function MovieDetails({ movieID }: IMovieDetails) {
         <div
           className={style.poster_1_inline}
           style={posterStyleMaker(baseUrl + movieDetails?.poster_path)}
+          onClick={() => setShowDetails(undefined)}
         />
         <div className={style.details_title}>
           <h1>{movieDetails?.title}</h1>

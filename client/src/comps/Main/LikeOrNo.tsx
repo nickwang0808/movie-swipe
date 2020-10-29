@@ -28,7 +28,7 @@ export default function LikeOrNo({
   setCurrentIndex,
 }: ICompProps) {
   const [filterOn, setFilterOn] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetails, setShowDetails] = useState<boolean | undefined>(false);
 
   const handleLike = () => {
     const movieID: number = movieList[currentIndex].id;
@@ -44,7 +44,12 @@ export default function LikeOrNo({
   };
 
   if (showDetails) {
-    return <MovieDetails movieID={movieList[currentIndex].id} />;
+    return (
+      <MovieDetails
+        movieID={movieList[currentIndex].id}
+        setShowDetails={setShowDetails}
+      />
+    );
   } else
     return (
       <>
@@ -63,10 +68,7 @@ export default function LikeOrNo({
         </div>
         {/* <div className="loader"></div> */}
         {/* <NotificationMatched /> */}
-        <div
-          className="container_poster"
-          onClick={() => setShowDetails(true)}
-        >
+        <div className="container_poster" onClick={() => setShowDetails(true)}>
           {movieList && (
             <MainPoster
               imgUrl_1={baseUrl + movieList[currentIndex].poster_path}

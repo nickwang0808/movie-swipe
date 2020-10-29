@@ -9,7 +9,12 @@ export default function MyListMain() {
   const [idTPshowDetails, setIdTPShowDetails] = useState<number>();
 
   if (idTPshowDetails) {
-    return <MovieDetails movieID={idTPshowDetails} />;
+    return (
+      <MovieDetails
+        movieID={idTPshowDetails}
+        setShowDetails={setIdTPShowDetails}
+      />
+    );
   } else {
     return (
       <>
