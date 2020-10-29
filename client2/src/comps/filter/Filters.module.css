@@ -17,6 +17,11 @@
   padding-top: 0;
 }
 
+.title h2 {
+  opacity: 0.5;
+  font-size: 1.8rem;
+}
+
 .types_list,
 .genres_list {
   display: flex;
@@ -39,9 +44,8 @@
 .types_list,
 .genres_list,
 .streaming_list {
-  margin-bottom: 3em;
-  padding-left: 3em;
-  padding-right: 2em;
+  margin-bottom: 3rem;
+  padding: 0 3rem;
 }
 
 .title h2 {

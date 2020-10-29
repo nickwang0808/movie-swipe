@@ -57,35 +57,33 @@ export default function LikeOrNo({
             )}
           />
         </div>
-        <div className="content">
-          <div className="container_header">
-            <Logo />
-            <FilterButton setFilterOn={setFilterOn} />
-          </div>
-          {/* <div className="loader"></div> */}
-          {/* <NotificationMatched /> */}
+        <div className="container_header">
+          <Logo />
+          <FilterButton setFilterOn={setFilterOn} />
+        </div>
+        {/* <div className="loader"></div> */}
+        {/* <NotificationMatched /> */}
+        <div
+          className="container_poster"
+          onClick={() => setShowDetails(true)}
+        >
+          {movieList && (
+            <MainPoster
+              imgUrl_1={baseUrl + movieList[currentIndex].poster_path}
+              imgUrl_2={baseUrl + movieList[currentIndex + 1].poster_path}
+              imgUrl_3={baseUrl + movieList[currentIndex + 2].poster_path}
+            />
+          )}
+        </div>
+        <div className="container_vote">
+          <DownVote handleDislike={handleDislike} />
           <div
-            className="container_poster"
+            className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}
             onClick={() => setShowDetails(true)}
           >
-            {movieList && (
-              <MainPoster
-                imgUrl_1={baseUrl + movieList[currentIndex].poster_path}
-                imgUrl_2={baseUrl + movieList[currentIndex + 1].poster_path}
-                imgUrl_3={baseUrl + movieList[currentIndex + 2].poster_path}
-              />
-            )}
+            Details
           </div>
-          <div className="container_vote">
-            <DownVote handleDislike={handleDislike} />
-            <div
-              className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}
-              onClick={() => setShowDetails(true)}
-            >
-              Details
-            </div>
-            <UpVote handleLike={handleLike} />
-          </div>
+          <UpVote handleLike={handleLike} />
         </div>
       </>
     );

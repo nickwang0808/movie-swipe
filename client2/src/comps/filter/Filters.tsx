@@ -22,23 +22,14 @@ export default function Filters({
         <div className={style.header}>
           <h1>Refine Suggestions</h1>
         </div>
-        <div className={style.title}>
+        {/* <div className={style.title}>
           <h2>Streaming Services</h2>
         </div>
         <div className={style.streaming_list}>
           <StreamingServiceButton />
-          <StreamingServiceButton />
-          <StreamingServiceButton />
-          <StreamingServiceButton />
-          <StreamingServiceButton />
-          <StreamingServiceButton />
-          <StreamingServiceButton />
-          <StreamingServiceButton />
-          <StreamingServiceButton />
-          <StreamingServiceButton />
-        </div>
+        </div> */}
         <div className={style.title}>
-          <h2>Types</h2>
+          <h2>Media Types</h2>
         </div>
         <div className={style.types_list}>
           <CheckboxButton name="Movies"/>
@@ -48,21 +39,6 @@ export default function Filters({
           <h2>Genres</h2>
         </div>
         <div className={style.genres_list}>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
-        <CheckboxButton name="Genre"/>
         <CheckboxButton name="Genre"/>
         </div>
       </div>
