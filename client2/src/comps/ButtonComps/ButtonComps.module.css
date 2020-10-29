@@ -140,7 +140,6 @@
 .checkbox label::after {
   position: absolute;
   content: "";
-
   /*Needed for the line-height to take effect*/
   display: inline-block;
 }

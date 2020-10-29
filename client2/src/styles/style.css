@@ -20,6 +20,8 @@ body {
   -ms-user-select: none;
   user-select: none;
   outline: none !important;
+  background-color: var(--light);
+  color: var(--dark);
 }
 
 *,
