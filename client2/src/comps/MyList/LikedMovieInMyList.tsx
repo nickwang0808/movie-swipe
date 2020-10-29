@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MovieDetail } from "../../db-operations/useGetLikedMovies";
 import getGenres from "../../HelperFunctions/getGenres";
 import style from "./LikedMovieInMylist.module.css";
@@ -47,11 +47,9 @@ export default function LikedMovieInMyList({
           </div>
           <div className={style.details_tags}>
             <h3>{getGenres(movie)}</h3>
-            <h3>
-              {`PG-13 | ${movie.runtime}min | ${
-                movie.release_date
-              }`}
-            </h3>
+            <h3>{`PG-13 | ${
+              movie.runtime
+            }min | ${movie.release_date.toString().slice(0, 4)}`}</h3>
           </div>
         </div>
       </div>
