@@ -13,6 +13,7 @@ import { Result } from "../../db-operations/useGetMovies";
 import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
+import VotingActions from "./VotingActions";
 
 interface ICompProps {
   movieList: Result[];
@@ -48,6 +49,9 @@ export default function LikeOrNo({
       <MovieDetails
         movieID={movieList[currentIndex].id}
         setShowDetails={setShowDetails}
+        handleDislike={handleDislike}
+        handleLike={handleLike}
+        showVoting={true}
       />
     );
   } else
@@ -77,16 +81,12 @@ export default function LikeOrNo({
             />
           )}
         </div>
-        <div className="container_vote">
-          <DownVote handleDislike={handleDislike} />
-          <div
-            className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}
-            onClick={() => setShowDetails(true)}
-          >
-            Details
-          </div>
-          <UpVote handleLike={handleLike} />
-        </div>
+        <VotingActions
+          handleDislike={handleDislike}
+          handleLike={handleLike}
+          setShowDetails={() => setShowDetails(true)}
+          showDetail="Details"
+        />
       </>
     );
 }

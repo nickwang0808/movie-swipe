@@ -8,15 +8,22 @@ import getMovieTrailers from "../../APICalls/getMovieTrailers";
 import StreamingServiceButton from "../ButtonComps/StreamingService";
 import style from "./MovieDetails.module.css";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
+import VotingActions from "../Main/VotingActions";
 
 interface IMovieDetails {
   movieID: number;
   setShowDetails: (arg: undefined) => void;
+  showVoting: boolean;
+  handleDislike: () => void;
+  handleLike: () => void;
 }
 
 export default function MovieDetails({
   movieID,
   setShowDetails,
+  handleDislike,
+  handleLike,
+  showVoting,
 }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
   const [trailerUrl, setTrailerUrl] = useState<string | null>();
@@ -130,6 +137,14 @@ export default function MovieDetails({
           </div>
         </div>
       </div>
+      {showVoting && (
+        <VotingActions
+          handleDislike={handleDislike}
+          handleLike={handleLike}
+          setShowDetails={() => setShowDetails(undefined)}
+          showDetail="Back"
+        />
+      )}
     </div>
   );
 }

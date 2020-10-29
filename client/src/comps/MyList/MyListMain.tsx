@@ -13,6 +13,9 @@ export default function MyListMain() {
       <MovieDetails
         movieID={idTPshowDetails}
         setShowDetails={setIdTPShowDetails}
+        handleDislike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
+        handleLike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
+        showVoting={false}
       />
     );
   } else {
