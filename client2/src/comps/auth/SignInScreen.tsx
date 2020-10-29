@@ -3,8 +3,7 @@ import { User } from "firebase/app";
 import { auth } from "../../firebase/config";
 import { cfaSignIn } from "capacitor-firebase-auth";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
-import style from "./auth.module.css"
-
+import style from "./auth.module.css";
 
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
@@ -48,7 +47,8 @@ export default function SignInScreen() {
         <label>Password</label>
         <input onChange={(e) => setPassword(e.target.value)} value={password} />
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             return isSignUp
               ? handleSignUnEmail(email, password)
               : handleSignInEmail(email, password);
@@ -72,15 +72,21 @@ export default function SignInScreen() {
 
   return (
     <div className={style.login_container}>
-        <h2>Create a MovieSync account to enable friend matching, so you can finally find watch something, together!</h2>
-        <button className={`${sharedstyle.btn} ${style.btn_login_google}`} onClick={handleSignInGoogle}>
+      <h2>
+        Create a MovieSync account to enable friend matching, so you can finally
+        find watch something, together!
+      </h2>
+      <button
+        className={`${sharedstyle.btn} ${style.btn_login_google}`}
+        onClick={handleSignInGoogle}
+      >
         Sign in with Google
-        </button>
+      </button>
       <p>-or-</p>
       <div className={style.email}>
         {emailAuthSignIn}
         {error && <div>{error}</div>} {/* log any login err below everything */}
-       </div>
+      </div>
     </div>
   );
 }
