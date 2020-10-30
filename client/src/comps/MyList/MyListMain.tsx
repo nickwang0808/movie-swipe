@@ -20,7 +20,7 @@ export default function MyListMain() {
     );
   } else {
     return (
-      <>
+      <div className={style.container_mylist}>
         <div>
           <h1>My Watch List</h1>
         </div>
@@ -34,7 +34,7 @@ export default function MyListMain() {
             />
           ))}
         </div>
-      </>
+      </div>
     );
   }
 }

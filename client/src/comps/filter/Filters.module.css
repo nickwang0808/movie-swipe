@@ -45,7 +45,7 @@
 .genres_list,
 .streaming_list {
   margin-bottom: 3rem;
-  padding: 0 3rem;
+  padding: 0 3rem 3rem 3rem;
 }
 
 .title h2 {

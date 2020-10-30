@@ -1,4 +1,12 @@
 .mylistmain {
   padding-bottom: var(--nav);
+}
+
+.container_mylist {
   overflow-y: auto;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }

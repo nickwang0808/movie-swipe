@@ -4,7 +4,17 @@
 }
 
 .details_content {
-  margin-bottom: calc(var(--nav) + 3em);
+  padding-bottom: calc(var(--nav) + 12rem);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+.bottom_fade_out {
+  -webkit-mask-image: linear-gradient(to top, transparent 110px, black 140px);
 }
 
 .details_title h1 {
@@ -29,6 +39,7 @@
   top: 0;
   width: 100%;
   height: calc(56vw);
+  border: 0;
 }
 
 .details_rating {
@@ -94,7 +105,7 @@
   padding-bottom: 4rem;
 }
 .who_matched {
-  height: 56px;
+  height: 6rem;
   display: grid;
   grid-template-columns: 33% 33% 33%;
   grid-template-rows: 100%;
@@ -113,7 +124,7 @@
 .matched {
   padding: 0.3em 1em;
   background-color: var(--positive);
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 900;
   border-radius: 0.3em;
   transform: skewX(-15deg);
