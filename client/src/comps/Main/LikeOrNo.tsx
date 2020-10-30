@@ -14,7 +14,6 @@ import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import VotingActions from "./VotingActions";
-import { CreateAnimation } from "@ionic/react";
 
 interface ICompProps {
   movieList: Result[];
@@ -58,12 +57,7 @@ export default function LikeOrNo({
   } else
     return (
       <>
-        <CreateAnimation
-          duration={2000}
-          // do your animation here
-        >
-          {filterOn && <Filters setFilterOn={setFilterOn} />}
-        </CreateAnimation>
+        {filterOn && <Filters setFilterOn={setFilterOn} />}
         <div className="background_container">
           <div
             className="background"

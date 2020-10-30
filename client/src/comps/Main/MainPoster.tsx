@@ -39,7 +39,6 @@ export default function MainPoster({
           {/* PG-13 | 2h 3min | Adventure, Crime, Drama | 2020 (USA) */}
           {/* {` ${movieInfo?.genre.join(", ")} | ${movieInfo?.released}`} */}
         </h3>
-
       </div>
       {/* <div className={style.voted_thumb}>
         <VoteUp />

@@ -1,6 +1,6 @@
 .container_filter {
   z-index: 1000;
-  position: fixed;
+  position: absolute;
   width: 90vw;
   height: 100vh;
   right: 0;
