@@ -10,7 +10,9 @@ export default function MyProfile() {
     <div>
       <h1>My Profile</h1>
       <div className={style.settings_container}>
-        <ListViewButton name="Watch Groups" />
+        <ListViewButton
+          name="Watch Groups" 
+        />
         <ListViewButton name="Disliked Media" />
         <ListViewButton name="About MediaSync" />
         <ListViewButton

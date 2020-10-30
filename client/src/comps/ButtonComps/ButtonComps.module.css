@@ -55,6 +55,15 @@
   margin: auto;
 }
 
+.btn_Back {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.btn_Back svg {
+  fill: var(--highlight);
+}
+
 .container_votebtn {
   margin: 0 2rem;
   height: 100%;
@@ -68,7 +77,8 @@
 }
 
 .btn_details:active,
-.btn_outline:active {
+.btn_outline:active,
+.btn:active {
   border-color: var(--highlight);
   color: var(--highlight);
 }

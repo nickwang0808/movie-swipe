@@ -15,6 +15,7 @@
   opacity: 0.5;
   font-size: 1.8rem;
   margin-top: 2rem;
+  padding: 1rem 0 1em 1em;
 }
 
 .types_list,
@@ -40,8 +41,4 @@
 .genres_list,
 .streaming_list {
   padding: 0 3rem 3rem 3rem;
-}
-
-.title h2 {
-  padding: 1rem 0 1em 1em;
 }
