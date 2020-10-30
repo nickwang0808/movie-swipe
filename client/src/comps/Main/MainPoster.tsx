@@ -1,7 +1,9 @@
 import React from "react";
-import style from "./MainPoster.module.css";
-import VoteUp from "./VoteLarge_Up";
-import VoteDown from "./VoteLarge_Down";
+// import style from "./MainPoster.module.css";
+// import VoteUp from "./VoteLarge_Up";
+// import VoteDown from "./VoteLarge_Down";
+import { motion } from "framer-motion"
+
 
 interface IMainPosterProps {
   imgUrl_1: string;
@@ -20,6 +22,11 @@ export default function MainPoster({
 
   return (
     <>
+      <div
+        className="poster_vote"
+        id="poster_4"
+        style={{ backgroundImage: assignUrlToPoster(imgUrl_3) }}
+      />
       <div
         className="poster_vote"
         id="poster_3"

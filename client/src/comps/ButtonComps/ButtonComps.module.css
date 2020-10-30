@@ -4,7 +4,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: fit-content; */
   height: 5rem;
   border: 2px solid var(--dark);
   text-align: center;
@@ -37,6 +36,11 @@
   border-color: var(--highlight);
 }
 
+.btn:active {
+  border-color: var(--highlight);
+  color: var(--highlight);
+}
+
 .btn_up:active svg,
 .btn_down:active svg {
   fill: var(--dark);
@@ -44,6 +48,11 @@
 
 .btn_details {
   width: 100%;
+}
+
+.btnNewWatchGroup {
+  width: fit-content;
+  margin: auto;
 }
 
 .container_votebtn {

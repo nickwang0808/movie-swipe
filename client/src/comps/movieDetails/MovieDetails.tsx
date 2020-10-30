@@ -5,9 +5,9 @@ import { MovieDetail } from "../../db-operations/useGetLikedMovies";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 import posterStyleMaker from "../../HelperFunctions/posterStyleMaker";
 import getMovieTrailers from "../../APICalls/getMovieTrailers";
-import StreamingServiceButton from "../ButtonComps/StreamingService";
+// import StreamingServiceButton from "../ButtonComps/StreamingService";
 import style from "./MovieDetails.module.css";
-import sharedstyle from "../ButtonComps/ButtonComps.module.css";
+// import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import VotingActions from "../Main/VotingActions";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 
