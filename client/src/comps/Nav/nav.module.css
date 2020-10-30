@@ -1,6 +1,8 @@
 .link {
   text-decoration: none;
   color: var(--dark);
+  flex-grow: 1;
+  width: 33%;
 }
 
 .container_nav {

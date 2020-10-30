@@ -19,11 +19,12 @@ export default function VotingActions({
   return (
     <div className="container_vote">
       <DownVote handleDislike={handleDislike} />
-      <div
-        className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}
-        onClick={setShowDetails}
-      >
-        {showDetail}
+      <div className={sharedstyle.container_detailsbtn} onClick={setShowDetails}>
+        <div
+          className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}
+        >
+          {showDetail}
+        </div>
       </div>
       <UpVote handleLike={handleLike} />
     </div>
