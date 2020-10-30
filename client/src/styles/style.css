@@ -52,7 +52,6 @@ h1 {
   font-size: 2.5em;
   font-weight: 900;
   padding: 2rem 0 2rem 2rem;
-  background-color: var(--light);
   color: var(--highlight);
 }
 
@@ -315,8 +314,4 @@ ul {
 .star {
   margin: 0 0.5em;
   fill: var(--bright);
-}
-
-.ion-page .hydrated {
-  overflow-y: auto;
 }
