@@ -35,13 +35,13 @@ export default function LikeOrNo({
     const movieID: number = movieList[currentIndex].id;
     UpdateLikeToDB(userId, movieID, true);
     setCurrentIndex((prev) => prev + 1);
-    console.log("liked");
+    setShowDetails(false);
   };
   const handleDislike = () => {
     const movieID: number = movieList[currentIndex].id;
     UpdateLikeToDB(userId, movieID, false);
     setCurrentIndex((prev) => prev + 1);
-    console.log("disliked");
+    setShowDetails(false);
   };
 
   if (showDetails) {
