@@ -3,7 +3,7 @@ import React from "react";
 import CheckboxButton from "../ButtonComps/Checkbox";
 import style from "./Filters.module.css";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function Filters({
   setFilterOn,

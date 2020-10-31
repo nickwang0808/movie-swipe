@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import FilterButton from "../ButtonComps/FilterButton";
-// import DownVote from "../ButtonComps/DownVote";
-// import UpVote from "../ButtonComps/UpVote";
 import Logo from "../Decorators/Logo";
-import MainPoster from "./MainPoster";
+import MainPoster from "./MainPoster/MainPoster";
 import Filters from "../filter/Filters";
 // import NotificationMatched from "./NotificationMatched";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
-// import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import { Result } from "../../db-operations/useGetMovies";
 import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
@@ -30,18 +27,21 @@ export default function LikeOrNo({
 }: ICompProps) {
   const [filterOn, setFilterOn] = useState(false);
   const [showDetails, setShowDetails] = useState<boolean | undefined>(false);
+  const [voteType, setVoteType] = useState<"like" | "dislike">();
 
   const handleLike = () => {
     const movieID: number = movieList[currentIndex].id;
     UpdateLikeToDB(userId, movieID, true);
     setCurrentIndex((prev) => prev + 1);
     setShowDetails(false);
+    setVoteType("like");
   };
   const handleDislike = () => {
     const movieID: number = movieList[currentIndex].id;
     UpdateLikeToDB(userId, movieID, false);
     setCurrentIndex((prev) => prev + 1);
     setShowDetails(false);
+    setVoteType("dislike");
   };
 
   if (showDetails) {
@@ -80,6 +80,7 @@ export default function LikeOrNo({
               imgUrl_1={baseUrl + movieList[currentIndex].poster_path}
               imgUrl_2={baseUrl + movieList[currentIndex + 1].poster_path}
               imgUrl_3={baseUrl + movieList[currentIndex + 2].poster_path}
+              voteType={voteType}
             />
           )}
         </div>
