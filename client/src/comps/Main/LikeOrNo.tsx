@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import DownVote from "../ButtonComps/DownVote";
 import FilterButton from "../ButtonComps/FilterButton";
-import UpVote from "../ButtonComps/UpVote";
+// import DownVote from "../ButtonComps/DownVote";
+// import UpVote from "../ButtonComps/UpVote";
 import Logo from "../Decorators/Logo";
 import MainPoster from "./MainPoster";
 import Filters from "../filter/Filters";
 // import NotificationMatched from "./NotificationMatched";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
-import sharedstyle from "../ButtonComps/ButtonComps.module.css";
-
+// import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import { Result } from "../../db-operations/useGetMovies";
 import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";

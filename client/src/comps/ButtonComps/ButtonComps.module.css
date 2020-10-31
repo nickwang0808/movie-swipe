@@ -4,7 +4,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: fit-content; */
   height: 5rem;
   border: 2px solid var(--dark);
   text-align: center;
@@ -37,6 +36,11 @@
   border-color: var(--highlight);
 }
 
+.btn:active {
+  border-color: var(--highlight);
+  color: var(--highlight);
+}
+
 .btn_up:active svg,
 .btn_down:active svg {
   fill: var(--dark);
@@ -44,6 +48,20 @@
 
 .btn_details {
   width: 100%;
+}
+
+.btnNewWatchGroup {
+  width: fit-content;
+  margin: auto;
+}
+
+.btn_Back {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.btn_Back svg {
+  fill: var(--highlight);
 }
 
 .container_votebtn {
@@ -59,7 +77,8 @@
 }
 
 .btn_details:active,
-.btn_outline:active {
+.btn_outline:active,
+.btn:active {
   border-color: var(--highlight);
   color: var(--highlight);
 }
