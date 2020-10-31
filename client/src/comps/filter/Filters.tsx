@@ -3,7 +3,7 @@ import StreamingServiceButton from "../ButtonComps/StreamingService";
 import CheckboxButton from "../ButtonComps/Checkbox";
 import style from "./Filters.module.css";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Filters({
   setFilterOn,
@@ -13,8 +13,13 @@ export default function Filters({
   return (
     <>
       <motion.div
-        animate={{ width: "90vw" }}
-        initial={{ width: "0" }}
+        key="filter_container"
+        animate={{ x: 0 }}
+        initial={{ x: "100vw" }}
+        exit={{ x: "100vw" }}
+        transition={{
+          ease: "easeInOut",
+        }}
         className={style.container_filter}
       >
         <div

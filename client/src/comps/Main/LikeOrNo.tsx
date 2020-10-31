@@ -14,6 +14,7 @@ import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import VotingActions from "./VotingActions";
+import { AnimatePresence } from "framer-motion";
 
 interface ICompProps {
   movieList: Result[];
@@ -57,7 +58,9 @@ export default function LikeOrNo({
   } else
     return (
       <>
-        {filterOn && <Filters setFilterOn={setFilterOn} />}
+        <AnimatePresence>
+          {filterOn && <Filters setFilterOn={setFilterOn} />}
+        </AnimatePresence>
         <div className="background_container">
           <div
             className="background"
