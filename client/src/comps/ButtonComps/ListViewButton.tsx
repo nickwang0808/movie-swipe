@@ -14,6 +14,10 @@ export default function ListViewButton({ name, action }: IListViewButton) {
       </div>
     );
   } else {
-    return <div className={style.btn_listview}>{name}</div>;
+    return (
+    <div className={style.btn_listview}>
+      {name}
+    </div>
+      );
   }
 }

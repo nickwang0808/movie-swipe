@@ -50,9 +50,15 @@
   width: 100%;
 }
 
-.btnNewWatchGroup {
+.container_invitebtns .btn {
   width: fit-content;
-  margin: auto;
+  margin-right: 2rem;
+}
+
+.container_invitebtns {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
 .btn_Back {
@@ -138,14 +144,34 @@
 
 /* LIST VIEW */
 
-.btn_listview {
-  padding-left: 30px;
+.btn_listview,
+.btn_listviewFriend {
+  padding-left: 4rem;
   font-size: 2em;
-  height: 48px;
-  line-height: 48px;
-  width: 100%;
+  height: 6rem;
+  line-height: 6rem;
   border-bottom: var(--border-bottom);
   cursor: pointer;
+}
+
+.btn_listviewFriend {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn_listviewFriend .trash {
+  fill: var(--highlight);
+  height: 4.5rem;
+  padding-right: 4rem;
+}
+.btn_listviewUser {
+  padding-left: 4rem;
+  padding-bottom: 3rem;
+  font-size: 2em;
+  line-height: 6rem;
+  cursor: pointer;
+  border-bottom: var(--border-bottom);
 }
 
 .btn_listview:active {
