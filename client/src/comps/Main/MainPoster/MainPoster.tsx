@@ -6,20 +6,14 @@ import VoteLarge_Up from "./VoteLarge_Up";
 import VoteLarge_Down from "./VoteLarge_Down";
 
 import { motion } from "framer-motion";
+import baseUrl from "../../../HelperFunctions/ImgBaseUrl";
 
 interface IMainPosterProps {
-  imgUrl_1: string;
-  imgUrl_2: string;
-  imgUrl_3: string;
-  voteType: "like" | "dislike" | undefined;
+  imgUrl: string;
+  voteType?: "like" | "dislike" | undefined;
 }
 
-export default function MainPoster({
-  imgUrl_1,
-  imgUrl_2,
-  imgUrl_3,
-  voteType,
-}: IMainPosterProps) {
+export default function MainPoster({ imgUrl, voteType }: IMainPosterProps) {
   const assignUrlToPoster = (url: string) => {
     return `linear-gradient(25deg, rgba(255, 255, 255, 0) 52%, rgba(255, 255, 255, 0.2) 53%, rgba(255, 255, 255, 0.2) 100%), linear-gradient(360deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 10%), url(${url})`;
   };
@@ -28,23 +22,8 @@ export default function MainPoster({
     <>
       <div
         className="poster_vote"
-        id="poster_4"
-        style={{ backgroundImage: assignUrlToPoster(imgUrl_3) }}
-      />
-      <div
-        className="poster_vote"
-        id="poster_3"
-        style={{ backgroundImage: assignUrlToPoster(imgUrl_3) }}
-      />
-      <div
-        className="poster_vote"
-        id="poster_2"
-        style={{ backgroundImage: assignUrlToPoster(imgUrl_2) }}
-      />
-      <div
-        className="poster_vote"
         id="poster_1"
-        style={{ backgroundImage: assignUrlToPoster(imgUrl_1) }}
+        style={{ backgroundImage: assignUrlToPoster(baseUrl + imgUrl) }}
       >
         {/* {voteType && (
           <div className={style.voted_thumb}>

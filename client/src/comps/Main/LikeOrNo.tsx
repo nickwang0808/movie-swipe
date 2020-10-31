@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FilterButton from "../ButtonComps/FilterButton";
 import Logo from "../Decorators/Logo";
 import MainPoster from "./MainPoster/MainPoster";
@@ -10,7 +10,8 @@ import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import VotingActions from "./VotingActions";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import Deck from "./Deck/Deck";
 
 interface ICompProps {
   movieList: Result[];
@@ -28,21 +29,38 @@ export default function LikeOrNo({
   const [filterOn, setFilterOn] = useState(false);
   const [showDetails, setShowDetails] = useState<boolean | undefined>(false);
   const [voteType, setVoteType] = useState<"like" | "dislike">();
+  const [movieListInDeck, setMovieListInDeck] = useState(movieList.slice(0, 4));
+  const [isLike, setIsLike] = useState<boolean>();
 
-  const handleLike = () => {
-    const movieID: number = movieList[currentIndex].id;
-    UpdateLikeToDB(userId, movieID, true);
+  const handleNext = () => {
+    let movieListInDeckCopy = [...movieListInDeck];
+    movieListInDeckCopy.shift();
+    movieListInDeckCopy.push(movieList[currentIndex + 4]);
+    setMovieListInDeck(movieListInDeckCopy);
     setCurrentIndex((prev) => prev + 1);
+  };
+
+  const handleLike = (movieID: number) => {
+    // UpdateLikeToDB(userId, movieID, true);
+    handleNext();
     setShowDetails(false);
     setVoteType("like");
   };
-  const handleDislike = () => {
-    const movieID: number = movieList[currentIndex].id;
-    UpdateLikeToDB(userId, movieID, false);
-    setCurrentIndex((prev) => prev + 1);
+  const handleDislike = (movieID: number) => {
+    // UpdateLikeToDB(userId, movieID, false);
+    handleNext();
     setShowDetails(false);
     setVoteType("dislike");
   };
+
+  useEffect(() => {
+    if (isLike === true) {
+      handleLike(movieListInDeck[0].id);
+    }
+    if (isLike === false) {
+      handleDislike(movieListInDeck[0].id);
+    }
+  }, [isLike]);
 
   if (showDetails) {
     return (
@@ -74,19 +92,28 @@ export default function LikeOrNo({
         </div>
         {/* <div className="loader"></div> */}
         {/* <NotificationMatched /> */}
-        <div className="container_poster" onClick={() => setShowDetails(true)}>
-          {movieList && (
-            <MainPoster
-              imgUrl_1={baseUrl + movieList[currentIndex].poster_path}
-              imgUrl_2={baseUrl + movieList[currentIndex + 1].poster_path}
-              imgUrl_3={baseUrl + movieList[currentIndex + 2].poster_path}
-              voteType={voteType}
-            />
-          )}
-        </div>
-        <VotingActions
-          handleDislike={handleDislike}
+        {/* <div className="container_poster" onClick={() => setShowDetails(true)}> */}
+        <Deck
+          movieListInDeck={movieListInDeck}
           handleLike={handleLike}
+          handleDislike={handleDislike}
+          setIsLike={setIsLike}
+          isLike={isLike}
+        />
+        {/* </div> */}
+        <VotingActions
+          handleDislike={() => {
+            if (isLike === false) {
+              handleDislike(movieListInDeck[0].id);
+            }
+            setIsLike(false);
+          }}
+          handleLike={() => {
+            if (isLike === true) {
+              handleLike(movieListInDeck[0].id);
+            }
+            setIsLike(true);
+          }}
           setShowDetails={() => setShowDetails(true)}
           showDetail="Details"
         />
