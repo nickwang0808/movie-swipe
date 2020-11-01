@@ -54,7 +54,8 @@ export default function Deck({
                   }}
                   dragElastic={1}
                   dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-                  style={{ top: 10 * i }}
+                  // style={{ top: `calc('var(--header)' + (10px * ${i})` }}
+                  style={{ top: 10 * i, marginTop: `var(--header)`, translateZ: `(-5 * ${i})` }}
                   exit={
                     isLike
                       ? { x: "1000px", rotate: 50, zIndex: 100 }
