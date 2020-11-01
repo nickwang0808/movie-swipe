@@ -48,7 +48,7 @@ export default function LikedMovieInMyList({
           </div>
           <div className={style.details_tags}>
             <h3>{getGenres(movie)}</h3>
-            <h3>{`${getMovieCertificate(movie)}| ${
+            <h3>{`${getMovieCertificate(movie)} | ${
               movie.runtime
             }min | ${movie.release_date.toString().slice(0, 4)}`}</h3>
           </div>

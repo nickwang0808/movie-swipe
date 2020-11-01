@@ -70,7 +70,7 @@ export default function Deck({
                       ease: [0.16, 1, 0.3, 1],
                     }}
                   >
-                    <MainPoster imgUrl={movie.poster_path} />
+                    <MainPoster imgUrl={movie.poster_path} movie={movie} />
                   </motion.div>
                 );
               })
