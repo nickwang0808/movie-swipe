@@ -39,10 +39,10 @@ export default function Deck({
                     drag={i === 0 ? true : false}
                     onDragEnd={(e, info) => {
                       const x = info.point.x;
-                      if (x > XCenter * 1.5) {
+                      if (x > XCenter * 1.6) {
                         setIsLike(true);
                         handleLike(movie.id);
-                      } else if (x < XCenter * 0.5) {
+                      } else if (x < XCenter * 0.4) {
                         setIsLike(false);
                         handleDislike(movie.id);
                       } else {

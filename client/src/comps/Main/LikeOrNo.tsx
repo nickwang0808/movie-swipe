@@ -25,13 +25,15 @@ export default function LikeOrNo({ userId }: ICompProps) {
   const { movieListInDeck, handleNext } = useContext(UserContext);
 
   const handleLike = (movieID: number) => {
-    // UpdateLikeToDB(userId, movieID, true);
+    UpdateLikeToDB(userId, movieID, true);
+    console.log("like");
     handleNext();
     setShowDetails(false);
     setVoteType("like");
   };
   const handleDislike = (movieID: number) => {
-    // UpdateLikeToDB(userId, movieID, false);
+    UpdateLikeToDB(userId, movieID, false);
+    console.log("dislike");
     handleNext();
     setShowDetails(false);
     setVoteType("dislike");

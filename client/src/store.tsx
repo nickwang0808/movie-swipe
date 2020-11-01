@@ -50,7 +50,7 @@ export default function StoreProvider({
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
       if (user) {
-        console.log("user", user);
+        // console.log("user", user);
         setUserAuth({ isLoggedIn: true, userInfo: user });
       } else {
         setUserAuth(null);

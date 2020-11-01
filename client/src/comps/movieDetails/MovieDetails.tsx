@@ -29,13 +29,15 @@ export default function MovieDetails({
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
   const [trailerUrl, setTrailerUrl] = useState<string | null>();
   useEffect(() => {
-    (async () => {
-      const movieDetails = await searchMovieByID(movieID);
-      setMovieDetails(movieDetails);
-      const trailerUrl = await getMovieTrailers(movieID);
-      setTrailerUrl(trailerUrl);
-    })();
-  }, []);
+    if (movieID) {
+      (async () => {
+        const movieDetails = await searchMovieByID(movieID);
+        setMovieDetails(movieDetails);
+        const trailerUrl = await getMovieTrailers(movieID);
+        setTrailerUrl(trailerUrl);
+      })();
+    }
+  }, [movieID]);
 
   const trailerDisplay = (
     <>
@@ -63,7 +65,7 @@ export default function MovieDetails({
       <div className={`${style.details_content} ${style.bottom_fade_out}`}>
         <div className={style.details_trailer}>
           {trailerUrl === undefined ? (
-            <div className="loader loader_center"/>
+            <div className="loader loader_center" />
           ) : (
             trailerDisplay
           )}
