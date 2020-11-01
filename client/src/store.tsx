@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useGetLikedMovies, {
   MovieDetail,
 } from "./db-operations/useGetLikedMovies";
+import useGetMovies, { Result } from "./db-operations/useGetMovies";
 import useGetUser from "./db-operations/useGetUser";
 import { auth } from "./firebase/config";
 
@@ -14,6 +15,9 @@ interface IStore {
   userAuth: IUser | null;
   userProfile: any;
   likedMoviesInfos: MovieDetail[];
+  movieListInDeck: Result[] | undefined;
+  isLoading: boolean;
+  handleNext: () => void;
 }
 
 export const UserContext = React.createContext({} as IStore);
@@ -27,6 +31,16 @@ export default function StoreProvider({
   const [userAuth, setUserAuth] = useState<IUser | null>(null);
   const userProfile = useGetUser(userAuth?.userInfo.uid as string);
   const likedMoviesInfos = useGetLikedMovies(userAuth?.userInfo.uid as string);
+  const { movieListInDeck, handleNext } = useGetMovies(
+    userAuth?.userInfo?.uid as string
+  );
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (movieListInDeck) {
+      setIsLoading(false);
+    }
+  }, [movieListInDeck]);
 
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
@@ -40,7 +54,16 @@ export default function StoreProvider({
   }, []);
 
   return (
-    <UserProvider value={{ userAuth, userProfile, likedMoviesInfos }}>
+    <UserProvider
+      value={{
+        isLoading,
+        userAuth,
+        userProfile,
+        likedMoviesInfos,
+        movieListInDeck,
+        handleNext,
+      }}
+    >
       {children}
     </UserProvider>
   );

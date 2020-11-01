@@ -34,6 +34,24 @@ export default function useGetMovies(userId: string) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pageNum, setPageNum] = useState(1);
 
+  const [movieListInDeck, setMovieListInDeck] = useState<Result[]>();
+
+  useEffect(() => {
+    if (movieList) {
+      setMovieListInDeck(movieList?.slice(0, 4));
+    }
+  }, [movieList]);
+
+  const handleNext = () => {
+    if (movieList && movieListInDeck) {
+      let movieListInDeckCopy = [...movieListInDeck];
+      movieListInDeckCopy.shift();
+      movieListInDeckCopy.push(movieList[currentIndex + 4]);
+      setMovieListInDeck(movieListInDeckCopy);
+      setCurrentIndex((prev) => prev + 1);
+    }
+  };
+
   let tempStorage: Result[] = [];
 
   useEffect(() => {
@@ -113,5 +131,5 @@ export default function useGetMovies(userId: string) {
     }
   }, [currentIndex, movieList]);
 
-  return { movieList, currentIndex, setCurrentIndex };
+  return { movieListInDeck, handleNext };
 }
