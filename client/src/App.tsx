@@ -32,10 +32,10 @@ import MyProfile from "./comps/profile/MyProfile";
 function App() {
   const { userAuth, isLoading, size } = useContext(UserContext);
 
-  if (userAuth?.isLoggedIn === false || !userAuth) {
-    return <SignInScreen />;
-  } else if (isLoading) {
+  if (isLoading) {
     return <div className="loader loader_center" />;
+  } else if (userAuth === null) {
+    return <SignInScreen />;
   } else {
     return (
       <IonApp>

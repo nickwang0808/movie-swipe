@@ -14,7 +14,7 @@ interface IUser {
 }
 
 interface IStore {
-  userAuth: IUser | null;
+  userAuth: IUser | undefined | null;
   userProfile: any;
   likedMoviesInfos: MovieDetail[];
   movieListInDeck: Result[] | undefined;
@@ -31,7 +31,7 @@ export default function StoreProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [userAuth, setUserAuth] = useState<IUser | null>(null);
+  const [userAuth, setUserAuth] = useState<IUser | null>(); // undefined is for loading
   const userProfile = useGetUser(userAuth?.userInfo.uid as string);
   const likedMoviesInfos = useGetLikedMovies(userAuth?.userInfo.uid as string);
   const { movieListInDeck, handleNext } = useGetMovies(
@@ -41,10 +41,9 @@ export default function StoreProvider({
   const size = useGetWIndowsSizing();
 
   useEffect(() => {
-    if (movieListInDeck) {
-      setIsLoading(false);
-    }
-  }, [movieListInDeck]);
+    if (movieListInDeck) setIsLoading(false);
+    if (userAuth !== undefined) setIsLoading(false);
+  }, [movieListInDeck, userAuth]);
 
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
@@ -52,6 +51,7 @@ export default function StoreProvider({
         // console.log("user", user);
         setUserAuth({ isLoggedIn: true, userInfo: user });
       } else {
+        // null is for no user logged in
         setUserAuth(null);
       }
     });
