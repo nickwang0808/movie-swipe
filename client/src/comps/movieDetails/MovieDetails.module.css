@@ -27,12 +27,7 @@
   width: 100%;
   padding-top: 56.25%;
   background-size: cover;
-}
-
-.details_trailer .loader {
-  position: absolute;
-  top: 0;
-  width: 100%;
+  position: relative;
 }
 
 .details_trailer iframe {

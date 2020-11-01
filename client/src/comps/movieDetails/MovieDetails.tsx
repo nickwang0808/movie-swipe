@@ -63,7 +63,7 @@ export default function MovieDetails({
       <div className={`${style.details_content} ${style.bottom_fade_out}`}>
         <div className={style.details_trailer}>
           {trailerUrl === undefined ? (
-            <div className="loader" />
+            <div className="loader loader_center"/>
           ) : (
             trailerDisplay
           )}
