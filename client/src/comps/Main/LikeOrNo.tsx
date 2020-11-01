@@ -78,15 +78,14 @@ export default function LikeOrNo({ userId }: ICompProps) {
         </div>
         {/* <div className="loader"></div> */}
         {/* <NotificationMatched /> */}
-        {/* <div className="container_poster" onClick={() => setShowDetails(true)}> */}
         <Deck
           movieListInDeck={movieListInDeck}
           handleLike={handleLike}
           handleDislike={handleDislike}
           setIsLike={setIsLike}
           isLike={isLike}
+          setShowDetails={() => setShowDetails(true)}
         />
-        {/* </div> */}
         <VotingActions
           handleDislike={() => {
             if (movieListInDeck) {

@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useContext, useEffect, useState } from "react";
 import { Result } from "../../../db-operations/useGetMovies";
-import baseUrl from "../../../HelperFunctions/ImgBaseUrl";
 import { UserContext } from "../../../store";
 import MainPoster from "../MainPoster/MainPoster";
 import style from "./Deck.module.css";
@@ -12,6 +11,7 @@ interface IDeckProp {
   movieListInDeck: Result[] | undefined;
   isLike: boolean | undefined;
   setIsLike: (arg: boolean) => void;
+  setShowDetails: () => void;
 }
 
 export default function Deck({
@@ -20,13 +20,14 @@ export default function Deck({
   handleDislike,
   isLike,
   setIsLike,
+  setShowDetails,
 }: IDeckProp) {
   const { size } = useContext(UserContext);
   const XCenter = size.XCenter;
 
   return (
     <>
-      <div className="container_poster">
+      <div className="container_poster" onClick={setShowDetails}>
         <AnimatePresence>
           {movieListInDeck &&
             movieListInDeck

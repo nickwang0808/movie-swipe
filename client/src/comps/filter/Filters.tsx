@@ -2,7 +2,7 @@ import React from "react";
 // import StreamingServiceButton from "../ButtonComps/StreamingService";
 import CheckboxButton from "../ButtonComps/Checkbox";
 import style from "./Filters.module.css";
-import sharedstyle from "../ButtonComps/ButtonComps.module.css";
+import sharedStyle from "../ButtonComps/ButtonComps.module.css";
 import { motion } from "framer-motion";
 
 export default function Filters({
@@ -17,13 +17,11 @@ export default function Filters({
         animate={{ x: 0 }}
         initial={{ x: "100vw" }}
         exit={{ x: "100vw" }}
-        transition={{
-          ease: "cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
+        transition={{ ease: "easeOut" }}
         className={style.container_filter}
       >
         <div
-          className={sharedstyle.btn_close}
+          className={sharedStyle.btn_close}
           onClick={() => setFilterOn(false)}
         >
           <svg
@@ -33,8 +31,8 @@ export default function Filters({
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M9.98531 10.9853L2.00003 18.9706L0.58582 17.5563L8.57109 9.57108L1.00002 2L2.41423 0.585786L9.98531 8.15686L17.5564 0.585786L18.9706 2L11.3995 9.57108L19.3848 17.5563L17.9706 18.9706L9.98531 10.9853Z"
             />
           </svg>
