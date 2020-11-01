@@ -123,7 +123,9 @@ export default function useGetMovies(userId: string) {
     if (userId) {
       getMovie();
     }
-  }, [userId, pageNum, movieListInDeck]);
+    // do not add movieListInDeck in the dep array, it will cause infinite loop
+    // eslint-disable-next-line
+  }, [userId, pageNum]);
 
   useEffect(() => {
     if ((movieList?.length as number) - currentIndex < 5) {
