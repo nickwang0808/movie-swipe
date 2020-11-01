@@ -70,10 +70,7 @@ export default function Deck({
                     layoutY: { delay: 0.2 },
                   }}
                 >
-                  {/* MainPoster goes here */}
-                  <div className={style.card_poster}>
-                    <img src={baseUrl + movie.poster_path} alt="movie poster" />
-                  </div>
+                  <MainPoster imgUrl={movie.poster_path} />
                 </motion.div>
               );
             })
