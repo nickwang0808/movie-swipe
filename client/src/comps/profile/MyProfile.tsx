@@ -2,12 +2,13 @@ import React from "react";
 import ListViewButton from "../ButtonComps/ListViewButton";
 // import { auth } from "../../firebase/config";
 import style from "./MyProfile.module.css";
-import sharedstyle from "../ButtonComps/ButtonComps.module.css";
+import Modal from "../notification/modal"
 import { cfaSignOut } from "capacitor-firebase-auth";
 
 export default function MyProfile() {
   return (
     <div>
+      {/* <Modal /> */}
       <h1>My Profile</h1>
       <div className={style.settings_container}>
         <ListViewButton

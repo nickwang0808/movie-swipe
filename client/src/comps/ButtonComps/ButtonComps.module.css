@@ -17,6 +17,10 @@
   font-size: 2rem;
 }
 
+.secondary {
+  border: none;
+}
+
 .btn_up,
 .btn_down {
   background-color: var(--dark);

@@ -18,7 +18,7 @@ export default function Filters({
         initial={{ x: "100vw" }}
         exit={{ x: "100vw" }}
         transition={{
-          ease: "easeInOut",
+          ease: "cubic-bezier(0.16, 1, 0.3, 1)",
         }}
         className={style.container_filter}
       >
