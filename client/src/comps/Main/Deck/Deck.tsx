@@ -55,7 +55,7 @@ export default function Deck({
                   dragElastic={1}
                   dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
                   // style={{ top: `calc('var(--header)' + (10px * ${i})` }}
-                  style={{ top: 10 * i, marginTop: `var(--header)`, translateZ: `(-5 * ${i})` }}
+                  style={{ top: 4 * i, marginTop: `var(--header)`, originY: 1, scale: 1 - (i * 0.07) }}
                   exit={
                     isLike
                       ? { x: "1000px", rotate: 50, zIndex: 100 }
@@ -67,8 +67,8 @@ export default function Deck({
                   }
                   layout
                   transition={{
-                    duration: 0.2,
-                    layoutY: { delay: 0.2 },
+                    duration: 0.5,
+                    ease: [0.16, 1, 0.3, 1]
                   }}
                 >
                   <MainPoster imgUrl={movie.poster_path} />
