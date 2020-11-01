@@ -33,10 +33,10 @@ import MyProfile from "./comps/profile/MyProfile";
 function App() {
   const { userAuth, isLoading } = useContext(UserContext);
 
-  if (isLoading) {
-    return <div className="loader loader_center" />;
-  } else if (userAuth?.isLoggedIn === false || !userAuth) {
+  if (userAuth?.isLoggedIn === false || !userAuth) {
     return <SignInScreen />;
+  } else if (isLoading) {
+    return <div className="loader loader_center" />;
   } else {
     return (
       <IonApp>
