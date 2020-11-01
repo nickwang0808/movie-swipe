@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Result } from "../../../db-operations/useGetMovies";
 import { UserContext } from "../../../store";
 import MainPoster from "../MainPoster/MainPoster";

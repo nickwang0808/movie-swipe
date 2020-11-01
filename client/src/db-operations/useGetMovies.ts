@@ -52,9 +52,9 @@ export default function useGetMovies(userId: string) {
     }
   };
 
-  let tempStorage: Result[] = [];
-
   useEffect(() => {
+    let tempStorage: Result[] = [];
+
     const getVotedMoviesIds = async () => {
       let votedMoviesIds: number[] = [];
       const votedMoviesRef = db
@@ -88,7 +88,7 @@ export default function useGetMovies(userId: string) {
     };
 
     async function getMovie() {
-      console.log("getMovie()");
+      // console.log("getMovie()");
       const votedMovies = await getVotedMoviesIds();
       const movieListUnfiltered = await fetchPopularMovies();
       const filteredMovieList = () => {
@@ -123,7 +123,7 @@ export default function useGetMovies(userId: string) {
     if (userId) {
       getMovie();
     }
-  }, [userId, pageNum]);
+  }, [userId, pageNum, movieListInDeck]);
 
   useEffect(() => {
     if ((movieList?.length as number) - currentIndex < 5) {

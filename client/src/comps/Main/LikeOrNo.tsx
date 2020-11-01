@@ -48,6 +48,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
         handleDislike(movieListInDeck[0].id);
       }
     }
+    // eslint-disable-next-line
   }, [isLike]);
 
   if (showDetails && movieListInDeck) {

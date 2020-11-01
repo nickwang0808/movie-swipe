@@ -36,7 +36,6 @@ export default function MovieDetails({
         (likedMovieInfo) => likedMovieInfo.id === movieID
       );
       if (checkStoreForMovieDetails) {
-        console.log("found");
         setMovieDetails(checkStoreForMovieDetails);
       } else {
         (async () => {
@@ -45,7 +44,7 @@ export default function MovieDetails({
         })();
       }
     }
-  }, [movieID]);
+  }, [movieID, likedMoviesInfos]);
 
   const getTrailerUrl = () => {
     if (movieDetails) {
@@ -70,7 +69,11 @@ export default function MovieDetails({
           {getTrailerUrl() === undefined ? (
             <div className="loader loader_center" />
           ) : (
-            <iframe allowFullScreen={true} src={getTrailerUrl()} />
+            <iframe
+              allowFullScreen={true}
+              src={getTrailerUrl()}
+              title="trailer_vid"
+            />
           )}
         </div>
         <div className={style.container_moviedetails}>

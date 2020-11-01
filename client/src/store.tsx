@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MovieDetail } from "./APICalls/searchMovieByID";
 import useGetLikedMovies from "./db-operations/useGetLikedMovies";
 import useGetMovies, { Result } from "./db-operations/useGetMovies";

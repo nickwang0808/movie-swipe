@@ -24,7 +24,6 @@ import LikeOrNo from "./comps/Main/LikeOrNo";
 import Nav from "./comps/Nav/Nav";
 import MyListMain from "./comps/MyList/MyListMain";
 import { Route } from "react-router-dom";
-import useGetMovies from "./db-operations/useGetMovies";
 import SignInScreen from "./comps/auth/SignInScreen";
 import { UserContext } from "./store";
 
