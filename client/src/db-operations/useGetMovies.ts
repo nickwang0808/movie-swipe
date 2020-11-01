@@ -112,8 +112,8 @@ export default function useGetMovies(userId: string) {
       }
 
       setMovieList((prev) => {
-        if (prev) {
-          return [...prev, ...tempStorage, ...filteredMovieList()];
+        if (movieListInDeck) {
+          return [...movieListInDeck, ...tempStorage, ...filteredMovieList()];
         } else {
           return [...tempStorage, ...filteredMovieList()];
         }
@@ -126,8 +126,10 @@ export default function useGetMovies(userId: string) {
   }, [userId, pageNum]);
 
   useEffect(() => {
-    if ((movieList?.length as number) - currentIndex < 4) {
+    if ((movieList?.length as number) - currentIndex < 5) {
+      console.log("refetch");
       setPageNum((prev) => prev + 1);
+      setCurrentIndex(3);
     }
   }, [currentIndex, movieList]);
 

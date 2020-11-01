@@ -51,11 +51,9 @@ export default function Deck({
                     }}
                     dragElastic={1}
                     dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-                    // style={{ top: `calc('var(--header)' + (10px * ${i})` }}
                     style={{
                       originY: 1,
                       top: 4 * i,
-                      marginTop: `var(--header)`,
                       scale: 1 - i * 0.07,
                     }}
                     exit={
