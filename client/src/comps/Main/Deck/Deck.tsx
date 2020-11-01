@@ -1,7 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Result } from "../../../db-operations/useGetMovies";
 import baseUrl from "../../../HelperFunctions/ImgBaseUrl";
+import { UserContext } from "../../../store";
 import MainPoster from "../MainPoster/MainPoster";
 import style from "./Deck.module.css";
 
@@ -20,11 +21,8 @@ export default function Deck({
   isLike,
   setIsLike,
 }: IDeckProp) {
-  const [XCenter, setXCenter] = useState(0);
-
-  useEffect(() => {
-    setXCenter(window.innerWidth / 2);
-  }, []);
+  const { size } = useContext(UserContext);
+  const XCenter = size.XCenter;
 
   return (
     <>

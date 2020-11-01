@@ -31,7 +31,7 @@ import { UserContext } from "./store";
 import MyProfile from "./comps/profile/MyProfile";
 
 function App() {
-  const { userAuth, isLoading } = useContext(UserContext);
+  const { userAuth, isLoading, size } = useContext(UserContext);
 
   if (userAuth?.isLoggedIn === false || !userAuth) {
     return <SignInScreen />;
@@ -40,22 +40,24 @@ function App() {
   } else {
     return (
       <IonApp>
-        <IonReactRouter>
-          <Nav />
-          <IonRouterOutlet>
-            <Route exact path="/">
-              {userAuth && (
-                <LikeOrNo userId={userAuth?.userInfo.uid as string} />
-              )}
-            </Route>
-            <Route exact path="/mylist">
-              <MyListMain />
-            </Route>
-            <Route exact path="/profile">
-              <MyProfile />
-            </Route>
-          </IonRouterOutlet>
-        </IonReactRouter>
+        <div style={{ height: size.height }}>
+          <IonReactRouter>
+            <Nav />
+            <IonRouterOutlet>
+              <Route exact path="/">
+                {userAuth && (
+                  <LikeOrNo userId={userAuth?.userInfo.uid as string} />
+                )}
+              </Route>
+              <Route exact path="/mylist">
+                <MyListMain />
+              </Route>
+              <Route exact path="/profile">
+                <MyProfile />
+              </Route>
+            </IonRouterOutlet>
+          </IonReactRouter>
+        </div>
       </IonApp>
     );
   }

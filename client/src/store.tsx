@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import useGetLikedMovies, {
   MovieDetail,
 } from "./db-operations/useGetLikedMovies";
 import useGetMovies, { Result } from "./db-operations/useGetMovies";
 import useGetUser from "./db-operations/useGetUser";
 import { auth } from "./firebase/config";
+import useGetWIndowsSizing, {
+  ISize,
+} from "./HelperFunctions/useGetWIndowsSizing";
 
 interface IUser {
   isLoggedIn: boolean;
@@ -18,6 +21,7 @@ interface IStore {
   movieListInDeck: Result[] | undefined;
   isLoading: boolean;
   handleNext: () => void;
+  size: ISize;
 }
 
 export const UserContext = React.createContext({} as IStore);
@@ -35,6 +39,7 @@ export default function StoreProvider({
     userAuth?.userInfo?.uid as string
   );
   const [isLoading, setIsLoading] = useState(true);
+  const size = useGetWIndowsSizing();
 
   useEffect(() => {
     if (movieListInDeck) {
@@ -62,6 +67,7 @@ export default function StoreProvider({
         likedMoviesInfos,
         movieListInDeck,
         handleNext,
+        size,
       }}
     >
       {children}
