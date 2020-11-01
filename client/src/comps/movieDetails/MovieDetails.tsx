@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import getGenres from "../../HelperFunctions/getGenres";
-import searchMovieByID from "../../APICalls/searchMovieByID";
-import { MovieDetail } from "../../db-operations/useGetLikedMovies";
+import searchMovieByID, { MovieDetail } from "../../APICalls/searchMovieByID";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 import posterStyleMaker from "../../HelperFunctions/posterStyleMaker";
-import getMovieTrailers from "../../APICalls/getMovieTrailers";
 // import StreamingServiceButton from "../ButtonComps/StreamingService";
 import style from "./MovieDetails.module.css";
 // import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import VotingActions from "../Main/VotingActions";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
+import { UserContext } from "../../store";
+import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
 
 interface IMovieDetails {
   movieID: number;
@@ -27,34 +27,37 @@ export default function MovieDetails({
   showVoting,
 }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
-  const [trailerUrl, setTrailerUrl] = useState<string | null>();
+  const { likedMoviesInfos } = useContext(UserContext);
+
   useEffect(() => {
     if (movieID) {
-      (async () => {
-        const movieDetails = await searchMovieByID(movieID);
-        setMovieDetails(movieDetails);
-        const trailerUrl = await getMovieTrailers(movieID);
-        setTrailerUrl(trailerUrl);
-      })();
+      // check if store already has the info
+      const checkStoreForMovieDetails = likedMoviesInfos.find(
+        (likedMovieInfo) => likedMovieInfo.id === movieID
+      );
+      if (checkStoreForMovieDetails) {
+        console.log("found");
+        setMovieDetails(checkStoreForMovieDetails);
+      } else {
+        (async () => {
+          const movieDetails = await searchMovieByID(movieID);
+          setMovieDetails(movieDetails);
+        })();
+      }
     }
   }, [movieID]);
 
-  const trailerDisplay = (
-    <>
-      {trailerUrl === null ? (
-        <div
-          style={{
-            backgroundImage: `url(${baseUrl + movieDetails?.backdrop_path})`,
-          }}
-        />
-      ) : (
-        <iframe
-          allowFullScreen={true}
-          src={trailerUrl ? trailerUrl : movieDetails?.backdrop_path}
-        />
-      )}
-    </>
-  );
+  const getTrailerUrl = () => {
+    if (movieDetails) {
+      const trailerKey = movieDetails.videos.results[0].key;
+      try {
+        return `https://www.youtube.com/embed/${trailerKey}?rel=0&amp;controls=1&amp&amp;showinfo=0&amp;modestbranding=1`;
+      } catch (err) {
+        console.log("err, can't find trailer url on youtube");
+        return undefined;
+      }
+    }
+  };
 
   return (
     <>
@@ -64,10 +67,10 @@ export default function MovieDetails({
       />
       <div className={`${style.details_content} ${style.bottom_fade_out}`}>
         <div className={style.details_trailer}>
-          {trailerUrl === undefined ? (
+          {getTrailerUrl() === undefined ? (
             <div className="loader loader_center" />
           ) : (
-            trailerDisplay
+            <iframe allowFullScreen={true} src={getTrailerUrl()} />
           )}
         </div>
         <div className={style.container_moviedetails}>
@@ -95,7 +98,7 @@ export default function MovieDetails({
           <div className={style.details_tags}>
             <h3> {`${movieDetails && getGenres(movieDetails)}`}</h3>
             <h3 className={style.poster_overview_details}>
-              {`PG-13 | ${
+              {`${getMovieCertificate(movieDetails)}| ${
                 movieDetails?.runtime
               }min | ${movieDetails?.release_date.toString().slice(0, 4)}`}
             </h3>

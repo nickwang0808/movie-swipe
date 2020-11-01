@@ -1,7 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import useGetLikedMovies, {
-  MovieDetail,
-} from "./db-operations/useGetLikedMovies";
+import { MovieDetail } from "./APICalls/searchMovieByID";
+import useGetLikedMovies from "./db-operations/useGetLikedMovies";
 import useGetMovies, { Result } from "./db-operations/useGetMovies";
 import useGetUser from "./db-operations/useGetUser";
 import { auth } from "./firebase/config";

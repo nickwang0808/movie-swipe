@@ -1,6 +1,7 @@
 import React from "react";
-import { MovieDetail } from "../../db-operations/useGetLikedMovies";
+import { MovieDetail } from "../../APICalls/searchMovieByID";
 import getGenres from "../../HelperFunctions/getGenres";
+import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
 import style from "./LikedMovieInMylist.module.css";
 
 interface ILikedMovieInMyList {
@@ -47,7 +48,7 @@ export default function LikedMovieInMyList({
           </div>
           <div className={style.details_tags}>
             <h3>{getGenres(movie)}</h3>
-            <h3>{`PG-13 | ${
+            <h3>{`${getMovieCertificate(movie)}| ${
               movie.runtime
             }min | ${movie.release_date.toString().slice(0, 4)}`}</h3>
           </div>

@@ -1,4 +1,4 @@
-import { MovieDetail } from "../db-operations/useGetLikedMovies";
+import { MovieDetail } from "../APICalls/searchMovieByID";
 
 const getGenres = (movie: MovieDetail) => {
   const genresArray: string[] = [];
