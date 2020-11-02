@@ -23,11 +23,12 @@ import "./styles/style.css";
 import LikeOrNo from "./comps/Main/LikeOrNo";
 import Nav from "./comps/Nav/Nav";
 import MyListMain from "./comps/MyList/MyListMain";
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import SignInScreen from "./comps/auth/SignInScreen";
 import { UserContext } from "./store";
 
 import MyProfile from "./comps/profile/MyProfile";
+import WatchGroups from "./comps/profile/WatchGroups";
 
 function App() {
   const { userAuth, isLoading, size } = useContext(UserContext);
@@ -42,15 +43,16 @@ function App() {
         <IonReactRouter>
           <Nav />
           <IonRouterOutlet>
-            <Route exact path="/">
+            <Route exact path="/" render={() => <Redirect to="/home" />} />
+            <Route path="/home">
               {userAuth && (
                 <LikeOrNo userId={userAuth?.userInfo.uid as string} />
               )}
             </Route>
-            <Route exact path="/mylist">
+            <Route path="/mylist">
               <MyListMain />
             </Route>
-            <Route exact path="/profile">
+            <Route path="/profile">
               <MyProfile />
             </Route>
           </IonRouterOutlet>

@@ -224,3 +224,8 @@ ul {
   margin: 0 0.5em;
   fill: var(--bright);
 }
+
+.link {
+  text-decoration: none;
+  color: var(--dark);
+}

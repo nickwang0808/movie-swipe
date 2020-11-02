@@ -10,21 +10,22 @@ import VotingActions from "../Main/VotingActions";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import { UserContext } from "../../store";
 import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
+import { Link } from "react-router-dom";
 
 interface IMovieDetails {
   movieID: number;
-  setShowDetails: (arg: undefined) => void;
   showVoting: boolean;
   handleDislike: (movieID: number) => void;
   handleLike: (movieID: number) => void;
+  goTo: string;
 }
 
 export default function MovieDetails({
   movieID,
-  setShowDetails,
   handleDislike,
   handleLike,
   showVoting,
+  goTo,
 }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
   const { likedMoviesInfos } = useContext(UserContext);
@@ -77,10 +78,10 @@ export default function MovieDetails({
           )}
         </div>
         <div className={style.container_moviedetails}>
-          <div
+          <Link
             className={style.poster_1_inline}
             style={posterStyleMaker(baseUrl + movieDetails?.poster_path)}
-            onClick={() => setShowDetails(undefined)}
+            to={goTo}
           />
           <div className={style.details_title}>
             <h1>{movieDetails?.title}</h1>
@@ -156,7 +157,7 @@ export default function MovieDetails({
         <VotingActions
           handleDislike={() => handleDislike(movieID)}
           handleLike={() => handleLike(movieID)}
-          setShowDetails={() => setShowDetails(undefined)}
+          goTo="/home"
           showDetail="Poster"
         />
       )}

@@ -1,4 +1,6 @@
+import { link } from "fs";
 import React from "react";
+import { Link } from "react-router-dom";
 import { MovieDetail } from "../../APICalls/searchMovieByID";
 import getGenres from "../../HelperFunctions/getGenres";
 import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
@@ -15,9 +17,10 @@ export default function LikedMovieInMyList({
 }: ILikedMovieInMyList) {
   return (
     <>
-      <div
-        className={style.flex_row}
+      <Link
+        className={`link ${style.flex_row}`}
         onClick={() => setIdTPShowDetails(movie.id)}
+        to="/mylist/detials"
       >
         <img
           className={style.poster}
@@ -53,7 +56,7 @@ export default function LikedMovieInMyList({
             }min | ${movie.release_date.toString().slice(0, 4)}`}</h3>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 }

@@ -11,6 +11,7 @@ import VotingActions from "./VotingActions";
 import { AnimatePresence, motion } from "framer-motion";
 import Deck from "./Deck/Deck";
 import { UserContext } from "../../store";
+import { Route } from "react-router";
 
 interface ICompProps {
   userId: string;
@@ -51,19 +52,20 @@ export default function LikeOrNo({ userId }: ICompProps) {
     // eslint-disable-next-line
   }, [isLike]);
 
-  if (showDetails && movieListInDeck) {
-    return (
-      <MovieDetails
-        movieID={movieListInDeck[0].id}
-        setShowDetails={setShowDetails}
-        handleDislike={handleDislike}
-        handleLike={handleLike}
-        showVoting={true}
-      />
-    );
-  } else
-    return (
-      <>
+  return (
+    <>
+      <Route exact path="/home/details">
+        {movieListInDeck && (
+          <MovieDetails
+            movieID={movieListInDeck[0].id}
+            handleDislike={handleDislike}
+            handleLike={handleLike}
+            showVoting={true}
+            goTo="/home"
+          />
+        )}
+      </Route>
+      <Route exact path="/home">
         <AnimatePresence>
           {filterOn && <Filters setFilterOn={setFilterOn} />}
         </AnimatePresence>
@@ -106,9 +108,10 @@ export default function LikeOrNo({ userId }: ICompProps) {
               setIsLike(true);
             }
           }}
-          setShowDetails={() => setShowDetails(true)}
+          goTo="/home/details"
           showDetail="Details"
         />
-      </>
-    );
+      </Route>
+    </>
+  );
 }
