@@ -28,6 +28,7 @@ import SignInScreen from "./comps/auth/SignInScreen";
 import { UserContext } from "./store";
 
 import MyProfile from "./comps/profile/MyProfile";
+import WatchGroups from "./comps/profile/WatchGroups";
 
 function App() {
   const { userAuth, isLoading, size } = useContext(UserContext);
@@ -52,6 +53,9 @@ function App() {
             </Route>
             <Route exact path="/profile">
               <MyProfile />
+            </Route>
+            <Route exact path="/profile/watch-groups">
+              <WatchGroups />
             </Route>
           </IonRouterOutlet>
         </IonReactRouter>

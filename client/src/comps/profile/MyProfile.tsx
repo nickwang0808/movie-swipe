@@ -5,21 +5,18 @@ import Modal from "../notification/modal";
 import { cfaSignOut } from "capacitor-firebase-auth";
 import { auth } from "../../firebase/config";
 import WatchGroups from "./WatchGroups";
+import { Link, Route } from "react-router-dom";
+import { IonRouterOutlet } from "@ionic/react";
 
 export default function MyProfile() {
-  const [showFriends, setShowFriends] = useState(false);
-
-  if (showFriends)
-    return <WatchGroups handleBack={() => setShowFriends(false)} />;
   return (
     <div>
       {/* <Modal /> */}
       <h1>My Profile</h1>
       <div className={style.settings_container}>
-        <ListViewButton
-          name="Watch Groups"
-          action={() => setShowFriends(true)}
-        />
+        <Link to="/profile/watch-groups">
+          <ListViewButton name="Watch Groups" />
+        </Link>
         <ListViewButton name="Disliked Media" />
         <ListViewButton name="About MediaSync" />
         <ListViewButton
@@ -34,6 +31,9 @@ export default function MyProfile() {
           }}
         />
       </div>
+      <Route exact path="/profile/watch-groups">
+        <WatchGroups />
+      </Route>
     </div>
   );
 }

@@ -7,10 +7,10 @@ import BackButton from "../ButtonComps/BackButton";
 import { UserContext } from "../../store";
 
 interface IWatchGroups {
-  handleBack: () => void;
+  // handleBack: () => void;
 }
 
-export default function WatchGroups({ handleBack }: IWatchGroups) {
+export default function WatchGroups({}: /* handleBack */ IWatchGroups) {
   const { userAuth } = useContext(UserContext);
 
   const handleAccept = () => {
@@ -24,7 +24,7 @@ export default function WatchGroups({ handleBack }: IWatchGroups) {
     <div className={style.container_friendsscreen}>
       <div className={style.container_header}>
         <h1>
-          <BackButton handleBack={handleBack} />
+          <BackButton linkTo="/profile" />
           Watch Groups
         </h1>
       </div>
