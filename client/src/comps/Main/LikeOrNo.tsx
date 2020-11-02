@@ -19,24 +19,21 @@ interface ICompProps {
 
 export default function LikeOrNo({ userId }: ICompProps) {
   const [filterOn, setFilterOn] = useState(false);
-  const [showDetails, setShowDetails] = useState<boolean | undefined>(false);
   const [voteType, setVoteType] = useState<"like" | "dislike">();
   const [isLike, setIsLike] = useState<boolean>();
 
   const { movieListInDeck, handleNext } = useContext(UserContext);
 
   const handleLike = (movieID: number) => {
-    UpdateLikeToDB(userId, movieID, true);
+    // UpdateLikeToDB(userId, movieID, true);
     console.log("like");
     handleNext();
-    setShowDetails(false);
     setVoteType("like");
   };
   const handleDislike = (movieID: number) => {
-    UpdateLikeToDB(userId, movieID, false);
+    // UpdateLikeToDB(userId, movieID, false);
     console.log("dislike");
     handleNext();
-    setShowDetails(false);
     setVoteType("dislike");
   };
 
@@ -89,7 +86,6 @@ export default function LikeOrNo({ userId }: ICompProps) {
           handleDislike={handleDislike}
           setIsLike={setIsLike}
           isLike={isLike}
-          setShowDetails={() => setShowDetails(true)}
         />
         <VotingActions
           handleDislike={() => {

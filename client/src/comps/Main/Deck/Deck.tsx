@@ -11,7 +11,6 @@ interface IDeckProp {
   movieListInDeck: Result[] | undefined;
   isLike: boolean | undefined;
   setIsLike: (arg: boolean) => void;
-  setShowDetails: () => void;
 }
 
 export default function Deck({
@@ -20,14 +19,13 @@ export default function Deck({
   handleDislike,
   isLike,
   setIsLike,
-  setShowDetails,
 }: IDeckProp) {
   const { size } = useContext(UserContext);
   const XCenter = size.XCenter;
 
   return (
     <>
-      <div className="container_poster" onClick={setShowDetails}>
+      <div className="container_poster">
         <AnimatePresence>
           {movieListInDeck &&
             movieListInDeck

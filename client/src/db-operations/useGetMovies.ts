@@ -95,6 +95,7 @@ export default function useGetMovies(userId: string) {
         let newResults: Result[] = [];
         // filter voted movies out
         movieListUnfiltered.results.forEach((result) => {
+          if (!result.backdrop_path) return;
           if (votedMovies.includes(result.id)) {
             return;
           } else {
@@ -128,10 +129,12 @@ export default function useGetMovies(userId: string) {
   }, [userId, pageNum]);
 
   useEffect(() => {
-    if ((movieList?.length as number) - currentIndex < 5) {
-      console.log("refetch");
-      setPageNum((prev) => prev + 1);
-      setCurrentIndex(3);
+    if (movieList) {
+      if ((movieList?.length as number) - currentIndex < 5) {
+        console.log("refetch");
+        setPageNum((prev) => prev + 1);
+        setCurrentIndex(0);
+      }
     }
   }, [currentIndex, movieList]);
 
