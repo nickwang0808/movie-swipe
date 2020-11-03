@@ -13,7 +13,7 @@ export default function PendingInvite({
 }: IPendingInvite) {
   return (
     <div className="container_subcontent">
-      <div className={`${"title"} ${"marginBottom2"}`}>
+      <div className={`${"title"}`}>
         <h2>Pending Invites</h2>
       </div>
       <ListViewPendingInvite

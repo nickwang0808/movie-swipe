@@ -39,7 +39,7 @@ export default function WatchGroups({}: /* handleBack */ IWatchGroups) {
         />
         {/* TODO: Hide this if no pending invites exist */}
       <div className={style.container_subcontent}>
-      <div className={`${"title"} ${"marginBottom2"}`}>
+      <div className={`${"title"}`}>
             <h2>Friends</h2>
           </div>
           <ListViewFriendsButton name="Zangmann@Gmail.com" />
@@ -47,7 +47,7 @@ export default function WatchGroups({}: /* handleBack */ IWatchGroups) {
         </div>
         <div className={style.container_subcontent}>
 
-        <div className={`${"title"} ${"marginBottom2"}`}>
+        <div className={`${"title"}`}>
             <h2>Invite New Friends</h2>
           </div>
           <div className={style.container_inset}>
