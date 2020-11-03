@@ -78,6 +78,9 @@ ul {
   font-weight: 900;
 }
 
+a {
+  text-decoration: none;
+}
 :root {
   --header: 64px;
   --vote: 76px;
@@ -122,6 +125,23 @@ ul {
   position: absolute;
   left: calc(50% - 31px);
   padding-top: 1rem;
+}
+
+/* SMALL MODIFIERS */
+
+.marginBottom2 {
+  margin-bottom: 2rem;
+}
+
+.marginSides2 {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.listview_separator_full {
+  height: 1rem;
+  width: 100%;
+  background-color: var(--gray);
 }
 
 /* FIND MEDIA*/
@@ -228,4 +248,20 @@ ul {
 .link {
   text-decoration: none;
   color: var(--dark);
+}
+
+.title {
+  background-color: var(--gray);
+  height: 5rem;
+}
+
+.title h2 {
+  opacity: 0.75;
+  font-size: 1.8rem;
+  padding: 1rem 0 1em 1em;
+  line-height: 3rem;
+}
+
+.container_subcontent {
+  margin-bottom: 4rem;
 }

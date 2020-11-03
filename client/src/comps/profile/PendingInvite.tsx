@@ -12,9 +12,9 @@ export default function PendingInvite({
   handleAccept,
 }: IPendingInvite) {
   return (
-    <div className={style.container_pendinginvites}>
-      <div className={style.title}>
-        <h2>Incoming Invites</h2>
+    <div className="container_subcontent">
+      <div className={`${"title"} ${"marginBottom2"}`}>
+        <h2>Pending Invites</h2>
       </div>
       <ListViewPendingInvite
         handleDecline={handleDecline}

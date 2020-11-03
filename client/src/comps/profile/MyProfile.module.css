@@ -5,51 +5,52 @@
   justify-content: center;
 }
 
-.container_friendsscreen {
+.container_allcontent {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 100%;
-  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  margin-bottom: 8rem;
 }
 
-.container_friends,
-.container_pendinginvites {
-  margin-bottom: 5rem;
+.container_subcontent div:last-of-type {
+  border-bottom: none;
+}
+.title_bold {
+  margin: 2rem;
 }
 
-.container_friendscontent {
-  margin-bottom: 15rem;
-}
-
-.friends_title {
-  margin: 2rem 2rem 4rem 2rem;
-}
-
-.title h2 {
-  opacity: 0.5;
-  font-size: 1.8rem;
-  margin-top: 2rem;
-  padding: 1rem 0 1em 1em;
-}
-
-.container_invite {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.container_inset {
   margin: 0 4rem;
 }
 
-.container_invite input {
+.invite_input_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.invite_input_container input {
   flex-grow: 1;
   margin-right: 2rem;
+  min-width: 100px;
 }
 
 .error {
-  margin: 1rem 4rem;
+  margin: 1rem 0;
   color: #ff0000;
 }
 
 .success {
-  margin: 1rem 4rem;
+  margin: 1rem 0;
   color: #1a8e1a;
+}
+
+.container_logo_tmdb svg {
+  height: 4rem;
 }

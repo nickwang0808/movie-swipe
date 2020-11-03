@@ -5,6 +5,8 @@ import Modal from "../notification/modal";
 import { cfaSignOut } from "capacitor-firebase-auth";
 import { auth } from "../../firebase/config";
 import WatchGroups from "./WatchGroups";
+import About from "./About";
+import DislikedMovies from "./DislikedMovies";
 
 import { IonRouterOutlet } from "@ionic/react";
 import { Route } from "react-router";
@@ -18,10 +20,15 @@ export default function MyProfile() {
         <h1>My Profile</h1>
         <div className={style.settings_container}>
           <Link className="link" to="/profile/watch-groups">
-            <ListViewButton name="Watch Groups" />
+            <ListViewButton name="Friends" />
           </Link>
-          <ListViewButton name="Disliked Media" />
-          <ListViewButton name="About MediaSync" />
+          <Link className="link" to="/profile/dislikedmovies">
+            <ListViewButton name="Disliked Media" />
+          </Link>
+          <Link className="link" to="/profile/about">
+          <ListViewButton name="About MovieSync" />
+          </Link>
+          <div className="listview_separator_full"/>
           <ListViewButton
             name="Sign Out"
             action={() => cfaSignOut().subscribe()}
@@ -37,6 +44,12 @@ export default function MyProfile() {
       </Route>
       <Route exact path="/profile/watch-groups">
         <WatchGroups />
+      </Route>
+      <Route exact path="/profile/about">
+        <About />
+      </Route>
+      <Route exact path="/profile/dislikedmovies">
+        <DislikedMovies />
       </Route>
     </div>
   );

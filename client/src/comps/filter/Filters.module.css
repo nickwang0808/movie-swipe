@@ -11,34 +11,20 @@
   overflow-y: auto;
 }
 
-.title h2 {
-  opacity: 0.5;
-  font-size: 1.8rem;
-  margin-top: 2rem;
-  padding: 1rem 0 1em 1em;
-}
-
 .types_list,
 .genres_list {
   display: flex;
   flex-direction: column;
 }
 
-.types_list {
-  border-bottom: var(--border-bottom);
-  padding-bottom: 3em;
-}
-
 .streaming_list {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  padding-bottom: 3em;
-  border-bottom: var(--border-bottom);
 }
 
 .types_list,
 .genres_list,
 .streaming_list {
-  padding: 0 3rem 3rem 3rem;
+  padding: 0 3rem;
 }

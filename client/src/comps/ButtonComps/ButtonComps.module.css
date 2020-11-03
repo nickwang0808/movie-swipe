@@ -59,10 +59,15 @@
   margin-right: 2rem;
 }
 
+.container_invitebtns .container_votebtn {
+  margin: 0;
+}
+
 .container_invitebtns {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  margin: 2rem 0;
 }
 
 .btn_Back {
@@ -170,10 +175,8 @@
   padding-right: 4rem;
 }
 .btn_listviewUser {
-  padding-left: 4rem;
-  padding-bottom: 3rem;
+  padding: 2rem 0 0 4rem;
   font-size: 2em;
-  line-height: 6rem;
   cursor: pointer;
   border-bottom: var(--border-bottom);
 }

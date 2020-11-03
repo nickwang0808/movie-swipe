@@ -17,7 +17,11 @@ export default function Filters({
         animate={{ x: 0 }}
         initial={{ x: "100vw" }}
         exit={{ x: "100vw" }}
-        transition={{ ease: "easeOut" }}
+        
+        transition={{
+          duration: 0.5,
+          ease: [0.16, 1, 0.3, 1],
+        }}
         className={style.container_filter}
       >
         <div
@@ -46,18 +50,22 @@ export default function Filters({
         <div className={style.streaming_list}>
           <StreamingServiceButton />
         </div> */}
-        <div className={style.title}>
-          <h2>Media Types</h2>
+        <div className="container_subcontent">
+          <div className={`${"title"} ${"marginBottom2"}`}>
+            <h2>Media Types</h2>
+          </div>
+          <div className={style.types_list}>
+            <CheckboxButton name="Movies" />
+            <CheckboxButton name="TV Shows" />
+          </div>
         </div>
-        <div className={style.types_list}>
-          <CheckboxButton name="Movies" />
-          <CheckboxButton name="TV Shows" />
-        </div>
-        <div className={style.title}>
-          <h2>Genres</h2>
-        </div>
-        <div className={style.genres_list}>
-          <CheckboxButton name="Genre" />
+        <div className="container_subcontent">
+          <div className={`${"title"} ${"marginBottom2"}`}>
+            <h2>Genres</h2>
+          </div>
+          <div className={style.genres_list}>
+            <CheckboxButton name="Genre" />
+          </div>
         </div>
       </motion.div>
     </>

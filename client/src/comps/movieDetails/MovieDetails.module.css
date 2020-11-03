@@ -4,7 +4,7 @@
 }
 
 .details_content {
-  padding-bottom: calc(var(--nav) + 12rem);
+  padding-bottom: calc(var(--nav) + 7rem);
   position: fixed;
   top: 0;
   left: 0;
