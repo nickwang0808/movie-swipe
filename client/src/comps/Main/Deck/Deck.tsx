@@ -52,7 +52,8 @@ export default function Deck({
                       originY: 1,
                       top: 4 * i,
                       scale: 1 - i * 0.07,
-                      height: 'calc(var(--global-window-inner-height) - var(--header) - var(--vote) - var(--nav) - 2em);'
+                      height:
+                        "calc(var(--global-window-inner-height) - var(--header) - var(--vote) - var(--nav) - 2em)",
                     }}
                     exit={
                       isLike
