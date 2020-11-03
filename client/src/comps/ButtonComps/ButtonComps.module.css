@@ -4,7 +4,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: fit-content; */
   height: 5rem;
   border: 2px solid var(--dark);
   text-align: center;
@@ -16,6 +15,10 @@
   line-height: 5rem;
   font-weight: 900;
   font-size: 2rem;
+}
+
+.secondary {
+  border: none;
 }
 
 .btn_up,
@@ -37,6 +40,11 @@
   border-color: var(--highlight);
 }
 
+.btn:active {
+  border-color: var(--highlight);
+  color: var(--highlight);
+}
+
 .btn_up:active svg,
 .btn_down:active svg {
   fill: var(--dark);
@@ -44,6 +52,31 @@
 
 .btn_details {
   width: 100%;
+}
+
+.container_invitebtns .btn {
+  width: fit-content;
+  margin-right: 2rem;
+}
+
+.container_invitebtns .container_votebtn {
+  margin: 0;
+}
+
+.container_invitebtns {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin: 2rem 0;
+}
+
+.btn_Back {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.btn_Back svg {
+  fill: var(--highlight);
 }
 
 .container_votebtn {
@@ -59,7 +92,8 @@
 }
 
 .btn_details:active,
-.btn_outline:active {
+.btn_outline:active,
+.btn:active {
   border-color: var(--highlight);
   color: var(--highlight);
 }
@@ -119,14 +153,32 @@
 
 /* LIST VIEW */
 
-.btn_listview {
-  padding-left: 30px;
+.btn_listview,
+.btn_listviewFriend {
+  padding-left: 4rem;
   font-size: 2em;
-  height: 48px;
-  line-height: 48px;
-  width: 100%;
+  height: 6rem;
+  line-height: 6rem;
   border-bottom: var(--border-bottom);
   cursor: pointer;
+}
+
+.btn_listviewFriend {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn_listviewFriend .trash {
+  fill: var(--highlight);
+  height: 4.5rem;
+  padding-right: 4rem;
+}
+.btn_listviewUser {
+  padding: 2rem 0 0 4rem;
+  font-size: 2em;
+  cursor: pointer;
+  border-bottom: var(--border-bottom);
 }
 
 .btn_listview:active {

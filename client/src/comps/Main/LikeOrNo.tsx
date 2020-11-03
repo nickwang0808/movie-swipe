@@ -1,68 +1,76 @@
-import React, { useState } from "react";
-import DownVote from "../ButtonComps/DownVote";
+import React, { useContext, useEffect, useState } from "react";
 import FilterButton from "../ButtonComps/FilterButton";
-import UpVote from "../ButtonComps/UpVote";
 import Logo from "../Decorators/Logo";
-import MainPoster from "./MainPoster";
 import Filters from "../filter/Filters";
 // import NotificationMatched from "./NotificationMatched";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
-import sharedstyle from "../ButtonComps/ButtonComps.module.css";
-
-import { Result } from "../../db-operations/useGetMovies";
 import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import VotingActions from "./VotingActions";
+import { AnimatePresence, motion } from "framer-motion";
+import Deck from "./Deck/Deck";
+import { UserContext } from "../../store";
+import { Route } from "react-router";
 
 interface ICompProps {
-  movieList: Result[];
   userId: string;
-  setCurrentIndex: (arg: (arg: number) => number) => void;
-  currentIndex: number;
 }
 
-export default function LikeOrNo({
-  movieList,
-  userId,
-  currentIndex,
-  setCurrentIndex,
-}: ICompProps) {
+export default function LikeOrNo({ userId }: ICompProps) {
   const [filterOn, setFilterOn] = useState(false);
-  const [showDetails, setShowDetails] = useState<boolean | undefined>(false);
+  const [voteType, setVoteType] = useState<"like" | "dislike">();
+  const [isLike, setIsLike] = useState<boolean>();
 
-  const handleLike = () => {
-    const movieID: number = movieList[currentIndex].id;
-    UpdateLikeToDB(userId, movieID, true);
-    setCurrentIndex((prev) => prev + 1);
-    setShowDetails(false);
+  const { movieListInDeck, handleNext } = useContext(UserContext);
+
+  const handleLike = (movieID: number) => {
+    // UpdateLikeToDB(userId, movieID, true);
+    console.log("like");
+    handleNext();
+    setVoteType("like");
   };
-  const handleDislike = () => {
-    const movieID: number = movieList[currentIndex].id;
-    UpdateLikeToDB(userId, movieID, false);
-    setCurrentIndex((prev) => prev + 1);
-    setShowDetails(false);
+  const handleDislike = (movieID: number) => {
+    // UpdateLikeToDB(userId, movieID, false);
+    console.log("dislike");
+    handleNext();
+    setVoteType("dislike");
   };
 
-  if (showDetails) {
-    return (
-      <MovieDetails
-        movieID={movieList[currentIndex].id}
-        setShowDetails={setShowDetails}
-        handleDislike={handleDislike}
-        handleLike={handleLike}
-        showVoting={true}
-      />
-    );
-  } else
-    return (
-      <>
-        {filterOn && <Filters setFilterOn={setFilterOn} />}
+  useEffect(() => {
+    if (movieListInDeck) {
+      if (isLike === true) {
+        handleLike(movieListInDeck[0].id);
+      }
+      if (isLike === false) {
+        handleDislike(movieListInDeck[0].id);
+      }
+    }
+    // eslint-disable-next-line
+  }, [isLike]);
+
+  return (
+    <>
+      <Route exact path="/home/details">
+        {movieListInDeck && (
+          <MovieDetails
+            movieID={movieListInDeck[0].id}
+            handleDislike={handleDislike}
+            handleLike={handleLike}
+            showVoting={true}
+            goTo="/home"
+          />
+        )}
+      </Route>
+      <Route exact path="/home">
+        <AnimatePresence>
+          {filterOn && <Filters setFilterOn={setFilterOn} />}
+        </AnimatePresence>
         <div className="background_container">
           <div
             className="background"
             style={backgroundStyle(
-              movieList ? baseUrl + movieList[currentIndex].poster_path : ""
+              movieListInDeck ? baseUrl + movieListInDeck[0].poster_path : ""
             )}
           />
         </div>
@@ -72,21 +80,34 @@ export default function LikeOrNo({
         </div>
         {/* <div className="loader"></div> */}
         {/* <NotificationMatched /> */}
-        <div className="container_poster" onClick={() => setShowDetails(true)}>
-          {movieList && (
-            <MainPoster
-              imgUrl_1={baseUrl + movieList[currentIndex].poster_path}
-              imgUrl_2={baseUrl + movieList[currentIndex + 1].poster_path}
-              imgUrl_3={baseUrl + movieList[currentIndex + 2].poster_path}
-            />
-          )}
-        </div>
-        <VotingActions
-          handleDislike={handleDislike}
+        <Deck
+          movieListInDeck={movieListInDeck}
           handleLike={handleLike}
-          setShowDetails={() => setShowDetails(true)}
+          handleDislike={handleDislike}
+          setIsLike={setIsLike}
+          isLike={isLike}
+        />
+        <VotingActions
+          handleDislike={() => {
+            if (movieListInDeck) {
+              if (isLike === false) {
+                handleDislike(movieListInDeck[0].id);
+              }
+              setIsLike(false);
+            }
+          }}
+          handleLike={() => {
+            if (movieListInDeck) {
+              if (isLike === true) {
+                handleLike(movieListInDeck[0].id);
+              }
+              setIsLike(true);
+            }
+          }}
+          goTo="/home/details"
           showDetail="Details"
         />
-      </>
-    );
+      </Route>
+    </>
+  );
 }

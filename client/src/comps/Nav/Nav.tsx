@@ -35,7 +35,7 @@ export default function Nav() {
         exact
         className={style.link}
         activeClassName={style.active_link}
-        to="/"
+        to="/home"
       >
         <div className={style.nav_item}>
           <svg

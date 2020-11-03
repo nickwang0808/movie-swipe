@@ -34,9 +34,27 @@ export default function useGetMovies(userId: string) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pageNum, setPageNum] = useState(1);
 
-  let tempStorage: Result[] = [];
+  const [movieListInDeck, setMovieListInDeck] = useState<Result[]>();
 
   useEffect(() => {
+    if (movieList) {
+      setMovieListInDeck(movieList?.slice(0, 4));
+    }
+  }, [movieList]);
+
+  const handleNext = () => {
+    if (movieList && movieListInDeck) {
+      let movieListInDeckCopy = [...movieListInDeck];
+      movieListInDeckCopy.shift();
+      movieListInDeckCopy.push(movieList[currentIndex + 4]);
+      setMovieListInDeck(movieListInDeckCopy);
+      setCurrentIndex((prev) => prev + 1);
+    }
+  };
+
+  useEffect(() => {
+    let tempStorage: Result[] = [];
+
     const getVotedMoviesIds = async () => {
       let votedMoviesIds: number[] = [];
       const votedMoviesRef = db
@@ -70,13 +88,14 @@ export default function useGetMovies(userId: string) {
     };
 
     async function getMovie() {
-      console.log("getMovie()");
+      // console.log("getMovie()");
       const votedMovies = await getVotedMoviesIds();
       const movieListUnfiltered = await fetchPopularMovies();
       const filteredMovieList = () => {
         let newResults: Result[] = [];
         // filter voted movies out
         movieListUnfiltered.results.forEach((result) => {
+          if (!result.backdrop_path) return;
           if (votedMovies.includes(result.id)) {
             return;
           } else {
@@ -94,8 +113,8 @@ export default function useGetMovies(userId: string) {
       }
 
       setMovieList((prev) => {
-        if (prev) {
-          return [...prev, ...tempStorage, ...filteredMovieList()];
+        if (movieListInDeck) {
+          return [...movieListInDeck, ...tempStorage, ...filteredMovieList()];
         } else {
           return [...tempStorage, ...filteredMovieList()];
         }
@@ -105,13 +124,19 @@ export default function useGetMovies(userId: string) {
     if (userId) {
       getMovie();
     }
+    // do not add movieListInDeck in the dep array, it will cause infinite loop
+    // eslint-disable-next-line
   }, [userId, pageNum]);
 
   useEffect(() => {
-    if ((movieList?.length as number) - currentIndex < 4) {
-      setPageNum((prev) => prev + 1);
+    if (movieList) {
+      if ((movieList?.length as number) - currentIndex < 5) {
+        console.log("refetch");
+        setPageNum((prev) => prev + 1);
+        setCurrentIndex(0);
+      }
     }
   }, [currentIndex, movieList]);
 
-  return { movieList, currentIndex, setCurrentIndex };
+  return { movieListInDeck, handleNext };
 }

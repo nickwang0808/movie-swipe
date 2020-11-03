@@ -1,6 +1,9 @@
+import { link } from "fs";
 import React from "react";
-import { MovieDetail } from "../../db-operations/useGetLikedMovies";
+import { Link } from "react-router-dom";
+import { MovieDetail } from "../../APICalls/searchMovieByID";
 import getGenres from "../../HelperFunctions/getGenres";
+import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
 import style from "./LikedMovieInMylist.module.css";
 
 interface ILikedMovieInMyList {
@@ -14,9 +17,10 @@ export default function LikedMovieInMyList({
 }: ILikedMovieInMyList) {
   return (
     <>
-      <div
-        className={style.flex_row}
+      <Link
+        className={`link ${style.flex_row}`}
         onClick={() => setIdTPShowDetails(movie.id)}
+        to="/mylist/detials"
       >
         <img
           className={style.poster}
@@ -47,12 +51,12 @@ export default function LikedMovieInMyList({
           </div>
           <div className={style.details_tags}>
             <h3>{getGenres(movie)}</h3>
-            <h3>{`PG-13 | ${
+            <h3>{`${getMovieCertificate(movie)} | ${
               movie.runtime
             }min | ${movie.release_date.toString().slice(0, 4)}`}</h3>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 }

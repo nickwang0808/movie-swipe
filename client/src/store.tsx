@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import useGetLikedMovies, {
-  MovieDetail,
-} from "./db-operations/useGetLikedMovies";
+import { MovieDetail } from "./APICalls/searchMovieByID";
+import useGetLikedMovies from "./db-operations/useGetLikedMovies";
+import useGetMovies, { Result } from "./db-operations/useGetMovies";
 import useGetUser from "./db-operations/useGetUser";
 import { auth } from "./firebase/config";
+import useGetWIndowsSizing, {
+  ISize,
+} from "./HelperFunctions/useGetWIndowsSizing";
 
 interface IUser {
   isLoggedIn: boolean;
@@ -11,9 +14,13 @@ interface IUser {
 }
 
 interface IStore {
-  userAuth: IUser | null;
+  userAuth: IUser | undefined | null;
   userProfile: any;
   likedMoviesInfos: MovieDetail[];
+  movieListInDeck: Result[] | undefined;
+  isLoading: boolean;
+  handleNext: () => void;
+  size: ISize;
 }
 
 export const UserContext = React.createContext({} as IStore);
@@ -24,23 +31,43 @@ export default function StoreProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [userAuth, setUserAuth] = useState<IUser | null>(null);
+  const [userAuth, setUserAuth] = useState<IUser | null>(); // undefined is for loading
   const userProfile = useGetUser(userAuth?.userInfo.uid as string);
   const likedMoviesInfos = useGetLikedMovies(userAuth?.userInfo.uid as string);
+  const { movieListInDeck, handleNext } = useGetMovies(
+    userAuth?.userInfo?.uid as string
+  );
+  const [isLoading, setIsLoading] = useState(true);
+  const size = useGetWIndowsSizing();
+
+  useEffect(() => {
+    if (userAuth !== undefined && movieListInDeck) setIsLoading(false);
+  }, [movieListInDeck, userAuth]);
 
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
       if (user) {
-        console.log("user", user);
+        // console.log("user", user);
         setUserAuth({ isLoggedIn: true, userInfo: user });
       } else {
+        // null is for no user logged in
         setUserAuth(null);
       }
     });
   }, []);
 
   return (
-    <UserProvider value={{ userAuth, userProfile, likedMoviesInfos }}>
+    <UserProvider
+      value={{
+        isLoading,
+        userAuth,
+        userProfile,
+        likedMoviesInfos,
+        movieListInDeck,
+        handleNext,
+        size,
+      }}
+    >
       {children}
     </UserProvider>
   );

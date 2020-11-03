@@ -54,7 +54,7 @@ export default function SignInScreen() {
               : handleSignInEmail(email, password);
           }}
         >
-          {isSignUp ? "SignUp" : "SignIn"}
+          {isSignUp ? "Sign Up" : "Sign In"}
         </button>
         <button
           onClick={(e) => {

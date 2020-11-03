@@ -4,7 +4,7 @@
 }
 
 .details_content {
-  padding-bottom: calc(var(--nav) + 12rem);
+  padding-bottom: calc(var(--nav) + 7rem);
   position: fixed;
   top: 0;
   left: 0;
@@ -20,18 +20,14 @@
 .details_title h1 {
   padding: 1rem 0;
   color: var(--dark);
+  box-shadow: none;
 }
 
 .details_trailer {
   width: 100%;
   padding-top: 56.25%;
   background-size: cover;
-}
-
-.details_trailer .loader {
-  position: absolute;
-  top: 0;
-  width: 100%;
+  position: relative;
 }
 
 .details_trailer iframe {

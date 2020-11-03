@@ -4,3 +4,41 @@
   width: 100%;
   justify-content: center;
 }
+
+.container_subcontent div:last-of-type {
+  border-bottom: none;
+}
+.title_bold {
+  margin: 2rem;
+}
+
+.container_inset {
+  margin: 0 4rem;
+}
+
+.invite_input_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.invite_input_container input {
+  flex-grow: 1;
+  margin-right: 2rem;
+  min-width: 100px;
+}
+
+.error {
+  margin: 1rem 0;
+  color: #ff0000;
+}
+
+.success {
+  margin: 1rem 0;
+  color: #1a8e1a;
+}
+
+.container_logo_tmdb svg {
+  height: 4rem;
+}

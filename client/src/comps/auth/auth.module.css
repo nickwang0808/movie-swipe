@@ -35,17 +35,21 @@
   margin: 2rem;
 }
 
-.login_container label {
+label {
   font-size: 2rem;
   padding-bottom: 1rem;
 }
-.login_container input {
-  margin-bottom: 2rem;
+input {
   padding: 1rem;
   font-size: 2.5rem;
   color: #0b0728;
   border-radius: 4px;
   border: 1px solid var(--dark);
+}
+
+input:focus {
+  outline: none !important;
+  border: 1px solid var(--highlight);
 }
 
 .login_container .email {
