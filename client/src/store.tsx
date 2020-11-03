@@ -41,8 +41,7 @@ export default function StoreProvider({
   const size = useGetWIndowsSizing();
 
   useEffect(() => {
-    if (movieListInDeck) setIsLoading(false);
-    if (userAuth !== undefined) setIsLoading(false);
+    if (userAuth !== undefined && movieListInDeck) setIsLoading(false);
   }, [movieListInDeck, userAuth]);
 
   useEffect(() => {
