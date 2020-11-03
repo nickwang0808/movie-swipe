@@ -90,7 +90,10 @@ a {
   --positive: #11ee9e;
   --negative: #ff0f00;
   --transparent: rgba(0, 0, 0, 0);
-  --poster-height: calc(100vh - var(--header) - var(--vote) - var(--nav) - 2em);
+  --poster-height: calc(
+    var(--global-window-inner-height) - var(--header) - var(--vote) - var(--nav) -
+      2rem
+  );
   --poster-width: calc(var(--poster-height) * 0.65);
   --border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
