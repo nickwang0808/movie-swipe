@@ -1,0 +1,55 @@
+.container_matched {
+  width: calc(100% - 4em);
+  margin-left: 2em;
+  position: absolute;
+  z-index: 1001;
+  bottom: calc(var(--nav) + var(--vote));
+  display: flex;
+  flex-direction: row;
+  padding: 1.5em;
+  border-radius: 3px;
+  border: 2px solid var(--positive);
+  background-color: var(--light);
+}
+
+.matched_details {
+  display: flex;
+  flex-direction: column;
+}
+
+.matched_poster {
+  height: 96px;
+  width: 63px;
+  background-color: gray;
+  margin-right: 1.5em;
+}
+
+.matched_banner {
+  padding: 0.3em 1em;
+  background-color: var(--positive);
+  font-size: 1.5em;
+  font-weight: 900;
+  border-radius: 0.3em;
+  transform: skewX(-15deg);
+  width: fit-content;
+}
+
+.forceSkew {
+  transform: skewX(15deg);
+}
+
+.matched_text {
+  padding-top: 0.5em;
+  flex-grow: 1;
+}
+.matched_getdetailsbtn {
+  text-align: right;
+}
+
+.matched_getdetailsbtn a:link {
+  text-decoration: none;
+  color: var(--highlight);
+  letter-spacing: 0.5px;
+  font-size: 1.8rem;
+  font-weight: 900;
+}

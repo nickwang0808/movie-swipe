@@ -5,18 +5,6 @@
   justify-content: center;
 }
 
-.container_allcontent {
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-y: auto;
-  margin-bottom: 8rem;
-}
-
 .container_subcontent div:last-of-type {
   border-bottom: none;
 }

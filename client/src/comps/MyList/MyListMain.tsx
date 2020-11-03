@@ -23,7 +23,7 @@ export default function MyListMain() {
         )}
       </Route>
       <Route exact path="/mylist">
-        <div className={style.container_mylist}>
+      <div className="container_allcontent">
           <div>
             <h1>My Watch List</h1>
           </div>

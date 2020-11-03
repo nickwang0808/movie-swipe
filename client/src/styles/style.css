@@ -1,7 +1,6 @@
 /* RESET */
 
 html {
-  /* box-sizing: border-box; */
   font-size: 8px;
   font-family: "Lato", sans-serif;
   font-weight: 400;
@@ -10,8 +9,6 @@ html {
 html,
 body {
   max-width: 100%;
-  /* overflow-x: hidden; */
-  /* position: relative; */
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -123,8 +120,8 @@ a {
 
 .logo {
   position: absolute;
-  left: calc(50% - 31px);
-  padding-top: 1rem;
+  left: calc(50% - 75px);
+  padding-top: 1.8rem;
 }
 
 /* SMALL MODIFIERS */
@@ -248,6 +245,18 @@ a {
 .link {
   text-decoration: none;
   color: var(--dark);
+}
+
+.container_allcontent {
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  padding-bottom: 8rem;
 }
 
 .title {

@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./MainPoster.module.css";
+import style from "./NotificationMatched.module.css";
 
 export default function NotificationMatched() {
   return (

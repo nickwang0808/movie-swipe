@@ -8,7 +8,7 @@ import DislikedMovieInMyList from "./DislikedMovieInMyList";
 export default function DislikedMovies() {
 
   return (
-    <div className={style.container_friendsscreen}>
+    <div className="container_allcontent">
       <div className={style.container_header}>
         <h1>
           <BackButton linkTo="/profile" />

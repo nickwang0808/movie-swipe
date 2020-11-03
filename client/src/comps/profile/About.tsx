@@ -8,7 +8,7 @@ import { ReactComponent as Logo_TMDB } from '../../img/logo_tmdb.svg';
 export default function About() {
 
   return (
-    <div className={style.container_friendsscreen}>
+    <div className="container_allcontent">
       <div className={style.container_header}>
         <h1>
           <BackButton linkTo="/profile" />
