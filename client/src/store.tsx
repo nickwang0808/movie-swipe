@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MovieDetail } from "./APICalls/searchMovieByID";
 import useGetLikedMovies from "./db-operations/useGetLikedMovies";
 import useGetMovies, { Result } from "./db-operations/useGetMovies";
-import useGetUser from "./db-operations/useGetUser";
+import useGetUser, { IUserProfile } from "./db-operations/useGetUser";
 import { auth } from "./firebase/config";
 import useGetWIndowsSizing, {
   ISize,
@@ -15,7 +15,7 @@ interface IUser {
 
 interface IStore {
   userAuth: IUser | undefined | null;
-  userProfile: any;
+  userProfile: IUserProfile | undefined;
   likedMoviesInfos: MovieDetail[];
   movieListInDeck: Result[] | undefined;
   isLoading: boolean;

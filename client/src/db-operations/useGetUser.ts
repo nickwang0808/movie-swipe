@@ -2,23 +2,34 @@ import { firestore } from "firebase";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 
+export interface IUserProfile {
+  friends: string[];
+}
+
 export default function useGetUser(user_id: string) {
   // eslint-disable-next-line
-  const [userProfile, setUserProfile] = useState<firestore.DocumentData>();
+  const [userProfile, setUserProfile] = useState<IUserProfile>();
 
   useEffect(() => {
+    const userRef = db.collection("Users").doc(user_id);
+    // first time user init
     (async function () {
       if (user_id) {
-        const userRef = db.collection("Users").doc(user_id);
-
         // document must have fields to be get-able, so I'm querying the deep nested doc
         const doc = await userRef
           .collection("User_Details")
           .doc("Liked_Movies")
           .get();
         if (doc.exists) {
-          // TODO: get groups
-          // console.log("user exist");
+          // retrieve all the friends
+          const doc = await userRef
+            .collection("User_Details")
+            .doc("Friends")
+            .get();
+          const data = doc.data();
+          if (data) {
+            setUserProfile({ ...data.friends });
+          }
         } else if (!doc.exists) {
           // if no user found in db, create empty docs for them
           // console.log("init user create");
@@ -30,7 +41,10 @@ export default function useGetUser(user_id: string) {
             .collection("User_Details")
             .doc("Disliked_Movies")
             .set({ disliked_movies: [] });
-          userRef.collection("User_Details").doc("Groups").set({ groups: [] });
+          userRef
+            .collection("User_Details")
+            .doc("Friends")
+            .set({ friends: [] });
         }
       }
     })();
@@ -38,16 +52,3 @@ export default function useGetUser(user_id: string) {
 
   return userProfile;
 }
-
-// for some reason batch didn't work here
-// db.batch().set(
-//   userRef.collection("User_Details").doc("Liked_Movies"),
-//   { liked_movies: [] }
-// );
-// db.batch().set(
-//   userRef.collection("User_Details").doc("DisLiked_Movies"),
-//   { disliked_movies: [] }
-// );
-// db.batch().set(userRef.collection("User_Details").doc("Groups"), {
-//   groups: [],
-// });
