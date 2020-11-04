@@ -26,9 +26,9 @@ export default function MyProfile() {
             <ListViewButton name="Disliked Media" />
           </Link>
           <Link className="link" to="/profile/about">
-          <ListViewButton name="About MovieSync" />
+            <ListViewButton name="About MovieSync" />
           </Link>
-          <div className="listview_separator_full"/>
+          <div className="listview_separator_full" />
           <ListViewButton
             name="Sign Out"
             action={() => cfaSignOut().subscribe()}

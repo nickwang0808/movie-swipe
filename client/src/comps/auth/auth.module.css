@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 80%;
+  width: calc(100% - 8rem);
   height: 100%;
   margin: auto;
 }
@@ -39,8 +39,10 @@ label {
   font-size: 2rem;
   padding-bottom: 1rem;
 }
+
 input {
   padding: 1rem;
+  margin-bottom: 2rem;
   font-size: 2.5rem;
   color: #0b0728;
   border-radius: 4px;
@@ -66,15 +68,14 @@ input:focus {
   border: 2px solid var(--dark);
   background-color: var(--light);
   text-align: center;
-  border-radius: 3px;
+  border-radius: 30px;
   color: #000000;
   cursor: pointer;
   margin: auto;
-  line-height: 5rem;
   font-weight: 900;
   font-size: 2rem;
   width: -webkit-fill-available;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
 }
 
 .login_container .email form button:nth-of-type(2n) {
@@ -84,11 +85,12 @@ input:focus {
   height: 5rem;
   background-color: transparent;
   text-align: center;
-  color: #000000;
+  color: var(--highlight);
   cursor: pointer;
   margin: auto;
-  line-height: 5rem;
-  font-weight: 900;
+  font-weight: 400;
   font-size: 2rem;
+  line-height: 2rem;
+  border: 0;
   width: -webkit-fill-available;
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MovieDetail } from "./APICalls/searchMovieByID";
 import useGetLikedMovies from "./db-operations/useGetLikedMovies";
 import useGetMovies, { Result } from "./db-operations/useGetMovies";
-import useGetUser from "./db-operations/useGetUser";
+import useGetUser, { IUserProfile } from "./db-operations/useGetUser";
 import { auth } from "./firebase/config";
 import useGetWIndowsSizing, {
   ISize,
@@ -15,7 +15,7 @@ interface IUser {
 
 interface IStore {
   userAuth: IUser | undefined | null;
-  userProfile: any;
+  userProfile: IUserProfile | undefined;
   likedMoviesInfos: MovieDetail[];
   movieListInDeck: Result[] | undefined;
   isLoading: boolean;
@@ -41,8 +41,7 @@ export default function StoreProvider({
   const size = useGetWIndowsSizing();
 
   useEffect(() => {
-    if (movieListInDeck) setIsLoading(false);
-    if (userAuth !== undefined) setIsLoading(false);
+    if (userAuth !== undefined && movieListInDeck) setIsLoading(false);
   }, [movieListInDeck, userAuth]);
 
   useEffect(() => {
@@ -53,6 +52,7 @@ export default function StoreProvider({
       } else {
         // null is for no user logged in
         setUserAuth(null);
+        setIsLoading(false);
       }
     });
   }, []);
