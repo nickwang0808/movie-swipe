@@ -55,17 +55,17 @@ export default function Deck({
                     }}
                     exit={
                       isLike
-                        ? { x: "1000px", rotate: 50, zIndex: 100 }
+                        ? { x: "700px", rotate: 20, zIndex: 100 }
                         : {
-                            x: "-1000px",
-                            rotate: -50,
+                            x: "-700px",
+                            rotate: -20,
                             zIndex: 100,
                           }
                     }
                     layout
                     transition={{
                       duration: 0.5,
-                      ease: [0.16, 1, 0.3, 1],
+                      ease: "circOut",
                     }}
                   >
                     <MainPoster imgUrl={movie.poster_path} movie={movie} />
