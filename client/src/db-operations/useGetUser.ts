@@ -1,6 +1,5 @@
-import { firestore } from "firebase";
 import { useEffect, useState } from "react";
-import { db } from "../firebase/config";
+import { auth, db } from "../firebase/config";
 
 export interface IUserProfile {
   friends: string[];
@@ -31,8 +30,15 @@ export default function useGetUser(user_id: string) {
             setUserProfile({ ...data.friends });
           }
         } else if (!doc.exists) {
-          // if no user found in db, create empty docs for them
+          // if no user found in db, init docs for them
           // console.log("init user create");
+          const userInfo = auth.currentUser;
+          console.log("userInfo", userInfo);
+          const name = userInfo?.displayName;
+          const email = userInfo?.email;
+          const uid = userInfo?.uid;
+          await userRef.set({ name, email, uid });
+
           userRef
             .collection("User_Details")
             .doc("Liked_Movies")
