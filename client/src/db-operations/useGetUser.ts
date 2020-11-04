@@ -50,7 +50,7 @@ export default function useGetUser(user_id: string) {
           userRef
             .collection("User_Details")
             .doc("Friends")
-            .set({ friends: [] });
+            .set({ friends: [], pending_sent: [], pending_received: [] });
         }
       })();
     }

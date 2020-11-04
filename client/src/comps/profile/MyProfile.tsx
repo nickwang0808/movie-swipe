@@ -4,7 +4,7 @@ import style from "./MyProfile.module.css";
 import Modal from "../notification/modal";
 import { cfaSignOut } from "capacitor-firebase-auth";
 import { auth } from "../../firebase/config";
-import WatchGroups from "./WatchGroups";
+import Friends from "./Frends";
 import About from "./About";
 import DislikedMovies from "./DislikedMovies";
 
@@ -16,10 +16,10 @@ export default function MyProfile() {
   return (
     <div>
       {/* <Modal /> */}
-      <Route exact path="/profile">
+      <Route path="/profile">
         <h1>My Profile</h1>
         <div className={style.settings_container}>
-          <Link className="link" to="/profile/watch-groups">
+          <Link className="link" to="/profile/friends">
             <ListViewButton name="Friends" />
           </Link>
           <Link className="link" to="/profile/dislikedmovies">
@@ -42,8 +42,8 @@ export default function MyProfile() {
           />
         </div>
       </Route>
-      <Route exact path="/profile/watch-groups">
-        <WatchGroups />
+      <Route exact path="/profile/friends">
+        <Friends />
       </Route>
       <Route exact path="/profile/about">
         <About />
