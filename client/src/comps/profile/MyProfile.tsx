@@ -16,7 +16,7 @@ export default function MyProfile() {
   return (
     <div>
       {/* <Modal /> */}
-      <Route path="/profile">
+      <Route exact path="/profile">
         <h1>My Profile</h1>
         <div className={style.settings_container}>
           <Link className="link" to="/profile/friends">

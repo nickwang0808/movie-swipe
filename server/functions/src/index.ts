@@ -1,29 +1,24 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-const serviceAccount = require("../secret.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://movie-swipe-82f52.firebaseio.com",
-});
+// const serviceAccount = require("../secret.json");
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://movie-swipe-82f52.firebaseio.com",
+// });
+const app = admin.initializeApp({ projectId: "YOUR_PROJECT_ID" });
 
 const db = admin.firestore();
 const arrayUnion = admin.firestore.FieldValue.arrayUnion;
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
-
-export const test = functions.https.onCall((data, context) => {
+export const test = functions.https.onCall(async (data, context) => {
   console.log("test function ran");
+  await db.collection("Users").add({ name: "Nick" });
 });
 
 export const sendFriendReq = functions.https.onCall(async (data, context) => {
   if (context.auth) {
+    console.log("if (context.auth) ");
+
     const emailToFind = data.email;
     // make sure data format is correct
     if (!(typeof emailToFind === "string") || emailToFind.length === 0) {
@@ -35,9 +30,12 @@ export const sendFriendReq = functions.https.onCall(async (data, context) => {
     }
 
     const currentUserUid = context.auth.uid;
+    console.log("currentUserUid", currentUserUid);
     // make sure user is authenticated
-    const userFound = await admin.auth().getUserByEmail(emailToFind);
+    const userFound = await admin.auth(app).getUserByEmail(emailToFind);
+    console.log("userFound", userFound);
     if (userFound) {
+      console.log("user found");
       const userFoundUid = userFound.uid;
       const UsersRef = db.collection("Users");
       // add to current user pending send
