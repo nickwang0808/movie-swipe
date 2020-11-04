@@ -52,6 +52,7 @@ export default function StoreProvider({
       } else {
         // null is for no user logged in
         setUserAuth(null);
+        setIsLoading(false);
       }
     });
   }, []);

@@ -11,10 +11,10 @@ export default function useGetUser(user_id: string) {
   const [userProfile, setUserProfile] = useState<IUserProfile>();
 
   useEffect(() => {
-    const userRef = db.collection("Users").doc(user_id);
-    // first time user init
-    (async function () {
-      if (user_id) {
+    if (user_id) {
+      const userRef = db.collection("Users").doc(user_id);
+      // first time user init
+      (async function () {
         // document must have fields to be get-able, so I'm querying the deep nested doc
         const doc = await userRef
           .collection("User_Details")
@@ -46,8 +46,8 @@ export default function useGetUser(user_id: string) {
             .doc("Friends")
             .set({ friends: [] });
         }
-      }
-    })();
+      })();
+    }
   }, [user_id]);
 
   return userProfile;
