@@ -1,32 +1,29 @@
 import React from "react";
 import style from "./MyProfile.module.css";
 import ListViewPendingInvite from "../ButtonComps/ListViewPendingInvite";
+import { IIdEmail } from "../../db-operations/useGetUser";
 
 interface IPendingInvite {
-  handleDecline: () => void;
-  handleAccept: () => void;
+  pendingReceived: IIdEmail[] | undefined;
 }
 
-export default function PendingInvite({
-  handleDecline,
-  handleAccept,
-}: IPendingInvite) {
+export default function PendingInvite({ pendingReceived }: IPendingInvite) {
   return (
     <div className="container_subcontent">
       <div className={`${"title"}`}>
         <h2>Pending Invites</h2>
       </div>
-      <ListViewPendingInvite
-        handleDecline={handleDecline}
-        handleAccept={handleAccept}
-        name="NickWangTech@Gmail.com"
-      />
-
-      <ListViewPendingInvite
-        handleDecline={handleDecline}
-        handleAccept={handleAccept}
-        name="NickWangTech@Gmail.com"
-      />
+      {pendingReceived &&
+        pendingReceived.map((user) => {
+          return (
+            <ListViewPendingInvite
+              handleDecline={() => console.log("Decline")}
+              handleAccept={() => console.log("accept")}
+              name={user.email}
+              key={user.id}
+            />
+          );
+        })}
     </div>
   );
 }

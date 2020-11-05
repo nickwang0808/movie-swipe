@@ -24,4 +24,4 @@ export const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
 
 // firebase.firestore().settings({ host: "localhost:8080", ssl: false });
 // firebase.auth().useEmulator("http://localhost:9099/");
-firebase.functions().useFunctionsEmulator("http://localhost:5001");
+firebase.functions().useFunctionsEmulator("http://0.0.0.0:5001");

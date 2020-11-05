@@ -5,17 +5,11 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://movie-swipe-82f52.firebaseio.com",
 });
-// const app = admin.initializeApp({ projectId: "YOUR_PROJECT_ID" });
 const db = admin.firestore();
 const arrayUnion = admin.firestore.FieldValue.arrayUnion;
 
-export const test = functions.https.onCall(async (data, context) => {
-  console.log("serviceAccount", serviceAccount);
-  const doc = await db
-    .collection("Users")
-    .doc("BdZTENqnboVUDpbZqHoExJLhoOm2")
-    .get();
-  console.log(doc.data());
+export const test2 = functions.https.onRequest((req, res) => {
+  console.log("hello test2");
 });
 
 export const sendFriendReq = functions.https.onCall(async (data, context) => {
@@ -35,27 +29,31 @@ export const sendFriendReq = functions.https.onCall(async (data, context) => {
     const currentUserUid = context.auth.uid;
     console.log("currentUserUid", currentUserUid);
     // make sure user is authenticated
-    const userFound = await admin.auth().getUserByEmail(emailToFind);
-    console.log("userFound", userFound);
-    if (userFound) {
-      console.log("user found");
-      const userFoundUid = userFound.uid;
-      const UsersRef = db.collection("Users");
-      // add to current user pending send
-      await UsersRef.doc(currentUserUid)
-        .collection("User_Details")
-        .doc("Friends")
-        .update({
-          pending_sent: arrayUnion(userFoundUid),
-        });
-      // add to receiving user pending receive
-      await UsersRef.doc(userFoundUid)
-        .collection("User_Details")
-        .doc("Friends")
-        .update({
-          pending_receive: arrayUnion(userFoundUid),
-        });
-      console.log("friend request sent");
+    try {
+      const userFound = await admin.auth().getUserByEmail(emailToFind);
+      if (userFound) {
+        console.log("user found");
+        const userFoundUid = userFound.uid;
+        const UsersRef = db.collection("Users");
+        // add to current user pending send
+        await UsersRef.doc(currentUserUid)
+          .collection("User_Details")
+          .doc("Friends")
+          .update({
+            pending_sent: arrayUnion(userFoundUid),
+          });
+        // add to receiving user pending receive
+        await UsersRef.doc(userFoundUid)
+          .collection("User_Details")
+          .doc("Friends")
+          .update({
+            pending_received: arrayUnion(currentUserUid),
+          });
+        console.log("friend request sent");
+        return "Friend Reqest Sent!";
+      }
+    } catch (err) {
+      return err;
     }
   } else {
     throw new functions.https.HttpsError(
