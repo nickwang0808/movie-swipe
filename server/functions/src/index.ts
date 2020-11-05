@@ -1,18 +1,21 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-// const serviceAccount = require("../secret.json");
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://movie-swipe-82f52.firebaseio.com",
-// });
-const app = admin.initializeApp({ projectId: "YOUR_PROJECT_ID" });
-
+const serviceAccount = require("./secret.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://movie-swipe-82f52.firebaseio.com",
+});
+// const app = admin.initializeApp({ projectId: "YOUR_PROJECT_ID" });
 const db = admin.firestore();
 const arrayUnion = admin.firestore.FieldValue.arrayUnion;
 
 export const test = functions.https.onCall(async (data, context) => {
-  console.log("test function ran");
-  await db.collection("Users").add({ name: "Nick" });
+  console.log("serviceAccount", serviceAccount);
+  const doc = await db
+    .collection("Users")
+    .doc("BdZTENqnboVUDpbZqHoExJLhoOm2")
+    .get();
+  console.log(doc.data());
 });
 
 export const sendFriendReq = functions.https.onCall(async (data, context) => {
@@ -32,7 +35,7 @@ export const sendFriendReq = functions.https.onCall(async (data, context) => {
     const currentUserUid = context.auth.uid;
     console.log("currentUserUid", currentUserUid);
     // make sure user is authenticated
-    const userFound = await admin.auth(app).getUserByEmail(emailToFind);
+    const userFound = await admin.auth().getUserByEmail(emailToFind);
     console.log("userFound", userFound);
     if (userFound) {
       console.log("user found");

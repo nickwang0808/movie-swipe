@@ -21,8 +21,8 @@ export default function Friends() {
 
   const handleInvite = () => {
     console.log("run cloud fn");
-    cloudFn.httpsCallable("sendFriendReq")({ email: emailInput });
-    // cloudFn.httpsCallable("test")();
+    // cloudFn.httpsCallable("sendFriendReq")({ email: emailInput });
+    cloudFn.httpsCallable("test")();
   };
 
   return (
