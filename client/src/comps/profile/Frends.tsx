@@ -15,8 +15,11 @@ export default function Friends() {
   const [disableInvite, setDisableInvite] = useState(false);
 
   const handleInvite = async () => {
+    cloudFn.httpsCallable("test2")();
     if (emailInput === userAuth?.userInfo.email) {
       console.log("you can't add yourself as friend");
+    } else if (emailInput.length === 0) {
+      console.log("error, please enter something");
     } else {
       setDisableInvite(true);
       const frienReqStatus = await cloudFn.httpsCallable("sendFriendReq")({
