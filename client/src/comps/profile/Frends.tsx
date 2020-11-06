@@ -19,7 +19,7 @@ export default function Friends() {
     if (emailInput === userAuth?.userInfo.email) {
       console.log("you can't add yourself as friend");
     } else if (emailInput.length === 0) {
-      console.log("error, please enter something");
+      console.log("please input email");
     } else {
       setDisableInvite(true);
       const frienReqStatus = await cloudFn.httpsCallable("sendFriendReq")({

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { auth, db } from "../firebase/config";
+import { auth, cloudFn, db } from "../firebase/config";
 
 export interface IIdEmail {
   id: string;
@@ -19,74 +19,61 @@ export default function useGetUser(user_id: string) {
   useEffect(() => {
     if (user_id) {
       const userRef = db.collection("Users").doc(user_id);
-      // first time user init
+
       (async function () {
         // document must have fields to be get-able, so I'm querying the deep nested doc
         const doc = await userRef
           .collection("User_Details")
           .doc("Liked_Movies")
-          .get();
+          .get(); // check if user's record is in the db
         if (doc.exists) {
           // retrieve all the friends
-          const doc = await userRef
+          const cleanUp = userRef
             .collection("User_Details")
             .doc("Friends")
-            .get();
+            .onSnapshot(async (doc) => {
+              const data = doc.data();
 
-          // TODO: make this real time, and the looks up fn to server
-          const data = doc.data();
-          if (data) {
-            const friends: string[] = data.friends;
-            const friendsArray: IIdEmail[] = [];
-            if (friends.length > 0) {
-              friends.forEach(async (id) => {
-                const doc = await db.collection("Users").doc(id).get();
-                if (doc.exists) {
-                  const data = doc.data();
-                  if (data) {
-                    friendsArray.push({ email: data.email, id: data.uid });
-                  }
-                }
-              });
-            }
+              // parse friends and requests ID to readable info
+              if (data) {
+                const friends: string[] = data.friends;
+                const pending_received: string[] = data.pending_received;
+                const pending_sent: string[] = data.pending_sent;
 
-            const pending_received: string[] = data.pending_received;
-            const pending_receivedArray: IIdEmail[] = [];
-            if (pending_received.length > 0) {
-              pending_received.forEach(async (id) => {
-                const doc = await db.collection("Users").doc(id).get();
-                if (doc.exists) {
-                  const data = doc.data();
-                  if (data) {
-                    pending_receivedArray.push({
-                      email: data.email,
-                      id: data.uid,
+                // combine all the ids and send it to server, easier to parse this way
+                const searchQuery = [
+                  ...friends,
+                  ...pending_received,
+                  ...pending_sent,
+                ];
+
+                if (searchQuery.length > 0) {
+                  const results = await cloudFn.httpsCallable("userLookUp")({
+                    UserIDs: searchQuery,
+                  });
+                  const UsersInfoLookupResults = results.data;
+
+                  // cloud fn returns array of info, use this function to match with the unorganized info
+                  const matchInfoToID = (idArray: string[]) => {
+                    return idArray.map((id) => {
+                      const found = UsersInfoLookupResults.find(
+                        (result: IIdEmail) => result.id === id
+                      );
+
+                      return found;
                     });
-                  }
-                }
-              });
-            }
+                  };
 
-            const pending_sent: string[] = data.pending_sent;
-            const pending_sentArray: IIdEmail[] = [];
-            if (pending_sent.length > 0) {
-              pending_sent.forEach(async (id) => {
-                const doc = await db.collection("Users").doc(id).get();
-                if (doc.exists) {
-                  const data = doc.data();
-                  if (data) {
-                    pending_sentArray.push({ email: data.email, id: data.uid });
-                  }
+                  return setUserProfile({
+                    friends: matchInfoToID(friends),
+                    pending_received: matchInfoToID(pending_received),
+                    pending_sent: matchInfoToID(pending_sent),
+                  });
                 }
-              });
-            }
-
-            setUserProfile({
-              friends: friendsArray,
-              pending_received: pending_receivedArray,
-              pending_sent: pending_sentArray,
+              }
             });
-          }
+
+          return () => cleanUp();
         } else if (!doc.exists) {
           // if no user found in db, init docs for them
           // console.log("init user create");
