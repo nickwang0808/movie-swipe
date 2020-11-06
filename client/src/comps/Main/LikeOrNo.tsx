@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import FilterButton from "../ButtonComps/FilterButton";
 import Logo from "../Decorators/Logo";
 import Filters from "../filter/Filters";
-// import NotificationMatched from "./NotificationMatched";
+import NotificationMatched from "./MainPoster/NotificationMatched";
+import VoteLarge_Down from "./MainPoster/VoteLarge_Down";
+import VoteLarge_Up from "./MainPoster/VoteLarge_Up";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
@@ -80,6 +82,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
         </div>
         {/* <div className="loader"></div> */}
         {/* <NotificationMatched /> */}
+        {/* < VoteLarge_Up /> */}
+        {/* < VoteLarge_Down /> */}
         <Deck
           movieListInDeck={movieListInDeck}
           handleLike={handleLike}

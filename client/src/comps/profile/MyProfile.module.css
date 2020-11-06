@@ -42,3 +42,7 @@
 .container_logo_tmdb svg {
   height: 4rem;
 }
+
+.invite_input_container input {
+  margin-bottom: 0rem;
+}

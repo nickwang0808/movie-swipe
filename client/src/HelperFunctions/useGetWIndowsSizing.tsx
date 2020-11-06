@@ -10,8 +10,8 @@ export default function useGetWIndowsSizing() {
   useLayoutEffect(() => {
     function updateSize() {
       document.documentElement.style.setProperty(
-        "--global-window-inner-height" + "px",
-        String(window.innerHeight)
+        "--global-window-inner-height",
+        String(window.innerHeight) + "px"
       );
       setSize({ height: window.innerHeight, XCenter: window.innerWidth / 2 });
     }

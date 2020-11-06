@@ -1,0 +1,84 @@
+.who_matched {
+  border-radius: 5px;
+  margin-bottom: 2rem;
+  border: 2px solid var(--positive);
+  background-color: var(--light);
+  position: relative;
+  font-size: 2rem;
+  font-weight: 400;
+  text-align: left;
+  fill: var(--positive);
+  padding: 3rem 0 2rem 0;
+}
+
+.matched_animation_cover {
+  height: 6rem;
+  grid-template-rows: 100%;
+  align-items: center;
+  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.matched {
+  padding: 0.3em 1em;
+  background-color: var(--positive);
+  font-size: 1.5rem;
+  font-weight: 900;
+  border-radius: 0.3em;
+  transform: skewX(-15deg);
+  position: absolute;
+  top: -11px;
+  left: 1.5rem;
+  overflow: visible;
+}
+
+.forceSkew {
+  transform: skewX(15deg);
+}
+
+.matched_animation {
+  background-color: var(--positive);
+  transform: skewX(-15deg);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 7rem;
+  right: 0;
+  top: 5rem;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+.matched_animation p {
+  transform: skewX(15deg);
+  font-size: 1.8rem;
+  font-weight: 400;
+  padding: 0 10rem 0 3rem;
+  text-align: left;
+  line-height: 2rem;
+}
+
+.flexitems {
+  text-align: left;
+}
+
+.matched_partner {
+  margin: 0rem 0 2rem 2rem;
+}
+
+.matched_thumb {
+  opacity: 0;
+  position: absolute;
+  left: 2.5rem;
+  top: 1.5rem;
+}
+
+.btn_watched {
+  margin: 0 2rem;
+}
