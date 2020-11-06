@@ -170,10 +170,15 @@
   align-items: center;
 }
 .btn_listviewFriend .trash {
-  fill: var(--highlight);
+  fill: var(--negative);
   height: 4.5rem;
   padding-right: 4rem;
 }
+
+.btn_listviewFriend .trash:active {
+  fill: var(--highlight);
+}
+
 .btn_listviewUser {
   padding: 2rem 0 0 4rem;
   font-size: 2em;
