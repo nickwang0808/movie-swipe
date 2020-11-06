@@ -112,7 +112,7 @@ export default function MovieDetails({
         <div className={style.container_info}>
           <div className={style.container_watch}></div>
           <div className={style.container_description}>
-            <WatchedAlert/>
+            {/* <WatchedAlert/> */}
             <p>{movieDetails?.overview}</p>
           </div>
           {/* <div className={style.container_available}>
