@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { auth, db } from "../firebase/config";
+import { auth, cloudFn, db } from "../firebase/config";
 
 export interface IIdEmail {
   id: string;
@@ -37,55 +37,39 @@ export default function useGetUser(user_id: string) {
           const data = doc.data();
           if (data) {
             const friends: string[] = data.friends;
-            const friendsArray: IIdEmail[] = [];
-            if (friends.length > 0) {
-              friends.forEach(async (id) => {
-                const doc = await db.collection("Users").doc(id).get();
-                if (doc.exists) {
-                  const data = doc.data();
-                  if (data) {
-                    friendsArray.push({ email: data.email, id: data.uid });
-                  }
-                }
-              });
-            }
-
             const pending_received: string[] = data.pending_received;
-            const pending_receivedArray: IIdEmail[] = [];
-            if (pending_received.length > 0) {
-              pending_received.forEach(async (id) => {
-                const doc = await db.collection("Users").doc(id).get();
-                if (doc.exists) {
-                  const data = doc.data();
-                  if (data) {
-                    pending_receivedArray.push({
-                      email: data.email,
-                      id: data.uid,
-                    });
-                  }
-                }
-              });
-            }
-
             const pending_sent: string[] = data.pending_sent;
-            const pending_sentArray: IIdEmail[] = [];
-            if (pending_sent.length > 0) {
-              pending_sent.forEach(async (id) => {
-                const doc = await db.collection("Users").doc(id).get();
-                if (doc.exists) {
-                  const data = doc.data();
-                  if (data) {
-                    pending_sentArray.push({ email: data.email, id: data.uid });
-                  }
-                }
+
+            const searchQuery = [
+              ...friends,
+              ...pending_received,
+              ...pending_sent,
+            ];
+
+            if (searchQuery.length > 0) {
+              const results = await cloudFn.httpsCallable("userLookUp")({
+                UserIDs: searchQuery,
+              });
+              const UsersInfoLookupResults = results.data;
+              console.log("UsersInfoLookupResults", UsersInfoLookupResults);
+
+              // cloud fn return array of info, use this function to match with the unorganized info
+              const matchInfoToID = (idArray: string[]) => {
+                return idArray.map((id) => {
+                  const found = UsersInfoLookupResults.find(
+                    (result: IIdEmail) => result.id === id
+                  );
+
+                  return found;
+                });
+              };
+
+              return setUserProfile({
+                friends: matchInfoToID(friends),
+                pending_received: matchInfoToID(pending_received),
+                pending_sent: matchInfoToID(pending_sent),
               });
             }
-
-            setUserProfile({
-              friends: friendsArray,
-              pending_received: pending_receivedArray,
-              pending_sent: pending_sentArray,
-            });
           }
         } else if (!doc.exists) {
           // if no user found in db, init docs for them
