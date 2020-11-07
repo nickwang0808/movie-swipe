@@ -1,23 +1,35 @@
-import React from "react";
+import React, { useContext } from "react";
 import style from "./MyProfile.module.css";
 import ListViewPendingInvite from "../ButtonComps/ListViewPendingInvite";
 import { IIdEmail } from "../../db-operations/useGetUser";
 import { cloudFn } from "../../firebase/config";
-import { decline } from "../../db-operations/handleFriendReq";
+import { accept, decline } from "../../db-operations/handleFriendReq";
+import { UserContext } from "../../store";
 
 interface IPendingInvite {
   pendingReceived: IIdEmail[] | undefined;
 }
 
 export default function PendingInvite({ pendingReceived }: IPendingInvite) {
-  const handleDecline = async (id: string) => {
-    decline(id);
-    const results = await cloudFn.httpsCallable("decline")({ id });
-    console.log(results);
+  const { userAuth } = useContext(UserContext);
+
+  const handleDecline = async (senderId: string) => {
+    if (userAuth) {
+      decline(userAuth.userInfo.uid, senderId); // this directly writes to the db of the current user
+      const results = await cloudFn.httpsCallable("declineRequest")({
+        id: senderId,
+      });
+      console.log(results);
+    }
   };
-  const handleAccept = async (id: string) => {
-    const results = await cloudFn.httpsCallable("accept")({ id });
-    console.log(results);
+  const handleAccept = async (senderId: string) => {
+    if (userAuth) {
+      accept(userAuth.userInfo.uid, senderId); // this directly writes to the db of the current user
+      const results = await cloudFn.httpsCallable("acceptRequest")({
+        id: senderId,
+      });
+      console.log(results);
+    }
   };
 
   return (

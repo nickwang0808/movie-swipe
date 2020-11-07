@@ -69,6 +69,8 @@ export default function useGetUser(user_id: string) {
                     pending_received: matchInfoToID(pending_received),
                     pending_sent: matchInfoToID(pending_sent),
                   });
+                } else {
+                  return setUserProfile(undefined);
                 }
               }
             });
