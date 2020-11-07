@@ -34,14 +34,14 @@ export const acceptRequest = functions.https.onCall(async (data, context) => {
 
 export const declineRequest = functions.https.onCall(async (data, context) => {
   if (context.auth) {
-    const myDocRef = db
-      .collection("Users")
-      .doc(context.auth.uid)
-      .collection("User_Details")
-      .doc("Friends");
-    await myDocRef.update({
-      pending_received: arrayRemove(data.id),
-    });
+    // const myDocRef = db
+    //   .collection("Users")
+    //   .doc(context.auth.uid)
+    //   .collection("User_Details")
+    //   .doc("Friends");
+    // await myDocRef.update({
+    //   pending_received: arrayRemove(data.id),
+    // });
 
     const incomingDocRef = db
       .collection("Users")

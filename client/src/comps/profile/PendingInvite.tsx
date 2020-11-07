@@ -3,6 +3,7 @@ import style from "./MyProfile.module.css";
 import ListViewPendingInvite from "../ButtonComps/ListViewPendingInvite";
 import { IIdEmail } from "../../db-operations/useGetUser";
 import { cloudFn } from "../../firebase/config";
+import { decline } from "../../db-operations/handleFriendReq";
 
 interface IPendingInvite {
   pendingReceived: IIdEmail[] | undefined;
@@ -10,6 +11,7 @@ interface IPendingInvite {
 
 export default function PendingInvite({ pendingReceived }: IPendingInvite) {
   const handleDecline = async (id: string) => {
+    decline(id);
     const results = await cloudFn.httpsCallable("decline")({ id });
     console.log(results);
   };
