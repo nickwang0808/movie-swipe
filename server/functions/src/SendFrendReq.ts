@@ -41,7 +41,8 @@ const sendFrendReq = functions.https.onCall(async (data, context) => {
             pending_received: arrayUnion(currentUserUid),
           });
         console.log("friend request sent");
-        return "Friend Reqest Sent!";
+        // return "Friend Reqest Sent!";
+        return { message: "Friend Req sent!" };
       }
     } catch (err) {
       return err;
