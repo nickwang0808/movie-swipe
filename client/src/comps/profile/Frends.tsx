@@ -48,8 +48,10 @@ export default function Friends() {
           <PendingInvite pendingReceived={userProfile?.pending_received} />
         )}
 
+        {userProfile?.friends && (
         <div className="container_subcontent">
           <div className={`${"title"}`}>
+            <div className="listview_separator_full" />
             <h2>Friends</h2>
           </div>
           {userProfile &&
@@ -57,8 +59,11 @@ export default function Friends() {
               return <ListViewFriendsButton name={user.email} key={user.id} />;
             })}
         </div>
+        )}
+        
         <div className="container_subcontent">
           <div className={`${"title"}`}>
+            <div className="listview_separator_full" />
             <h2>Invite New Friends</h2>
           </div>
           <div className={style.container_inset}>
@@ -73,7 +78,7 @@ export default function Friends() {
               <button
                 disabled={disableInvite}
                 onClick={handleInvite}
-                className={`${sharedstyle.btn} ${sharedstyle.btnInvite}`}
+                className={`${sharedstyle.btn}`}
               >
                 Invite
               </button>

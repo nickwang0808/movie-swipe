@@ -263,7 +263,7 @@ a {
 }
 
 .title {
-  background-color: var(--gray);
+  /* background-color: var(--gray); */
   height: 5rem;
 }
 
@@ -275,5 +275,5 @@ a {
 }
 
 .container_subcontent {
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }

@@ -24,16 +24,20 @@ export default function About() {
         </div>
         <div className="container_subcontent">
         <div className={`${"title"} ${"marginBottom2"}`}>
-              <h2>Need to chat?</h2>
+        <div className="listview_separator_full" />
+
+             <h2>Need to chat?</h2>
           </div>
           <div className={style.container_inset}>
-              <div className={`${sharedstyle.btn} ${sharedstyle.btnInvite}`}>
+              <div className={`${sharedstyle.btn}`}>
                   Hello@Movie-Sync.com
               </div><div></div>
           </div>
         </div>
         <div className="container_subcontent">
           <div className={`${"title"} ${"marginBottom2"}`}>
+          <div className="listview_separator_full" />
+
               <h2>Contributions</h2>
           </div>
           <div className={`${style.container_inset}`}>

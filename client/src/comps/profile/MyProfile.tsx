@@ -23,7 +23,7 @@ export default function MyProfile() {
             <ListViewButton name="Friends" />
           </Link>
           <Link className="link" to="/profile/dislikedmovies">
-            <ListViewButton name="Disliked Media" />
+            <ListViewButton name="Disliked Movies" />
           </Link>
           <Link className="link" to="/profile/about">
             <ListViewButton name="About MovieSync" />
