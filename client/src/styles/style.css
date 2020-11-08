@@ -197,6 +197,7 @@ a {
 }
 .container_poster {
   margin: 0 auto;
+  position: relative;
 }
 
 .poster_overview {
