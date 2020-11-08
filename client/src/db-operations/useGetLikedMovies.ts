@@ -4,6 +4,7 @@ import { db } from "../firebase/config";
 
 export default function useGetLikedMovies(userID: string) {
   const [likedMoviesInfos, setLikedMoviesInfos] = useState<MovieDetail[]>([]);
+  const [likedMovieIds, setLikedMovieIds] = useState<string[]>();
 
   useEffect(() => {
     if (userID) {
@@ -17,6 +18,7 @@ export default function useGetLikedMovies(userID: string) {
             const data = doc.data();
             if (data) {
               // here we take the fetched id and get the actual movie data
+              setLikedMovieIds(data.liked_movies);
               const tempArray: MovieDetail[] = [];
               data.liked_movies.forEach(async (movieID: number) => {
                 const movieDetails = await searchMovieByID(movieID);
@@ -33,5 +35,5 @@ export default function useGetLikedMovies(userID: string) {
     }
   }, [userID]);
 
-  return likedMoviesInfos;
+  return { likedMoviesInfos, likedMovieIds };
 }

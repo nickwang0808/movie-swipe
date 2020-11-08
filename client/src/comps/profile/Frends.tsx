@@ -6,19 +6,20 @@ import PendingInvite from "./PendingInvite";
 import BackButton from "../ButtonComps/BackButton";
 import { UserContext } from "../../store";
 import { cloudFn } from "../../firebase/config";
+import { deleteFriend } from "../../db-operations/handleFriendReq";
 
 export default function Friends() {
   const { userAuth, userProfile } = useContext(UserContext);
 
   const [emailInput, setEmailInput] = useState("");
-  const [message, setMessage] = useState(false);
+  const [message, setMessage] = useState<string>();
   const [disableInvite, setDisableInvite] = useState(false);
 
   const handleInvite = async () => {
     if (emailInput === userAuth?.userInfo.email) {
-      console.log("You can't add yourself as friend.");
+      setMessage("you can't add yourself as friend");
     } else if (emailInput.length === 0) {
-      console.log("Enter a valid email first.");
+      setMessage("please input email");
     } else {
       setDisableInvite(true);
       const frienReqStatus = await cloudFn.httpsCallable("sendFriendReq")({
@@ -27,6 +28,7 @@ export default function Friends() {
       console.log("Friends -> frienReqStatus", frienReqStatus.data.message);
 
       setMessage(frienReqStatus.data.message);
+      setEmailInput("");
       setDisableInvite(false);
     }
   };
@@ -41,25 +43,33 @@ export default function Friends() {
       </div>
       <div className={style.container_subcontent}>
         <h2 className={style.title_bold}>
-          We'll let you know when you and your friends both want to watch something!
+          We'll let you know when you and your friends both want to watch
+          something!
         </h2>
         {userProfile?.pending_received && (
           <PendingInvite pendingReceived={userProfile?.pending_received} />
         )}
 
         {userProfile?.friends && (
-        <div className="container_subcontent">
-          <div className={`${"title"}`}>
-            <div className="listview_separator_full" />
-            <h2>Friends</h2>
+          <div className="container_subcontent">
+            <div className={`${"title"}`}>
+              <div className="listview_separator_full" />
+              <h2>Friends</h2>
+            </div>
+            {userProfile &&
+              userAuth &&
+              userProfile.friends.map((user) => {
+                return (
+                  <ListViewFriendsButton
+                    name={user.email}
+                    key={user.id}
+                    action={() => deleteFriend(userAuth.userInfo.uid, user.id)}
+                  />
+                );
+              })}
           </div>
-          {userProfile &&
-            userProfile.friends.map((user) => {
-              return <ListViewFriendsButton name={user.email} key={user.id} />;
-            })}
-        </div>
         )}
-        
+
         <div className="container_subcontent">
           <div className={`${"title"}`}>
             <div className="listview_separator_full" />

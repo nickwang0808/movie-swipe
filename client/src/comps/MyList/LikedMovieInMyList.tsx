@@ -10,11 +10,13 @@ import { motion } from "framer-motion";
 interface ILikedMovieInMyList {
   movie: MovieDetail;
   setIdTPShowDetails: (arg: number) => void;
+  matched: boolean;
 }
 
 export default function LikedMovieInMyList({
   movie,
   setIdTPShowDetails,
+  matched,
 }: ILikedMovieInMyList) {
   return (
     <>
@@ -38,12 +40,14 @@ export default function LikedMovieInMyList({
           alt="img"
         />
         <div className={style.details_rating}>
-        {/* {matched && <div className={style.matched_watchlist}> */} 
-        {/* <div className={style.matched_watchlist}>
-            <div className={style.forceSkew}>
-              <div>MATCHED!</div>
+          {matched && (
+            <div className={style.matched_watchlist}>
+              <div className={style.forceSkew}>
+                <div>MATCHED!</div>
+              </div>
             </div>
-          </div> */}
+          )}
+
           <div className={style.details_likedtitle}>
             <h2>{movie.title}</h2>
           </div>

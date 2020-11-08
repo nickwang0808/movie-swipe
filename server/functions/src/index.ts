@@ -11,9 +11,12 @@ export const arrayRemove = admin.firestore.FieldValue.arrayRemove;
 
 import userLookUpRoute from "./UserLookUp";
 import snedFriendReqRoute from "./SendFrendReq";
-import { acceptRequest, declineRequest } from "./handleFriendsReq";
+import * as handleFriendsReq from "./handleFriendsReq";
+import findAllMatchesRoute from "./findAllMatches";
 
 export const sendFriendReq = snedFriendReqRoute;
 export const userLookUp = userLookUpRoute;
-export const accept = acceptRequest;
-export const decline = declineRequest;
+export const acceptRequest = handleFriendsReq.acceptRequest;
+export const declineRequest = handleFriendsReq.declineRequest;
+export const deleteFriend = handleFriendsReq.deleteFriend;
+export const findAllMatches = findAllMatchesRoute;

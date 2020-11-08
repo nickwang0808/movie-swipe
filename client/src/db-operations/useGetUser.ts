@@ -10,6 +10,7 @@ export interface IUserProfile {
   friends: IIdEmail[];
   pending_received: IIdEmail[];
   pending_sent: IIdEmail[];
+  friendsIdOnly: string[];
 }
 
 export default function useGetUser(user_id: string) {
@@ -68,7 +69,10 @@ export default function useGetUser(user_id: string) {
                     friends: matchInfoToID(friends),
                     pending_received: matchInfoToID(pending_received),
                     pending_sent: matchInfoToID(pending_sent),
+                    friendsIdOnly: friends,
                   });
+                } else {
+                  return setUserProfile(undefined);
                 }
               }
             });
@@ -87,7 +91,7 @@ export default function useGetUser(user_id: string) {
           userRef
             .collection("User_Details")
             .doc("Liked_Movies")
-            .set({ liked_movies: [] });
+            .set({ uid, liked_movies: [] });
           userRef
             .collection("User_Details")
             .doc("Disliked_Movies")

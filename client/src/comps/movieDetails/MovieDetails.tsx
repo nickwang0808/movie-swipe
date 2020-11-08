@@ -20,6 +20,7 @@ interface IMovieDetails {
   handleDislike: (movieID: number) => void;
   handleLike: (movieID: number) => void;
   goTo: string;
+  matches?: string[] | undefined;
 }
 
 export default function MovieDetails({
@@ -28,6 +29,7 @@ export default function MovieDetails({
   handleLike,
   showVoting,
   goTo,
+  matches,
 }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
   const { likedMoviesInfos } = useContext(UserContext);
@@ -122,6 +124,9 @@ export default function MovieDetails({
             {/* <WatchedAlert/> */}
             <p>{movieDetails?.overview}</p>
           </div>
+          {matches && (
+            <div style={{ fontSize: 18 }}>Matched with {matches}</div>
+          )}
           {/* <div className={style.container_available}>
           Available on
           <div className={style.available_icons}>
