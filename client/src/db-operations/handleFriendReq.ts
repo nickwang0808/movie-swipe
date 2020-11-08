@@ -1,12 +1,37 @@
-import { db } from "../firebase/config";
-import { arrayRemove } from "../firebase/config";
+import { arrayUnion, cloudFn, db, arrayRemove } from "../firebase/config";
 
-export function decline(userId: string) {
-  db.collection("Users")
+export async function decline(userId: string, senderId: string) {
+  await db
+    .collection("Users")
     .doc(userId)
     .collection("User_Details")
     .doc("Friends")
     .update({
-      pending_received: arrayRemove(userId),
+      pending_received: arrayRemove(senderId),
     });
+}
+
+export async function accept(userId: string, senderId: string) {
+  await db
+    .collection("Users")
+    .doc(userId)
+    .collection("User_Details")
+    .doc("Friends")
+    .update({
+      pending_received: arrayRemove(senderId),
+      friends: arrayUnion(senderId),
+    });
+}
+
+export async function deleteFriend(userId: string, friendId: string) {
+  console.log("delete friend");
+  await db
+    .collection("Users")
+    .doc(userId)
+    .collection("User_Details")
+    .doc("Friends")
+    .update({
+      friends: arrayRemove(friendId),
+    });
+  await cloudFn.httpsCallable("deleteFriend")({ id: friendId });
 }
