@@ -12,6 +12,7 @@ import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import { UserContext } from "../../store";
 import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 interface IMovieDetails {
   movieID: number;
@@ -69,7 +70,13 @@ export default function MovieDetails({
         style={backgroundStyle(baseUrl + movieDetails?.poster_path)}
       />
       <div className={`${style.details_content} ${style.bottom_fade_out}`}>
-        <div className={style.details_trailer}>
+        <motion.div
+          className={style.details_trailer}
+          animate={{opacity: 1}}
+          initial={{opacity: 0}}
+          transition={{
+            duration: 1
+          }}>
           {getTrailerUrl() === undefined ? (
             <div className="loader loader_center" />
           ) : (
@@ -79,7 +86,7 @@ export default function MovieDetails({
               title="trailer_vid"
             />
           )}
-        </div>
+        </motion.div>
         <div className={style.container_moviedetails}>
           <Link
             className={style.poster_1_inline}

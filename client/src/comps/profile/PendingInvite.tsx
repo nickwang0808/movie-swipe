@@ -35,6 +35,7 @@ export default function PendingInvite({ pendingReceived }: IPendingInvite) {
   return (
     <div className="container_subcontent">
       <div className={`${"title"}`}>
+        <div className="listview_separator_full" />
         <h2>Pending Invites</h2>
       </div>
       {pendingReceived &&

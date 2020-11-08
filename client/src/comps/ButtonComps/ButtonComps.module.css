@@ -9,16 +9,22 @@
   text-align: center;
   border-radius: 5rem;
   color: #000000;
+  background-color: rgba(0, 0, 0, 0);
   cursor: pointer;
   margin: auto 0;
   padding: 0 3rem;
   line-height: 5rem;
   font-weight: 900;
   font-size: 2rem;
+  outline: none;
 }
 
 .secondary {
   border: none;
+}
+
+.btn:disabled {
+  opacity: 0.3;
 }
 
 .btn_up,
@@ -155,7 +161,7 @@
 
 .btn_listview,
 .btn_listviewFriend {
-  padding-left: 4rem;
+  padding-left: 2rem;
   font-size: 2em;
   height: 6rem;
   line-height: 6rem;
@@ -180,7 +186,7 @@
 }
 
 .btn_listviewUser {
-  padding: 2rem 0 0 4rem;
+  padding: 2rem 0 0 2rem;
   font-size: 2em;
   cursor: pointer;
   border-bottom: var(--border-bottom);

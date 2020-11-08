@@ -43,31 +43,36 @@ export default function Friends() {
       </div>
       <div className={style.container_subcontent}>
         <h2 className={style.title_bold}>
-          Invite your friends and we’ll let you know when there’s something to
-          watch together!
+          We'll let you know when you and your friends both want to watch
+          something!
         </h2>
         {userProfile?.pending_received && (
           <PendingInvite pendingReceived={userProfile?.pending_received} />
         )}
 
-        <div className="container_subcontent">
-          <div className={`${"title"}`}>
-            <h2>Friends</h2>
+        {userProfile?.friends && (
+          <div className="container_subcontent">
+            <div className={`${"title"}`}>
+              <div className="listview_separator_full" />
+              <h2>Friends</h2>
+            </div>
+            {userProfile &&
+              userAuth &&
+              userProfile.friends.map((user) => {
+                return (
+                  <ListViewFriendsButton
+                    name={user.email}
+                    key={user.id}
+                    action={() => deleteFriend(userAuth.userInfo.uid, user.id)}
+                  />
+                );
+              })}
           </div>
-          {userProfile &&
-            userAuth &&
-            userProfile.friends.map((user) => {
-              return (
-                <ListViewFriendsButton
-                  name={user.email}
-                  key={user.id}
-                  action={() => deleteFriend(userAuth.userInfo.uid, user.id)}
-                />
-              );
-            })}
-        </div>
+        )}
+
         <div className="container_subcontent">
           <div className={`${"title"}`}>
+            <div className="listview_separator_full" />
             <h2>Invite New Friends</h2>
           </div>
           <div className={style.container_inset}>
@@ -82,7 +87,7 @@ export default function Friends() {
               <button
                 disabled={disableInvite}
                 onClick={handleInvite}
-                className={`${sharedstyle.btn} ${sharedstyle.btnInvite}`}
+                className={`${sharedstyle.btn}`}
               >
                 Invite
               </button>

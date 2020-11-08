@@ -23,14 +23,14 @@ export default function MyProfile() {
             <ListViewButton name="Friends" />
           </Link>
           <Link className="link" to="/profile/dislikedmovies">
-            <ListViewButton name="Disliked Media" />
+            <ListViewButton name="Disliked Movies" />
           </Link>
           <Link className="link" to="/profile/about">
             <ListViewButton name="About MovieSync" />
           </Link>
           <div className="listview_separator_full" />
           <ListViewButton
-            name="Sign Out"
+            name="Sign Out (XX@gmail.com)"
             action={() => cfaSignOut().subscribe()}
           />
           <ListViewButton

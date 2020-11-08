@@ -42,7 +42,7 @@ const sendFrendReq = functions.https.onCall(async (data, context) => {
           });
         console.log("friend request sent");
         // return "Friend Reqest Sent!";
-        return { message: "Friend Req sent!" };
+        return { message: "Friend invite sent!" };
       }
     } catch (err) {
       return err;
