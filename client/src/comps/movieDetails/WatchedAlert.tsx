@@ -3,7 +3,13 @@ import style from "./WatchedAlert.module.css";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import { motion } from "framer-motion";
 
-export default function WatchedAlert(){
+interface IMovieDetails {
+  matches?: string[] | undefined;
+}
+
+export default function WatchedAlert({
+  matches,
+}: IMovieDetails) {
   return (
     <>
         <div className={style.container_details_matched}>
@@ -55,7 +61,7 @@ export default function WatchedAlert(){
                 duration: 1,
                 ease: [0.16, 1, 0.3, 1]
               }}
-              className={`${style.matched_partner}`}>Trevor Wernisch want to watch this too!</motion.div>
+              className={`${style.matched_partner}`}>{matches} want to watch this too!</motion.div>
             </motion.div>
           </div>
           <motion.div 

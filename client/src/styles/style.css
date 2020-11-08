@@ -277,3 +277,13 @@ a {
 .container_subcontent {
   margin-bottom: 2rem;
 }
+
+.VoteUpBG_anim {
+  position: absolute;
+  top: 0;
+  width: 70%;
+  bottom: 0;
+  left: -100%;
+  background-color: var(--positive);
+  transform: skewX(-15deg);
+}

@@ -80,6 +80,13 @@ export default function LikeOrNo({ userId }: ICompProps) {
           <Logo />
           <FilterButton setFilterOn={setFilterOn} />
         </div>
+        {/* <motion.div 
+        animate={{left: "130%"}}
+        transition={{
+          duration: 1,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="VoteUpBG_anim"></motion.div> */}
         {/* <div className="loader"></div> */}
         {/* <NotificationMatched /> */}
         {/* < VoteLarge_Up /> */}
