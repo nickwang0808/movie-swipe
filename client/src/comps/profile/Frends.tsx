@@ -16,9 +16,9 @@ export default function Friends() {
 
   const handleInvite = async () => {
     if (emailInput === userAuth?.userInfo.email) {
-      console.log("you can't add yourself as friend");
+      console.log("You can't add yourself as friend.");
     } else if (emailInput.length === 0) {
-      console.log("please input email");
+      console.log("Enter a valid email first.");
     } else {
       setDisableInvite(true);
       const frienReqStatus = await cloudFn.httpsCallable("sendFriendReq")({
@@ -41,8 +41,7 @@ export default function Friends() {
       </div>
       <div className={style.container_subcontent}>
         <h2 className={style.title_bold}>
-          Invite your friends and we’ll let you know when there’s something to
-          watch together!
+          We'll let you know when you and your friends both want to watch something!
         </h2>
         {userProfile?.pending_received && (
           <PendingInvite pendingReceived={userProfile?.pending_received} />

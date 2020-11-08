@@ -7,12 +7,16 @@ export default function NotificationMatched() {
   return (
     <><motion.div
         className={style.matched_banner_large}
-        animate={{ skew: [-15, -15, -15],
-        opacity: [0, 1, 0],
-        left: ["40%", "50%", "50%"],
-        translateX: ["-50%", "-50%", "-50%"] }}
+        animate={{ skew: [-15, -15, -15, -15],
+        opacity: [0, 1, 1, 0],
+        left: ["40%", "50%", "50%", "50%"],
+        translateX: ["-50%", "-50%", "-50%", "-50%"],
+        top: ['calc(40% - var(--header) + 128px + 3rem)',
+              'calc(40% - var(--header) + 128px + 3rem)',
+              'calc(40% - var(--header) + 200px + 3rem)',
+              'calc(40% - var(--header) + 200px + 3rem)'] }}
         transition={{
-          times: [0, 0.5, 1],
+          times: [0, 0.5, 1, 1],
           duration: 2,
           ease: [0.16, 1, 0.3, 1],
         }}>

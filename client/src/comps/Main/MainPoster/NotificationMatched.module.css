@@ -46,7 +46,7 @@
   position: absolute;
   margin: auto;
   top: calc(40% - var(--header) + 128px + 3rem);
-  z-index: 1006;
+  z-index: 1001;
   padding: 0.3rem 4rem;
   background-color: var(--positive);
   font-size: 5rem;

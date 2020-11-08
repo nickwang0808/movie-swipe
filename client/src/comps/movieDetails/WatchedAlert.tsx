@@ -9,7 +9,7 @@ export default function WatchedAlert(){
         <div className={style.container_details_matched}>
             <motion.div
               className={style.who_matched}
-              // animate={{paddingBottom: "0rem"}}
+              // animate={{marginBottom: "0rem"}}
               transition={{
                 ease: [0.16, 1, 0.3, 1],
                 duration: 1}}
@@ -18,15 +18,14 @@ export default function WatchedAlert(){
                 <motion.div
                   key="watched"
                   className={style.matched_animation}
-                  // animate={{ left: "8rem", top: 0}}
+                  // animate={{ left: "7rem"}}
                   transition={{
-                    delay: 0.1,
                     duration: 1,
                     ease: [0.16, 1, 0.3, 1],
                   }}><p>Watched with FWernisch@gmail.com on Sept 20</p>
                 </motion.div>
               </div>
-              <motion.div
+              {/* <motion.div
               key="watched"
               // animate={{opacity: 0}}
               transition={{
@@ -35,7 +34,7 @@ export default function WatchedAlert(){
               }}
               className={style.matched}>
                 <div className={style.forceSkew}>MATCHED!</div>
-              </motion.div>
+              </motion.div> */}
               <motion.div
               key="watched"
               // animate={{opacity: 1}}
@@ -56,16 +55,16 @@ export default function WatchedAlert(){
                 duration: 1,
                 ease: [0.16, 1, 0.3, 1]
               }}
-              className={`${style.matched_partner}`}>TWernisch@gmail.com wants to watch this too!</motion.div>
-              <motion.div 
+              className={`${style.matched_partner}`}>Trevor Wernisch want to watch this too!</motion.div>
+            </motion.div>
+          </div>
+          <motion.div 
             key="watched"
               // animate={{ height: 0, opacity: 0}}
             transition={{duration: 0.5, ease: [0.16, 1, 0.3, 1]}}
               className={`${sharedstyle.btn} ${sharedstyle.btn_outline} ${style.btn_watched}`}>
                         We've watched this!
             </motion.div>
-            </motion.div>
-          </div>
     </>
   );
 }

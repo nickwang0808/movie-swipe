@@ -23,6 +23,10 @@
   border: none;
 }
 
+.btn:disabled {
+  opacity: 0.3;
+}
+
 .btn_up,
 .btn_down {
   background-color: var(--dark);
@@ -42,9 +46,7 @@
   border-color: var(--highlight);
 }
 
-.btn:active,
-.btn:focus,
-.btn:hover {
+.btn:active {
   border-color: var(--highlight);
   color: var(--highlight);
 }

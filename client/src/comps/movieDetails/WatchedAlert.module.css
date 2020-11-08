@@ -1,27 +1,13 @@
 .who_matched {
-  border-radius: 5px;
   margin-bottom: 2rem;
-  border: 2px solid var(--positive);
+  border: 1px solid var(--positive);
   background-color: var(--light);
   position: relative;
   font-size: 2rem;
   font-weight: 400;
   text-align: left;
   fill: var(--positive);
-  padding: 3rem 0 2rem 0;
-}
-
-.matched_animation_cover {
-  height: 6rem;
-  grid-template-rows: 100%;
-  align-items: center;
-  position: relative;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  overflow: hidden;
+  padding: 1rem 0;
 }
 
 .matched {
@@ -41,15 +27,24 @@
   transform: skewX(15deg);
 }
 
+.matched_animation_cover {
+  grid-template-rows: 100%;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+}
 .matched_animation {
   background-color: var(--positive);
   transform: skewX(-15deg);
   width: 100%;
   height: 100%;
   position: absolute;
-  left: 7rem;
-  right: 0;
-  top: 5rem;
+  left: calc(-100% + 7rem);
+  top: 0;
   bottom: 0;
   display: flex;
   align-items: center;
@@ -69,16 +64,20 @@
 }
 
 .matched_partner {
-  margin: 0rem 0 2rem 2rem;
+  margin: auto 1rem auto 9rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
 }
 
 .matched_thumb {
-  opacity: 0;
   position: absolute;
-  left: 2.5rem;
-  top: 1.5rem;
+  left: 2rem;
+  top: 2rem;
+  fill: var(--dark);
 }
 
 .btn_watched {
-  margin: 0 2rem;
+  margin: auto;
+  margin-bottom: 4rem;
 }

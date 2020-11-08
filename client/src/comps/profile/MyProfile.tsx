@@ -30,7 +30,7 @@ export default function MyProfile() {
           </Link>
           <div className="listview_separator_full" />
           <ListViewButton
-            name="Sign Out"
+            name="Sign Out (XX@gmail.com)"
             action={() => cfaSignOut().subscribe()}
           />
           <ListViewButton
