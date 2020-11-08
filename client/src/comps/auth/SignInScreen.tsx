@@ -54,7 +54,7 @@ export default function SignInScreen() {
               : handleSignInEmail(email, password);
           }}
         >
-          {isSignUp ? "Sign Up" : "Sign In"}
+          {isSignUp ? "Sign Up with Email" : "Login with Email"}
         </button>
         <button
           onClick={(e) => {
@@ -63,8 +63,8 @@ export default function SignInScreen() {
           }}
         >
           {isSignUp
-            ? "Already registered? Sign-in instead"
-            : "Need an account? Sign up"}
+            ? "Already registered? Login instead"
+            : "Need an account? Sign Up"}
         </button>
       </form>
     </>
@@ -79,12 +79,12 @@ export default function SignInScreen() {
         className={`${sharedstyle.btn} ${style.btn_login_google}`}
         onClick={handleSignInGoogle}
       >
-        Sign in with Google
+        Sign Up or Login With Google
       </button>
       <p>-or-</p>
       <div className={style.email}>
+        {error && <div className={style.error}>{error}</div>} {/* log any login err below everything */}
         {emailAuthSignIn}
-        {error && <div>{error}</div>} {/* log any login err below everything */}
       </div>
     </div>
   );
