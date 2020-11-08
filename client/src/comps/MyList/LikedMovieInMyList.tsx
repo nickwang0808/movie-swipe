@@ -9,11 +9,13 @@ import style from "./LikedMovieInMylist.module.css";
 interface ILikedMovieInMyList {
   movie: MovieDetail;
   setIdTPShowDetails: (arg: number) => void;
+  matched: boolean;
 }
 
 export default function LikedMovieInMyList({
   movie,
   setIdTPShowDetails,
+  matched,
 }: ILikedMovieInMyList) {
   return (
     <>
@@ -28,11 +30,13 @@ export default function LikedMovieInMyList({
           alt="img"
         />
         <div className="details_rating">
-          {/* <div className={style.matched}>
-            <div className={style.forceSkew}>
-              {matched && <div>MATCHED!</div>}
+          {matched && (
+            <div className={style.matched}>
+              <div className={style.forceSkew}>
+                {matched && <div>MATCHED!</div>}
+              </div>
             </div>
-          </div> */}
+          )}
           <div className={style.details_likedtitle}>
             <h2>{movie.title}</h2>
           </div>
