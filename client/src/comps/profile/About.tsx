@@ -18,22 +18,26 @@ export default function About() {
       <div className={style.container_aboutcontent}>
       <div className="container_subcontent">
           <h2 className={style.title_bold}>
-            MovieSync is a fast and simple way to find something new for you and your friends to watch together, finally.
+            MovieSync is an easy way to find something new for you and your friends to watch together, finally.
           </h2>
           <p className="marginSides2"> MovieSync is built by Nick Wang (development) and Trevor Wernisch (design).</p>
         </div>
         <div className="container_subcontent">
         <div className={`${"title"} ${"marginBottom2"}`}>
-              <h2>Need to chat?</h2>
+        <div className="listview_separator_full" />
+
+             <h2>Need to chat?</h2>
           </div>
           <div className={style.container_inset}>
-              <div className={`${sharedstyle.btn} ${sharedstyle.btnInvite}`}>
+              <div className={`${sharedstyle.btn}`}>
                   Hello@Movie-Sync.com
               </div><div></div>
           </div>
         </div>
         <div className="container_subcontent">
           <div className={`${"title"} ${"marginBottom2"}`}>
+          <div className="listview_separator_full" />
+
               <h2>Contributions</h2>
           </div>
           <div className={`${style.container_inset}`}>

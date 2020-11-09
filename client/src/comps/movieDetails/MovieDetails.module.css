@@ -52,7 +52,7 @@
 
 .details_title {
   padding: 1em 0;
-  font-weight: 900;
+  font-weight: 600;
 }
 
 .details_title h1 {
@@ -90,47 +90,11 @@
 
 .container_available {
   font-size: 2rem;
-  font-weight: 900;
+  font-weight: 600;
 }
 
 .container_available img {
   margin: 0.5em 0.5em 0.5em 0;
-}
-
-.container_details_matched {
-  padding-bottom: 4rem;
-}
-.who_matched {
-  height: 6rem;
-  display: grid;
-  grid-template-columns: 33% 33% 33%;
-  grid-template-rows: 100%;
-  align-items: center;
-  border-radius: 3px;
-  margin-bottom: 2rem;
-  border: 2px solid var(--positive);
-  background-color: var(--light);
-  position: relative;
-  font-size: 2rem;
-  font-weight: 900;
-  text-align: center;
-  fill: var(--positive);
-}
-
-.matched {
-  padding: 0.3em 1em;
-  background-color: var(--positive);
-  font-size: 1.5rem;
-  font-weight: 900;
-  border-radius: 0.3em;
-  transform: skewX(-15deg);
-  position: absolute;
-  top: -11px;
-  left: 2rem;
-}
-
-.forceSkew {
-  transform: skewX(15deg);
 }
 
 .container_description .btn {

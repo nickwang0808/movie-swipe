@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { MovieDetail } from "./APICalls/searchMovieByID";
+import useGetAllMatches, { IMatches } from "./db-operations/useGetAllMatches";
 import useGetLikedMovies from "./db-operations/useGetLikedMovies";
 import useGetMovies, { Result } from "./db-operations/useGetMovies";
-import useGetUser from "./db-operations/useGetUser";
+import useGetUser, { IUserProfile } from "./db-operations/useGetUser";
 import { auth } from "./firebase/config";
 import useGetWIndowsSizing, {
   ISize,
@@ -15,12 +16,13 @@ interface IUser {
 
 interface IStore {
   userAuth: IUser | undefined | null;
-  userProfile: any;
+  userProfile: IUserProfile | undefined;
   likedMoviesInfos: MovieDetail[];
   movieListInDeck: Result[] | undefined;
   isLoading: boolean;
   handleNext: () => void;
   size: ISize;
+  matches: IMatches[] | undefined;
 }
 
 export const UserContext = React.createContext({} as IStore);
@@ -33,10 +35,19 @@ export default function StoreProvider({
 }) {
   const [userAuth, setUserAuth] = useState<IUser | null>(); // undefined is for loading
   const userProfile = useGetUser(userAuth?.userInfo.uid as string);
-  const likedMoviesInfos = useGetLikedMovies(userAuth?.userInfo.uid as string);
+  const { likedMoviesInfos, likedMovieIds } = useGetLikedMovies(
+    userAuth?.userInfo.uid as string
+  );
   const { movieListInDeck, handleNext } = useGetMovies(
     userAuth?.userInfo?.uid as string
   );
+
+  const matches = useGetAllMatches(
+    userAuth?.userInfo.uid,
+    likedMovieIds,
+    userProfile?.friendsIdOnly
+  );
+
   const [isLoading, setIsLoading] = useState(true);
   const size = useGetWIndowsSizing();
 
@@ -52,6 +63,7 @@ export default function StoreProvider({
       } else {
         // null is for no user logged in
         setUserAuth(null);
+        setIsLoading(false);
       }
     });
   }, []);
@@ -66,6 +78,7 @@ export default function StoreProvider({
         movieListInDeck,
         handleNext,
         size,
+        matches,
       }}
     >
       {children}

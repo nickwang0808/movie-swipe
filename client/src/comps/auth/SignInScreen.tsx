@@ -54,7 +54,7 @@ export default function SignInScreen() {
               : handleSignInEmail(email, password);
           }}
         >
-          {isSignUp ? "Sign Up" : "Sign In"}
+          {isSignUp ? "Sign Up with Email" : "Login with Email"}
         </button>
         <button
           onClick={(e) => {
@@ -63,8 +63,8 @@ export default function SignInScreen() {
           }}
         >
           {isSignUp
-            ? "Already a MovieSync friend? Sign-in instead"
-            : "Need an account? Sign up"}
+            ? "Already registered? Login instead"
+            : "Need an account? Sign Up"}
         </button>
       </form>
     </>
@@ -73,19 +73,18 @@ export default function SignInScreen() {
   return (
     <div className={style.login_container}>
       <h2>
-        Create a MovieSync account to enable friend matching, so you can finally
-        find watch something, together!
+        Create a MovieSync account so you and your friends can finally find something to watch, together!
       </h2>
       <button
         className={`${sharedstyle.btn} ${style.btn_login_google}`}
         onClick={handleSignInGoogle}
       >
-        Sign in with Google
+        Sign Up or Login With Google
       </button>
       <p>-or-</p>
       <div className={style.email}>
+        {error && <div className={style.error}>{error}</div>} {/* log any login err below everything */}
         {emailAuthSignIn}
-        {error && <div>{error}</div>} {/* log any login err below everything */}
       </div>
     </div>
   );

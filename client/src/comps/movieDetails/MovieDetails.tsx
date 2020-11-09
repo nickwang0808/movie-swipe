@@ -7,10 +7,13 @@ import posterStyleMaker from "../../HelperFunctions/posterStyleMaker";
 import style from "./MovieDetails.module.css";
 // import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import VotingActions from "../Main/VotingActions";
+import WatchedAlert from "./WatchedAlert";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import { UserContext } from "../../store";
 import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { IUserInfo } from "../../db-operations/useGetAllMatches";
 
 interface IMovieDetails {
   movieID: number;
@@ -18,6 +21,7 @@ interface IMovieDetails {
   handleDislike: (movieID: number) => void;
   handleLike: (movieID: number) => void;
   goTo: string;
+  matches?: IUserInfo[] | undefined;
 }
 
 export default function MovieDetails({
@@ -26,6 +30,7 @@ export default function MovieDetails({
   handleLike,
   showVoting,
   goTo,
+  matches,
 }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
   const { likedMoviesInfos } = useContext(UserContext);
@@ -66,7 +71,14 @@ export default function MovieDetails({
         style={backgroundStyle(baseUrl + movieDetails?.poster_path)}
       />
       <div className={`${style.details_content} ${style.bottom_fade_out}`}>
-        <div className={style.details_trailer}>
+        <motion.div
+          className={style.details_trailer}
+          animate={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
+          transition={{
+            duration: 1,
+          }}
+        >
           {getTrailerUrl() === undefined ? (
             <div className="loader loader_center" />
           ) : (
@@ -76,7 +88,7 @@ export default function MovieDetails({
               title="trailer_vid"
             />
           )}
-        </div>
+        </motion.div>
         <div className={style.container_moviedetails}>
           <Link
             className={style.poster_1_inline}
@@ -111,38 +123,7 @@ export default function MovieDetails({
         <div className={style.container_info}>
           <div className={style.container_watch}></div>
           <div className={style.container_description}>
-            {/* <div className={style.container_details_matched}>
-            <div className={style.who_matched}>
-              <div className={style.matched}>
-                <div className={style.forceSkew}>MATCH!</div>
-              </div>
-              <div>You</div>
-              <div className={style.matched_thumb}>
-                <svg
-                  width="84"
-                  height="21"
-                  viewBox="0 0 84 21"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M31 7.5002V19.5002C31 20.3286 31.6715 21.0002 32.5 21.0002H37V6.0002H32.5C31.6715 6.0002 31 6.67174 31 7.5002Z" />
-                  <path d="M52.2299 7.4999H47.7988C47.4113 7.4999 47.2172 7.24136 47.1521 7.13003C47.0869 7.01943 46.955 6.72427 47.1425 6.38589L48.7048 3.57265C49.0476 2.95668 49.0827 2.23232 48.8022 1.58558C48.5217 0.938122 47.968 0.468639 47.2831 0.297985L46.1816 0.0225937C45.9135 -0.0447891 45.6293 0.0409044 45.4426 0.24818L39.4616 6.89272C38.8412 7.58339 38.4999 8.47402 38.4999 9.40126V17.2499C38.4999 19.3175 40.1823 20.9999 42.2499 20.9999L49.7111 20.9992C51.3957 20.9992 52.8833 19.8646 53.3278 18.2409L54.9289 10.8932C54.9758 10.6888 54.9999 10.4794 54.9999 10.2699C54.9999 8.7428 53.757 7.49988 52.2299 7.49988L52.2299 7.4999Z" />
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M0.5 13L19.5 13L19.5 15L0.5 15L0.5 13Z" />
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M64.5 13L83.5 13L83.5 15L64.5 15L64.5 13Z" />
-                </svg>
-              </div>
-              <div>Partner</div>
-            </div>
-            <div className={`${sharedstyle.btn} ${sharedstyle.btn_outline}`}>
-                        We've watched this!
-            </div>
-          </div> */}
-
+            {matches && <WatchedAlert matches={matches} />}
             <p>{movieDetails?.overview}</p>
           </div>
           {/* <div className={style.container_available}>

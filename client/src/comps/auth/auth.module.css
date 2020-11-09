@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 80%;
+  width: calc(100% - 8rem);
   height: 100%;
   margin: auto;
 }
@@ -27,6 +27,7 @@
 
 .btn_login_google:active {
   background-color: #a73f2d;
+  color: var(--light);
 }
 
 .login_container form {
@@ -39,8 +40,10 @@ label {
   font-size: 2rem;
   padding-bottom: 1rem;
 }
+
 input {
   padding: 1rem;
+  margin-bottom: 2rem;
   font-size: 2.5rem;
   color: #0b0728;
   border-radius: 4px;
@@ -64,17 +67,23 @@ input:focus {
   align-items: center;
   height: 5rem;
   border: 2px solid var(--dark);
-  background-color: var(--light);
+  background-color: transparent;
   text-align: center;
-  border-radius: 3px;
+  border-radius: 30px;
   color: #000000;
   cursor: pointer;
   margin: auto;
-  line-height: 5rem;
-  font-weight: 900;
+  font-weight: 600;
   font-size: 2rem;
-  width: -webkit-fill-available;
-  margin-bottom: 2rem;
+  width: fit-content;
+  margin: 2rem auto;
+  padding: 0 3rem;
+  outline: none;
+}
+
+.login_container .email form button:first-of-type:active {
+  border-color: var(--highlight);
+  color: var(--highlight);
 }
 
 .login_container .email form button:nth-of-type(2n) {
@@ -84,11 +93,21 @@ input:focus {
   height: 5rem;
   background-color: transparent;
   text-align: center;
-  color: #000000;
+  color: var(--highlight);
   cursor: pointer;
   margin: auto;
-  line-height: 5rem;
-  font-weight: 900;
+  font-weight: 400;
   font-size: 2rem;
-  width: -webkit-fill-available;
+  line-height: 2rem;
+  border: 0;
+  outline: none;
+  text-decoration: underline;
+}
+
+.error {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 2rem 1rem 0 1rem;
+  color: var(--negative);
 }

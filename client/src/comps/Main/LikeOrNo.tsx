@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import FilterButton from "../ButtonComps/FilterButton";
 import Logo from "../Decorators/Logo";
 import Filters from "../filter/Filters";
-// import NotificationMatched from "./NotificationMatched";
+import NotificationMatched from "./MainPoster/NotificationMatched";
+import VoteLarge_Down from "./MainPoster/VoteLarge_Down";
+import VoteLarge_Up from "./MainPoster/VoteLarge_Up";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
@@ -25,13 +27,13 @@ export default function LikeOrNo({ userId }: ICompProps) {
   const { movieListInDeck, handleNext } = useContext(UserContext);
 
   const handleLike = (movieID: number) => {
-    // UpdateLikeToDB(userId, movieID, true);
+    UpdateLikeToDB(userId, movieID, true);
     console.log("like");
     handleNext();
     setVoteType("like");
   };
   const handleDislike = (movieID: number) => {
-    // UpdateLikeToDB(userId, movieID, false);
+    UpdateLikeToDB(userId, movieID, false);
     console.log("dislike");
     handleNext();
     setVoteType("dislike");
@@ -66,20 +68,44 @@ export default function LikeOrNo({ userId }: ICompProps) {
         <AnimatePresence>
           {filterOn && <Filters setFilterOn={setFilterOn} />}
         </AnimatePresence>
-        <div className="background_container">
+        <motion.div
+        animate={{opacity: 1}}
+        initial={{opacity: 0}}
+        transition={{
+          delay: 0.1,
+          duration: 0.75,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="background_container">
           <div
             className="background"
             style={backgroundStyle(
               movieListInDeck ? baseUrl + movieListInDeck[0].poster_path : ""
             )}
           />
-        </div>
-        <div className="container_header">
+        </motion.div>
+        <motion.div 
+        animate={{opacity: 1, paddingTop: "0rem"}}
+        initial={{opacity: 0, paddingTop: "2rem"}}
+        transition={{
+          duration: 0.75,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="container_header">
           <Logo />
           <FilterButton setFilterOn={setFilterOn} />
-        </div>
+        </motion.div>
+        {/* <motion.div 
+        animate={{left: "130%"}}
+        transition={{
+          duration: 1,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="VoteUpBG_anim"></motion.div> */}
         {/* <div className="loader"></div> */}
         {/* <NotificationMatched /> */}
+        {/* < VoteLarge_Up /> */}
+        {/* < VoteLarge_Down /> */}
         <Deck
           movieListInDeck={movieListInDeck}
           handleLike={handleLike}

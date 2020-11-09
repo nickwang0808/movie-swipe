@@ -26,7 +26,8 @@
   margin: 0.5em 1em;
   text-align: center;
   font-size: 1.8em;
-  font-weight: 900;
+  font-weight: 600;
+  position: relative;
 }
 
 .nav_item:hover,
@@ -40,4 +41,18 @@
 .active_link {
   color: var(--highlight);
   fill: var(--highlight);
+}
+
+.nav_item_notification {
+  display: inline-block;
+  border-radius: 3px;
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  background-color: var(--positive);
+  color: var(--dark);
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 2rem;
+  left: 55%;
 }

@@ -2,6 +2,7 @@ import * as firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/functions";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAD46xBT6mGc5jTUf7SbcXEWIYpQQTxaVo",
@@ -17,3 +18,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
 export const auth = firebase.auth();
+export const cloudFn = firebase.functions();
+
+export const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
+export const arrayRemove = firebase.firestore.FieldValue.arrayRemove;
+
+// firebase.firestore().settings({ host: "localhost:8080", ssl: false });
+// firebase.auth().useEmulator("http://localhost:9099/");
+firebase.functions().useFunctionsEmulator("http://35.241.124.138:5001");

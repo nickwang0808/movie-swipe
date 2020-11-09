@@ -2,7 +2,7 @@
 
 html {
   font-size: 8px;
-  font-family: "Lato", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 400;
 }
 
@@ -47,7 +47,7 @@ p {
 }
 h1 {
   font-size: 2.5em;
-  font-weight: 900;
+  font-weight: 600;
   padding: 2rem 0 2rem 2rem;
   color: var(--highlight);
   box-shadow: 0px 0.5px 1.75px rgba(0, 0, 0, 0.039),
@@ -56,7 +56,7 @@ h1 {
 
 h2 {
   font-size: 2.1em;
-  font-weight: 900;
+  font-weight: 600;
 }
 
 h3 {
@@ -72,14 +72,14 @@ ul {
 }
 
 .heavy {
-  font-weight: 900;
+  font-weight: 600;
 }
 
 a {
   text-decoration: none;
 }
 :root {
-  --header: 64px;
+  --header: 56px;
   --vote: 76px;
   --nav: 56px;
   --dark: #111111;
@@ -90,7 +90,10 @@ a {
   --positive: #11ee9e;
   --negative: #ff0f00;
   --transparent: rgba(0, 0, 0, 0);
-  --poster-height: calc(100vh - var(--header) - var(--vote) - var(--nav) - 2em);
+  --poster-height: calc(
+    var(--global-window-inner-height) - var(--header) - var(--vote) - var(--nav) -
+      2rem
+  );
   --poster-width: calc(var(--poster-height) * 0.65);
   --border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -191,9 +194,11 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  height: var(--header);
 }
 .container_poster {
   margin: 0 auto;
+  position: relative;
 }
 
 .poster_overview {
@@ -260,7 +265,7 @@ a {
 }
 
 .title {
-  background-color: var(--gray);
+  /* background-color: var(--gray); */
   height: 5rem;
 }
 
@@ -272,5 +277,15 @@ a {
 }
 
 .container_subcontent {
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
+}
+
+.VoteUpBG_anim {
+  position: absolute;
+  top: 0;
+  width: 70%;
+  bottom: 0;
+  left: -100%;
+  background-color: var(--positive);
+  transform: skewX(-15deg);
 }

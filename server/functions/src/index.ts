@@ -1,9 +1,22 @@
-import * as functions from 'firebase-functions';
+import * as admin from "firebase-admin";
+const serviceAccount = require("./secret.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://movie-swipe-82f52.firebaseio.com",
+});
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+export const db = admin.firestore();
+export const arrayUnion = admin.firestore.FieldValue.arrayUnion;
+export const arrayRemove = admin.firestore.FieldValue.arrayRemove;
+
+import userLookUpRoute from "./UserLookUp";
+import snedFriendReqRoute from "./SendFrendReq";
+import * as handleFriendsReq from "./handleFriendsReq";
+import findAllMatchesRoute from "./findAllMatches";
+
+export const sendFriendReq = snedFriendReqRoute;
+export const userLookUp = userLookUpRoute;
+export const acceptRequest = handleFriendsReq.acceptRequest;
+export const declineRequest = handleFriendsReq.declineRequest;
+export const deleteFriend = handleFriendsReq.deleteFriend;
+export const findAllMatches = findAllMatchesRoute;

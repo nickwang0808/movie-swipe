@@ -4,39 +4,64 @@ import { UserContext } from "../../store";
 import MovieDetails from "../movieDetails/MovieDetails";
 import LikedMovieInMyList from "./LikedMovieInMyList";
 import style from "./mylistmain.module.css";
+import { motion } from "framer-motion";
 
 export default function MyListMain() {
-  const { likedMoviesInfos } = useContext(UserContext);
-  const [idTPshowDetails, setIdTPShowDetails] = useState<number>();
+  const { likedMoviesInfos, matches } = useContext(UserContext);
+  const [idToShowDetails, setIdToShowDetails] = useState<number>();
 
   return (
     <>
       <Route exact path="/mylist/detials">
-        {idTPshowDetails && (
+        {idToShowDetails && (
           <MovieDetails
-            movieID={idTPshowDetails}
+            movieID={idToShowDetails}
             goTo="/mylist"
             handleDislike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
             handleLike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
             showVoting={false}
+            matches={
+              matches?.find(
+                (element) => element.matchedMovie === idToShowDetails
+              )
+                ? matches?.find(
+                    (element) => element.matchedMovie === idToShowDetails
+                  )?.friendInfo
+                : undefined
+            }
           />
         )}
       </Route>
       <Route exact path="/mylist">
-      <div className="container_allcontent">
+        <div className="container_allcontent">
           <div>
             <h1>My Watch List</h1>
           </div>
 
-          <div className={style.mylistmain}>
+          <motion.div
+            animate={{ opacity: 1, paddingTop: "0rem" }}
+            initial={{ opacity: 0, paddingTop: "2rem" }}
+            transition={{
+              duration: 0.5,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className={style.mylistmain}
+          >
             {likedMoviesInfos.map((likedMovieInfo) => (
               <LikedMovieInMyList
                 key={likedMovieInfo.id}
                 movie={likedMovieInfo}
-                setIdTPShowDetails={setIdTPShowDetails}
+                setIdTPShowDetails={setIdToShowDetails}
+                matched={
+                  matches?.find(
+                    (element) => element.matchedMovie === likedMovieInfo.id
+                  )
+                    ? true
+                    : false
+                }
               />
             ))}
-          </div>
+          </motion.div>
         </div>
       </Route>
     </>

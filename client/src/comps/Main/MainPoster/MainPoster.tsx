@@ -32,10 +32,9 @@ export default function MainPoster({ imgUrl }: IMainPosterProps) {
             {voteType === "dislike" && <VoteLarge_Down />}
           </div>
         )} */}
-        {/* <h3 className="poster_overview"> */}
-        {/* PG-13 | 2h 3min | Adventure, Crime, Drama | 2020 (USA) */}
-        {/* {` ${movieInfo?.genre.join(", ")} | ${movieInfo?.released}`} */}
-        {/* </h3> */}
+        <h3 className="poster_overview">
+        PG-13 | Adventure, Crime, Drama | 2020 | I am placeholder
+        </h3>
       </div>
     </>
   );
