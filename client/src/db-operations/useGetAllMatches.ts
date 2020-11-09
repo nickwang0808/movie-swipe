@@ -22,13 +22,12 @@ export default function useGetAllMatches(
   useEffect(() => {
     // if (userId && myLikes && myFriends && matches === undefined) {
     if (userId && myLikes && myFriends) {
-      console.log("getallmatches");
       (async () => {
         const result = await cloudFn.httpsCallable("findAllMatches")({
           myFriends,
           myLikes,
         });
-        console.log("result", result);
+        // console.log("result", result);
         setMatches(result.data);
       })();
     }

@@ -19,7 +19,7 @@ interface IMovieDetails {
   movieID: number;
   showVoting: boolean;
   handleDislike: (movieID: number) => void;
-  handleLike: (movieID: number) => void;
+  handleLike: (movieID: number, poster: string, title: string) => void;
   goTo: string;
   matches?: IUserInfo[] | undefined;
 }
@@ -137,7 +137,13 @@ export default function MovieDetails({
       {showVoting && (
         <VotingActions
           handleDislike={() => handleDislike(movieID)}
-          handleLike={() => handleLike(movieID)}
+          handleLike={() =>
+            handleLike(
+              movieID,
+              movieDetails?.poster_path as string,
+              movieDetails?.title as string
+            )
+          }
           goTo="/home"
           showDetail="Poster"
         />

@@ -30,6 +30,8 @@
   background-color: gray;
   margin: 1.5rem;
   z-index: 1003;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .matched_banner {

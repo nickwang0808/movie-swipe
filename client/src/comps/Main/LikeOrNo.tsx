@@ -14,23 +14,44 @@ import { AnimatePresence, motion } from "framer-motion";
 import Deck from "./Deck/Deck";
 import { UserContext } from "../../store";
 import { Route } from "react-router";
+import { cloudFn } from "../../firebase/config";
+import { IUserInfo } from "../../db-operations/useGetAllMatches";
 
 interface ICompProps {
   userId: string;
+}
+
+interface IMatchNotification {
+  movieId: number;
+  matchedWith: IUserInfo[];
+  poster: string;
+  title: string;
 }
 
 export default function LikeOrNo({ userId }: ICompProps) {
   const [filterOn, setFilterOn] = useState(false);
   const [voteType, setVoteType] = useState<"like" | "dislike">();
   const [isLike, setIsLike] = useState<boolean>();
+  const [showMatched, setShowMatched] = useState<IMatchNotification>();
+  const { movieListInDeck, handleNext, userProfile } = useContext(UserContext);
 
-  const { movieListInDeck, handleNext } = useContext(UserContext);
-
-  const handleLike = (movieID: number) => {
+  const handleLike = async (movieID: number, poster: string, title: string) => {
     UpdateLikeToDB(userId, movieID, true);
     console.log("like");
     handleNext();
     setVoteType("like");
+    const response = await cloudFn.httpsCallable("checkMatchesWhileSwiping")({
+      myLike: movieID,
+      myFriends: userProfile?.friendsIdOnly,
+    });
+    if (response.data) {
+      setShowMatched({
+        movieId: movieID,
+        title,
+        poster,
+        matchedWith: response.data,
+      });
+    }
   };
   const handleDislike = (movieID: number) => {
     UpdateLikeToDB(userId, movieID, false);
@@ -39,20 +60,30 @@ export default function LikeOrNo({ userId }: ICompProps) {
     setVoteType("dislike");
   };
 
-  useEffect(() => {
-    if (movieListInDeck) {
-      if (isLike === true) {
-        handleLike(movieListInDeck[0].id);
-      }
-      if (isLike === false) {
-        handleDislike(movieListInDeck[0].id);
-      }
-    }
-    // eslint-disable-next-line
-  }, [isLike]);
+  // useEffect(() => {
+  //   if (movieListInDeck) {
+  //     if (isLike === true) {
+  //       const card = movieListInDeck[0];
+  //       handleLike(card.id, card.poster_path, card.title);
+  //     }
+  //     if (isLike === false) {
+  //       handleDislike(movieListInDeck[0].id);
+  //     }
+  //   }
+  //   // eslint-disable-next-line
+  // }, [isLike]);
 
   return (
     <>
+      {showMatched && (
+        <NotificationMatched
+          movieId={showMatched.movieId}
+          poster={showMatched.poster}
+          title={showMatched.title}
+          setShowMatched={() => setShowMatched(undefined)}
+          matchedWith={showMatched.matchedWith}
+        />
+      )}
       <Route exact path="/home/details">
         {movieListInDeck && (
           <MovieDetails
@@ -69,14 +100,15 @@ export default function LikeOrNo({ userId }: ICompProps) {
           {filterOn && <Filters setFilterOn={setFilterOn} />}
         </AnimatePresence>
         <motion.div
-        animate={{opacity: 1}}
-        initial={{opacity: 0}}
-        transition={{
-          delay: 0.1,
-          duration: 0.75,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        className="background_container">
+          animate={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
+          transition={{
+            delay: 0.1,
+            duration: 0.75,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="background_container"
+        >
           <div
             className="background"
             style={backgroundStyle(
@@ -84,14 +116,15 @@ export default function LikeOrNo({ userId }: ICompProps) {
             )}
           />
         </motion.div>
-        <motion.div 
-        animate={{opacity: 1, paddingTop: "0rem"}}
-        initial={{opacity: 0, paddingTop: "2rem"}}
-        transition={{
-          duration: 0.75,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        className="container_header">
+        <motion.div
+          animate={{ opacity: 1, paddingTop: "0rem" }}
+          initial={{ opacity: 0, paddingTop: "2rem" }}
+          transition={{
+            duration: 0.75,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="container_header"
+        >
           <Logo />
           <FilterButton setFilterOn={setFilterOn} />
         </motion.div>
@@ -125,7 +158,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
           handleLike={() => {
             if (movieListInDeck) {
               if (isLike === true) {
-                handleLike(movieListInDeck[0].id);
+                const card = movieListInDeck[0];
+                handleLike(card.id, card.title, card.poster_path);
               }
               setIsLike(true);
             }
