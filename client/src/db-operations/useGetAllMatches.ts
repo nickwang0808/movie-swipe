@@ -3,7 +3,13 @@ import { cloudFn } from "../firebase/config";
 
 export interface IMatches {
   matchedMovie: number;
-  friendUid: string[];
+  friendInfo: IUserInfo[];
+}
+
+export interface IUserInfo {
+  email: string;
+  name: string | null;
+  uid: string;
 }
 
 export default function useGetAllMatches(

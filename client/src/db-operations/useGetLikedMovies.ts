@@ -8,7 +8,7 @@ export default function useGetLikedMovies(userID: string) {
 
   useEffect(() => {
     if (userID) {
-      const userRef = db
+      const cleanUp = db
         .collection("Users")
         .doc(userID)
         .collection("User_Details")
@@ -31,7 +31,7 @@ export default function useGetLikedMovies(userID: string) {
           }
         });
 
-      return () => userRef();
+      return () => cleanUp();
     }
   }, [userID]);
 

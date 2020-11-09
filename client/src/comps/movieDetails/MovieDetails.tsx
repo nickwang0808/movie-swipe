@@ -13,6 +13,7 @@ import { UserContext } from "../../store";
 import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { IUserInfo } from "../../db-operations/useGetAllMatches";
 
 interface IMovieDetails {
   movieID: number;
@@ -20,7 +21,7 @@ interface IMovieDetails {
   handleDislike: (movieID: number) => void;
   handleLike: (movieID: number) => void;
   goTo: string;
-  matches?: string[] | undefined;
+  matches?: IUserInfo[] | undefined;
 }
 
 export default function MovieDetails({
@@ -72,11 +73,12 @@ export default function MovieDetails({
       <div className={`${style.details_content} ${style.bottom_fade_out}`}>
         <motion.div
           className={style.details_trailer}
-          animate={{opacity: 1}}
-          initial={{opacity: 0}}
+          animate={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
           transition={{
-            duration: 1
-          }}>
+            duration: 1,
+          }}
+        >
           {getTrailerUrl() === undefined ? (
             <div className="loader loader_center" />
           ) : (
@@ -121,12 +123,9 @@ export default function MovieDetails({
         <div className={style.container_info}>
           <div className={style.container_watch}></div>
           <div className={style.container_description}>
-          {matches && (<WatchedAlert/>)}
+            {matches && <WatchedAlert matches={matches} />}
             <p>{movieDetails?.overview}</p>
           </div>
-          {matches && (
-            <div style={{ fontSize: 18 }}>Matched with {matches}</div>
-          )}
           {/* <div className={style.container_available}>
           Available on
           <div className={style.available_icons}>
