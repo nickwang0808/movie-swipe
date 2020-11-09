@@ -4,6 +4,7 @@ import { UserContext } from "../../store";
 import MovieDetails from "../movieDetails/MovieDetails";
 import LikedMovieInMyList from "./LikedMovieInMyList";
 import style from "./mylistmain.module.css";
+import {motion} from "framer-motion";
 
 export default function MyListMain() {
   const { likedMoviesInfos, matches } = useContext(UserContext);
@@ -37,7 +38,13 @@ export default function MyListMain() {
             <h1>My Watch List</h1>
           </div>
 
-          <div className={style.mylistmain}>
+          <motion.div
+          animate={{opacity: 1, paddingTop: "0rem"}}
+          initial={{opacity: 0, paddingTop: "2rem"}}
+          transition={{
+            duration: 0.5,
+            ease: [0.16, 1, 0.3, 1],
+          }}className={style.mylistmain}>
             {likedMoviesInfos.map((likedMovieInfo) => (
               <LikedMovieInMyList
                 key={likedMovieInfo.id}
@@ -52,7 +59,7 @@ export default function MyListMain() {
                 }
               />
             ))}
-          </div>
+          </motion.div>
         </div>
       </Route>
     </>

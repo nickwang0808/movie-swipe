@@ -7,7 +7,7 @@ import { auth } from "../../firebase/config";
 import Friends from "./Frends";
 import About from "./About";
 import DislikedMovies from "./DislikedMovies";
-
+import {motion} from "framer-motion";
 import { IonRouterOutlet } from "@ionic/react";
 import { Route } from "react-router";
 import { Link } from "react-router-dom";
@@ -18,7 +18,13 @@ export default function MyProfile() {
       {/* <Modal /> */}
       <Route exact path="/profile">
         <h1>My Profile</h1>
-        <div className={style.settings_container}>
+        <motion.div
+        animate={{opacity: 1, paddingTop: "0rem"}}
+        initial={{opacity: 0, paddingTop: "2rem"}}
+        transition={{
+          duration: 0.5,
+          ease: [0.16, 1, 0.3, 1],
+        }}className={style.settings_container}>
           <Link className="link" to="/profile/friends">
             <ListViewButton name="Friends" />
           </Link>
@@ -40,7 +46,7 @@ export default function MyProfile() {
               auth.currentUser?.delete().then(() => window.location.reload());
             }}
           />
-        </div>
+        </motion.div>
       </Route>
       <Route exact path="/profile/friends">
         <Friends />
