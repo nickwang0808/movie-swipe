@@ -32,7 +32,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
   const [filterOn, setFilterOn] = useState(false);
   const [voteType, setVoteType] = useState<"like" | "dislike">();
   const [isLike, setIsLike] = useState<boolean>();
-  const [showMatched, setShowMatched] = useState<IMatchNotification>();
+  const [showMatched, setShowMatched] = useState<IMatchNotification | null>();
   const { movieListInDeck, handleNext, userProfile } = useContext(UserContext);
 
   const handleLike = async (movieID: number, poster: string, title: string) => {
@@ -44,7 +44,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
       myLike: movieID,
       myFriends: userProfile?.friendsIdOnly,
     });
-    if (response.data) {
+    if (response.data.length > 0) {
       setShowMatched({
         movieId: movieID,
         title,
@@ -80,7 +80,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
           movieId={showMatched.movieId}
           poster={showMatched.poster}
           title={showMatched.title}
-          setShowMatched={() => setShowMatched(undefined)}
+          setShowMatched={() => setShowMatched(null)}
           matchedWith={showMatched.matchedWith}
         />
       )}

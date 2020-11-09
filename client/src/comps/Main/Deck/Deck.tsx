@@ -65,10 +65,10 @@ export default function Deck({
                     }}
                     exit={
                       isLike
-                        ? { x: "700px", rotate: 20, zIndex: 100 }
+                        ? { x: "700px", /* rotate: 20, */ zIndex: 100 }
                         : {
                             x: "-700px",
-                            rotate: -20,
+                            /*  rotate: -20, */
                             zIndex: 100,
                           }
                     }
