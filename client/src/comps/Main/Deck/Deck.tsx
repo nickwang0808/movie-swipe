@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { relative } from "path";
 import React, { useContext } from "react";
 import { Result } from "../../../db-operations/useGetMovies";
 import { UserContext } from "../../../store";
@@ -25,7 +26,15 @@ export default function Deck({
 
   return (
     <>
-      <div className="container_poster">
+      <motion.div
+      animate={{opacity: 1, marginTop: '0rem'}}
+      initial={{opacity: 0, marginTop: ' 2rem'}}
+      transition={{
+        delay: 0,
+        duration: 1,
+        ease: [0.16, 1, 0.3, 1]
+      }}
+        className="container_poster">
         <AnimatePresence>
           {movieListInDeck &&
             movieListInDeck
@@ -74,7 +83,7 @@ export default function Deck({
               })
               .reverse()}
         </AnimatePresence>
-      </div>
+      </motion.div>
     </>
   );
 }

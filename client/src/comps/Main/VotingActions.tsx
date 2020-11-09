@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import DownVote from "../ButtonComps/DownVote";
 import UpVote from "../ButtonComps/UpVote";
-
+import  {motion} from "framer-motion";
 interface IVotingActionsProps {
   handleDislike: () => void;
   handleLike: () => void;
@@ -18,7 +18,14 @@ export default function VotingActions({
   goTo,
 }: IVotingActionsProps) {
   return (
-    <div className="container_vote">
+    <motion.div
+    animate={{opacity: 1, bottom: 'calc(var(--nav) + 0rem)'}}
+        initial={{opacity: 0, bottom: 'calc(var(--nav) - 2rem)'}}
+        transition={{
+          delay: 0.1,
+          duration: 0.75,
+          ease: [0.16, 1, 0.3, 1],
+        }}className="container_vote">
       <DownVote handleDislike={handleDislike} />
       <div className={sharedstyle.container_detailsbtn}>
         <Link
@@ -29,6 +36,6 @@ export default function VotingActions({
         </Link>
       </div>
       <UpVote handleLike={handleLike} />
-    </div>
+    </motion.div>
   );
 }
