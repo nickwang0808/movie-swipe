@@ -3,6 +3,7 @@ import style from "./NotificationMatched.module.css";
 import { motion } from "framer-motion";
 import { IUserInfo } from "../../../db-operations/useGetAllMatches";
 import baseUrl from "../../../HelperFunctions/ImgBaseUrl";
+import { Link } from "react-router-dom";
 
 interface INotificationMatched {
   setShowMatched: () => void;
@@ -88,7 +89,9 @@ export default function NotificationMatched({
             </p>
           </div>
           <div className={style.matched_getdetailsbtn}>
-            <a href="#">Details</a>
+            <Link onClick={setShowMatched} to={`/home/details/${movieId}`}>
+              Details
+            </Link>
           </div>
         </motion.div>
       </div>

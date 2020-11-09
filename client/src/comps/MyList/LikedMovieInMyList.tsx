@@ -23,7 +23,7 @@ export default function LikedMovieInMyList({
       <Link
         className={`link ${style.flex_row}`}
         onClick={() => setIdTPShowDetails(movie.id)}
-        to="/mylist/detials"
+        to={`/mylist/detials/${movie.id}`}
       >
         {/* <motion.div 
         animate={{left: "110%"}}

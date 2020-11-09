@@ -84,10 +84,10 @@ export default function LikeOrNo({ userId }: ICompProps) {
           matchedWith={showMatched.matchedWith}
         />
       )}
-      <Route exact path="/home/details">
+      <Route path="/home/details/:id">
         {movieListInDeck && (
           <MovieDetails
-            movieID={movieListInDeck[0].id}
+            // movieID={movieListInDeck[0].id}
             handleDislike={handleDislike}
             handleLike={handleLike}
             showVoting={true}
@@ -146,27 +146,29 @@ export default function LikeOrNo({ userId }: ICompProps) {
           setIsLike={setIsLike}
           isLike={isLike}
         />
-        <VotingActions
-          handleDislike={() => {
-            if (movieListInDeck) {
-              if (isLike === false) {
-                handleDislike(movieListInDeck[0].id);
+        {movieListInDeck && (
+          <VotingActions
+            handleDislike={() => {
+              if (movieListInDeck) {
+                if (isLike === false) {
+                  handleDislike(movieListInDeck[0].id);
+                }
+                setIsLike(false);
               }
-              setIsLike(false);
-            }
-          }}
-          handleLike={() => {
-            if (movieListInDeck) {
-              if (isLike === true) {
-                const card = movieListInDeck[0];
-                handleLike(card.id, card.title, card.poster_path);
+            }}
+            handleLike={() => {
+              if (movieListInDeck) {
+                if (isLike === true) {
+                  const card = movieListInDeck[0];
+                  handleLike(card.id, card.title, card.poster_path);
+                }
+                setIsLike(true);
               }
-              setIsLike(true);
-            }
-          }}
-          goTo="/home/details"
-          showDetail="Details"
-        />
+            }}
+            goTo={`/home/details/${movieListInDeck[0].id}`}
+            showDetail="Details"
+          />
+        )}
       </Route>
     </>
   );

@@ -11,12 +11,12 @@ import WatchedAlert from "./WatchedAlert";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import { UserContext } from "../../store";
 import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { IUserInfo } from "../../db-operations/useGetAllMatches";
 
 interface IMovieDetails {
-  movieID: number;
+  // movieID: number;
   showVoting: boolean;
   handleDislike: (movieID: number) => void;
   handleLike: (movieID: number, poster: string, title: string) => void;
@@ -25,7 +25,7 @@ interface IMovieDetails {
 }
 
 export default function MovieDetails({
-  movieID,
+  // movieID,
   handleDislike,
   handleLike,
   showVoting,
@@ -34,7 +34,8 @@ export default function MovieDetails({
 }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
   const { likedMoviesInfos } = useContext(UserContext);
-
+  const { id } = useParams<{ id: string }>();
+  const movieID = Number(id);
   useEffect(() => {
     if (movieID) {
       // check if store already has the info

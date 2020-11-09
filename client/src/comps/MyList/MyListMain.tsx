@@ -12,10 +12,10 @@ export default function MyListMain() {
 
   return (
     <>
-      <Route exact path="/mylist/detials">
+      <Route path="/mylist/detials/:id">
         {idToShowDetails && (
           <MovieDetails
-            movieID={idToShowDetails}
+            // movieID={idToShowDetails}
             goTo="/mylist"
             handleDislike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
             handleLike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
