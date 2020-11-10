@@ -19,11 +19,10 @@ export default function VotingActions({
 }: IVotingActionsProps) {
   return (
     <motion.div
-    animate={{opacity: 1, bottom: 'calc(var(--nav) + 0rem)'}}
-        initial={{opacity: 0, bottom: 'calc(var(--nav) - 2rem)'}}
+    animate={{opacity: 1}}
+        initial={{opacity: 0}}
         transition={{
-          delay: 0.1,
-          duration: 0.75,
+          duration: 0.5,
           ease: [0.16, 1, 0.3, 1],
         }}className="container_vote">
       <DownVote handleDislike={handleDislike} />

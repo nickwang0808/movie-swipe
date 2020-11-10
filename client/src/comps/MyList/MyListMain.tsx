@@ -37,7 +37,10 @@ export default function MyListMain() {
           <div>
             <h1>My Watch List</h1>
           </div>
-
+            <div className={style.container_tabs}>
+              <div className={`${style.tab} ${"heavy"} ${style.tab_active_1}`}>My Movies</div>
+              <div className={`${style.tab} ${"heavy"}`}>History</div>
+            </div>
           <motion.div
             animate={{ opacity: 1, paddingTop: "0rem" }}
             initial={{ opacity: 0, paddingTop: "2rem" }}
