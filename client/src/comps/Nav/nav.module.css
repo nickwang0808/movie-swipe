@@ -23,9 +23,10 @@
 
 .nav_item {
   cursor: pointer;
-  margin: 0.5em 1em;
+  margin: 0.5rem 1rem;
   text-align: center;
-  font-size: 1.8em;
+  font-size: 1.8rem;
+  line-height: 2rem;
   font-weight: 600;
   position: relative;
 }

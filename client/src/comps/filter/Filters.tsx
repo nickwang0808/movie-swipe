@@ -61,6 +61,7 @@ export default function Filters({
         </div>
         <div className="container_subcontent">
           <div className={`${"title"} ${"marginBottom2"}`}>
+          <div className="listview_separator_full" />
             <h2>Genres</h2>
           </div>
           <div className={style.genres_list}>
