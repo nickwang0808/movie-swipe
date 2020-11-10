@@ -64,7 +64,7 @@ export default function useGetLikedMovies(userID: string) {
                   }) => {
                     const movieDetails = await searchMovieByID(watched.movieId);
                     return {
-                      movieID: watched.movieId,
+                      movieId: watched.movieId,
                       watchedWith: watched.watchedWith,
                       movieDetails: movieDetails,
                     };

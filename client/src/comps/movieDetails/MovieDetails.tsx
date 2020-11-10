@@ -28,7 +28,9 @@ export default function MovieDetails({
   showVoting,
 }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
-  const { likedMoviesInfos, matches } = useContext(UserContext);
+  const { likedMoviesInfos, matches, watchedMovieInfos } = useContext(
+    UserContext
+  );
   const { id } = useParams<{ id: string }>();
   const movieID = Number(id);
   const matchedFriends = matches?.find(
@@ -37,6 +39,9 @@ export default function MovieDetails({
     ? matches?.find((element) => element.matchedMovie === movieID)?.friendInfo
     : undefined;
 
+  const watchedFriends = watchedMovieInfos?.find(
+    (element) => element.movieId === movieID
+  );
   const history = useHistory();
 
   useEffect(() => {
@@ -130,6 +135,8 @@ export default function MovieDetails({
             {matchedFriends && (
               <WatchedAlert matches={matchedFriends} movieId={movieID} />
             )}
+            {/* TODO: make a different element show watched card */}
+            {watchedFriends && <WatchedAlert watched movieId={movieID} />}
             <p>{movieDetails?.overview}</p>
           </div>
           {/* <div className={style.container_available}>
