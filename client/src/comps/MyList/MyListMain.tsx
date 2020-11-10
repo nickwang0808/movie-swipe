@@ -12,26 +12,6 @@ export default function MyListMain() {
 
   return (
     <>
-      <Route path="/mylist/detials/:id">
-        {idToShowDetails && (
-          <MovieDetails
-            // movieID={idToShowDetails}
-            goTo="/mylist"
-            handleDislike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
-            handleLike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
-            showVoting={false}
-            matches={
-              matches?.find(
-                (element) => element.matchedMovie === idToShowDetails
-              )
-                ? matches?.find(
-                    (element) => element.matchedMovie === idToShowDetails
-                  )?.friendInfo
-                : undefined
-            }
-          />
-        )}
-      </Route>
       <Route exact path="/mylist">
         <div className="container_allcontent">
           <div>

@@ -28,6 +28,7 @@ import SignInScreen from "./comps/auth/SignInScreen";
 import { UserContext } from "./store";
 
 import MyProfile from "./comps/profile/MyProfile";
+import MovieDetails from "./comps/movieDetails/MovieDetails";
 
 function App() {
   const { userAuth, isLoading, size } = useContext(UserContext);
@@ -53,6 +54,12 @@ function App() {
             </Route>
             <Route path="/profile">
               <MyProfile />
+            </Route>
+            <Route path="/detials/:id">
+              <MovieDetails
+                handleDislike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
+                handleLike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
+              />
             </Route>
           </IonRouterOutlet>
         </IonReactRouter>

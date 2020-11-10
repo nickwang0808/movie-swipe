@@ -93,7 +93,6 @@ export default function LikeOrNo({ userId }: ICompProps) {
             handleDislike={handleDislike}
             handleLike={handleLike}
             showVoting={true}
-            goTo="/home"
           />
         )}
       </Route>

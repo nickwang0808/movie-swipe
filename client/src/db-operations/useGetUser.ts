@@ -98,6 +98,10 @@ export default function useGetUser(user_id: string) {
             .set({ disliked_movies: [] });
           userRef
             .collection("User_Details")
+            .doc("Watched")
+            .set({ watched: [] });
+          userRef
+            .collection("User_Details")
             .doc("Friends")
             .set({ friends: [], pending_sent: [], pending_received: [] });
         }

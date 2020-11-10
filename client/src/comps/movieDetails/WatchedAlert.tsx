@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import style from "./WatchedAlert.module.css";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import { motion } from "framer-motion";
 import { IUserInfo } from "../../db-operations/useGetAllMatches";
+import handleWatched from "../../db-operations/handleWatched";
+import { UserContext } from "../../store";
 
 interface IMovieDetails {
   matches: IUserInfo[] | undefined;
+  movieId: number;
 }
 
-export default function WatchedAlert({ matches }: IMovieDetails) {
+export default function WatchedAlert({ matches, movieId }: IMovieDetails) {
+  const { userAuth } = useContext(UserContext);
+
   return (
     <>
       <div className={style.container_details_matched}>
@@ -84,6 +89,13 @@ export default function WatchedAlert({ matches }: IMovieDetails) {
         // animate={{ height: 0, opacity: 0}}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className={`${sharedstyle.btn} ${sharedstyle.btn_outline} ${style.btn_watched}`}
+        onClick={() =>
+          handleWatched(
+            userAuth?.userInfo.uid as string,
+            movieId,
+            matches?.map((match) => match.uid) as string[]
+          )
+        }
       >
         We've watched this!
       </motion.div>
