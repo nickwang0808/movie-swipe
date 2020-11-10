@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
+import { IWatchedMovieInfo } from "./useGetLikedMovies";
 
 export interface IPopularMovies {
   page: number;
@@ -65,6 +66,13 @@ export default function useGetMovies(userId: string) {
       const likedMoviesDoc = await votedMoviesRef.doc("Liked_Movies").get();
       if (likedMoviesDoc.exists) {
         const data = likedMoviesDoc.data()?.liked_movies;
+        votedMoviesIds = [...votedMoviesIds, ...data];
+      }
+
+      const watchedMoviesDoc = await votedMoviesRef.doc("Watched").get();
+      if (likedMoviesDoc.exists) {
+        const rawData = watchedMoviesDoc.data()?.watched as IWatchedMovieInfo[];
+        const data = rawData.map((watchedMovie) => watchedMovie.movieId);
         votedMoviesIds = [...votedMoviesIds, ...data];
       }
 

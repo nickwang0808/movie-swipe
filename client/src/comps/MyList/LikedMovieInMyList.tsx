@@ -9,22 +9,18 @@ import { motion } from "framer-motion";
 
 interface ILikedMovieInMyList {
   movie: MovieDetail;
-  setIdTPShowDetails: (arg: number) => void;
-  matched: boolean;
+  matched?: boolean;
+  watched?: boolean;
 }
 
 export default function LikedMovieInMyList({
   movie,
-  setIdTPShowDetails,
   matched,
+  watched,
 }: ILikedMovieInMyList) {
   return (
     <>
-      <Link
-        className={`link ${style.flex_row}`}
-        onClick={() => setIdTPShowDetails(movie.id)}
-        to={`/detials/${movie.id}`}
-      >
+      <Link className={`link ${style.flex_row}`} to={`/detials/${movie.id}`}>
         {/* <motion.div 
         animate={{left: "110%"}}
         transition={{
@@ -51,14 +47,30 @@ export default function LikedMovieInMyList({
           <div className={style.details_likedtitle}>
             <h2>{movie.title}</h2>
           </div>
-          {/* <div className={style.watched_watchlist}>
-            <svg width="22" height="14" viewBox="0 0 22 14" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21.667 6.55424C18.9324 2.32783 15.2464 0 11.2988 0C7.35127 0 3.66518 2.32783 0.930612 6.55424C0.75488 6.82665 0.75488 7.17335 0.930612 7.44575C3.66518 11.6722 7.35127 14 11.2988 14C15.2464 14 18.9282 11.6722 21.667 7.44575C21.8427 7.17335 21.8427 6.82665 21.667 6.55424Z" fill="black"/>
-              <path d="M10.9073 4.51298C9.60192 4.51298 8.53706 5.62736 8.53706 7.00001C8.53706 8.36911 9.59838 9.48703 10.9073 9.48703C12.2128 9.48703 13.2776 8.37265 13.2776 7.00001C13.2776 5.6309 12.2128 4.51298 10.9073 4.51298Z" fill="#11EE9E"/>
-              <path d="M10.9073 10.9304C8.80593 10.9304 7.09367 9.16863 7.09367 7C7.09367 4.83137 8.80593 3.06958 10.9073 3.06958C13.0088 3.06958 14.721 4.83137 14.721 7C14.721 9.16863 13.0088 10.9304 10.9073 10.9304ZM19.6208 6.61792C17.3637 2.99528 14.3213 1 11.063 1C7.80475 1 4.7623 2.99528 2.50522 6.61792C2.36018 6.85141 2.36018 7.14858 2.50522 7.38207C4.7623 11.0047 7.80475 13 11.063 13C14.3213 13 17.3602 11.0047 19.6208 7.38207C19.7658 7.14858 19.7658 6.85141 19.6208 6.61792Z" fill="#11EE9E"/>
-            </svg>
-            <p>Watched with Email@Email.com</p>
-          </div> */}
+          {watched && (
+            <div className={style.watched_watchlist}>
+              <svg
+                width="22"
+                height="14"
+                viewBox="0 0 22 14"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M21.667 6.55424C18.9324 2.32783 15.2464 0 11.2988 0C7.35127 0 3.66518 2.32783 0.930612 6.55424C0.75488 6.82665 0.75488 7.17335 0.930612 7.44575C3.66518 11.6722 7.35127 14 11.2988 14C15.2464 14 18.9282 11.6722 21.667 7.44575C21.8427 7.17335 21.8427 6.82665 21.667 6.55424Z"
+                  fill="black"
+                />
+                <path
+                  d="M10.9073 4.51298C9.60192 4.51298 8.53706 5.62736 8.53706 7.00001C8.53706 8.36911 9.59838 9.48703 10.9073 9.48703C12.2128 9.48703 13.2776 8.37265 13.2776 7.00001C13.2776 5.6309 12.2128 4.51298 10.9073 4.51298Z"
+                  fill="#11EE9E"
+                />
+                <path
+                  d="M10.9073 10.9304C8.80593 10.9304 7.09367 9.16863 7.09367 7C7.09367 4.83137 8.80593 3.06958 10.9073 3.06958C13.0088 3.06958 14.721 4.83137 14.721 7C14.721 9.16863 13.0088 10.9304 10.9073 10.9304ZM19.6208 6.61792C17.3637 2.99528 14.3213 1 11.063 1C7.80475 1 4.7623 2.99528 2.50522 6.61792C2.36018 6.85141 2.36018 7.14858 2.50522 7.38207C4.7623 11.0047 7.80475 13 11.063 13C14.3213 13 17.3602 11.0047 19.6208 7.38207C19.7658 7.14858 19.7658 6.85141 19.6208 6.61792Z"
+                  fill="#11EE9E"
+                />
+              </svg>
+              <p>Watched</p>
+            </div>
+          )}
           <div className={style.flex_row_rating}>
             <h3 className="heavy">{movie.vote_average}</h3>
             <div className="star">

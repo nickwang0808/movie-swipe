@@ -5,19 +5,38 @@ import MovieDetails from "../movieDetails/MovieDetails";
 import LikedMovieInMyList from "./LikedMovieInMyList";
 import style from "./mylistmain.module.css";
 import { motion } from "framer-motion";
+import { Link, NavLink } from "react-router-dom";
 
 export default function MyListMain() {
-  const { likedMoviesInfos, matches } = useContext(UserContext);
-  const [idToShowDetails, setIdToShowDetails] = useState<number>();
+  const { likedMoviesInfos, watchedMovieInfos, matches } = useContext(
+    UserContext
+  );
 
   return (
     <>
-      <Route exact path="/mylist">
+      <Route path="/mylist">
         <div className="container_allcontent">
           <div>
             <h1>My Watch List</h1>
           </div>
-
+          <div className={style.container_tabs}>
+            <NavLink
+              exact
+              to="/mylist"
+              className={`${style.tab} ${"heavy link"}`}
+              activeClassName={style.tab_active_1}
+            >
+              My Movies
+            </NavLink>
+            <NavLink
+              exact
+              to="/mylist/watched"
+              className={`${style.tab} ${"heavy link"}`}
+              activeClassName={style.tab_active_1}
+            >
+              History
+            </NavLink>
+          </div>
           <motion.div
             animate={{ opacity: 1, paddingTop: "0rem" }}
             initial={{ opacity: 0, paddingTop: "2rem" }}
@@ -27,20 +46,30 @@ export default function MyListMain() {
             }}
             className={style.mylistmain}
           >
-            {likedMoviesInfos.map((likedMovieInfo) => (
-              <LikedMovieInMyList
-                key={likedMovieInfo.id}
-                movie={likedMovieInfo}
-                setIdTPShowDetails={setIdToShowDetails}
-                matched={
-                  matches?.find(
-                    (element) => element.matchedMovie === likedMovieInfo.id
-                  )
-                    ? true
-                    : false
-                }
-              />
-            ))}
+            <Route exact path="/mylist">
+              {likedMoviesInfos.map((likedMovieInfo) => (
+                <LikedMovieInMyList
+                  key={likedMovieInfo.id}
+                  movie={likedMovieInfo}
+                  matched={
+                    matches?.find(
+                      (element) => element.matchedMovie === likedMovieInfo.id
+                    )
+                      ? true
+                      : false
+                  }
+                />
+              ))}
+            </Route>
+            <Route exact path="/mylist/watched">
+              {watchedMovieInfos.map((watchedMovieInfo) => (
+                <LikedMovieInMyList
+                  key={watchedMovieInfo.movieDetails.id}
+                  movie={watchedMovieInfo.movieDetails}
+                  watched
+                />
+              ))}
+            </Route>
           </motion.div>
         </div>
       </Route>

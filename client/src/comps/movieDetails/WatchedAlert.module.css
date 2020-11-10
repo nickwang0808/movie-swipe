@@ -3,28 +3,12 @@
   border: 1px solid var(--positive);
   background-color: var(--light);
   position: relative;
-  font-size: 2rem;
+  font-size: 1.8rem;
+  line-height: 2rem;
   font-weight: 400;
   text-align: left;
   fill: var(--positive);
   padding: 1rem 0;
-}
-
-.matched {
-  padding: 0.3em 1em;
-  background-color: var(--positive);
-  font-size: 1.5rem;
-  font-weight: 600;
-  border-radius: 0.3em;
-  transform: skewX(-15deg);
-  position: absolute;
-  top: -11px;
-  left: 1.5rem;
-  overflow: visible;
-}
-
-.forceSkew {
-  transform: skewX(15deg);
 }
 
 .matched_animation_cover {
@@ -65,7 +49,7 @@
 
 .matched_partner {
   margin: auto 1rem auto 9rem;
-  height: 5rem;
+  min-height: 5rem;
   display: flex;
   align-items: center;
 }

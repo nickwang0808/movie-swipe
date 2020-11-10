@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { MovieDetail } from "./APICalls/searchMovieByID";
 import useGetAllMatches, { IMatches } from "./db-operations/useGetAllMatches";
-import useGetLikedMovies from "./db-operations/useGetLikedMovies";
+import useGetLikedMovies, {
+  IWatchedMovieInfo,
+} from "./db-operations/useGetLikedMovies";
 import useGetMovies, { Result } from "./db-operations/useGetMovies";
 import useGetUser, { IUserProfile } from "./db-operations/useGetUser";
 import { auth } from "./firebase/config";
@@ -18,6 +20,7 @@ interface IStore {
   userAuth: IUser | undefined | null;
   userProfile: IUserProfile | undefined;
   likedMoviesInfos: MovieDetail[];
+  watchedMovieInfos: IWatchedMovieInfo[];
   movieListInDeck: Result[] | undefined;
   isLoading: boolean;
   handleNext: () => void;
@@ -35,9 +38,11 @@ export default function StoreProvider({
 }) {
   const [userAuth, setUserAuth] = useState<IUser | null>(); // undefined is for loading
   const userProfile = useGetUser(userAuth?.userInfo.uid as string);
-  const { likedMoviesInfos, likedMovieIds } = useGetLikedMovies(
-    userAuth?.userInfo.uid as string
-  );
+  const {
+    likedMoviesInfos,
+    likedMovieIds,
+    watchedMovieInfos,
+  } = useGetLikedMovies(userAuth?.userInfo.uid as string);
   const { movieListInDeck, handleNext } = useGetMovies(
     userAuth?.userInfo?.uid as string
   );
@@ -75,6 +80,7 @@ export default function StoreProvider({
         userAuth,
         userProfile,
         likedMoviesInfos,
+        watchedMovieInfos,
         movieListInDeck,
         handleNext,
         size,

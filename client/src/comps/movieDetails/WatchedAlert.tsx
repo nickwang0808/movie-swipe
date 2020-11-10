@@ -38,16 +38,6 @@ export default function WatchedAlert({ matches, movieId }: IMovieDetails) {
               <p>Watched with FWernisch@gmail.com on Sept 20</p>
             </motion.div>
           </div>
-          {/* <motion.div
-              key="watched"
-              // animate={{opacity: 0}}
-              transition={{
-                duration: 1,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className={style.matched}>
-                <div className={style.forceSkew}>MATCHED!</div>
-              </motion.div> */}
           <motion.div
             key="watched2"
             // animate={{opacity: 1}}
@@ -79,8 +69,7 @@ export default function WatchedAlert({ matches, movieId }: IMovieDetails) {
             }}
             className={`${style.matched_partner}`}
           >
-            <strong>{matches?.map((match) => match.name).join(", ")}</strong>
-            &nbsp;want to watch this too!
+            <div className={style.matchName}><span className="heavy">{matches?.map((match) => match.name).join(", ")}</span>&nbsp;wants to watch this too!</div>
           </motion.div>
         </motion.div>
       </div>

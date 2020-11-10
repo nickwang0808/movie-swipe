@@ -20,18 +20,17 @@ export default function About() {
           <h2 className={style.title_bold}>
             MovieSync is an easy way to find something new for you and your friends to watch together, finally.
           </h2>
-          <p className="marginSides2"> MovieSync is built by Nick Wang (development) and Trevor Wernisch (design).</p>
+          <p className="marginSides2"> MovieSync is developed by Nick Wang (NickWangTech.com) and designed by Trevor Wernisch (No-Tec.com).</p>
         </div>
         <div className="container_subcontent">
-        <div className={`${"title"} ${"marginBottom2"}`}>
-        <div className="listview_separator_full" />
-
-             <h2>Need to chat?</h2>
+          <div className={`${"title"} ${"marginBottom2"}`}>
+            <div className="listview_separator_full" />
+            <h2>Need to chat?</h2>
           </div>
           <div className={style.container_inset}>
               <div className={`${sharedstyle.btn}`}>
                   Hello@Movie-Sync.com
-              </div><div></div>
+              </div>
           </div>
         </div>
         <div className="container_subcontent">

@@ -60,7 +60,7 @@ export default function MovieDetails({
     if (movieDetails) {
       const trailerKey = movieDetails.videos.results[0].key;
       try {
-        return `https://www.youtube.com/embed/${trailerKey}?rel=0&amp;controls=1&amp&amp;showinfo=0&amp;modestbranding=1`;
+        return `https://www.youtube.com/embed/${trailerKey}?rel=0;controls=1;showinfo=0;fs=1;modestbranding=1`;
       } catch (err) {
         console.log("err, can't find trailer url on youtube");
         return undefined;
