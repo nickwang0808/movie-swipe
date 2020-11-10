@@ -40,17 +40,19 @@ export default function LikeOrNo({ userId }: ICompProps) {
     console.log("like");
     handleNext();
     setVoteType("like");
-    const response = await cloudFn.httpsCallable("checkMatchesWhileSwiping")({
-      myLike: movieID,
-      myFriends: userProfile?.friendsIdOnly,
-    });
-    if (response.data.length > 0) {
-      setShowMatched({
-        movieId: movieID,
-        title,
-        poster,
-        matchedWith: response.data,
+    if (userProfile && userProfile.friendsIdOnly.length > 0) {
+      const response = await cloudFn.httpsCallable("checkMatchesWhileSwiping")({
+        myLike: movieID,
+        myFriends: userProfile?.friendsIdOnly,
       });
+      if (response.data.length > 0) {
+        setShowMatched({
+          movieId: movieID,
+          title,
+          poster,
+          matchedWith: response.data,
+        });
+      }
     }
   };
   const handleDislike = (movieID: number) => {

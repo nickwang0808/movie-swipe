@@ -21,7 +21,7 @@ export default function useGetAllMatches(
 
   useEffect(() => {
     // if (userId && myLikes && myFriends && matches === undefined) {
-    if (userId && myLikes && myFriends) {
+    if (userId && myLikes && myFriends && myFriends.length > 0) {
       (async () => {
         const result = await cloudFn.httpsCallable("findAllMatches")({
           myFriends,
