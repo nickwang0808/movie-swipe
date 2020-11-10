@@ -98,6 +98,10 @@ export default function useGetUser(user_id: string) {
             .set({ disliked_movies: [] });
           userRef
             .collection("User_Details")
+            .doc("Match_Counts")
+            .set({ new_match_counts: 0, old_match_counts: 0 });
+          userRef
+            .collection("User_Details")
             .doc("Watched")
             .set({ watched: [] });
           userRef

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route } from "react-router";
 import { UserContext } from "../../store";
 import MovieDetails from "../movieDetails/MovieDetails";
@@ -6,11 +6,19 @@ import LikedMovieInMyList from "./LikedMovieInMyList";
 import style from "./mylistmain.module.css";
 import { motion } from "framer-motion";
 import { Link, NavLink } from "react-router-dom";
+import { updateOldMatchCounts } from "../../db-operations/useGetWatchListNotification";
 
 export default function MyListMain() {
-  const { likedMoviesInfos, watchedMovieInfos, matches } = useContext(
+  const { likedMoviesInfos, watchedMovieInfos, matches, userAuth } = useContext(
     UserContext
   );
+
+  useEffect(() => {
+    if (likedMoviesInfos && userAuth) {
+      console.log("update old match count");
+      updateOldMatchCounts(userAuth.userInfo.uid, likedMoviesInfos.length);
+    }
+  }, [likedMoviesInfos, userAuth]);
 
   return (
     <>

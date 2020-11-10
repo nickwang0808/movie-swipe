@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { cloudFn } from "../firebase/config";
+import { cloudFn, db } from "../firebase/config";
 
 export interface IMatches {
   matchedMovie: number;
@@ -32,6 +32,20 @@ export default function useGetAllMatches(
       })();
     }
   }, [userId, myLikes, myFriends]);
+
+  useEffect(() => {
+    // if (userId && myLikes && myFriends && matches === undefined) {
+    if (matches) {
+      (async () => {
+        await db
+          .collection("Users")
+          .doc(userId)
+          .collection("User_Details")
+          .doc("Match_Counts")
+          .update({ new_match_counts: matches.length });
+      })();
+    }
+  }, [matches]);
 
   return matches;
 }

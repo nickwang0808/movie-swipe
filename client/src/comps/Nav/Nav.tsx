@@ -1,9 +1,16 @@
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import useGetWatchListNotification from "../../db-operations/useGetWatchListNotification";
+import { UserContext } from "../../store";
 import style from "./nav.module.css";
 
 export default function Nav() {
+  const { userAuth } = useContext(UserContext);
+  const matchDiff = useGetWatchListNotification(
+    userAuth?.userInfo.uid as string
+  );
+
   return (
     <div className={style.container_nav}>
       <NavLink
@@ -13,16 +20,19 @@ export default function Nav() {
         to="/mylist"
       >
         <div className={style.nav_item}>
-          {/* <motion.div 
-            className={style.nav_item_notification}
-            animate={{ scale: [0, 1.5, 1, 1], rotateZ: [0,15,0,0]}}
-            transition={{
-              times: [0, 0.25, 1, 1.5],
-              duration: 2,
-              ease: [0.16, 1, 0.3, 1],
-            }}>
-              1
-          </motion.div> */}
+          {matchDiff !== 0 && (
+            <motion.div
+              className={style.nav_item_notification}
+              animate={{ scale: [0, 1.5, 1, 1], rotateZ: [0, 15, 0, 0] }}
+              transition={{
+                times: [0, 0.25, 1, 1.5],
+                duration: 2,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+            >
+              {matchDiff}
+            </motion.div>
+          )}
           <svg
             className="nav_icon list"
             width={25}
