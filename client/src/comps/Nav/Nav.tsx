@@ -6,7 +6,7 @@ import { UserContext } from "../../store";
 import style from "./nav.module.css";
 
 export default function Nav() {
-  const { userAuth } = useContext(UserContext);
+  const { userAuth, userProfile } = useContext(UserContext);
   const matchDiff = useGetWatchListNotification(
     userAuth?.userInfo.uid as string
   );
@@ -84,6 +84,19 @@ export default function Nav() {
         activeClassName={style.active_link}
       >
         <div className={style.nav_item}>
+          {userProfile && userProfile.pending_received.length > 0 && (
+            <motion.div
+              className={style.nav_item_notification}
+              animate={{ scale: [0, 1.5, 1, 1], rotateZ: [0, 15, 0, 0] }}
+              transition={{
+                times: [0, 0.25, 1, 1.5],
+                duration: 2,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+            >
+              {userProfile.pending_received.length}
+            </motion.div>
+          )}
           <svg
             className="nav_icon settings"
             width="24"

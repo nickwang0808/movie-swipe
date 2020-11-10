@@ -14,14 +14,6 @@ export default function useGetWatchListNotification(userId: string) {
         .onSnapshot((doc) => {
           const new_match_counts: number = doc.data()?.new_match_counts;
           const old_match_counts: number = doc.data()?.old_match_counts;
-          console.log(
-            "useGetWatchListNotification -> old_match_counts",
-            old_match_counts
-          );
-          console.log(
-            "useGetWatchListNotification -> new_match_counts",
-            new_match_counts
-          );
 
           if (new_match_counts && old_match_counts) {
             const diff = new_match_counts - old_match_counts;
