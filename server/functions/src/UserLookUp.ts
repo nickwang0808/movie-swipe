@@ -15,7 +15,7 @@ const userLookUp = functions.https.onCall(async (data, context) => {
 
           if (data) {
             console.log("data", data);
-            return { email: data?.email, id: data?.uid };
+            return { email: data?.email, id: data?.uid, name: data?.name };
           } else {
             throw new functions.https.HttpsError(
               "failed-precondition",
