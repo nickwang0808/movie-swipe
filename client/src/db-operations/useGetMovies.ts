@@ -110,11 +110,11 @@ export default function useGetMovies(userId: string) {
             return "fail";
           }
         });
-        if (result.includes("fail")) {
+        if (result.includes("pass")) {
           // no true allowed
-          return "fail";
-        } else {
           return "pass";
+        } else {
+          return "fail";
         }
       } else return "pass";
     };
