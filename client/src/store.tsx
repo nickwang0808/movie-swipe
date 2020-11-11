@@ -22,6 +22,7 @@ interface IStore {
   likedMoviesInfos: MovieDetail[];
   watchedMovieInfos: IWatchedMovieInfo[];
   movieListInDeck: Result[] | undefined;
+  genrePref: number[] | undefined;
   isLoading: boolean;
   handleNext: () => void;
   size: ISize;
@@ -43,7 +44,7 @@ export default function StoreProvider({
     likedMovieIds,
     watchedMovieInfos,
   } = useGetLikedMovies(userAuth?.userInfo.uid as string);
-  const { movieListInDeck, handleNext } = useGetMovies(
+  const { movieListInDeck, handleNext, genrePref } = useGetMovies(
     userAuth?.userInfo?.uid as string
   );
 
@@ -83,6 +84,7 @@ export default function StoreProvider({
         watchedMovieInfos,
         movieListInDeck,
         handleNext,
+        genrePref,
         size,
         matches,
       }}

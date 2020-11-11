@@ -33,7 +33,9 @@ export default function LikeOrNo({ userId }: ICompProps) {
   const [voteType, setVoteType] = useState<"like" | "dislike">();
   const [isLike, setIsLike] = useState<boolean>();
   const [showMatched, setShowMatched] = useState<IMatchNotification | null>();
-  const { movieListInDeck, handleNext, userProfile } = useContext(UserContext);
+  const { movieListInDeck, handleNext, userProfile, genrePref } = useContext(
+    UserContext
+  );
 
   const handleLike = async (movieID: number, poster: string, title: string) => {
     UpdateLikeToDB(userId, movieID, true);
@@ -98,7 +100,13 @@ export default function LikeOrNo({ userId }: ICompProps) {
       </Route>
       <Route exact path="/home">
         <AnimatePresence>
-          {filterOn && <Filters setFilterOn={setFilterOn} />}
+          {filterOn && genrePref && (
+            <Filters
+              setFilterOn={setFilterOn}
+              userId={userId}
+              genrePref={genrePref}
+            />
+          )}
         </AnimatePresence>
         <motion.div
           animate={{ opacity: 1 }}
