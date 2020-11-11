@@ -14,6 +14,7 @@ import snedFriendReqRoute from "./SendFrendReq";
 import * as handleFriendsReq from "./handleFriendsReq";
 import findAllMatchesRoute from "./findAllMatches";
 import checkMatchesWhileSwipingRoute from "./checkMatchesWhileSwiping";
+import handleWatchRoute from "./handleWatched";
 
 export const sendFriendReq = snedFriendReqRoute;
 export const userLookUp = userLookUpRoute;
@@ -22,3 +23,4 @@ export const declineRequest = handleFriendsReq.declineRequest;
 export const deleteFriend = handleFriendsReq.deleteFriend;
 export const findAllMatches = findAllMatchesRoute;
 export const checkMatchesWhileSwiping = checkMatchesWhileSwipingRoute;
+export const handleWatched = handleWatchRoute;
