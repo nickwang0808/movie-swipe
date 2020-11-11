@@ -16,7 +16,10 @@ export default function useGetWatchListNotification(userId: string) {
           const old_match_counts: number = doc.data()?.old_match_counts;
 
           if (new_match_counts && old_match_counts) {
-            const diff = new_match_counts - old_match_counts;
+            let diff = new_match_counts - old_match_counts;
+            if (diff < 0) {
+              diff = 0;
+            }
             setMatchDiff(diff);
           }
         });
