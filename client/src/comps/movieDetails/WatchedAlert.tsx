@@ -10,7 +10,7 @@ import { cloudFn } from "../../firebase/config";
 interface IMovieDetails {
   matches?: IUserInfo[] | undefined;
   watchedWith?: { email: string; name: string; uid: string }[] | undefined;
-  movieId: number;
+  setShowModal: (arg: boolean) => void;
 }
 
 const Ease = [0.16, 1, 0.3, 1];
@@ -18,10 +18,8 @@ const Ease = [0.16, 1, 0.3, 1];
 export default function WatchedAlert({
   matches,
   watchedWith,
-  movieId,
+  setShowModal,
 }: IMovieDetails) {
-  const { userAuth } = useContext(UserContext);
-
   return (
     <>
       <AnimatePresence>
@@ -99,13 +97,7 @@ export default function WatchedAlert({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: Ease }}
             className={`${sharedstyle.btn} ${sharedstyle.btn_outline} ${style.btn_watched}`}
-            onClick={() =>
-              handleWatched(
-                userAuth?.userInfo.uid as string,
-                movieId,
-                matches?.map((match) => match.uid) as string[]
-              )
-            }
+            onClick={() => setShowModal(true)}
           >
             We've watched this!
           </motion.div>

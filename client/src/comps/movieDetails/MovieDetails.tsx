@@ -14,6 +14,8 @@ import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { IUserInfo } from "../../db-operations/useGetAllMatches";
+import Modal from "../notification/modal";
+import WatchedWithWho from "../notification/ModalContent/WatchedWithWho";
 
 interface IMovieDetails {
   showVoting?: boolean;
@@ -28,9 +30,12 @@ export default function MovieDetails({
   showVoting,
 }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
-  const { likedMoviesInfos, matches, watchedMovieInfos } = useContext(
+  const { likedMoviesInfos, matches, watchedMovieInfos, userAuth } = useContext(
     UserContext
   );
+
+  const [showModal, setShowModal] = useState(false);
+
   const { id } = useParams<{ id: string }>();
   const movieID = Number(id);
   const matchedFriends = matches?.find(
@@ -75,6 +80,15 @@ export default function MovieDetails({
 
   return (
     <>
+      {showModal && (
+        <Modal>
+          <WatchedWithWho
+            uid={userAuth?.userInfo.uid as string}
+            movieId={movieID}
+            matches={matchedFriends}
+          />
+        </Modal>
+      )}
       <div
         className="background"
         style={backgroundStyle(baseUrl + movieDetails?.poster_path)}
@@ -136,7 +150,7 @@ export default function MovieDetails({
               <WatchedAlert
                 matches={matchedFriends}
                 watchedWith={watchedFriends}
-                movieId={movieID}
+                setShowModal={setShowModal}
               />
             )}
 
