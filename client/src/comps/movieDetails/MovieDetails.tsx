@@ -41,7 +41,7 @@ export default function MovieDetails({
 
   const watchedFriends = watchedMovieInfos?.find(
     (element) => element.movieId === movieID
-  );
+  )?.watchedWith;
   const history = useHistory();
 
   useEffect(() => {
@@ -132,11 +132,14 @@ export default function MovieDetails({
         <div className={style.container_info}>
           <div className={style.container_watch}></div>
           <div className={style.container_description}>
-            {matchedFriends && (
-              <WatchedAlert matches={matchedFriends} movieId={movieID} />
+            {(matchedFriends || watchedFriends) && (
+              <WatchedAlert
+                matches={matchedFriends}
+                watchedWith={watchedFriends}
+                movieId={movieID}
+              />
             )}
-            {/* TODO: make a different element show watched card */}
-            {watchedFriends && <WatchedAlert watched movieId={movieID} />}
+
             <p>{movieDetails?.overview}</p>
           </div>
           {/* <div className={style.container_available}>

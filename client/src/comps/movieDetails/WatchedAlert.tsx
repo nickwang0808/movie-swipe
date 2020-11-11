@@ -1,48 +1,57 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import style from "./WatchedAlert.module.css";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import { IUserInfo } from "../../db-operations/useGetAllMatches";
 import handleWatched from "../../db-operations/handleWatched";
 import { UserContext } from "../../store";
+import { cloudFn } from "../../firebase/config";
 
 interface IMovieDetails {
   matches?: IUserInfo[] | undefined;
-  watched?: boolean;
+  watchedWith?: { email: string; name: string; uid: string }[] | undefined;
   movieId: number;
 }
 
-export default function WatchedAlert({ matches, movieId }: IMovieDetails) {
+const Ease = [0.16, 1, 0.3, 1];
+
+export default function WatchedAlert({
+  matches,
+  watchedWith,
+  movieId,
+}: IMovieDetails) {
   const { userAuth } = useContext(UserContext);
 
   return (
     <>
       <AnimatePresence>
-        <div className={style.container_details_matched}>
-          <motion.div
-            className={style.who_matched}
-            // animate={{marginBottom: "0rem"}}
-            transition={{
-              ease: [0.16, 1, 0.3, 1],
-              duration: 1,
-            }}
-          >
+        <div>
+          <div className={style.who_matched}>
             <div className={style.matched_animation_cover}>
               <motion.div
                 key="watched1"
                 className={style.matched_animation}
-                // animate={{ left: "7rem"}}
+                animate={watchedWith ? { left: "7rem" } : {}}
                 transition={{
                   duration: 1,
-                  ease: [0.16, 1, 0.3, 1],
+                  ease: Ease,
                 }}
               >
-                <p>Watched with FWernisch@gmail.com on Sept 20</p>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1 }}
+                >
+                  Watched with{" "}
+                  <strong>
+                    {watchedWith?.map((info) => info.name).join(", ")}
+                  </strong>
+                </motion.p>
               </motion.div>
             </div>
             <motion.div
               key="watched2"
-              // animate={{opacity: 1}}
+              animate={{ opacity: 1 }}
               transition={{
                 duration: 1,
                 ease: [0.16, 1, 0.3, 1],
@@ -62,39 +71,45 @@ export default function WatchedAlert({ matches, movieId }: IMovieDetails) {
                 />
               </svg>
             </motion.div>
-            <motion.div
-              key="watched3"
-              // animate={{opacity: 0, margin: "0rem"}}
-              transition={{
-                duration: 1,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className={`${style.matched_partner}`}
-            >
-              <div className={style.matchName}>
-                <span className="heavy">
-                  {matches?.map((match) => match.name).join(", ")}
-                </span>
-                &nbsp;wants to watch this too!
-              </div>
-            </motion.div>
-          </motion.div>
+            {matches && (
+              <motion.div
+                key="watched3"
+                exit={{ opacity: 0, margin: "0rem" }}
+                transition={{
+                  duration: 1,
+                  ease: Ease,
+                  delay: 1,
+                }}
+                className={`${style.matched_partner}`}
+              >
+                <div className={style.matchName}>
+                  <span className="heavy">
+                    {matches?.map((match) => match.name).join(", ")}
+                  </span>
+                  &nbsp;wants to watch this too!
+                </div>
+              </motion.div>
+            )}
+          </div>
         </div>
-        <motion.div
-          key="watched4"
-          // animate={{ height: 0, opacity: 0}}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className={`${sharedstyle.btn} ${sharedstyle.btn_outline} ${style.btn_watched}`}
-          onClick={() =>
-            handleWatched(
-              userAuth?.userInfo.uid as string,
-              movieId,
-              matches?.map((match) => match.uid) as string[]
-            )
-          }
-        >
-          We've watched this!
-        </motion.div>
+        {matches && (
+          <motion.div
+            key="watched4"
+            // animate={{ height: 0, opacity: 0}}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: Ease }}
+            className={`${sharedstyle.btn} ${sharedstyle.btn_outline} ${style.btn_watched}`}
+            onClick={() =>
+              handleWatched(
+                userAuth?.userInfo.uid as string,
+                movieId,
+                matches?.map((match) => match.uid) as string[]
+              )
+            }
+          >
+            We've watched this!
+          </motion.div>
+        )}
       </AnimatePresence>
     </>
   );

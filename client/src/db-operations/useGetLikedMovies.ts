@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import searchMovieByID, { MovieDetail } from "../APICalls/searchMovieByID";
-import { db } from "../firebase/config";
+import { cloudFn, db } from "../firebase/config";
 
 export interface IWatchedMovieInfo {
   movieId: number;
-  watchedWith: string[];
+  watchedWith: { email: string; name: string; uid: string }[];
   movieDetails: MovieDetail;
 }
 
@@ -63,9 +63,13 @@ export default function useGetLikedMovies(userID: string) {
                     watchedWith: string[];
                   }) => {
                     const movieDetails = await searchMovieByID(watched.movieId);
+                    const watchedWithInfo = await cloudFn.httpsCallable(
+                      "userLookUp"
+                    )({ UserIDs: watched.watchedWith });
+
                     return {
                       movieId: watched.movieId,
-                      watchedWith: watched.watchedWith,
+                      watchedWith: watchedWithInfo.data,
                       movieDetails: movieDetails,
                     };
                   }
