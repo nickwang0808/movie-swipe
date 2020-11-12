@@ -8,7 +8,6 @@
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2), 0px 10px 16px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
 }
 
 .types_list,
@@ -26,5 +25,23 @@
 .types_list,
 /* .genres_list, */
 .streaming_list {
-  padding: 0 3rem;
+  padding: 0 0 0 1rem;
+}
+
+.container_subcontent {
+  overflow-y: auto;
+}
+
+.container_btnSave {
+  background-color: var(--light);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--nav));
+  z-index: 1000;
+  border-top: 1px solid var(--gray);
+}
+
+.btnSave {
+  margin: 1rem 3rem;
 }

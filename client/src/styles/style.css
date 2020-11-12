@@ -6,6 +6,14 @@ html {
   font-weight: 400;
 }
 
+:root[mode="ios"],
+:root[mode="md"] {
+  --ion-font-family: "Poppins", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
+  button {
+  }
+}
+
 html,
 body {
   max-width: 100%;
@@ -131,6 +139,10 @@ a {
 
 .marginBottom2 {
   margin-bottom: 2rem;
+}
+
+.marginTop2 {
+  margin-top: 2rem;
 }
 
 .marginSides2 {
@@ -265,7 +277,6 @@ a {
 }
 
 .title {
-  /* background-color: var(--gray); */
   height: 5rem;
 }
 
@@ -288,4 +299,14 @@ a {
   left: -100%;
   background-color: var(--positive);
   transform: skewX(-15deg);
+}
+
+ion-checkbox {
+  margin-right: 3rem;
+  border-bottom: 0px;
+}
+
+:host(.item-inner) {
+  border-color: transparent;
+  background: transparent important!;
 }

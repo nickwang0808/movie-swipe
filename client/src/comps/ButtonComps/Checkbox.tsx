@@ -26,6 +26,7 @@ export default function CheckboxButton({
       <IonCheckbox
         slot="start"
         color="dark"
+        mode="md"
         checked={isChecked}
         onChange={() => {
           isChecked
@@ -36,18 +37,4 @@ export default function CheckboxButton({
       <IonLabel>{name}</IonLabel>
     </IonItem>
   );
-  // return (
-  //   <div className={style.checkbox}>
-  //     <input
-  //       type="checkbox"
-  //       checked={isChecked}
-  //       onChange={() => {
-  //         isChecked
-  //           ? setChecked((prev) => prev.filter((elem) => elem !== id))
-  //           : setChecked((prev) => [...prev, id]);
-  //       }}
-  //     />
-  //     <label htmlFor="type">{name}</label>
-  //   </div>
-  // );
 }
