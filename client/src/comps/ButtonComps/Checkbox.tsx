@@ -1,3 +1,10 @@
+import {
+  IonCheckbox,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
+  IonList,
+} from "@ionic/react";
 import React from "react";
 import style from "./ButtonComps.module.css";
 
@@ -15,9 +22,10 @@ export default function CheckboxButton({
   id,
 }: ICheckboxButton) {
   return (
-    <div className={style.checkbox}>
-      <input
-        type="checkbox"
+    <IonItem>
+      <IonCheckbox
+        slot="start"
+        color="dark"
         checked={isChecked}
         onChange={() => {
           isChecked
@@ -25,7 +33,21 @@ export default function CheckboxButton({
             : setChecked((prev) => [...prev, id]);
         }}
       />
-      <label htmlFor="type">{name}</label>
-    </div>
+      <IonLabel>{name}</IonLabel>
+    </IonItem>
   );
+  // return (
+  //   <div className={style.checkbox}>
+  //     <input
+  //       type="checkbox"
+  //       checked={isChecked}
+  //       onChange={() => {
+  //         isChecked
+  //           ? setChecked((prev) => prev.filter((elem) => elem !== id))
+  //           : setChecked((prev) => [...prev, id]);
+  //       }}
+  //     />
+  //     <label htmlFor="type">{name}</label>
+  //   </div>
+  // );
 }
