@@ -86,7 +86,13 @@ export default function useGetUser(user_id: string) {
           const name = userInfo?.displayName;
           const email = userInfo?.email;
           const uid = userInfo?.uid;
-          await userRef.set({ name, email, uid });
+          await userRef.set({
+            name,
+            email,
+            uid,
+            // prettier-ignore
+            genre_preference: [28,12,16,35,80,99,18,10751,14,36,27,10402,9648,10749,878,10770,53,10752,37,],
+          });
 
           userRef
             .collection("User_Details")
@@ -96,6 +102,14 @@ export default function useGetUser(user_id: string) {
             .collection("User_Details")
             .doc("Disliked_Movies")
             .set({ disliked_movies: [] });
+          userRef
+            .collection("User_Details")
+            .doc("Match_Counts")
+            .set({ new_match_counts: 0, old_match_counts: 0 });
+          userRef
+            .collection("User_Details")
+            .doc("Watched")
+            .set({ watched: [] });
           userRef
             .collection("User_Details")
             .doc("Friends")

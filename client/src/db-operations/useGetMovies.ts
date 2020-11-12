@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
+import { IWatchedMovieInfo } from "./useGetLikedMovies";
 
 export interface IPopularMovies {
   page: number;
@@ -33,6 +34,7 @@ export default function useGetMovies(userId: string) {
   const [movieList, setMovieList] = useState<Result[]>();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pageNum, setPageNum] = useState(1);
+  const [genrePref, setGenrePref] = useState<number[]>();
 
   const [movieListInDeck, setMovieListInDeck] = useState<Result[]>();
 
@@ -68,6 +70,13 @@ export default function useGetMovies(userId: string) {
         votedMoviesIds = [...votedMoviesIds, ...data];
       }
 
+      const watchedMoviesDoc = await votedMoviesRef.doc("Watched").get();
+      if (likedMoviesDoc.exists) {
+        const rawData = watchedMoviesDoc.data()?.watched as IWatchedMovieInfo[];
+        const data = rawData.map((watchedMovie) => watchedMovie.movieId);
+        votedMoviesIds = [...votedMoviesIds, ...data];
+      }
+
       const dislikedMoviesDoc = await votedMoviesRef
         .doc("Disliked_Movies")
         .get();
@@ -76,6 +85,38 @@ export default function useGetMovies(userId: string) {
         votedMoviesIds = [...votedMoviesIds, ...data];
       }
       return votedMoviesIds;
+    };
+
+    const fetchGenrePreference = async () => {
+      const doc = await db.collection("Users").doc(userId).get();
+      const data = doc.data()?.genre_preference;
+      if (data.length > 0) {
+        setGenrePref(data as number[]);
+        return data as number[];
+      }
+    };
+
+    const genreFiltering = (
+      genreIds: number[],
+      userPreference: number[] | undefined
+    ) => {
+      if (userPreference !== undefined) {
+        const result = genreIds.map((genreId) => {
+          const found = userPreference.includes(genreId);
+          if (found) {
+            // true is not allowed
+            return "pass";
+          } else {
+            return "fail";
+          }
+        });
+        if (result.includes("pass")) {
+          // no true allowed
+          return "pass";
+        } else {
+          return "fail";
+        }
+      } else return "pass";
     };
 
     const fetchPopularMovies = async () => {
@@ -91,16 +132,20 @@ export default function useGetMovies(userId: string) {
       // console.log("getMovie()");
       const votedMovies = await getVotedMoviesIds();
       const movieListUnfiltered = await fetchPopularMovies();
+      const genrePreference = await fetchGenrePreference();
       const filteredMovieList = () => {
         let newResults: Result[] = [];
         // filter voted movies out
         movieListUnfiltered.results.forEach((result) => {
-          if (!result.backdrop_path) return;
+          if (!result.backdrop_path) return; // make sure movie has a poster
           if (votedMovies.includes(result.id)) {
             return;
-          } else {
-            newResults.push(result);
           }
+          if (genreFiltering(result.genre_ids, genrePreference) === "fail") {
+            console.log("genre check failed");
+            return;
+          }
+          newResults.push(result);
         });
         return newResults;
       };
@@ -112,7 +157,7 @@ export default function useGetMovies(userId: string) {
         return setPageNum((prev) => prev + 1);
       }
 
-      setMovieList((prev) => {
+      setMovieList(() => {
         if (movieListInDeck) {
           return [...movieListInDeck, ...tempStorage, ...filteredMovieList()];
         } else {
@@ -138,5 +183,5 @@ export default function useGetMovies(userId: string) {
     }
   }, [currentIndex, movieList]);
 
-  return { movieListInDeck, handleNext };
+  return { movieListInDeck, handleNext, genrePref };
 }

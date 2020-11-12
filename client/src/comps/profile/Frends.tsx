@@ -46,11 +46,11 @@ export default function Friends() {
           We'll let you know when you and your friends both want to watch
           something!
         </h2>
-        {userProfile?.pending_received && (
+        {userProfile && userProfile.pending_received.length > 0 && (
           <PendingInvite pendingReceived={userProfile?.pending_received} />
         )}
 
-        {userProfile?.friends && (
+        {userProfile && userProfile.friends.length > 0 && (
           <div className="container_subcontent">
             <div className={`${"title"}`}>
               <div className="listview_separator_full" />

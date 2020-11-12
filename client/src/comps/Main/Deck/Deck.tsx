@@ -7,7 +7,7 @@ import MainPoster from "../MainPoster/MainPoster";
 import style from "./Deck.module.css";
 
 interface IDeckProp {
-  handleLike: (movieID: number) => void;
+  handleLike: (movieID: number, poster: string, title: string) => void;
   handleDislike: (movieID: number) => void;
   movieListInDeck: Result[] | undefined;
   isLike: boolean | undefined;
@@ -27,14 +27,15 @@ export default function Deck({
   return (
     <>
       <motion.div
-      animate={{opacity: 1, marginTop: '0rem'}}
-      initial={{opacity: 0, marginTop: ' 2rem'}}
-      transition={{
-        delay: 0,
-        duration: 1,
-        ease: [0.16, 1, 0.3, 1]
-      }}
-        className="container_poster">
+        animate={{ opacity: 1, marginTop: "0rem" }}
+        initial={{ opacity: 0, marginTop: " 2rem" }}
+        transition={{
+          delay: 0,
+          duration: 1,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="container_poster"
+      >
         <AnimatePresence>
           {movieListInDeck &&
             movieListInDeck
@@ -48,7 +49,7 @@ export default function Deck({
                       const x = info.point.x;
                       if (x > XCenter * 1.6) {
                         setIsLike(true);
-                        handleLike(movie.id);
+                        handleLike(movie.id, movie.poster_path, movie.title);
                       } else if (x < XCenter * 0.4) {
                         setIsLike(false);
                         handleDislike(movie.id);
@@ -64,10 +65,10 @@ export default function Deck({
                     }}
                     exit={
                       isLike
-                        ? { x: "700px", rotate: 20, zIndex: 100 }
+                        ? { x: "700px", /* rotate: 20, */ zIndex: 100 }
                         : {
                             x: "-700px",
-                            rotate: -20,
+                            /*  rotate: -20, */
                             zIndex: 100,
                           }
                     }

@@ -6,8 +6,8 @@ export default function ModalScrim(){
   return (
     <>
       <motion.div
-        animate={{ opacity: 1 }}
-        initial={{  opacity: 0 }}
+        // animate={{ opacity: 1 }}
+        // initial={{  opacity: 0 }}
         transition={{
           duration: 1,
           ease: "cubic-bezier(0.16, 1, 0.3, 1)",

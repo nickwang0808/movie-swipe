@@ -11,29 +11,43 @@ import WatchedAlert from "./WatchedAlert";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import { UserContext } from "../../store";
 import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { IUserInfo } from "../../db-operations/useGetAllMatches";
+import Modal from "../notification/modal";
+import WatchedWithWho from "../notification/ModalContent/WatchedWithWho";
 
 interface IMovieDetails {
-  movieID: number;
-  showVoting: boolean;
+  showVoting?: boolean;
   handleDislike: (movieID: number) => void;
-  handleLike: (movieID: number) => void;
-  goTo: string;
+  handleLike: (movieID: number, poster: string, title: string) => void;
   matches?: IUserInfo[] | undefined;
 }
 
 export default function MovieDetails({
-  movieID,
   handleDislike,
   handleLike,
   showVoting,
-  goTo,
-  matches,
 }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
-  const { likedMoviesInfos } = useContext(UserContext);
+  const { likedMoviesInfos, matches, watchedMovieInfos, userAuth } = useContext(
+    UserContext
+  );
+
+  const [showModal, setShowModal] = useState(false);
+
+  const { id } = useParams<{ id: string }>();
+  const movieID = Number(id);
+  const matchedFriends = matches?.find(
+    (element) => element.matchedMovie === movieID
+  )
+    ? matches?.find((element) => element.matchedMovie === movieID)?.friendInfo
+    : undefined;
+
+  const watchedFriends = watchedMovieInfos?.find(
+    (element) => element.movieId === movieID
+  )?.watchedWith;
+  const history = useHistory();
 
   useEffect(() => {
     if (movieID) {
@@ -56,7 +70,7 @@ export default function MovieDetails({
     if (movieDetails) {
       const trailerKey = movieDetails.videos.results[0].key;
       try {
-        return `https://www.youtube.com/embed/${trailerKey}?rel=0&amp;controls=1&amp&amp;showinfo=0&amp;modestbranding=1`;
+        return `https://www.youtube.com/embed/${trailerKey}?rel=0;controls=1;showinfo=0;fs=1;modestbranding=1`;
       } catch (err) {
         console.log("err, can't find trailer url on youtube");
         return undefined;
@@ -66,6 +80,15 @@ export default function MovieDetails({
 
   return (
     <>
+      {showModal && (
+        <Modal>
+          <WatchedWithWho
+            uid={userAuth?.userInfo.uid as string}
+            movieId={movieID}
+            matches={matchedFriends}
+          />
+        </Modal>
+      )}
       <div
         className="background"
         style={backgroundStyle(baseUrl + movieDetails?.poster_path)}
@@ -90,10 +113,10 @@ export default function MovieDetails({
           )}
         </motion.div>
         <div className={style.container_moviedetails}>
-          <Link
+          <div
             className={style.poster_1_inline}
             style={posterStyleMaker(baseUrl + movieDetails?.poster_path)}
-            to={goTo}
+            onClick={() => history.goBack()}
           />
           <div className={style.details_title}>
             <h1>{movieDetails?.title}</h1>
@@ -123,7 +146,14 @@ export default function MovieDetails({
         <div className={style.container_info}>
           <div className={style.container_watch}></div>
           <div className={style.container_description}>
-            {matches && <WatchedAlert matches={matches} />}
+            {(matchedFriends || watchedFriends) && (
+              <WatchedAlert
+                matches={matchedFriends}
+                watchedWith={watchedFriends}
+                setShowModal={setShowModal}
+              />
+            )}
+
             <p>{movieDetails?.overview}</p>
           </div>
           {/* <div className={style.container_available}>
@@ -137,7 +167,13 @@ export default function MovieDetails({
       {showVoting && (
         <VotingActions
           handleDislike={() => handleDislike(movieID)}
-          handleLike={() => handleLike(movieID)}
+          handleLike={() =>
+            handleLike(
+              movieID,
+              movieDetails?.poster_path as string,
+              movieDetails?.title as string
+            )
+          }
           goTo="/home"
           showDetail="Poster"
         />

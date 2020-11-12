@@ -6,9 +6,9 @@
 }
 
 .matched_watchlist {
-  padding: 0.3em 1rem;
+  padding: 0.2em 1rem 0.1rem 1rem;
   background-color: var(--positive);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
   border-radius: 0.3rem;
   transform: skewX(-15deg);
