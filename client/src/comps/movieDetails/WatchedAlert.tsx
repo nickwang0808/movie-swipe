@@ -6,11 +6,14 @@ import { IUserInfo } from "../../db-operations/useGetAllMatches";
 import handleWatched from "../../db-operations/handleWatched";
 import { UserContext } from "../../store";
 import { cloudFn } from "../../firebase/config";
+import MovieDetails from "./MovieDetails";
 
 interface IMovieDetails {
   matches?: IUserInfo[] | undefined;
+  movieId: number;
   watchedWith?: { email: string; name: string; uid: string }[] | undefined;
   setShowModal: (arg: boolean) => void;
+  userId: string;
 }
 
 const Ease = [0.16, 1, 0.3, 1];
@@ -19,6 +22,8 @@ export default function WatchedAlert({
   matches,
   watchedWith,
   setShowModal,
+  movieId,
+  userId,
 }: IMovieDetails) {
   return (
     <>
@@ -97,7 +102,11 @@ export default function WatchedAlert({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: Ease }}
             className={`${sharedstyle.btn} ${sharedstyle.btn_outline} ${style.btn_watched}`}
-            onClick={() => setShowModal(true)}
+            onClick={() => {
+              matches.length > 1
+                ? setShowModal(true)
+                : handleWatched(userId, movieId, [matches[0].uid]);
+            }}
           >
             We've watched this!
           </motion.div>

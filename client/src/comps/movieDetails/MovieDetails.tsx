@@ -81,7 +81,7 @@ export default function MovieDetails({
   return (
     <>
       {showModal && (
-        <Modal>
+        <Modal closeAction={() => setShowModal(false)}>
           <WatchedWithWho
             uid={userAuth?.userInfo.uid as string}
             movieId={movieID}
@@ -151,6 +151,8 @@ export default function MovieDetails({
                 matches={matchedFriends}
                 watchedWith={watchedFriends}
                 setShowModal={setShowModal}
+                movieId={movieID}
+                userId={userAuth?.userInfo.uid as string}
               />
             )}
 

@@ -29,14 +29,13 @@ export default function Filters({ setFilterOn, userId, genrePref }: IFilters) {
         }}
         className={style.container_filter}
       >
-        <button
-          onClick={async () => {
-            await updateGenrePreference(userId, checked);
-            window.location.reload();
-          }}
-        >
-          Save
-        </button>
+        <div className={style.container_btnSave}>
+          <div className={`${style.btnSave} ${sharedStyle.btn} ${sharedStyle.btn_outline}`} onClick={async () => {
+              await updateGenrePreference(userId, checked);
+              window.location.reload();
+            }}>Save
+          </div>
+        </div>
         <div
           className={sharedStyle.btn_close}
           onClick={() => setFilterOn(false)}
@@ -57,27 +56,9 @@ export default function Filters({ setFilterOn, userId, genrePref }: IFilters) {
         <div className={style.header}>
           <h1>Refine Suggestions</h1>
         </div>
-        {/* <div className={style.title}>
-          <h2>Streaming Services</h2>
-        </div>
-        <div className={style.streaming_list}>
-          <StreamingServiceButton />
-        </div> */}
-        {/* <div className="container_subcontent">
-          <div className={`${"title"} ${"marginBottom2"}`}>
-            <h2>Media Types</h2>
-          </div>
-          <div className={style.types_list}>
-            <CheckboxButton
-              name="Movies"
-              checked={checked}
-              setChecked={setChecked}
-            />
-          </div>
-        </div> */}
-        <div className="container_subcontent">
-          <div className={`${"title"} ${"marginBottom2"}`}>
-            <div className="listview_separator_full" />
+        <div className={style.container_subcontent}>
+          <div className={`${"title"} ${"marginTop2"}`}>
+            {/* <div className="listview_separator_full" /> */}
             <h2>Genres</h2>
           </div>
           <div className={style.genres_list}>

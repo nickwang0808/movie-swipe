@@ -3,10 +3,15 @@ import style from "./notification.module.css";
 import ModalScrim from "./scrim";
 import { motion } from "framer-motion";
 
-export default function Modal({ children }: { children: React.ReactNode }) {
+interface IModal {
+  children: React.ReactNode;
+  closeAction: () => void;
+}
+
+export default function Modal({ children, closeAction }: IModal) {
   return (
     <>
-      <ModalScrim />
+      <ModalScrim closeAction={closeAction} />
       <motion.div
         // animate={{
         //   transform: "translate(0, -50%) scale3d(1, 1, 1)",
@@ -21,6 +26,7 @@ export default function Modal({ children }: { children: React.ReactNode }) {
         // }}
         className={style.container_modal}
       >
+        <button onClick={closeAction}>Close</button>
         {children}
       </motion.div>
     </>
