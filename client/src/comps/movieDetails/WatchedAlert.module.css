@@ -1,4 +1,5 @@
 .who_matched {
+  display: flex;
   margin-bottom: 2rem;
   border: 1px solid var(--positive);
   background-color: var(--light);
