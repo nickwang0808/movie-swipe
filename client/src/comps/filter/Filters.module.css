@@ -24,7 +24,7 @@
 }
 
 .types_list,
-.genres_list,
+/* .genres_list, */
 .streaming_list {
   padding: 0 3rem;
 }
