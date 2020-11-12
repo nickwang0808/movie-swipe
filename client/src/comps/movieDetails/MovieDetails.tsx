@@ -151,6 +151,8 @@ export default function MovieDetails({
                 matches={matchedFriends}
                 watchedWith={watchedFriends}
                 setShowModal={setShowModal}
+                movieId={movieID}
+                userId={userAuth?.userInfo.uid as string}
               />
             )}
 
