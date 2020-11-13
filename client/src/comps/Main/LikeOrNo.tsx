@@ -75,7 +75,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
     if (showMatched) {
       setTimeout(() => {
         setShowMatched(undefined);
-      }, 5000);
+      }, 4000);
     }
   }, [showMatched]);
 
