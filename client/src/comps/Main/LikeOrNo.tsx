@@ -10,7 +10,12 @@ import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import VotingActions from "./VotingActions";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  animate,
+  AnimatePresence,
+  motion,
+  useMotionValue,
+} from "framer-motion";
 import Deck from "./Deck/Deck";
 import { UserContext } from "../../store";
 import { Route } from "react-router";
@@ -36,6 +41,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
   const { movieListInDeck, handleNext, userProfile, genrePref } = useContext(
     UserContext
   );
+
+  const xMotionValue = useMotionValue(0);
 
   const handleLike = async (movieID: number, poster: string, title: string) => {
     UpdateLikeToDB(userId, movieID, true);
@@ -64,18 +71,21 @@ export default function LikeOrNo({ userId }: ICompProps) {
     setVoteType("dislike");
   };
 
-  // useEffect(() => {
-  //   if (movieListInDeck) {
-  //     if (isLike === true) {
-  //       const card = movieListInDeck[0];
-  //       handleLike(card.id, card.poster_path, card.title);
-  //     }
-  //     if (isLike === false) {
-  //       handleDislike(movieListInDeck[0].id);
-  //     }
-  //   }
-  //   // eslint-disable-next-line
-  // }, [isLike]);
+  const forceOut = (movieID: number) => {
+    animate(xMotionValue, 500, {
+      type: "spring",
+      onComplete: () => {
+        xMotionValue.set(0);
+      },
+    });
+    animate(xMotionValue, -500, {
+      type: "spring",
+      onComplete: () => {
+        xMotionValue.set(0);
+        handleDislike(movieID);
+      },
+    });
+  };
 
   return (
     <>
@@ -154,25 +164,30 @@ export default function LikeOrNo({ userId }: ICompProps) {
           handleDislike={handleDislike}
           setIsLike={setIsLike}
           isLike={isLike}
+          xMotionValue={xMotionValue}
         />
         {movieListInDeck && (
           <VotingActions
-            handleDislike={() => {
-              if (movieListInDeck) {
-                if (isLike === false) {
-                  handleDislike(movieListInDeck[0].id);
-                }
-                setIsLike(false);
-              }
-            }}
             handleLike={() => {
-              if (movieListInDeck) {
-                if (isLike === true) {
-                  const card = movieListInDeck[0];
+              const card = movieListInDeck[0];
+              animate(xMotionValue, 500, {
+                type: "spring",
+                onComplete: () => {
+                  xMotionValue.set(0);
                   handleLike(card.id, card.poster_path, card.title);
-                }
-                setIsLike(true);
-              }
+                  setIsLike(true);
+                },
+              });
+            }}
+            handleDislike={() => {
+              animate(xMotionValue, -500, {
+                type: "spring",
+                onComplete: () => {
+                  xMotionValue.set(0);
+                  handleDislike(movieListInDeck[0].id);
+                  setIsLike(false);
+                },
+              });
             }}
             goTo={`/home/details/${movieListInDeck[0].id}`}
             showDetail="Details"
