@@ -71,6 +71,14 @@ export default function LikeOrNo({ userId }: ICompProps) {
     setVoteType("dislike");
   };
 
+  useEffect(() => {
+    if (showMatched) {
+      setTimeout(() => {
+        setShowMatched(undefined);
+      }, 5000);
+    }
+  }, [showMatched]);
+
   return (
     <>
       {showMatched && (
