@@ -87,7 +87,7 @@ export default function useGetUser(user_id: string) {
           const email = userInfo?.email;
           const uid = userInfo?.uid;
           await userRef.set({
-            name,
+            name: name ? name : email,
             email,
             uid,
             // prettier-ignore
