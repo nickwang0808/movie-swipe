@@ -4,7 +4,7 @@ import style from "./MyProfile.module.css";
 import Modal from "../notification/modal";
 import { cfaSignOut } from "capacitor-firebase-auth";
 import { auth } from "../../firebase/config";
-import Friends from "./Frends";
+import Friends from "./Friends";
 import About from "./About";
 import DislikedMovies from "./DislikedMovies";
 import { motion } from "framer-motion";
