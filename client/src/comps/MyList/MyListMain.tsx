@@ -74,7 +74,11 @@ export default function MyListMain() {
                 <LikedMovieInMyList
                   key={watchedMovieInfo.movieDetails.id}
                   movie={watchedMovieInfo.movieDetails}
-                  watched
+                  watched={
+                    watchedMovieInfo.watchedWith.length > 0
+                      ? watchedMovieInfo.watchedWith
+                      : undefined
+                  }
                 />
               ))}
             </Route>
