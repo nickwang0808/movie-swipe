@@ -11,9 +11,9 @@ export default function ListViewFriendsButton({
   action,
 }: IListViewButton) {
   return (
-    <div className={style.btn_listviewFriend} onClick={action}>
+    <div className={style.btn_listviewFriend}>
       {name}
-      <div className={style.trash}>
+      <div className={style.trash} onClick={action}>
         <svg
           width="22"
           height="20"
