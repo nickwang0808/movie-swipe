@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { auth, cloudFn, db } from "../firebase/config";
 
-export interface IIdEmail {
+export interface userInfo {
   id: string;
   email: string;
+  name: string;
 }
 
 export interface IUserProfile {
-  friends: IIdEmail[];
-  pending_received: IIdEmail[];
-  pending_sent: IIdEmail[];
+  friends: userInfo[];
+  pending_received: userInfo[];
+  pending_sent: userInfo[];
   friendsIdOnly: string[];
 }
 
@@ -58,7 +59,7 @@ export default function useGetUser(user_id: string) {
                   const matchInfoToID = (idArray: string[]) => {
                     return idArray.map((id) => {
                       const found = UsersInfoLookupResults.find(
-                        (result: IIdEmail) => result.id === id
+                        (result: userInfo) => result.id === id
                       );
 
                       return found;

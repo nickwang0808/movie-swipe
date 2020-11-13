@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import ListViewPendingInvite from "../ButtonComps/ListViewPendingInvite";
-import { IIdEmail } from "../../db-operations/useGetUser";
+import { userInfo } from "../../db-operations/useGetUser";
 import { cloudFn } from "../../firebase/config";
 import { accept, decline } from "../../db-operations/handleFriendReq";
 import { UserContext } from "../../store";
 
 interface IPendingInvite {
-  pendingReceived: IIdEmail[] | undefined;
+  pendingReceived: userInfo[] | undefined;
 }
 
 export default function PendingInvite({ pendingReceived }: IPendingInvite) {

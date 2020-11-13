@@ -8,17 +8,25 @@ import Friends from "./Friends";
 import About from "./About";
 import DislikedMovies from "./DislikedMovies";
 import { motion } from "framer-motion";
-import { IonRouterOutlet } from "@ionic/react";
-import { Route } from "react-router";
-import { Link } from "react-router-dom";
-import RemoveFriend from "../notification/ModalContent/RemoveFriend";
+import { Link, Route } from "react-router-dom";
+import DeleteConfirmation from "./DeleteConfirmation";
 
 export default function MyProfile() {
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
   return (
     <div>
-      {/* <Modal>
-        <RemoveFriend />
-      </Modal> */}
+      {showDeleteConfirmation && (
+        <Modal closeAction={() => setShowDeleteConfirmation(false)}>
+          <DeleteConfirmation
+            action={() => {
+              console.log("deleted");
+              auth.currentUser?.delete().then(() => window.location.reload());
+              // TODO: need to fix re-auth issue
+            }}
+          />
+        </Modal>
+      )}
       <Route exact path="/profile">
         <h1>My Profile</h1>
         <motion.div
@@ -46,10 +54,7 @@ export default function MyProfile() {
           />
           <ListViewButton
             name="Delete Account"
-            action={() => {
-              console.log("deleted");
-              auth.currentUser?.delete().then(() => window.location.reload());
-            }}
+            action={() => setShowDeleteConfirmation(true)}
           />
         </motion.div>
       </Route>
