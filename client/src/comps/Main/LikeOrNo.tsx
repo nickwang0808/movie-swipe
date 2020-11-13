@@ -71,22 +71,6 @@ export default function LikeOrNo({ userId }: ICompProps) {
     setVoteType("dislike");
   };
 
-  const forceOut = (movieID: number) => {
-    animate(xMotionValue, 500, {
-      type: "spring",
-      onComplete: () => {
-        xMotionValue.set(0);
-      },
-    });
-    animate(xMotionValue, -500, {
-      type: "spring",
-      onComplete: () => {
-        xMotionValue.set(0);
-        handleDislike(movieID);
-      },
-    });
-  };
-
   return (
     <>
       {showMatched && (
@@ -101,7 +85,6 @@ export default function LikeOrNo({ userId }: ICompProps) {
       <Route path="/home/details/:id">
         {movieListInDeck && (
           <MovieDetails
-            // movieID={movieListInDeck[0].id}
             handleDislike={handleDislike}
             handleLike={handleLike}
             showVoting={true}
