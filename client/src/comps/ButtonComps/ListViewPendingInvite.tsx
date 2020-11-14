@@ -26,7 +26,8 @@ export default function ListViewPendingInvite({
   } else {
     return (
       <div className={style.btn_listviewUser}>
-        <div className={style.containerinvitename}>{name}</div>
+        {name}
+        {/* Decline Button */}
         <div className={style.container_invitebtns}>
           <DownVote handleDislike={handleDecline} />
           <UpVote handleLike={handleAccept} />
