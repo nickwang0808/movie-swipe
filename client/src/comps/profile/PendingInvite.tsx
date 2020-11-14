@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
-import style from "./MyProfile.module.css";
 import ListViewPendingInvite from "../ButtonComps/ListViewPendingInvite";
-import { IIdEmail } from "../../db-operations/useGetUser";
+import { userInfo } from "../../db-operations/useGetUser";
 import { cloudFn } from "../../firebase/config";
 import { accept, decline } from "../../db-operations/handleFriendReq";
 import { UserContext } from "../../store";
 
 interface IPendingInvite {
-  pendingReceived: IIdEmail[] | undefined;
+  pendingReceived: userInfo[] | undefined;
 }
 
 export default function PendingInvite({ pendingReceived }: IPendingInvite) {
@@ -16,19 +15,17 @@ export default function PendingInvite({ pendingReceived }: IPendingInvite) {
   const handleDecline = async (senderId: string) => {
     if (userAuth) {
       decline(userAuth.userInfo.uid, senderId); // this directly writes to the db of the current user
-      const results = await cloudFn.httpsCallable("declineRequest")({
+      await cloudFn.httpsCallable("declineRequest")({
         id: senderId,
       });
-      console.log(results);
     }
   };
   const handleAccept = async (senderId: string) => {
     if (userAuth) {
       accept(userAuth.userInfo.uid, senderId); // this directly writes to the db of the current user
-      const results = await cloudFn.httpsCallable("acceptRequest")({
+      await cloudFn.httpsCallable("acceptRequest")({
         id: senderId,
       });
-      console.log(results);
     }
   };
 

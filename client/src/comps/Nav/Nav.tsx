@@ -14,7 +14,6 @@ export default function Nav() {
   return (
     <div className={style.container_nav}>
       <NavLink
-        exact
         className={style.link}
         activeClassName={style.active_link}
         to="/mylist"
@@ -53,7 +52,6 @@ export default function Nav() {
         </div>
       </NavLink>
       <NavLink
-        exact
         className={style.link}
         activeClassName={style.active_link}
         to="/home"
@@ -78,7 +76,6 @@ export default function Nav() {
         </div>
       </NavLink>
       <NavLink
-        exact
         to="/profile"
         className={style.link}
         activeClassName={style.active_link}

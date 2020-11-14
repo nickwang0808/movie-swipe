@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 interface ILikedMovieInMyList {
   movie: MovieDetail;
   matched?: boolean;
-  watched?: boolean;
+  watched?: undefined | { email: string; name: string; uid: string }[];
 }
 
 export default function LikedMovieInMyList({
@@ -68,7 +68,7 @@ export default function LikedMovieInMyList({
                   fill="#11EE9E"
                 />
               </svg>
-              <p>Watched</p>
+              <p>Watched with {watched.map((elem) => elem.name).join(", ")}</p>
             </div>
           )}
           <div className={style.flex_row_rating}>
