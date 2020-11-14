@@ -12,6 +12,8 @@ interface IDeckProp {
   isLike: boolean | undefined;
   setIsLike: (arg: boolean) => void;
   xMotionValue: MotionValue<number>;
+  likeSlider: MotionValue<number>;
+  thumbMotionValue: MotionValue<number>;
 }
 
 export default function Deck({
@@ -21,10 +23,32 @@ export default function Deck({
   isLike,
   setIsLike,
   xMotionValue,
+  likeSlider,
+  thumbMotionValue,
 }: IDeckProp) {
   const { size } = useContext(UserContext);
   const XCenter = size.XCenter;
   const screenWidth = size.width;
+
+  const animateSlider = (direction: number) => {
+    animate(likeSlider, direction * 2, {
+      type: "tween",
+      duration: 0.2,
+      onComplete: () => {
+        likeSlider.set(0);
+      },
+    });
+  };
+  const animateThumb = (direction: number) => {
+    // this controls where the thumb to animate to
+    animate(thumbMotionValue, direction * 0.8, {
+      type: "tween",
+      duration: 0.2,
+      onComplete: () => {
+        likeSlider.set(0);
+      },
+    });
+  };
 
   return (
     <>
@@ -64,7 +88,11 @@ export default function Deck({
                 <motion.div
                   className={style.card}
                   key={movie.id}
-                  drag={i === 0 ? true : false}
+                  drag
+                  onViewportBoxUpdate={(_, delta) => {
+                    likeSlider.set(delta.x.translate);
+                    thumbMotionValue.set(delta.x.translate);
+                  }}
                   onDragEnd={(e, info) => {
                     const xPosition = info.point.x;
                     if (xPosition > XCenter * 1.6) {
@@ -76,6 +104,8 @@ export default function Deck({
                           handleLike(movie.id, movie.poster_path, movie.title);
                         },
                       });
+                      animateSlider(screenWidth);
+                      animateThumb(screenWidth);
                     } else if (xPosition < XCenter * 0.4) {
                       animate(xMotionValue, -screenWidth, {
                         type: "tween",
@@ -85,6 +115,8 @@ export default function Deck({
                           handleDislike(movie.id);
                         },
                       });
+                      animateSlider(-screenWidth);
+                      animateThumb(-screenWidth);
                     }
                   }}
                   dragElastic={0.8}

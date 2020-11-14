@@ -1,0 +1,17 @@
+.voted_thumb {
+  z-index: 1000;
+  position: absolute;
+  top: calc(40% - var(--header));
+  /* right: 0; */
+  bottom: 0;
+  /* left: calc(50% - 64px); */
+  height: 128px;
+}
+
+.up {
+  left: -20vw;
+}
+
+.down {
+  right: -20vw;
+}

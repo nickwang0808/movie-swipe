@@ -3,8 +3,8 @@ import FilterButton from "../ButtonComps/FilterButton";
 import Logo from "../Decorators/Logo";
 import Filters from "../filter/Filters";
 import NotificationMatched from "./MainPoster/NotificationMatched";
-import VoteLarge_Down from "./MainPoster/VoteLarge_Down";
-import VoteLarge_Up from "./MainPoster/VoteLarge_Up";
+import VoteLarge_Down from "./CardAnimationParts/VoteLarge_Down";
+import VoteLarge_Up from "./CardAnimationParts/VoteLarge_Up";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
@@ -15,6 +15,7 @@ import {
   AnimatePresence,
   motion,
   useMotionValue,
+  useTransform,
 } from "framer-motion";
 import Deck from "./Deck/Deck";
 import { UserContext } from "../../store";
@@ -38,14 +39,17 @@ export default function LikeOrNo({ userId }: ICompProps) {
   const [voteType, setVoteType] = useState<"like" | "dislike">();
   const [isLike, setIsLike] = useState<boolean>();
   const [showMatched, setShowMatched] = useState<IMatchNotification | null>();
-  const { movieListInDeck, handleNext, userProfile, genrePref } = useContext(
-    UserContext
-  );
-
-  const xMotionValue = useMotionValue(0);
+  const {
+    movieListInDeck,
+    handleNext,
+    userProfile,
+    genrePref,
+    size,
+  } = useContext(UserContext);
+  const screenWidth = size.width;
 
   const handleLike = async (movieID: number, poster: string, title: string) => {
-    UpdateLikeToDB(userId, movieID, true);
+    // UpdateLikeToDB(userId, movieID, true);
     console.log("like");
     handleNext();
     setVoteType("like");
@@ -65,7 +69,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
     }
   };
   const handleDislike = (movieID: number) => {
-    UpdateLikeToDB(userId, movieID, false);
+    // UpdateLikeToDB(userId, movieID, false);
     console.log("dislike");
     handleNext();
     setVoteType("dislike");
@@ -78,6 +82,38 @@ export default function LikeOrNo({ userId }: ICompProps) {
       }, 4000);
     }
   }, [showMatched]);
+
+  const xMotionValue = useMotionValue(0); // to control the deck via button
+  const likeSlider = useMotionValue(0); // let deck control other stuff
+  const backgroundSlide = useTransform(likeSlider, (value) => value * 2.5);
+
+  const thumbMotionValue = useMotionValue(0); // let deck control other stuff
+  const thumbX = useTransform(thumbMotionValue, (value) => value / 1.5);
+  const thumbOpacity = useTransform(
+    thumbMotionValue,
+    (value) => Math.abs(value / 300) // the higher num the slower it adds opacity
+  );
+
+  const animateSlider = (direction: number) => {
+    animate(likeSlider, direction * 1.5, {
+      type: "tween",
+      duration: 0.6,
+      onComplete: () => {
+        likeSlider.set(0);
+      },
+    });
+  };
+
+  const animateThumb = (direction: number) => {
+    // this controls where the thumb to animate to
+    animate(thumbMotionValue, direction * 0.8, {
+      type: "tween",
+      duration: 0.4,
+      onComplete: () => {
+        likeSlider.set(0);
+      },
+    });
+  };
 
   return (
     <>
@@ -138,17 +174,21 @@ export default function LikeOrNo({ userId }: ICompProps) {
           <Logo />
           <FilterButton setFilterOn={setFilterOn} />
         </motion.div>
-        {/* <motion.div 
-        animate={{left: "130%"}}
-        transition={{
-          duration: 1,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        className="VoteUpBG_anim"></motion.div> */}
+
+        <motion.div
+          // "green slider"
+          style={{ skew: "-15deg", x: backgroundSlide }}
+          className="VoteUpBG_anim"
+        ></motion.div>
+        <motion.div
+          // "red slider"
+          style={{ skew: "15deg", x: backgroundSlide }}
+          className="VoteDownBG_anim"
+        ></motion.div>
         {/* <div className="loader"></div> */}
         {/* <NotificationMatched /> */}
-        {/* < VoteLarge_Up /> */}
-        {/* < VoteLarge_Down /> */}
+        <VoteLarge_Up thumbX={thumbX} thumbOpacity={thumbOpacity} />
+        <VoteLarge_Down thumbX={thumbX} thumbOpacity={thumbOpacity} />
         <Deck
           movieListInDeck={movieListInDeck}
           handleLike={handleLike}
@@ -156,6 +196,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
           setIsLike={setIsLike}
           isLike={isLike}
           xMotionValue={xMotionValue}
+          likeSlider={likeSlider}
+          thumbMotionValue={thumbMotionValue}
         />
         {movieListInDeck && (
           <VotingActions
@@ -163,24 +205,28 @@ export default function LikeOrNo({ userId }: ICompProps) {
               const card = movieListInDeck[0];
               animate(xMotionValue, 500, {
                 type: "tween",
-                duration: 0.2,
+                duration: 0.4,
                 onComplete: () => {
                   xMotionValue.set(0);
                   handleLike(card.id, card.poster_path, card.title);
                   setIsLike(true);
                 },
               });
+              animateSlider(screenWidth);
+              animateThumb(screenWidth);
             }}
             handleDislike={() => {
               animate(xMotionValue, -500, {
                 type: "tween",
-                duration: 0.2,
+                duration: 0.4,
                 onComplete: () => {
                   xMotionValue.set(0);
                   handleDislike(movieListInDeck[0].id);
                   setIsLike(false);
                 },
               });
+              animateSlider(-screenWidth);
+              animateThumb(-screenWidth);
             }}
             goTo={`/home/details/${movieListInDeck[0].id}`}
             showDetail="Details"
