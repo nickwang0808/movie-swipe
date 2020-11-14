@@ -24,6 +24,7 @@ export default function Deck({
 }: IDeckProp) {
   const { size } = useContext(UserContext);
   const XCenter = size.XCenter;
+  const screenWidth = size.width;
 
   return (
     <>
@@ -67,16 +68,18 @@ export default function Deck({
                   onDragEnd={(e, info) => {
                     const xPosition = info.point.x;
                     if (xPosition > XCenter * 1.6) {
-                      animate(xMotionValue, 500, {
-                        type: "spring",
+                      animate(xMotionValue, screenWidth, {
+                        type: "tween",
+                        duration: 0.2,
                         onComplete: () => {
                           xMotionValue.set(0);
                           handleLike(movie.id, movie.poster_path, movie.title);
                         },
                       });
                     } else if (xPosition < XCenter * 0.4) {
-                      animate(xMotionValue, -500, {
-                        type: "spring",
+                      animate(xMotionValue, -screenWidth, {
+                        type: "tween",
+                        duration: 0.2,
                         onComplete: () => {
                           xMotionValue.set(0);
                           handleDislike(movie.id);

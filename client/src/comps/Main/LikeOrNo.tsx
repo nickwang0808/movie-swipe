@@ -162,7 +162,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
             handleLike={() => {
               const card = movieListInDeck[0];
               animate(xMotionValue, 500, {
-                type: "spring",
+                type: "tween",
+                duration: 0.2,
                 onComplete: () => {
                   xMotionValue.set(0);
                   handleLike(card.id, card.poster_path, card.title);
@@ -172,7 +173,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
             }}
             handleDislike={() => {
               animate(xMotionValue, -500, {
-                type: "spring",
+                type: "tween",
+                duration: 0.2,
                 onComplete: () => {
                   xMotionValue.set(0);
                   handleDislike(movieListInDeck[0].id);
