@@ -5,6 +5,8 @@
   bottom: calc(var(--nav) + var(--vote) + 1rem);
   display: flex;
   flex-direction: row;
+  left: 0;
+  right: 0;
 }
 
 .container_matched_styling {
@@ -19,6 +21,7 @@
 .matched_details {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   z-index: 1004;
   margin: 1.5rem 1.5rem 1.5rem 0.5rem;
 }
