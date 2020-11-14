@@ -62,7 +62,8 @@
 
 .container_invitebtns .btn {
   width: fit-content;
-  margin-right: 2rem;
+  margin-right: 1rem;
+  padding: 0 2rem;
 }
 
 .container_invitebtns .container_votebtn {
@@ -73,7 +74,8 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  margin: 2rem 0;
+  margin: 1rem 0;
+  width: 17rem;
 }
 
 .btn_Back {
@@ -178,7 +180,7 @@
 .btn_listviewFriend .trash {
   fill: var(--negative);
   height: 4.5rem;
-  padding-right: 4rem;
+  padding-right: 3rem;
 }
 
 .btn_listviewFriend .trash:active {
@@ -190,70 +192,13 @@
   font-size: 2em;
   cursor: pointer;
   border-bottom: var(--border-bottom);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 2rem;
+  overflow-wrap: anywhere;
 }
 
 .btn_listview:active {
   background-color: var(--gray);
 }
-
-/* CHECKBOX */
-
-.checkbox {
-  height: 48px;
-  width: 100%;
-  line-height: 48px;
-}
-
-/* .checkbox input[type="checkbox"] {
-  opacity: 0;
-  margin-left: -16px;
-  margin-top: 12px;
-} */
-
-.checkbox label {
-  position: relative;
-  display: inline-block;
-  padding-left: 8px;
-  font-size: 2em;
-  /* width: calc(100% - 36px); */
-}
-
-/* .checkbox label::before,
-.checkbox label::after {
-  position: absolute;
-  content: "";
-  display: inline-block;
-} */
-
-/*Outer box of the fake checkbox*/
-/* .checkbox label::before {
-  height: 20px;
-  width: 20px;
-  border: 2px solid;
-  border-radius: 2px;
-  left: 0px;
-} */
-
-/*Checkmark of the fake checkbox*/
-/* .checkbox label::after {
-  height: 18px;
-  width: 18px;
-  background-color: var(--dark);
-  left: 3px;
-  top: 3px;
-} */
-
-/*Hide the checkmark by default*/
-/* .checkbox input[type="checkbox"] + label::after {
-  content: none;
-} */
-
-/*Unhide on the checked state*/
-/* .checkbox input[type="checkbox"]:checked + label::after {
-  content: "";
-} */
-
-/*Adding focus styles on the outer-box of the fake checkbox*/
-/* .checkbox input[type="checkbox"]:focus + label::before {
-  outline: var(--highlight) auto 0px;
-} */

@@ -32,13 +32,13 @@ export default function NotificationMatched({
           top: [
             "calc(40% - var(--header) + 128px + 3rem)",
             "calc(40% - var(--header) + 128px + 3rem)",
-            "calc(40% - var(--header) + 200px + 3rem)",
-            "calc(40% - var(--header) + 200px + 3rem)",
+            "calc(40% - var(--header) + 230px + 3rem)",
+            "calc(40% - var(--header) + 230px + 3rem)",
           ],
         }}
         transition={{
-          times: [0, 0.5, 1, 1],
-          duration: 2,
+          times: [0, 0.5, 0.8, 1],
+          duration: 1,
           ease: [0.16, 1, 0.3, 1],
         }}
       >
@@ -50,7 +50,7 @@ export default function NotificationMatched({
           animate={{ visibility: "visible", height: "100%", y: 0 }}
           initial={{ visibility: "hidden", height: "0%", y: -20 }}
           transition={{
-            delay: 1,
+            delay: 0.5,
             duration: 0.75,
             ease: [0.16, 1, 0.3, 1],
           }}
@@ -62,7 +62,7 @@ export default function NotificationMatched({
           animate={{ scale: 1 }}
           initial={{ scale: 0 }}
           transition={{
-            delay: 1.15,
+            delay: 0.8,
             type: "spring",
             stiffness: 200,
             damping: 15,
@@ -74,7 +74,7 @@ export default function NotificationMatched({
           animate={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: -10 }}
           transition={{
-            delay: 1.2,
+            delay: 1,
             duration: 1,
             ease: [0.16, 1, 0.3, 1],
           }}

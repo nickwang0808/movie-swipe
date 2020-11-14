@@ -43,7 +43,6 @@ export default function WatchedAlert({
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 1 }}
                 >
                   Watched with{" "}
                   <strong>
@@ -57,7 +56,7 @@ export default function WatchedAlert({
               animate={{ opacity: 1 }}
               transition={{
                 duration: 1,
-                ease: [0.16, 1, 0.3, 1],
+                ease: Ease,
               }}
               className={`${style.matched_thumb}`}
             >
@@ -98,8 +97,7 @@ export default function WatchedAlert({
         {matches && (
           <motion.div
             key="watched4"
-            // animate={{ height: 0, opacity: 0}}
-            exit={{ opacity: 0 }}
+            exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.5, ease: Ease }}
             className={`${sharedstyle.btn} ${sharedstyle.btn_outline} ${style.btn_watched}`}
             onClick={() => {

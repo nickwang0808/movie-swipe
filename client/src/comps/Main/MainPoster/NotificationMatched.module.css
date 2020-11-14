@@ -11,10 +11,9 @@
   position: absolute;
   height: 100%;
   width: 100%;
-  border-radius: 6px;
-  border: 2px solid var(--positive);
+  border: 1px solid var(--positive);
   background-color: var(--light);
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.039), 0px 7px 24px rgba(0, 0, 0, 0.19);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.5), 0px 7px 24px rgba(0, 0, 0, 0.25);
   z-index: 1002;
 }
 .matched_details {
@@ -65,6 +64,11 @@
   padding-top: 1em;
   flex-grow: 1;
 }
+
+.matched_text p {
+  line-height: 2rem;
+}
+
 .matched_getdetailsbtn {
   text-align: right;
 }

@@ -169,7 +169,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
               if (movieListInDeck) {
                 if (isLike === true) {
                   const card = movieListInDeck[0];
-                  handleLike(card.id, card.title, card.poster_path);
+                  handleLike(card.id, card.poster_path, card.title);
                 }
                 setIsLike(true);
               }
