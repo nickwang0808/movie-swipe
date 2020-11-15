@@ -11,11 +11,19 @@ export default function ModalScrim({ closeAction }: iModalScrim) {
     <>
       <motion.div
         onClick={closeAction}
-        // animate={{ opacity: 1 }}
-        // initial={{  opacity: 0 }}
+        key="modal_scrim"
+        animate={{
+          opacity: 1,
+        }}
+        initial={{
+          opacity: 0,
+        }}
+        exit={{
+          opacity: 0,
+        }}
         transition={{
-          duration: 1,
-          ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+          duration: 0.3,
+          ease: [0.16, 1, 0.3, 1],
         }}
         className={style.scrim}
       ></motion.div>

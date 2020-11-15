@@ -16,27 +16,19 @@
   margin: 3rem;
   border-radius: 0.4rem;
   /* padding: 3rem; */
-  top: 50%;
+  top: calc(50% - var(--nav));
   left: 0;
   right: 0;
   transform: translate(0, -50%);
   z-index: 10001;
 }
 
-.container_modal .title {
-  padding: 0;
-  box-shadow: none;
+.modal_body {
+  padding: 1rem 2rem 2rem 2rem;
 }
 
-.container_modal .body {
-  padding: 1rem 0 3rem 0;
-}
-
-.container_modal .container_actions {
+.container_actions {
   display: flex;
   justify-content: flex-end;
-}
-
-.container_modalcontent {
-  padding: 3rem;
+  margin-top: 2rem;
 }

@@ -111,7 +111,7 @@ a {
   width: 80px;
   border-radius: 50%;
   margin: 0 auto;
-  border-top: 2px solid var(--dark);
+  border-top: 2px solid var(--highlight);
   border-right: 2px solid transparent;
   animation: loader 650ms linear infinite;
   z-index: 10;
