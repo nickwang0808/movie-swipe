@@ -116,7 +116,7 @@ export default function Deck({
                     } else if (xPosition < XCenter * 0.4) {
                       animate(xMotionValue, -screenWidth, {
                         type: "tween",
-                        duration: 1,
+                        duration: 0.5,
                         ease: [0.16, 1, 0.3, 1],
                         onComplete: () => {
                           xMotionValue.set(0);

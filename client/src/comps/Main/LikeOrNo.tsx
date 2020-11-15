@@ -96,10 +96,10 @@ export default function LikeOrNo({ userId }: ICompProps) {
   );
 
   const animateSlider = (direction: number) => {
-    animate(likeSlider, direction * 1.5, {
+    animate(likeSlider, direction * 1.2, {
       type: "tween",
-      duration: 0.5,
-      ease: [0.16, 1, 0.3, 1],
+      duration: 1,
+      ease: [0.33, 1, 0.68, 1],
       onComplete: () => {
         likeSlider.set(0);
       },
@@ -108,13 +108,17 @@ export default function LikeOrNo({ userId }: ICompProps) {
 
   const animateThumb = (direction: 1 | -1) => {
     // this controls where the thumb to animate to
+    // animate(thumbMotionValue, screenWidth * direction, {
     animate(thumbMotionValue, screenWidth * direction, {
       type: "tween",
-      duration: 1,
-      ease: [0.16, 1, 0.3, 1],
-      onComplete: () => {
-        likeSlider.set(0);
-      },
+      duration: 0.5,
+      ease: [0.33, 1, 0.68, 1],
+    });
+
+    animate(thumbOpacityMotionValue, [300, 0], {
+      ease: "easeIn",
+      duration: 0.5,
+      onComplete: () => {},
     });
   };
 
@@ -210,21 +214,21 @@ export default function LikeOrNo({ userId }: ICompProps) {
               animate(xMotionValue, 500, {
                 type: "tween",
                 duration: 0.5,
-                ease: [0.16, 1, 0.3, 1],
+                ease: [0.33, 1, 0.68, 1],
                 onComplete: () => {
                   xMotionValue.set(0);
                   handleLike(card.id, card.poster_path, card.title);
                   setIsLike(true);
                 },
               });
-              animateSlider(screenWidth);
               animateThumb(1);
+              animateSlider(screenWidth);
             }}
             handleDislike={() => {
               animate(xMotionValue, -500, {
                 type: "tween",
-                duration: 1,
-                ease: [0.16, 1, 0.3, 1],
+                duration: 0.5,
+                ease: [0.33, 1, 0.68, 1],
                 onComplete: () => {
                   xMotionValue.set(0);
                   handleDislike(movieListInDeck[0].id);
