@@ -67,7 +67,7 @@
 .container_moviedetails {
   position: relative;
   padding-left: calc(var(--poster_width) + 4rem);
-  padding-bottom: 4rem;
+  padding-bottom: 3rem;
   min-height: calc(var(--poster_height) - 4rem);
 }
 
