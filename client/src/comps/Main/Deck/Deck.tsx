@@ -14,6 +14,7 @@ interface IDeckProp {
   xMotionValue: MotionValue<number>;
   likeSlider: MotionValue<number>;
   thumbMotionValue: MotionValue<number>;
+  thumbOpacityMotionValue: MotionValue<number>;
 }
 
 export default function Deck({
@@ -25,6 +26,7 @@ export default function Deck({
   xMotionValue,
   likeSlider,
   thumbMotionValue,
+  thumbOpacityMotionValue,
 }: IDeckProp) {
   const { size } = useContext(UserContext);
   const XCenter = size.XCenter;
@@ -39,9 +41,10 @@ export default function Deck({
       },
     });
   };
-  const animateThumb = (direction: number) => {
+  const animateThumb = (direction: 1 | -1) => {
     // this controls where the thumb to animate to
-    animate(thumbMotionValue, direction * 0.8, {
+    // animate(thumbMotionValue, direction * 0.8, {
+    animate(thumbMotionValue, screenWidth * direction, {
       type: "tween",
       duration: 0.2,
       onComplete: () => {
@@ -92,6 +95,7 @@ export default function Deck({
                   onViewportBoxUpdate={(_, delta) => {
                     likeSlider.set(delta.x.translate);
                     thumbMotionValue.set(delta.x.translate);
+                    thumbOpacityMotionValue.set(delta.x.translate);
                   }}
                   onDragEnd={(e, info) => {
                     const xPosition = info.point.x;
@@ -105,7 +109,7 @@ export default function Deck({
                         },
                       });
                       animateSlider(screenWidth);
-                      animateThumb(screenWidth);
+                      animateThumb(1);
                     } else if (xPosition < XCenter * 0.4) {
                       animate(xMotionValue, -screenWidth, {
                         type: "tween",
@@ -116,7 +120,7 @@ export default function Deck({
                         },
                       });
                       animateSlider(-screenWidth);
-                      animateThumb(-screenWidth);
+                      animateThumb(-1);
                     }
                   }}
                   dragElastic={0.8}

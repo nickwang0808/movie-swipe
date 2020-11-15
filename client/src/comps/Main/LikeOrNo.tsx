@@ -89,8 +89,9 @@ export default function LikeOrNo({ userId }: ICompProps) {
 
   const thumbMotionValue = useMotionValue(0); // let deck control other stuff
   const thumbX = useTransform(thumbMotionValue, (value) => value / 1.5);
+  const thumbOpacityMotionValue = useMotionValue(0);
   const thumbOpacity = useTransform(
-    thumbMotionValue,
+    thumbOpacityMotionValue,
     (value) => Math.abs(value / 300) // the higher num the slower it adds opacity
   );
 
@@ -104,9 +105,9 @@ export default function LikeOrNo({ userId }: ICompProps) {
     });
   };
 
-  const animateThumb = (direction: number) => {
+  const animateThumb = (direction: 1 | -1) => {
     // this controls where the thumb to animate to
-    animate(thumbMotionValue, direction * 0.8, {
+    animate(thumbMotionValue, screenWidth * direction, {
       type: "tween",
       duration: 0.4,
       onComplete: () => {
@@ -198,6 +199,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
           xMotionValue={xMotionValue}
           likeSlider={likeSlider}
           thumbMotionValue={thumbMotionValue}
+          thumbOpacityMotionValue={thumbOpacityMotionValue}
         />
         {movieListInDeck && (
           <VotingActions
@@ -213,7 +215,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
                 },
               });
               animateSlider(screenWidth);
-              animateThumb(screenWidth);
+              animateThumb(1);
             }}
             handleDislike={() => {
               animate(xMotionValue, -500, {
@@ -226,7 +228,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
                 },
               });
               animateSlider(-screenWidth);
-              animateThumb(-screenWidth);
+              animateThumb(-1);
             }}
             goTo={`/home/details/${movieListInDeck[0].id}`}
             showDetail="Details"

@@ -9,9 +9,9 @@
 }
 
 .up {
-  left: -20vw;
+  right: 100%;
 }
 
 .down {
-  right: -20vw;
+  left: 100%;
 }
