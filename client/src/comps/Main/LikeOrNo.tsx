@@ -3,8 +3,8 @@ import FilterButton from "../ButtonComps/FilterButton";
 import Logo from "../Decorators/Logo";
 import Filters from "../filter/Filters";
 import NotificationMatched from "./MainPoster/NotificationMatched";
-import VoteLarge_Down from "./CardAnimationParts/VoteLarge_Down";
-import VoteLarge_Up from "./CardAnimationParts/VoteLarge_Up";
+import VoteLargeDown from "./CardAnimationParts/VoteLargeDown";
+import VoteLargeUp from "./CardAnimationParts/VoteLargeUp";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
@@ -36,8 +36,6 @@ interface IMatchNotification {
 
 export default function LikeOrNo({ userId }: ICompProps) {
   const [filterOn, setFilterOn] = useState(false);
-  const [voteType, setVoteType] = useState<"like" | "dislike">();
-  const [isLike, setIsLike] = useState<boolean>();
   const [showMatched, setShowMatched] = useState<IMatchNotification | null>();
   const {
     movieListInDeck,
@@ -49,10 +47,9 @@ export default function LikeOrNo({ userId }: ICompProps) {
   const screenWidth = size.width;
 
   const handleLike = async (movieID: number, poster: string, title: string) => {
-    // UpdateLikeToDB(userId, movieID, true);
+    UpdateLikeToDB(userId, movieID, true);
     console.log("like");
     handleNext();
-    setVoteType("like");
     if (userProfile && userProfile.friendsIdOnly.length > 0) {
       const response = await cloudFn.httpsCallable("checkMatchesWhileSwiping")({
         myLike: movieID,
@@ -69,10 +66,9 @@ export default function LikeOrNo({ userId }: ICompProps) {
     }
   };
   const handleDislike = (movieID: number) => {
-    // UpdateLikeToDB(userId, movieID, false);
+    UpdateLikeToDB(userId, movieID, false);
     console.log("dislike");
     handleNext();
-    setVoteType("dislike");
   };
 
   useEffect(() => {
@@ -192,8 +188,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
         ></motion.div>
         {/* <div className="loader"></div> */}
         {/* <NotificationMatched /> */}
-        <VoteLarge_Up thumbX={thumbX} thumbOpacity={thumbOpacity} />
-        <VoteLarge_Down thumbX={thumbX} thumbOpacity={thumbOpacity} />
+        <VoteLargeUp thumbX={thumbX} thumbOpacity={thumbOpacity} />
+        <VoteLargeDown thumbX={thumbX} thumbOpacity={thumbOpacity} />
         <Deck
           movieListInDeck={movieListInDeck}
           handleLike={handleLike}
@@ -214,7 +210,6 @@ export default function LikeOrNo({ userId }: ICompProps) {
                 onComplete: () => {
                   xMotionValue.set(0);
                   handleLike(card.id, card.poster_path, card.title);
-                  setIsLike(true);
                 },
               });
               animateSliderAndThumb(screenWidth, 1);
@@ -227,7 +222,6 @@ export default function LikeOrNo({ userId }: ICompProps) {
                 onComplete: () => {
                   xMotionValue.set(0);
                   handleDislike(movieListInDeck[0].id);
-                  setIsLike(false);
                 },
               });
               animateSliderAndThumb(-screenWidth, -1);

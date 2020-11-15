@@ -45,6 +45,7 @@ export default function useGetAllMatches(
           .update({ new_match_counts: matches.length });
       })();
     }
+    // eslint-disable-next-line
   }, [matches]);
 
   return matches;

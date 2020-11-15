@@ -2,12 +2,12 @@ import React from "react";
 import style from "./style.module.css";
 import { motion, MotionValue } from "framer-motion";
 
-interface IVoteLarge_Up {
+interface iVoteLargeUp {
   thumbX: MotionValue<number>;
   thumbOpacity: MotionValue<number>;
 }
 
-export default function VoteLarge_Up({ thumbX, thumbOpacity }: IVoteLarge_Up) {
+export default function VoteLargeUp({ thumbX, thumbOpacity }: iVoteLargeUp) {
   return (
     <motion.div
       className={`${style.voted_thumb} ${style.up}`}

@@ -1,12 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import style from "./MyProfile.module.css";
-import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import BackButton from "../ButtonComps/BackButton";
-import DislikedMovieInMyList from "./DislikedMovieInMyList";
-
 
 export default function DislikedMovies() {
-
   return (
     <div className="container_allcontent">
       <div className={style.container_header}>

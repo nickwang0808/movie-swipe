@@ -1,11 +1,9 @@
-import { link } from "fs";
 import React from "react";
 import { Link } from "react-router-dom";
 import { MovieDetail } from "../../APICalls/searchMovieByID";
 import getGenres from "../../HelperFunctions/getGenres";
 import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
 import style from "./LikedMovieInMylist.module.css";
-import { motion } from "framer-motion";
 
 interface ILikedMovieInMyList {
   movie: MovieDetail;

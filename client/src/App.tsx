@@ -31,7 +31,7 @@ import MyProfile from "./comps/profile/MyProfile";
 import MovieDetails from "./comps/movieDetails/MovieDetails";
 
 function App() {
-  const { userAuth, isLoading, size } = useContext(UserContext);
+  const { userAuth, isLoading } = useContext(UserContext);
 
   if (isLoading) {
     return <div className="loader loader_center" />;

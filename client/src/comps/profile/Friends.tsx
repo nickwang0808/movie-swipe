@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import style from "./MyProfile.module.css";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import ListViewFriendsButton from "../ButtonComps/ListViewFriendsButton";
@@ -17,9 +17,6 @@ export default function Friends() {
   const [emailInput, setEmailInput] = useState("");
   const [message, setMessage] = useState<string>();
   const [disableInvite, setDisableInvite] = useState(false);
-  const [setShowDeleteConfirmation, setSetShowDeleteConfirmation] = useState(
-    false
-  );
   const [friendToDelete, setFriendToDelete] = useState<userInfo>();
 
   const handleInvite = async () => {

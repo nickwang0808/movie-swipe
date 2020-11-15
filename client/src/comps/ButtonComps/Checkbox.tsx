@@ -1,12 +1,5 @@
-import {
-  IonCheckbox,
-  IonItem,
-  IonItemDivider,
-  IonLabel,
-  IonList,
-} from "@ionic/react";
+import { IonCheckbox, IonItem, IonLabel } from "@ionic/react";
 import React from "react";
-import style from "./ButtonComps.module.css";
 
 interface ICheckboxButton {
   name: string;
