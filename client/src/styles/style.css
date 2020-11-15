@@ -294,18 +294,20 @@ a {
 .VoteUpBG_anim {
   position: absolute;
   top: 0;
-  width: 70%;
+  width: 50%;
   bottom: 0;
-  left: -180%; /* prevent element showing up too early at 3x relative speed, kinda hacked the green one tho, something about the match behind the acceleration is not right*/
+  left: -100%; /* prevent element showing up too early at 3x relative speed, kinda hacked the green one tho, something about the match behind the acceleration is not right*/
   background-color: var(--positive);
+  opacity: 0.8;
 }
 .VoteDownBG_anim {
   position: absolute;
   top: 0;
-  width: 70%;
+  width: 50%;
   bottom: 0;
-  right: -150%; /* prevent element showing up too early at 3x relative speed */
+  right: -100%; /* prevent element showing up too early at 3x relative speed */
   background-color: var(--negative);
+  opacity: 0.8;
 }
 
 ion-checkbox {

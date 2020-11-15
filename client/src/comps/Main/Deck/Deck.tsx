@@ -33,7 +33,8 @@ export default function Deck({
   const animateSlider = (direction: number) => {
     animate(likeSlider, direction * 2, {
       type: "tween",
-      duration: 0.2,
+      duration: 1,
+      ease: [0.16, 1, 0.3, 1],
       onComplete: () => {
         likeSlider.set(0);
       },
@@ -43,7 +44,8 @@ export default function Deck({
     // this controls where the thumb to animate to
     animate(thumbMotionValue, direction * 0.8, {
       type: "tween",
-      duration: 0.2,
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1],
       onComplete: () => {
         likeSlider.set(0);
       },
@@ -98,7 +100,8 @@ export default function Deck({
                     if (xPosition > XCenter * 1.6) {
                       animate(xMotionValue, screenWidth, {
                         type: "tween",
-                        duration: 0.2,
+                        duration: 0.5,
+                        ease: [0.16, 1, 0.3, 1],
                         onComplete: () => {
                           xMotionValue.set(0);
                           handleLike(movie.id, movie.poster_path, movie.title);
@@ -109,7 +112,8 @@ export default function Deck({
                     } else if (xPosition < XCenter * 0.4) {
                       animate(xMotionValue, -screenWidth, {
                         type: "tween",
-                        duration: 0.2,
+                        duration: 1,
+                        ease: [0.16, 1, 0.3, 1],
                         onComplete: () => {
                           xMotionValue.set(0);
                           handleDislike(movie.id);

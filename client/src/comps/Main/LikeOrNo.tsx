@@ -97,7 +97,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
   const animateSlider = (direction: number) => {
     animate(likeSlider, direction * 1.5, {
       type: "tween",
-      duration: 0.6,
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1],
       onComplete: () => {
         likeSlider.set(0);
       },
@@ -108,7 +109,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
     // this controls where the thumb to animate to
     animate(thumbMotionValue, direction * 0.8, {
       type: "tween",
-      duration: 0.4,
+      duration: 1,
+      ease: [0.16, 1, 0.3, 1],
       onComplete: () => {
         likeSlider.set(0);
       },
@@ -205,7 +207,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
               const card = movieListInDeck[0];
               animate(xMotionValue, 500, {
                 type: "tween",
-                duration: 0.4,
+                duration: 0.5,
+                ease: [0.16, 1, 0.3, 1],
                 onComplete: () => {
                   xMotionValue.set(0);
                   handleLike(card.id, card.poster_path, card.title);
@@ -218,7 +221,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
             handleDislike={() => {
               animate(xMotionValue, -500, {
                 type: "tween",
-                duration: 0.4,
+                duration: 1,
+                ease: [0.16, 1, 0.3, 1],
                 onComplete: () => {
                   xMotionValue.set(0);
                   handleDislike(movieListInDeck[0].id);
