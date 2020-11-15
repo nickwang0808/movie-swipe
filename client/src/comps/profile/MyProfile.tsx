@@ -41,9 +41,9 @@ export default function MyProfile() {
           <Link className="link" to="/profile/friends">
             <ListViewButton name="Friends" />
           </Link>
-          <Link className="link" to="/profile/dislikedmovies">
+          {/* <Link className="link" to="/profile/dislikedmovies">
             <ListViewButton name="Disliked Movies" />
-          </Link>
+          </Link> */}
           <Link className="link" to="/profile/about">
             <ListViewButton name="About MovieSync" />
           </Link>

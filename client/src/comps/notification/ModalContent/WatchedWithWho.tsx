@@ -3,13 +3,7 @@ import handleWatched from "../../../db-operations/handleWatched";
 import { IUserInfo } from "../../../db-operations/useGetAllMatches";
 import style from "../notification.module.css";
 import sharedstyle from "../../ButtonComps/ButtonComps.module.css";
-import {
-  IonCheckbox,
-  IonItem,
-  IonItemDivider,
-  IonLabel,
-  IonList,
-} from "@ionic/react";
+import { IonCheckbox, IonItem, IonLabel } from "@ionic/react";
 
 interface IWatchedWithWho {
   uid: string;

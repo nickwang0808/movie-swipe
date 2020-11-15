@@ -11,7 +11,7 @@ import WatchedAlert from "./WatchedAlert";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import { UserContext } from "../../store";
 import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { IUserInfo } from "../../db-operations/useGetAllMatches";
 import Modal from "../notification/modal";
@@ -112,7 +112,15 @@ export default function MovieDetails({
             />
           )}
         </motion.div>
-        <div className={style.container_moviedetails}>
+        <motion.div
+          animate={{ opacity: 1, paddingTop: "0rem" }}
+          initial={{ opacity: 0, paddingTop: "2rem" }}
+          transition={{
+            duration: 0.5,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className={style.container_moviedetails}
+        >
           <div
             className={style.poster_1_inline}
             style={posterStyleMaker(baseUrl + movieDetails?.poster_path)}
@@ -142,8 +150,17 @@ export default function MovieDetails({
               }min | ${movieDetails?.release_date.toString().slice(0, 4)}`}
             </h3>
           </div>
-        </div>
-        <div className={style.container_info}>
+        </motion.div>
+        <motion.div
+          animate={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
+          transition={{
+            delay: 0.1,
+            duration: 0.5,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className={style.container_info}
+        >
           <div className={style.container_watch}></div>
           <div className={style.container_description}>
             {(matchedFriends || watchedFriends) && (
@@ -164,7 +181,7 @@ export default function MovieDetails({
             <StreamingServiceButton />
           </div>
         </div> */}
-        </div>
+        </motion.div>
       </div>
       {showVoting && (
         <VotingActions

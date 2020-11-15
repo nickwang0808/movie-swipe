@@ -9,21 +9,39 @@ interface IDeckProp {
   handleLike: (movieID: number, poster: string, title: string) => void;
   handleDislike: (movieID: number) => void;
   movieListInDeck: Result[] | undefined;
-  isLike: boolean | undefined;
-  setIsLike: (arg: boolean) => void;
   xMotionValue: MotionValue<number>;
+  likeSlider: MotionValue<number>;
+  thumbMotionValue: MotionValue<number>;
+  thumbOpacityMotionValue: MotionValue<number>;
 }
 
 export default function Deck({
   movieListInDeck,
   handleLike,
   handleDislike,
-  isLike,
-  setIsLike,
   xMotionValue,
+  likeSlider,
+  thumbMotionValue,
+  thumbOpacityMotionValue,
 }: IDeckProp) {
   const { size } = useContext(UserContext);
   const XCenter = size.XCenter;
+  const screenWidth = size.width;
+
+  const animateSliderAndThumb = (direction: number, thumbDirection: 1 | -1) => {
+    animate(likeSlider, direction * 1.2, {
+      type: "tween",
+      duration: 1,
+      ease: [0.33, 1, 0.68, 1],
+    });
+    // this controls where the thumb to animate to
+    animate(thumbMotionValue, screenWidth * thumbDirection, {
+      type: "tween",
+      duration: 0.5,
+      ease: [0.33, 1, 0.68, 1],
+    });
+    // thumbOpacity is controlled by drag, which will fade out after release automatically
+  };
 
   return (
     <>
@@ -63,25 +81,38 @@ export default function Deck({
                 <motion.div
                   className={style.card}
                   key={movie.id}
-                  drag={i === 0 ? true : false}
+                  drag
+                  onViewportBoxUpdate={(_, delta) => {
+                    likeSlider.set(delta.x.translate);
+                    thumbMotionValue.set(delta.x.translate);
+                    thumbOpacityMotionValue.set(delta.x.translate);
+                  }}
                   onDragEnd={(e, info) => {
                     const xPosition = info.point.x;
                     if (xPosition > XCenter * 1.6) {
-                      animate(xMotionValue, 500, {
-                        type: "spring",
+                      animate(xMotionValue, screenWidth, {
+                        type: "tween",
+                        duration: 0.5,
+                        ease: [0.16, 1, 0.3, 1],
                         onComplete: () => {
                           xMotionValue.set(0);
+                          /* not pulling it out because handlelike is a pain is the 
+                          ass to assign types  */
                           handleLike(movie.id, movie.poster_path, movie.title);
                         },
                       });
+                      animateSliderAndThumb(screenWidth, 1);
                     } else if (xPosition < XCenter * 0.4) {
-                      animate(xMotionValue, -500, {
-                        type: "spring",
+                      animate(xMotionValue, -screenWidth, {
+                        type: "tween",
+                        duration: 0.5,
+                        ease: [0.16, 1, 0.3, 1],
                         onComplete: () => {
                           xMotionValue.set(0);
                           handleDislike(movie.id);
                         },
                       });
+                      animateSliderAndThumb(-screenWidth, -1);
                     }
                   }}
                   dragElastic={0.8}

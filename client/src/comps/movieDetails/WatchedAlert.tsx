@@ -1,12 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import style from "./WatchedAlert.module.css";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import { IUserInfo } from "../../db-operations/useGetAllMatches";
 import handleWatched from "../../db-operations/handleWatched";
-import { UserContext } from "../../store";
-import { cloudFn } from "../../firebase/config";
-import MovieDetails from "./MovieDetails";
 
 interface IMovieDetails {
   matches?: IUserInfo[] | undefined;
@@ -40,10 +37,7 @@ export default function WatchedAlert({
                   ease: Ease,
                 }}
               >
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                   Watched with{" "}
                   <strong>
                     {watchedWith?.map((info) => info.name).join(", ")}

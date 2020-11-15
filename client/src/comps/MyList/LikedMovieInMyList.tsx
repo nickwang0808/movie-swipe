@@ -1,11 +1,9 @@
-import { link } from "fs";
 import React from "react";
 import { Link } from "react-router-dom";
 import { MovieDetail } from "../../APICalls/searchMovieByID";
 import getGenres from "../../HelperFunctions/getGenres";
 import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
 import style from "./LikedMovieInMylist.module.css";
-import { motion } from "framer-motion";
 
 interface ILikedMovieInMyList {
   movie: MovieDetail;
@@ -21,15 +19,6 @@ export default function LikedMovieInMyList({
   return (
     <>
       <Link className={`link ${style.flex_row}`} to={`/detials/${movie.id}`}>
-        {/* <motion.div 
-        animate={{left: "110%"}}
-        transition={{
-          delay: 0.25,
-          duration: 1.5,
-          ease: [0.85, 0, 0.15, 1],
-        }}
-        className={style.newmatch_anim}>
-        </motion.div> */}
         <img
           className={style.poster}
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
