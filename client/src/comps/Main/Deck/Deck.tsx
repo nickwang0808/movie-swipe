@@ -36,7 +36,7 @@ export default function Deck({
     animate(likeSlider, direction * 2, {
       type: "tween",
       duration: 1,
-      ease: [0.16, 1, 0.3, 1],
+      ease: [0.33, 1, 0.68, 1],
       onComplete: () => {
         likeSlider.set(0);
       },
@@ -48,7 +48,7 @@ export default function Deck({
     animate(thumbMotionValue, screenWidth * direction, {
       type: "tween",
       duration: 0.5,
-      ease: [0.16, 1, 0.3, 1],
+      ease: [0.33, 1, 0.68, 1],
       onComplete: () => {
         likeSlider.set(0);
       },
