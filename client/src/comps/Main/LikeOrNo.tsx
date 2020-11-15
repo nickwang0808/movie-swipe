@@ -95,26 +95,24 @@ export default function LikeOrNo({ userId }: ICompProps) {
     (value) => Math.abs(value / 300) // the higher num the slower it adds opacity
   );
 
-  const animateSlider = (direction: number) => {
+  const animateSliderAndThumb = (direction: number, thumbDirection: 1 | -1) => {
     animate(likeSlider, direction * 1.2, {
       type: "tween",
       duration: 1,
       ease: [0.33, 1, 0.68, 1],
       onComplete: () => {
-        likeSlider.set(0);
+        likeSlider.set(0); // don't remove this
       },
     });
-  };
 
-  const animateThumb = (direction: 1 | -1) => {
     // this controls where the thumb to animate to
-    // animate(thumbMotionValue, screenWidth * direction, {
-    animate(thumbMotionValue, screenWidth * direction, {
+    animate(thumbMotionValue, screenWidth * thumbDirection, {
       type: "tween",
       duration: 0.5,
       ease: [0.33, 1, 0.68, 1],
     });
 
+    // this controls thumb opacity
     animate(thumbOpacityMotionValue, [300, 0], {
       ease: "easeIn",
       duration: 0.5,
@@ -200,8 +198,6 @@ export default function LikeOrNo({ userId }: ICompProps) {
           movieListInDeck={movieListInDeck}
           handleLike={handleLike}
           handleDislike={handleDislike}
-          setIsLike={setIsLike}
-          isLike={isLike}
           xMotionValue={xMotionValue}
           likeSlider={likeSlider}
           thumbMotionValue={thumbMotionValue}
@@ -221,8 +217,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
                   setIsLike(true);
                 },
               });
-              animateThumb(1);
-              animateSlider(screenWidth);
+              animateSliderAndThumb(screenWidth, 1);
             }}
             handleDislike={() => {
               animate(xMotionValue, -500, {
@@ -235,8 +230,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
                   setIsLike(false);
                 },
               });
-              animateSlider(-screenWidth);
-              animateThumb(-1);
+              animateSliderAndThumb(-screenWidth, -1);
             }}
             goTo={`/home/details/${movieListInDeck[0].id}`}
             showDetail="Details"

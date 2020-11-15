@@ -9,8 +9,6 @@ interface IDeckProp {
   handleLike: (movieID: number, poster: string, title: string) => void;
   handleDislike: (movieID: number) => void;
   movieListInDeck: Result[] | undefined;
-  isLike: boolean | undefined;
-  setIsLike: (arg: boolean) => void;
   xMotionValue: MotionValue<number>;
   likeSlider: MotionValue<number>;
   thumbMotionValue: MotionValue<number>;
@@ -21,8 +19,6 @@ export default function Deck({
   movieListInDeck,
   handleLike,
   handleDislike,
-  isLike,
-  setIsLike,
   xMotionValue,
   likeSlider,
   thumbMotionValue,
@@ -32,27 +28,19 @@ export default function Deck({
   const XCenter = size.XCenter;
   const screenWidth = size.width;
 
-  const animateSlider = (direction: number) => {
-    animate(likeSlider, direction * 2, {
+  const animateSliderAndThumb = (direction: number, thumbDirection: 1 | -1) => {
+    animate(likeSlider, direction * 1.2, {
       type: "tween",
       duration: 1,
       ease: [0.33, 1, 0.68, 1],
-      onComplete: () => {
-        likeSlider.set(0);
-      },
     });
-  };
-  const animateThumb = (direction: 1 | -1) => {
     // this controls where the thumb to animate to
-    // animate(thumbMotionValue, direction * 0.8, {
-    animate(thumbMotionValue, screenWidth * direction, {
+    animate(thumbMotionValue, screenWidth * thumbDirection, {
       type: "tween",
       duration: 0.5,
       ease: [0.33, 1, 0.68, 1],
-      onComplete: () => {
-        likeSlider.set(0);
-      },
     });
+    // thumbOpacity is controlled by drag, which will fade out after release automatically
   };
 
   return (
@@ -108,11 +96,12 @@ export default function Deck({
                         ease: [0.16, 1, 0.3, 1],
                         onComplete: () => {
                           xMotionValue.set(0);
+                          /* not pulling it out because handlelike is a pain is the 
+                          ass to assign types  */
                           handleLike(movie.id, movie.poster_path, movie.title);
                         },
                       });
-                      animateSlider(screenWidth);
-                      animateThumb(1);
+                      animateSliderAndThumb(screenWidth, 1);
                     } else if (xPosition < XCenter * 0.4) {
                       animate(xMotionValue, -screenWidth, {
                         type: "tween",
@@ -123,8 +112,7 @@ export default function Deck({
                           handleDislike(movie.id);
                         },
                       });
-                      animateSlider(-screenWidth);
-                      animateThumb(-1);
+                      animateSliderAndThumb(-screenWidth, -1);
                     }
                   }}
                   dragElastic={0.8}
