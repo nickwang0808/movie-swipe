@@ -10,7 +10,7 @@ export default function SignInScreen() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<any>();
 
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(true);
 
   const handleSignInGoogle = () => {
     cfaSignIn("google.com").subscribe((user: User) =>
@@ -66,6 +66,7 @@ export default function SignInScreen() {
             ? "Already registered? Login instead"
             : "Need an account? Sign Up"}
         </button>
+        <button>Skip</button>
       </form>
     </>
   );
@@ -73,7 +74,8 @@ export default function SignInScreen() {
   return (
     <div className={style.login_container}>
       <h2>
-        Create a MovieSync account so you and your friends can finally find something to watch, together!
+        Create a MovieSync account so you and your friends can finally find
+        something to watch, together!
       </h2>
       <button
         className={`${sharedstyle.btn} ${style.btn_login_google}`}
@@ -83,7 +85,8 @@ export default function SignInScreen() {
       </button>
       <p>-or-</p>
       <div className={style.email}>
-        {error && <div className={style.error}>{error}</div>} {/* log any login err below everything */}
+        {error && <div className={style.error}>{error}</div>}{" "}
+        {/* log any login err below everything */}
         {emailAuthSignIn}
       </div>
     </div>
