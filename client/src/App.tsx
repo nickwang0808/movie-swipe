@@ -55,8 +55,8 @@ function App() {
             </Route>
             <Route path="/detials/:id">
               <MovieDetails
-                handleDislike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
                 handleLike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
+                handleDislike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
               />
             </Route>
           </IonRouterOutlet>

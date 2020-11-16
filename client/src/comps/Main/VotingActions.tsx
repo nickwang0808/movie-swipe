@@ -9,6 +9,8 @@ interface IVotingActionsProps {
   handleLike: () => void;
   showDetail: string;
   goTo: string;
+  isLiked?: boolean;
+  changeToDisLike?: () => void;
 }
 
 export default function VotingActions({
@@ -16,6 +18,8 @@ export default function VotingActions({
   handleLike,
   showDetail,
   goTo,
+  isLiked,
+  changeToDisLike,
 }: IVotingActionsProps) {
   return (
     <motion.div
@@ -27,7 +31,11 @@ export default function VotingActions({
       }}
       className="container_vote"
     >
-      <DownVote handleDislike={handleDislike} />
+      <DownVote
+        handleDislike={handleDislike}
+        isLiked={isLiked}
+        changeToDisLike={changeToDisLike}
+      />
       <div className={sharedstyle.container_detailsbtn}>
         <Link
           to={goTo}
@@ -36,7 +44,7 @@ export default function VotingActions({
           {showDetail}
         </Link>
       </div>
-      <UpVote handleLike={handleLike} />
+      <UpVote handleLike={handleLike} isLiked={isLiked} />
     </motion.div>
   );
 }

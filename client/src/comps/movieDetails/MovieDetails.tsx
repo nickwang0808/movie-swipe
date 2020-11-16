@@ -16,18 +16,17 @@ import { motion } from "framer-motion";
 import { IUserInfo } from "../../db-operations/useGetAllMatches";
 import Modal from "../notification/modal";
 import WatchedWithWho from "../notification/ModalContent/WatchedWithWho";
+import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 
 interface IMovieDetails {
   showVoting?: boolean;
   handleDislike: (movieID: number) => void;
   handleLike: (movieID: number, poster: string, title: string) => void;
-  matches?: IUserInfo[] | undefined;
 }
 
 export default function MovieDetails({
   handleDislike,
   handleLike,
-  showVoting,
 }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
   const { likedMoviesInfos, matches, watchedMovieInfos, userAuth } = useContext(
@@ -183,20 +182,24 @@ export default function MovieDetails({
         </div> */}
         </motion.div>
       </div>
-      {showVoting && (
-        <VotingActions
-          handleDislike={() => handleDislike(movieID)}
-          handleLike={() =>
-            handleLike(
-              movieID,
-              movieDetails?.poster_path as string,
-              movieDetails?.title as string
-            )
-          }
-          goTo="/home"
-          showDetail="Poster"
-        />
-      )}
+      <VotingActions
+        handleDislike={() => handleDislike(movieID)}
+        handleLike={() =>
+          handleLike(
+            movieID,
+            movieDetails?.poster_path as string,
+            movieDetails?.title as string
+          )
+        }
+        goTo="/home"
+        showDetail="Poster"
+        isLiked={
+          likedMoviesInfos.find((elem) => elem.id === movieID) ? true : false
+        }
+        changeToDisLike={() =>
+          UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, false)
+        }
+      />
     </>
   );
 }

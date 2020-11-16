@@ -1,5 +1,5 @@
 import { firestore } from "firebase/app";
-import { db } from "../firebase/config";
+import { arrayRemove, db } from "../firebase/config";
 const arrayUnion = firestore.FieldValue.arrayUnion;
 
 /*
@@ -14,10 +14,16 @@ export default function UpdateLikeToDB(
   const userRef = db.collection("Users").doc(userId).collection("User_Details");
 
   if (isLike) {
+    userRef.doc("Disliked_Movies").update({
+      disliked_movies: arrayRemove(movieID),
+    });
     userRef.doc("Liked_Movies").update({
       liked_movies: arrayUnion(movieID),
     });
   } else {
+    userRef.doc("Liked_Movies").update({
+      liked_movies: arrayRemove(movieID),
+    });
     userRef.doc("Disliked_Movies").update({
       disliked_movies: arrayUnion(movieID),
     });
