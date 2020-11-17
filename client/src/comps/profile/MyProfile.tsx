@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ListViewButton from "../ButtonComps/ListViewButton";
 import style from "./MyProfile.module.css";
 import Modal from "../notification/modal";
@@ -14,10 +14,13 @@ import DeleteConfirmation from "./DeleteConfirmation";
 import firebase from "firebase/app";
 import "firebase/auth";
 import updateUserInfo from "../../db-operations/updateUserInfo";
+import { UserContext } from "../../store";
 var provider = new firebase.auth.GoogleAuthProvider();
 
 export default function MyProfile() {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+  const { userAuth } = useContext(UserContext);
 
   const completeSignUp = () => {
     auth.currentUser
@@ -31,6 +34,7 @@ export default function MyProfile() {
           });
 
           await updateUserInfo(user.uid);
+          window.location.reload();
         }
         console.log("Anonymous account successfully upgraded", user);
       })
@@ -49,7 +53,6 @@ export default function MyProfile() {
               await auth.currentUser?.reauthenticateWithPopup(provider);
               await db.collection("Users").doc(auth.currentUser?.uid).delete();
               auth.currentUser?.delete().then(() => window.location.reload());
-              // TODO: need to fix re-auth issue
             }}
           />
         </Modal>
@@ -65,7 +68,7 @@ export default function MyProfile() {
           }}
           className={style.settings_container}
         >
-          {auth.currentUser?.email === null ? (
+          {userAuth?.userInfo.email === null ? (
             <ListViewButton
               name="Complete Sign In"
               action={() => completeSignUp()}
@@ -82,10 +85,12 @@ export default function MyProfile() {
             <ListViewButton name="About MovieSync" />
           </Link>
           <div className="listview_separator_full" />
-          <ListViewButton
-            name={`Sign Out ${auth.currentUser?.email}`}
-            action={() => cfaSignOut().subscribe()}
-          />
+          {userAuth?.userInfo.email && (
+            <ListViewButton
+              name={`Sign Out ${userAuth?.userInfo.email}`}
+              action={() => cfaSignOut().subscribe()}
+            />
+          )}
 
           <ListViewButton
             name="Delete Account"
