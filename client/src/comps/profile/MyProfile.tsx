@@ -13,35 +13,14 @@ import DeleteConfirmation from "./DeleteConfirmation";
 
 import firebase from "firebase/app";
 import "firebase/auth";
-import updateUserInfo from "../../db-operations/updateUserInfo";
 import { UserContext } from "../../store";
+
 var provider = new firebase.auth.GoogleAuthProvider();
 
 export default function MyProfile() {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   const { userAuth } = useContext(UserContext);
-
-  const completeSignUp = () => {
-    auth.currentUser
-      ?.linkWithPopup(provider)
-      .then(async (usercred) => {
-        const user = usercred.user;
-        if (user) {
-          await user.updateProfile({
-            displayName: user.providerData[0]?.displayName,
-            photoURL: user.providerData[0]?.photoURL,
-          });
-
-          await updateUserInfo(user.uid);
-          window.location.reload();
-        }
-        console.log("Anonymous account successfully upgraded", user);
-      })
-      .catch(function (error) {
-        console.log("Error upgrading anonymous account", error);
-      });
-  };
 
   return (
     <div>
@@ -69,10 +48,9 @@ export default function MyProfile() {
           className={style.settings_container}
         >
           {userAuth?.userInfo.email === null ? (
-            <ListViewButton
-              name="Complete Sign In"
-              action={() => completeSignUp()}
-            />
+            <Link className="link" to="/completeSignUp">
+              <ListViewButton name="Complete Sign In" />
+            </Link>
           ) : (
             <Link className="link" to="/profile/friends">
               <ListViewButton name="Friends" />

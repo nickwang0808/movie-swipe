@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { User } from "firebase/app";
 import { auth } from "../../firebase/config";
 import { cfaSignIn } from "capacitor-firebase-auth";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import style from "./auth.module.css";
+import { UserContext } from "../../store";
+
+import firebase from "firebase/app";
+import "firebase/auth";
+import updateUserInfo from "../../db-operations/updateUserInfo";
+import { useHistory } from "react-router";
+
+var provider = new firebase.auth.GoogleAuthProvider();
 
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
@@ -11,6 +19,11 @@ export default function SignInScreen() {
   const [error, setError] = useState<any>();
 
   const [isSignUp, setIsSignUp] = useState(true);
+
+  const { userAuth } = useContext(UserContext);
+  const existingEmail = userAuth?.userInfo.email;
+
+  const history = useHistory();
 
   const handleSignInGoogle = () => {
     cfaSignIn("google.com").subscribe((user: User) =>
@@ -39,6 +52,48 @@ export default function SignInScreen() {
     });
   };
 
+  const completeWithEmail = (email: string, password: string) => {
+    var credential = firebase.auth.EmailAuthProvider.credential(
+      email,
+      password
+    );
+
+    auth.currentUser
+      ?.linkWithCredential(credential)
+      .then(async (usercred) => {
+        var user = usercred.user;
+        if (user) {
+          await updateUserInfo(user.uid);
+        }
+        console.log("Anonymous account successfully upgraded", user);
+        history.goBack();
+      })
+      .catch(function (error) {
+        console.log("Error upgrading anonymous account", error);
+      });
+  };
+
+  const completeWithSocialSignUp = () => {
+    auth.currentUser
+      ?.linkWithPopup(provider)
+      .then(async (usercred) => {
+        const user = usercred.user;
+        if (user) {
+          await user.updateProfile({
+            displayName: user.providerData[0]?.displayName,
+            photoURL: user.providerData[0]?.photoURL,
+          });
+
+          await updateUserInfo(user.uid);
+          history.goBack();
+        }
+        console.log("Anonymous account successfully upgraded", user);
+      })
+      .catch(function (error) {
+        console.log("Error upgrading anonymous account", error);
+      });
+  };
+
   const emailAuthSignIn = (
     <>
       <form>
@@ -50,7 +105,9 @@ export default function SignInScreen() {
           onClick={(e) => {
             e.preventDefault();
             return isSignUp
-              ? handleSignUnEmail(email, password)
+              ? existingEmail === null
+                ? completeWithEmail(email, password)
+                : handleSignUnEmail(email, password)
               : handleSignInEmail(email, password);
           }}
         >
@@ -79,7 +136,7 @@ export default function SignInScreen() {
       </h2>
       <button
         className={`${sharedstyle.btn} ${style.btn_login_google}`}
-        onClick={handleSignInGoogle}
+        onClick={existingEmail ? completeWithSocialSignUp : handleSignInGoogle}
       >
         Sign Up or Login With Google
       </button>

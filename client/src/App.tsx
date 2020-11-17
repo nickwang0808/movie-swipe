@@ -69,6 +69,9 @@ function App() {
             handleDislike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
           />
         </Route>
+        <Route path="/completeSignUp">
+          <SignInScreen />;
+        </Route>
       </>
     );
   }
