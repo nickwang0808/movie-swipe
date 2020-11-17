@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import genreList from "../comps/other/genreList";
 import { db } from "../firebase/config";
 import { IWatchedMovieInfo } from "./useGetLikedMovies";
 
@@ -93,6 +94,9 @@ export default function useGetMovies(userId: string) {
       if (data.length > 0) {
         setGenrePref(data as number[]);
         return data as number[];
+      } else {
+        setGenrePref(genreList.movie.map((elem) => elem.id));
+        return genreList.movie.map((elem) => elem.id);
       }
     };
 

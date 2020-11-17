@@ -1,3 +1,6 @@
+import { IonApp, IonRouterOutlet } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import { AnimateSharedLayout } from "framer-motion";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
@@ -6,7 +9,15 @@ import Store from "./store";
 
 ReactDOM.render(
   <Store>
-    <App />
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          {/* <AnimateSharedLayout> */}
+          <App />
+          {/* </AnimateSharedLayout> */}
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
   </Store>,
   document.getElementById("root")
 );
