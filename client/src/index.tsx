@@ -12,9 +12,9 @@ ReactDOM.render(
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          {/* <AnimateSharedLayout> */}
-          <App />
-          {/* </AnimateSharedLayout> */}
+          <AnimateSharedLayout>
+            <App />
+          </AnimateSharedLayout>
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
