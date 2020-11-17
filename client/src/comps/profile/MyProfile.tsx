@@ -11,8 +11,34 @@ import { motion } from "framer-motion";
 import { Link, Route } from "react-router-dom";
 import DeleteConfirmation from "./DeleteConfirmation";
 
+import firebase from "firebase/app";
+import "firebase/auth";
+import updateUserInfo from "../../db-operations/updateUserInfo";
+
 export default function MyProfile() {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+  const completeSignUp = () => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    auth.currentUser
+      ?.linkWithPopup(provider)
+      .then(async (usercred) => {
+        const user = usercred.user;
+        if (user) {
+          await user.updateProfile({
+            displayName: user.providerData[0]?.displayName,
+            photoURL: user.providerData[0]?.photoURL,
+          });
+
+          await updateUserInfo(user.uid);
+        }
+        console.log("Anonymous account successfully upgraded", user);
+      })
+      .catch(function (error) {
+        console.log("Error upgrading anonymous account", error);
+      });
+  };
 
   return (
     <div>
@@ -49,8 +75,12 @@ export default function MyProfile() {
           </Link>
           <div className="listview_separator_full" />
           <ListViewButton
-            name="Sign Out (XX@gmail.com)"
+            name={`Sign Out ${auth.currentUser?.email}`}
             action={() => cfaSignOut().subscribe()}
+          />
+          <ListViewButton
+            name="Complete Registration"
+            action={() => completeSignUp()}
           />
           <ListViewButton
             name="Delete Account"

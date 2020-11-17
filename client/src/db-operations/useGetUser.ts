@@ -83,7 +83,7 @@ export default function useGetUser(user_id: string) {
           // if no user found in db, init docs for them
           // console.log("init user create");
           const userInfo = auth.currentUser;
-          console.log("userInfo", userInfo);
+          // console.log("userInfo", userInfo);
           const name = userInfo?.displayName;
           const email = userInfo?.email;
           const uid = userInfo?.uid;
