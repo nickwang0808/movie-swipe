@@ -3,7 +3,7 @@ import ListViewButton from "../ButtonComps/ListViewButton";
 import style from "./MyProfile.module.css";
 import Modal from "../notification/modal";
 import { cfaSignOut } from "capacitor-firebase-auth";
-import { auth } from "../../firebase/config";
+import { auth, db } from "../../firebase/config";
 import Friends from "./Friends";
 import About from "./About";
 import DislikedMovies from "./DislikedMovies";
@@ -14,13 +14,12 @@ import DeleteConfirmation from "./DeleteConfirmation";
 import firebase from "firebase/app";
 import "firebase/auth";
 import updateUserInfo from "../../db-operations/updateUserInfo";
+var provider = new firebase.auth.GoogleAuthProvider();
 
 export default function MyProfile() {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   const completeSignUp = () => {
-    var provider = new firebase.auth.GoogleAuthProvider();
-
     auth.currentUser
       ?.linkWithPopup(provider)
       .then(async (usercred) => {
@@ -45,8 +44,10 @@ export default function MyProfile() {
       {showDeleteConfirmation && (
         <Modal closeAction={() => setShowDeleteConfirmation(false)}>
           <DeleteConfirmation
-            action={() => {
+            action={async () => {
               console.log("deleted");
+              await auth.currentUser?.reauthenticateWithPopup(provider);
+              await db.collection("Users").doc(auth.currentUser?.uid).delete();
               auth.currentUser?.delete().then(() => window.location.reload());
               // TODO: need to fix re-auth issue
             }}
@@ -64,9 +65,16 @@ export default function MyProfile() {
           }}
           className={style.settings_container}
         >
-          <Link className="link" to="/profile/friends">
-            <ListViewButton name="Friends" />
-          </Link>
+          {auth.currentUser?.email === null ? (
+            <ListViewButton
+              name="Complete Sign In"
+              action={() => completeSignUp()}
+            />
+          ) : (
+            <Link className="link" to="/profile/friends">
+              <ListViewButton name="Friends" />
+            </Link>
+          )}
           {/* <Link className="link" to="/profile/dislikedmovies">
             <ListViewButton name="Disliked Movies" />
           </Link> */}
@@ -78,10 +86,7 @@ export default function MyProfile() {
             name={`Sign Out ${auth.currentUser?.email}`}
             action={() => cfaSignOut().subscribe()}
           />
-          <ListViewButton
-            name="Complete Registration"
-            action={() => completeSignUp()}
-          />
+
           <ListViewButton
             name="Delete Account"
             action={() => setShowDeleteConfirmation(true)}
