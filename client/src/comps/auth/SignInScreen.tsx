@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { User } from "firebase/app";
-import { auth } from "../../firebase/config";
+import { auth, db } from "../../firebase/config";
 import { cfaSignIn } from "capacitor-firebase-auth";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import style from "./auth.module.css";
@@ -41,7 +41,7 @@ export default function SignInScreen() {
     });
   };
 
-  const handleSignUnEmail = (email: string, password: string) => {
+  const handleSignUpEmail = (email: string, password: string) => {
     auth.createUserWithEmailAndPassword(email, password).catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
@@ -52,46 +52,65 @@ export default function SignInScreen() {
     });
   };
 
-  const completeWithEmail = (email: string, password: string) => {
-    var credential = firebase.auth.EmailAuthProvider.credential(
-      email,
-      password
-    );
+  const completeWithEmail = async (email: string, password: string) => {
+    const oldUser = auth.currentUser?.uid;
+    const userRef = db.collection("Users").doc(auth.currentUser?.uid);
+    const likedRef = await userRef
+      .collection("User_Details")
+      .doc("Liked_Movies")
+      .get();
+    const liked_movies: number[] = likedRef.data()?.liked_movies;
 
-    auth.currentUser
-      ?.linkWithCredential(credential)
-      .then(async (usercred) => {
-        var user = usercred.user;
-        if (user) {
-          await updateUserInfo(user.uid);
-        }
-        console.log("Anonymous account successfully upgraded", user);
-        history.goBack();
-      })
-      .catch(function (error) {
-        console.log("Error upgrading anonymous account", error);
-      });
+    auth.createUserWithEmailAndPassword(email, password).then((user) => {
+      try {
+        // intermittent err where user init is slower than this function
+        setTimeout(async () => {
+          await db
+            .collection("Users")
+            .doc(user.user?.uid)
+            .collection("User_Details")
+            .doc("Liked_Movies")
+            .update({ liked_movies });
+
+          // TODO: update user profile with name as email
+
+          userRef.delete();
+          //TODO: call cloud fn to delete account
+        }, 2000);
+      } catch (err) {
+        console.log("SignInScreen -> err", err);
+      }
+    });
   };
 
-  const completeWithSocialSignUp = () => {
-    auth.currentUser
-      ?.linkWithPopup(provider)
-      .then(async (usercred) => {
-        const user = usercred.user;
-        if (user) {
-          await user.updateProfile({
-            displayName: user.providerData[0]?.displayName,
-            photoURL: user.providerData[0]?.photoURL,
-          });
+  const completeWithSocialSignUp = async () => {
+    const oldUser = auth.currentUser?.uid;
+    const userRef = db.collection("Users").doc(auth.currentUser?.uid);
+    const likedRef = await userRef
+      .collection("User_Details")
+      .doc("Liked_Movies")
+      .get();
+    const liked_movies: number[] = likedRef.data()?.liked_movies;
 
-          await updateUserInfo(user.uid);
-          history.goBack();
-        }
-        console.log("Anonymous account successfully upgraded", user);
-      })
-      .catch(function (error) {
-        console.log("Error upgrading anonymous account", error);
-      });
+    cfaSignIn("google.com").subscribe(async (user: User) => {
+      console.log(user.uid);
+      try {
+        // intermittent err where user init is slower than this function
+        setTimeout(async () => {
+          await db
+            .collection("Users")
+            .doc(user.uid)
+            .collection("User_Details")
+            .doc("Liked_Movies")
+            .update({ liked_movies });
+
+          userRef.delete();
+          //TODO: call cloud fn to delete account
+        }, 2000);
+      } catch (err) {
+        console.log("SignInScreen -> err", err);
+      }
+    });
   };
 
   const emailAuthSignIn = (
@@ -107,7 +126,7 @@ export default function SignInScreen() {
             return isSignUp
               ? existingEmail === null
                 ? completeWithEmail(email, password)
-                : handleSignUnEmail(email, password)
+                : handleSignUpEmail(email, password)
               : handleSignInEmail(email, password);
           }}
         >
@@ -136,7 +155,9 @@ export default function SignInScreen() {
       </h2>
       <button
         className={`${sharedstyle.btn} ${style.btn_login_google}`}
-        onClick={existingEmail ? completeWithSocialSignUp : handleSignInGoogle}
+        onClick={
+          existingEmail === null ? completeWithSocialSignUp : handleSignInGoogle
+        }
       >
         Sign Up or Login With Google
       </button>
