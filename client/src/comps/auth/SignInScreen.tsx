@@ -101,22 +101,24 @@ export default function SignInScreen() {
       .get();
     const liked_movies: number[] = likedRef.data()?.liked_movies;
 
+    localStorage.setItem("liked_movies", liked_movies.join(","));
+
     cfaSignIn("google.com").subscribe(async (user: User) => {
       console.log(user.uid);
       try {
         // intermittent err where user init is slower than this function
-        setTimeout(async () => {
-          await db
-            .collection("Users")
-            .doc(user.uid)
-            .collection("User_Details")
-            .doc("Liked_Movies")
-            .update({ liked_movies });
+        // setTimeout(async () => {
+        //   await db
+        //     .collection("Users")
+        //     .doc(user.uid)
+        //     .collection("User_Details")
+        //     .doc("Liked_Movies")
+        //     .update({ liked_movies });
 
-          userRef.delete();
-          //TODO: call cloud fn to delete account
-          history.goBack();
-        }, 2000);
+        //     //TODO: call cloud fn to delete account
+        //   }, 2000);
+        userRef.delete();
+        history.goBack();
       } catch (err) {
         console.log("SignInScreen -> err", err);
       }

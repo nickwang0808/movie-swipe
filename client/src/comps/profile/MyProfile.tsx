@@ -68,7 +68,7 @@ export default function MyProfile() {
           {userAuth?.userInfo.email && (
             <ListViewButton
               name={`Sign Out ${userAuth?.userInfo.email}`}
-              action={() => cfaSignOut().subscribe()}
+              action={() => auth.signOut()}
             />
           )}
 

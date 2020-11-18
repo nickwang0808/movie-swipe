@@ -98,7 +98,11 @@ export default function useGetUser(user_id: string) {
           userRef
             .collection("User_Details")
             .doc("Liked_Movies")
-            .set({ uid, liked_movies: [] });
+            .set({
+              uid,
+              liked_movies:
+                localStorage.getItem("liked_movies")?.split(",") || [],
+            });
           userRef
             .collection("User_Details")
             .doc("Disliked_Movies")
