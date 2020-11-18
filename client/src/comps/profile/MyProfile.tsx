@@ -51,7 +51,7 @@ export default function MyProfile() {
         >
           {userAuth?.userInfo.email === null ? (
             <Link className="link" to="/completeSignUp">
-              <ListViewButton name="Complete Sign In" />
+              <ListViewButton name="Register / Log In" />
             </Link>
           ) : (
             <Link className="link" to="/profile/friends">

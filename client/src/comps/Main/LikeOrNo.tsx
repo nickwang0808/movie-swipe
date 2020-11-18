@@ -10,6 +10,7 @@ import MovieDetails from "../movieDetails/MovieDetails";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import VotingActions from "./VotingActions";
+import style from "./style.module.css";
 import {
   animate,
   AnimatePresence,
@@ -170,7 +171,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
             duration: 0.75,
             ease: [0.16, 1, 0.3, 1],
           }}
-          className="container_header"
+          className={`${"container_header"} ${style.filterplacement}`}
         >
           <Logo />
           <FilterButton setFilterOn={setFilterOn} />
@@ -186,8 +187,6 @@ export default function LikeOrNo({ userId }: ICompProps) {
           style={{ skew: "15deg", x: backgroundSlide }}
           className="VoteDownBG_anim"
         ></motion.div>
-        {/* <div className="loader"></div> */}
-        {/* <NotificationMatched /> */}
         <VoteLargeUp thumbX={thumbX} thumbOpacity={thumbOpacity} />
         <VoteLargeDown thumbX={thumbX} thumbOpacity={thumbOpacity} />
         <Deck

@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { User } from "firebase/app";
 import { auth, db } from "../../firebase/config";
+import BackButton from "../ButtonComps/BackButton";
+
 import { cfaSignIn } from "capacitor-firebase-auth";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import style from "./auth.module.css";
@@ -133,8 +135,8 @@ export default function SignInScreen() {
           }}
         >
           {isSignUp
-            ? "Already registered? Login instead"
-            : "Need an account? Sign Up"}
+            ? "Log In"
+            : "Sign Up"}
         </button>
         <button
           onClick={(e) => {
@@ -149,25 +151,30 @@ export default function SignInScreen() {
   );
 
   return (
+  <div className="container_allcontent">
+          <h1>
+            <BackButton linkTo="history.goBack()" />
+            Register / Log In
+          </h1>
     <div className={style.login_container}>
-      <h2>
-        Create a MovieSync account so you and your friends can finally find
-        something to watch, together!
-      </h2>
-      <button
-        className={`${sharedstyle.btn} ${style.btn_login_google}`}
-        onClick={
-          existingEmail === null ? completeWithSocialSignUp : handleSignInGoogle
-        }
-      >
-        Sign Up or Login With Google
-      </button>
-      <p>-or-</p>
-      <div className={style.email}>
-        {error && <div className={style.error}>{error}</div>}{" "}
-        {/* log any login err below everything */}
-        {emailAuthSignIn}
-      </div>
+        <h2>
+          Create a free MovieSync account so you and your friends can finally find
+          something to watch, together!
+        </h2>
+        <button
+          className={`${sharedstyle.btn} ${style.btn_login_google}`}
+          onClick={
+            existingEmail === null ? completeWithSocialSignUp : handleSignInGoogle
+          }>
+          Sign Up or Login With Google
+        </button>
+        <p>-or-</p>
+        <div className={style.email}>
+          {error && <div className={style.error}>{error}</div>}{" "}
+
+          {emailAuthSignIn}
+        </div>
     </div>
+  </div>
   );
 }

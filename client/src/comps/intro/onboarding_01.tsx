@@ -121,8 +121,8 @@ export default function Onboarding_01() {
               style={{
                 backgroundImage: `url(${posters && baseUrl + posters[0]})`,
               }}
-              animate={{ rotate: 15, left: 70 }}
-              initial={{ rotate: -15, left: -70 }}
+              animate={{ rotate: 10, left: 100 }}
+              initial={{ rotate: -10, left: -100 }}
               transition={{
                 duration: 1,
                 ease: [0.76, 0, 0.24, 1],
@@ -154,10 +154,10 @@ export default function Onboarding_01() {
             </div>
           </Route>
           <Route path="/onboard/2">
-            <div className={`${style.container_text} ${"heavy"} `}>
-              <p>
-                Swipe right to like, or left to dislike. When you and your
-                friends match movies, we’ll let you know!
+            <div className={`${style.container_text}`}>
+              <p className={`${"heavy"}`}>
+                Swipe right to like, or left to dislike.</p>
+                <p> When you and your friends match movies, we’ll let you know!
               </p>
             </div>
           </Route>
@@ -183,11 +183,11 @@ export default function Onboarding_01() {
               onClick={anonymousSignIn}
               className={`${sharedStyle.btn} ${style.onboarding_btn} `}
             >
-              Start Swiping
+              Let's Start Swiping!
             </div>
           </Route>
           <Link to="/auth" className={style.onboarding_hyperlink}>
-            Register / Sign In
+            Register / Log In 
           </Link>
         </motion.div>
       </div>

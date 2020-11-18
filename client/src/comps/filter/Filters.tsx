@@ -53,10 +53,10 @@ export default function Filters({ setFilterOn, userId, genrePref }: IFilters) {
             />
           </svg>
         </div>
-        <div className={style.header}>
+        <div className={style.filter_header}>
           <h1>Refine Suggestions</h1>
         </div>
-        <div className={style.container_subcontent}>
+        <div className={`${"container_subcontent"} ${style.filterScroll}`}>
           <div className={`${"title"} ${"marginTop2"}`}>
             {/* <div className="listview_separator_full" /> */}
             <h2>Genres</h2>

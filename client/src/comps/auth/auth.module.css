@@ -1,19 +1,13 @@
 .login_container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  width: calc(100% - 8rem);
-  height: 100%;
-  margin: auto;
+  margin: 2rem;
 }
 
 .firebaseUi {
   min-width: 250px;
-}
-
-.login_container h2 {
-  padding: 0 0 3rem 0;
 }
 
 .btn_login_google {
@@ -22,7 +16,7 @@
   color: #fff;
   height: 6rem;
   width: inherit;
-  margin-bottom: 3rem;
+  margin: 3rem 0;
 }
 
 .btn_login_google:active {

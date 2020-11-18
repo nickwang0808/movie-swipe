@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: calc(100% - var(--nav));
+  height: 100%;
   width: calc(100% - 6rem);
   margin: 0 auto;
 }
@@ -56,29 +56,28 @@
   left: 0;
   right: 0;
   transform-origin: bottom;
-  background-size: contain;
+  background-size: cover;
   background-position: center;
 }
 
 .onboarding_card_1 {
-  background-color: #f4f4f4;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2),
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5),
     0px 11px 36px rgba(63, 44, 44, 0.5);
   z-index: 2;
 }
 
 .onboarding_card_2 {
-  background-color: green;
   z-index: 1;
   transform: scale(0.9);
   margin-top: 0.5rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .onboarding_card_3 {
-  background-color: #0d0d0d;
   z-index: 0;
   transform: scale(0.85);
   margin-top: 1rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .onboarding_btn {
