@@ -95,7 +95,7 @@ export default function useGetUser(user_id: string) {
             genre_preference: [28,12,16,35,80,99,18,10751,14,36,27,10402,9648,10749,878,10770,53,10752,37,],
           });
 
-          userRef
+          await userRef
             .collection("User_Details")
             .doc("Liked_Movies")
             .set({
@@ -103,23 +103,28 @@ export default function useGetUser(user_id: string) {
               liked_movies:
                 localStorage.getItem("liked_movies")?.split(",") || [],
             });
-          userRef
+          await userRef
             .collection("User_Details")
             .doc("Disliked_Movies")
-            .set({ disliked_movies: [] });
-          userRef
+            .set({
+              disliked_movies:
+                localStorage.getItem("disliked_movies")?.split(",") || [],
+            });
+          await userRef
             .collection("User_Details")
             .doc("Match_Counts")
             .set({ new_match_counts: 0, old_match_counts: 0 });
-          userRef
+          await userRef
             .collection("User_Details")
             .doc("Watched")
             .set({ watched: [] });
-          userRef
+          await userRef
             .collection("User_Details")
             .doc("Friends")
             .set({ friends: [], pending_sent: [], pending_received: [] });
         }
+
+        localStorage.clear();
       })();
     }
   }, [user_id]);

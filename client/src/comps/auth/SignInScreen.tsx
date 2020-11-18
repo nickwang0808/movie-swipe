@@ -52,34 +52,35 @@ export default function SignInScreen() {
     });
   };
 
-  const completeWithEmail = async (email: string, password: string) => {
-    const oldUser = auth.currentUser?.uid;
+  const getTempLikedMovies = async () => {
     const userRef = db.collection("Users").doc(auth.currentUser?.uid);
     const likedRef = await userRef
       .collection("User_Details")
       .doc("Liked_Movies")
       .get();
+    const dislikedRef = await userRef
+      .collection("User_Details")
+      .doc("Disliked_Movies")
+      .get();
     const liked_movies: number[] = likedRef.data()?.liked_movies;
+    const disliked_movies: number[] = dislikedRef.data()?.disliked_movies;
+
+    localStorage.setItem("liked_movies", liked_movies.join(","));
+    localStorage.setItem("disliked_movies", disliked_movies.join(","));
+
+    return;
+  };
+
+  const completeWithEmail = async (email: string, password: string) => {
+    const userRef = db.collection("Users").doc(auth.currentUser?.uid);
+    await getTempLikedMovies();
 
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((user) => {
         try {
-          // intermittent err where user init is slower than this function
-          setTimeout(async () => {
-            await db
-              .collection("Users")
-              .doc(user.user?.uid)
-              .collection("User_Details")
-              .doc("Liked_Movies")
-              .update({ liked_movies });
-
-            // TODO: update user profile with name as email
-
-            userRef.delete();
-            //TODO: call cloud fn to delete account
-            history.goBack();
-          }, 2000);
+          userRef.delete();
+          history.goBack();
         } catch (err) {
           console.log("SignInScreen -> err", err);
         }
@@ -93,30 +94,11 @@ export default function SignInScreen() {
   };
 
   const completeWithSocialSignUp = async () => {
-    const oldUser = auth.currentUser?.uid;
     const userRef = db.collection("Users").doc(auth.currentUser?.uid);
-    const likedRef = await userRef
-      .collection("User_Details")
-      .doc("Liked_Movies")
-      .get();
-    const liked_movies: number[] = likedRef.data()?.liked_movies;
-
-    localStorage.setItem("liked_movies", liked_movies.join(","));
+    await getTempLikedMovies();
 
     cfaSignIn("google.com").subscribe(async (user: User) => {
-      console.log(user.uid);
       try {
-        // intermittent err where user init is slower than this function
-        // setTimeout(async () => {
-        //   await db
-        //     .collection("Users")
-        //     .doc(user.uid)
-        //     .collection("User_Details")
-        //     .doc("Liked_Movies")
-        //     .update({ liked_movies });
-
-        //     //TODO: call cloud fn to delete account
-        //   }, 2000);
         userRef.delete();
         history.goBack();
       } catch (err) {
