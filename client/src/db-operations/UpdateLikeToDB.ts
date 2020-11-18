@@ -13,6 +13,8 @@ export default function UpdateLikeToDB(
 ) {
   const userRef = db.collection("Users").doc(userId).collection("User_Details");
 
+  console.log("update");
+
   if (isLike) {
     userRef.doc("Disliked_Movies").update({
       disliked_movies: arrayRemove(movieID),
