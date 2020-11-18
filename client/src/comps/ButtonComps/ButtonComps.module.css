@@ -48,7 +48,11 @@
 
 .btn_forceActive {
   background-color: var(--highlight);
-  border-color: var(--highlight);
+  border: var(--highlight);
+}
+
+.btn_forceActive svg {
+  fill: var(--dark);
 }
 
 .btn:active {

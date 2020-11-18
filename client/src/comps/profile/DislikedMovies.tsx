@@ -5,7 +5,7 @@ import BackButton from "../ButtonComps/BackButton";
 export default function DislikedMovies() {
   return (
     <div className="container_allcontent">
-      <div className={style.container_header}>
+      <div className="container_header">
         <h1>
           <BackButton linkTo="/profile" />
           Disliked Movies
