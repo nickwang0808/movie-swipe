@@ -5,12 +5,14 @@ import style from "./ButtonComps.module.css";
 interface IDownVote {
   handleDislike: () => void;
   isLiked?: boolean;
+  isDisliked?: boolean;
   changeToDisLike?: () => void;
 }
 
 export default function DownVote({
   handleDislike,
   isLiked,
+  isDisliked,
   changeToDisLike,
 }: IDownVote) {
   const icon = (
@@ -39,13 +41,12 @@ export default function DownVote({
       <div
         className={style.container_votebtn}
         onClick={() => {
-          handleDislike();
-          changeToDisLike && changeToDisLike();
+          changeToDisLike ? changeToDisLike() : handleDislike();
         }}
       >
         <div
           className={`${style.btn} ${style.btn_down} ${
-            isLiked === false && style.btn_forceActive
+            isDisliked && style.btn_forceActive
           }`}
         >
           {icon}
