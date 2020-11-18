@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { User } from "firebase/app";
-import { auth, db } from "../../firebase/config";
+import { auth, cloudFn, db } from "../../firebase/config";
 import BackButton from "../ButtonComps/BackButton";
 
 import { cfaSignIn } from "capacitor-firebase-auth";
@@ -55,7 +55,8 @@ export default function SignInScreen() {
   };
 
   const getTempLikedMovies = async () => {
-    const userRef = db.collection("Users").doc(auth.currentUser?.uid);
+    const oldUid = auth.currentUser?.uid;
+    const userRef = db.collection("Users").doc(oldUid);
     const likedRef = await userRef
       .collection("User_Details")
       .doc("Liked_Movies")
@@ -69,7 +70,7 @@ export default function SignInScreen() {
 
     localStorage.setItem("liked_movies", liked_movies.join(","));
     localStorage.setItem("disliked_movies", disliked_movies.join(","));
-
+    localStorage.setItem("oldUid", oldUid as string);
     return;
   };
 
@@ -81,7 +82,9 @@ export default function SignInScreen() {
       .createUserWithEmailAndPassword(email, password)
       .then((user) => {
         try {
-          userRef.delete();
+          cloudFn.httpsCallable("deleteAccount")({
+            accountToDelete: localStorage.getItem("oldUid"),
+          });
           history.goBack();
         } catch (err) {
           console.log("SignInScreen -> err", err);
@@ -99,13 +102,13 @@ export default function SignInScreen() {
     const userRef = db.collection("Users").doc(auth.currentUser?.uid);
     await getTempLikedMovies();
 
-    cfaSignIn("google.com").subscribe(async (user: User) => {
-      try {
-        userRef.delete();
-        history.goBack();
-      } catch (err) {
-        console.log("SignInScreen -> err", err);
-      }
+    cfaSignIn("google.com").subscribe((user: User) => {
+      console.log("SignInScreen -> user", user);
+
+      cloudFn.httpsCallable("deleteAccount")({
+        accountToDelete: localStorage.getItem("oldUid"),
+      });
+      history.goBack();
     });
   };
 
@@ -134,9 +137,7 @@ export default function SignInScreen() {
             return setIsSignUp((prev) => !prev);
           }}
         >
-          {isSignUp
-            ? "Log In"
-            : "Sign Up"}
+          {isSignUp ? "Log In" : "Sign Up"}
         </button>
         <button
           onClick={(e) => {
@@ -151,30 +152,32 @@ export default function SignInScreen() {
   );
 
   return (
-  <div className="container_allcontent">
-          <h1>
-            <BackButton linkTo="history.goBack()" />
-            Register / Log In
-          </h1>
-    <div className={style.login_container}>
+    <div className="container_allcontent">
+      <h1>
+        <BackButton linkTo="history.goBack()" />
+        Register / Log In
+      </h1>
+      <div className={style.login_container}>
         <h2>
-          Create a free MovieSync account so you and your friends can finally find
-          something to watch, together!
+          Create a free MovieSync account so you and your friends can finally
+          find something to watch, together!
         </h2>
         <button
           className={`${sharedstyle.btn} ${style.btn_login_google}`}
           onClick={
-            existingEmail === null ? completeWithSocialSignUp : handleSignInGoogle
-          }>
+            existingEmail === null
+              ? completeWithSocialSignUp
+              : handleSignInGoogle
+          }
+        >
           Sign Up or Login With Google
         </button>
         <p>-or-</p>
         <div className={style.email}>
           {error && <div className={style.error}>{error}</div>}{" "}
-
           {emailAuthSignIn}
         </div>
+      </div>
     </div>
-  </div>
   );
 }

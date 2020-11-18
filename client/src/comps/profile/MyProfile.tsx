@@ -3,7 +3,7 @@ import ListViewButton from "../ButtonComps/ListViewButton";
 import style from "./MyProfile.module.css";
 import Modal from "../notification/modal";
 import { cfaSignOut } from "capacitor-firebase-auth";
-import { auth, db } from "../../firebase/config";
+import { auth, cloudFn, db } from "../../firebase/config";
 import Friends from "./Friends";
 import About from "./About";
 import DislikedMovies from "./DislikedMovies";
