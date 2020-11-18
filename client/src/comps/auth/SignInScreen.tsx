@@ -61,26 +61,35 @@ export default function SignInScreen() {
       .get();
     const liked_movies: number[] = likedRef.data()?.liked_movies;
 
-    auth.createUserWithEmailAndPassword(email, password).then((user) => {
-      try {
-        // intermittent err where user init is slower than this function
-        setTimeout(async () => {
-          await db
-            .collection("Users")
-            .doc(user.user?.uid)
-            .collection("User_Details")
-            .doc("Liked_Movies")
-            .update({ liked_movies });
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        try {
+          // intermittent err where user init is slower than this function
+          setTimeout(async () => {
+            await db
+              .collection("Users")
+              .doc(user.user?.uid)
+              .collection("User_Details")
+              .doc("Liked_Movies")
+              .update({ liked_movies });
 
-          // TODO: update user profile with name as email
+            // TODO: update user profile with name as email
 
-          userRef.delete();
-          //TODO: call cloud fn to delete account
-        }, 2000);
-      } catch (err) {
-        console.log("SignInScreen -> err", err);
-      }
-    });
+            userRef.delete();
+            //TODO: call cloud fn to delete account
+            history.goBack();
+          }, 2000);
+        } catch (err) {
+          console.log("SignInScreen -> err", err);
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("handleSignUnEmail -> errorCode", errorCode);
+        setError(errorMessage);
+      });
   };
 
   const completeWithSocialSignUp = async () => {
@@ -106,6 +115,7 @@ export default function SignInScreen() {
 
           userRef.delete();
           //TODO: call cloud fn to delete account
+          history.goBack();
         }, 2000);
       } catch (err) {
         console.log("SignInScreen -> err", err);
@@ -142,7 +152,14 @@ export default function SignInScreen() {
             ? "Already registered? Login instead"
             : "Need an account? Sign Up"}
         </button>
-        <button>Skip</button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            history.goBack();
+          }}
+        >
+          back
+        </button>
       </form>
     </>
   );
