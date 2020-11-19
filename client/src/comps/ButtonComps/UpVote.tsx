@@ -6,9 +6,15 @@ interface IProps {
   handleLike: () => void;
   isLiked?: boolean;
   isDisliked?: boolean;
+  changeToLike?: () => void;
 }
 
-export default function UpVote({ handleLike, isLiked, isDisliked }: IProps) {
+export default function UpVote({
+  handleLike,
+  isLiked,
+  isDisliked,
+  changeToLike,
+}: IProps) {
   const icon = (
     <svg
       width={24}
@@ -28,7 +34,12 @@ export default function UpVote({ handleLike, isLiked, isDisliked }: IProps) {
     );
   } else {
     return (
-      <div className={style.container_votebtn} onClick={handleLike}>
+      <div
+        className={style.container_votebtn}
+        onClick={() => {
+          changeToLike ? changeToLike() : handleLike();
+        }}
+      >
         <div
           className={`${style.btn} ${style.btn_up} ${
             isLiked && style.btn_forceActive

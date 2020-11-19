@@ -206,6 +206,9 @@ export default function MovieDetails({
         changeToDisLike={() =>
           UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, false)
         }
+        changeToLike={() =>
+          UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, true)
+        }
       />
     </>
   );
