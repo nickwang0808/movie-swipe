@@ -6,6 +6,7 @@ admin.initializeApp({
 });
 
 export const db = admin.firestore();
+export const adminAuth = admin.auth;
 export const arrayUnion = admin.firestore.FieldValue.arrayUnion;
 export const arrayRemove = admin.firestore.FieldValue.arrayRemove;
 
@@ -15,6 +16,8 @@ import * as handleFriendsReq from "./handleFriendsReq";
 import findAllMatchesRoute from "./findAllMatches";
 import checkMatchesWhileSwipingRoute from "./checkMatchesWhileSwiping";
 import handleWatchRoute from "./handleWatched";
+import deleteAllAccountRoute from "./DeleteAllAccount";
+import deleteAccountRoute from "./deleteAccount";
 
 export const sendFriendReq = snedFriendReqRoute;
 export const userLookUp = userLookUpRoute;
@@ -24,3 +27,5 @@ export const deleteFriend = handleFriendsReq.deleteFriend;
 export const findAllMatches = findAllMatchesRoute;
 export const checkMatchesWhileSwiping = checkMatchesWhileSwipingRoute;
 export const handleWatched = handleWatchRoute;
+export const deleteAllAccount = deleteAllAccountRoute;
+export const deleteAccount = deleteAccountRoute;

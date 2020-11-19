@@ -13,6 +13,7 @@ interface IVotingActionsProps {
   isLiked?: boolean;
   isDisliked?: boolean;
   changeToDisLike?: () => void;
+  changeToLike?: () => void;
 }
 
 export default function VotingActions({
@@ -23,6 +24,7 @@ export default function VotingActions({
   isLiked,
   isDisliked,
   changeToDisLike,
+  changeToLike,
 }: IVotingActionsProps) {
   return (
     <motion.div
@@ -45,10 +47,14 @@ export default function VotingActions({
           to={isLiked ? "/mylist" : goTo}
           className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}
         >
-          {isLiked ? "Watch List" : showDetail}
+          {isLiked || isDisliked ? "Watch List" : showDetail}
         </Link>
       </div>
-      <UpVote handleLike={handleLike} isLiked={isLiked} />
+      <UpVote
+        handleLike={handleLike}
+        isLiked={isLiked}
+        changeToLike={changeToLike}
+      />
     </motion.div>
   );
 }

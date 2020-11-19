@@ -54,38 +54,47 @@ export default function MyListMain() {
             className={style.mylistmain}
           >
             <Route exact path="/mylist">
-              {likedMoviesInfos.map((likedMovieInfo) => (
-                <LikedMovieInMyList
-                  key={likedMovieInfo.id}
-                  movie={likedMovieInfo}
-                  matched={
-                    matches?.find(
-                      (element) => element.matchedMovie === likedMovieInfo.id
-                    )
-                      ? true
-                      : false
-                  }
-                />
-              ))}
+              {likedMoviesInfos.length === 0 ? (
+                <p className="marginSides2 marginTop2">
+                  We'll put your liked movies here, and let you know when your
+                  friends also want to watch them.
+                </p>
+              ) : (
+                likedMoviesInfos.map((likedMovieInfo) => (
+                  <LikedMovieInMyList
+                    key={likedMovieInfo.id}
+                    movie={likedMovieInfo}
+                    matched={
+                      matches?.find(
+                        (element) => element.matchedMovie === likedMovieInfo.id
+                      )
+                        ? true
+                        : false
+                    }
+                  />
+                ))
+              )}
             </Route>
-            <div className="container_subcontent">
-            {/* NICK: HOOK THIS P UP TO "MY MOVIES" WHEN THE LIST IS EMPTY */}
-            {/* <p className="marginSides2 marginTop2">We'll put your liked movies here, and let you know when your friends also want to watch them.</p> */}
-             {/* NICK: HOOK THIS P UP TO "WATCHED" WHEN THE LIST IS EMPTY */}
-            {/* <p className="marginSides2 marginTop2">Whenever you and your friend have watched a movie together, we'll toss it in here.</p> */}
-            </div>
+            <div className="container_subcontent"></div>
             <Route exact path="/mylist/watched">
-              {watchedMovieInfos.map((watchedMovieInfo) => (
-                <LikedMovieInMyList
-                  key={watchedMovieInfo.movieDetails.id}
-                  movie={watchedMovieInfo.movieDetails}
-                  watched={
-                    watchedMovieInfo.watchedWith.length > 0
-                      ? watchedMovieInfo.watchedWith
-                      : undefined
-                  }
-                />
-              ))}
+              {watchedMovieInfos.length === 0 ? (
+                <p className="marginSides2 marginTop2">
+                  Whenever you and your friend have watched a movie together,
+                  we'll toss it in here.
+                </p>
+              ) : (
+                watchedMovieInfos.map((watchedMovieInfo) => (
+                  <LikedMovieInMyList
+                    key={watchedMovieInfo.movieDetails.id}
+                    movie={watchedMovieInfo.movieDetails}
+                    watched={
+                      watchedMovieInfo.watchedWith.length > 0
+                        ? watchedMovieInfo.watchedWith
+                        : undefined
+                    }
+                  />
+                ))
+              )}
             </Route>
           </motion.div>
         </div>
