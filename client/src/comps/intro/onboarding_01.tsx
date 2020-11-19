@@ -11,9 +11,9 @@ import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 const transition = { type: "tween", duration: 2 };
 
 const variant = {
-  hidden: { x: "-100vw", transition },
-  visible: { x: 0, transition },
-  exit: { x: "100vw", transition },
+  hidden: { x: "-5rem", opacity: 0 },
+  visible: { x: 0, opacity: 1 },
+  exit: { x: "5rem", opacity: 0 },
 };
 
 export default function Onboarding_01() {
@@ -173,80 +173,71 @@ export default function Onboarding_01() {
               className={`${style.onboarding_card} ${style.onboarding_card_3}`}
             ></div>
           </div>
+        </motion.div>
           <AnimatePresence>
             {!showSecondScreen ? (
               <motion.div
-                variants={variant}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                key="onboard1"
-                className={`${style.container_text} ${"heavy"} `}
+              variants={variant}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              key="next"
+              transition={{
+                duration: 0.5,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className={`${style.onboarding_footer} `}
+              >
+              <div
+                className={`${style.container_text}`}
               >
                 <p>
-                  MovieSync helps you and your friends find new movies to watch
+                MovieSync helps you and your friends find new movies to watch
                   together...finally.
                 </p>
+              </div>
+              <div
+                onClick={() => setShowSecondScreen(true)}
+                className={`${sharedStyle.btn} ${style.onboarding_btn} `}
+              >
+                Got It!
+              </div>
               </motion.div>
             ) : (
               <motion.div
-                variants={variant}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                key="onboard2"
+              variants={variant}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              key="signIn"
+              transition={{
+                duration: 0.5,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className={`${style.onboarding_footer} `}
+              >
+                 <div
                 className={`${style.container_text}`}
               >
                 <p className={`${"heavy"}`}>
                   Swipe right to like, or left to dislike.
                 </p>
                 <p>
-                  {" "}
                   When you and your friends match movies, we’ll let you know!
                 </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-        <motion.div
-          animate={{ opacity: 1 }}
-          initial={{ opacity: 0 }}
-          transition={{
-            duration: 0.75,
-          }}
-          className={style.container_buttons}
-        >
-          <AnimatePresence>
-            {!showSecondScreen ? (
-              <motion.div
-                variants={variant}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                key="next"
-                onClick={() => setShowSecondScreen(true)}
-                className={`${sharedStyle.btn} ${style.onboarding_btn} `}
-              >
-                Got It!
-              </motion.div>
-            ) : (
-              <motion.div
-                variants={variant}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                key="signIn"
+              </div>
+              <div
                 onClick={anonymousSignIn}
                 className={`${sharedStyle.btn} ${style.onboarding_btn} `}
               >
                 Let's Start Swiping!
+              </div>
               </motion.div>
             )}
           </AnimatePresence>
           <Link to="/auth" className={style.onboarding_hyperlink}>
             Register / Log In
           </Link>
-        </motion.div>
       </div>
     </>
   );
