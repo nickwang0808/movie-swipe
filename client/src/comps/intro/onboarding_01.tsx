@@ -2,14 +2,23 @@ import React, { useEffect, useState } from "react";
 import style from "./intro.module.css";
 import sharedStyle from "../ButtonComps/ButtonComps.module.css";
 import Logo from "../Decorators/Logo";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { auth } from "../../firebase/config";
 import { Link, Route } from "react-router-dom";
 import { IPopularMovies } from "../../db-operations/useGetMovies";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 
+const transition = { type: "tween", duration: 2 };
+
+const variant = {
+  hidden: { x: "-100vw", transition },
+  visible: { x: 0, transition },
+  exit: { x: "100vw", transition },
+};
+
 export default function Onboarding_01() {
   const [posters, setPosters] = useState<string[]>();
+  const [showSecondScreen, setShowSecondScreen] = useState(false);
 
   const anonymousSignIn = () => {
     auth.signInAnonymously().catch(function (error) {
@@ -134,6 +143,7 @@ export default function Onboarding_01() {
               </motion.div>
             </div>
             <motion.div
+              key="0"
               style={{
                 backgroundImage: `url(${posters && baseUrl + posters[0]})`,
               }}
@@ -149,34 +159,54 @@ export default function Onboarding_01() {
               className={`${style.onboarding_card} ${style.onboarding_card_1}`}
             ></motion.div>
             <div
+              key="1"
               style={{
                 backgroundImage: `url(${posters && baseUrl + posters[1]})`,
               }}
               className={`${style.onboarding_card} ${style.onboarding_card_2}`}
             ></div>
             <div
+              key="2"
               style={{
                 backgroundImage: `url(${posters && baseUrl + posters[2]})`,
               }}
               className={`${style.onboarding_card} ${style.onboarding_card_3}`}
             ></div>
           </div>
-          <Route exact path="/onboard">
-            <div className={`${style.container_text} ${"heavy"} `}>
-              <p>
-                MovieSync helps you and your friends find new movies to watch
-                together...finally.
-              </p>
-            </div>
-          </Route>
-          <Route path="/onboard/2">
-            <div className={`${style.container_text}`}>
-              <p className={`${"heavy"}`}>
-                Swipe right to like, or left to dislike.</p>
-                <p> When you and your friends match movies, we’ll let you know!
-              </p>
-            </div>
-          </Route>
+          <AnimatePresence>
+            {!showSecondScreen ? (
+              <motion.div
+                variants={variant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                key="onboard1"
+                className={`${style.container_text} ${"heavy"} `}
+              >
+                <p>
+                  MovieSync helps you and your friends find new movies to watch
+                  together...finally.
+                </p>
+              </motion.div>
+            ) : (
+              <motion.div
+                variants={variant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                key="onboard2"
+                className={`${style.container_text}`}
+              >
+                <p className={`${"heavy"}`}>
+                  Swipe right to like, or left to dislike.
+                </p>
+                <p>
+                  {" "}
+                  When you and your friends match movies, we’ll let you know!
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
         <motion.div
           animate={{ opacity: 1 }}
@@ -186,24 +216,35 @@ export default function Onboarding_01() {
           }}
           className={style.container_buttons}
         >
-          <Route exact path="/onboard">
-            <Link
-              to="/onboard/2"
-              className={`${sharedStyle.btn} ${style.onboarding_btn} `}
-            >
-              Got It!
-            </Link>
-          </Route>
-          <Route path="/onboard/2">
-            <div
-              onClick={anonymousSignIn}
-              className={`${sharedStyle.btn} ${style.onboarding_btn} `}
-            >
-              Let's Start Swiping!
-            </div>
-          </Route>
+          <AnimatePresence>
+            {!showSecondScreen ? (
+              <motion.div
+                variants={variant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                key="next"
+                onClick={() => setShowSecondScreen(true)}
+                className={`${sharedStyle.btn} ${style.onboarding_btn} `}
+              >
+                Got It!
+              </motion.div>
+            ) : (
+              <motion.div
+                variants={variant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                key="signIn"
+                onClick={anonymousSignIn}
+                className={`${sharedStyle.btn} ${style.onboarding_btn} `}
+              >
+                Let's Start Swiping!
+              </motion.div>
+            )}
+          </AnimatePresence>
           <Link to="/auth" className={style.onboarding_hyperlink}>
-            Register / Log In 
+            Register / Log In
           </Link>
         </motion.div>
       </div>
