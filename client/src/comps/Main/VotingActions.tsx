@@ -38,10 +38,10 @@ export default function VotingActions({
       />
       <div className={sharedstyle.container_detailsbtn}>
         <Link
-          to={goTo}
+          to={isLiked ? "/mylist" : goTo}
           className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}
         >
-          {showDetail}
+          {isLiked ? "Watch List" : showDetail}
         </Link>
       </div>
       <UpVote handleLike={handleLike} isLiked={isLiked} />
