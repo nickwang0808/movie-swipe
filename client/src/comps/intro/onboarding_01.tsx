@@ -13,7 +13,7 @@ const transition = { type: "tween", duration: 2 };
 const variant = {
   hidden: { x: "-100vw", transition },
   visible: { x: 0, transition },
-  exist: { x: "100vw", transition },
+  exit: { x: "100vw", transition },
 };
 
 export default function Onboarding_01() {
@@ -163,7 +163,7 @@ export default function Onboarding_01() {
                 variants={variant}
                 initial="hidden"
                 animate="visible"
-                exit="exist"
+                exit="exit"
                 key="onboard1"
                 className={`${style.container_text} ${"heavy"} `}
               >
@@ -177,7 +177,7 @@ export default function Onboarding_01() {
                 variants={variant}
                 initial="hidden"
                 animate="visible"
-                exit="exist"
+                exit="exit"
                 key="onboard2"
                 className={`${style.container_text}`}
               >
@@ -206,7 +206,7 @@ export default function Onboarding_01() {
                 variants={variant}
                 initial="hidden"
                 animate="visible"
-                exit="exist"
+                exit="exit"
                 key="next"
                 onClick={() => setShowSecondScreen(true)}
                 className={`${sharedStyle.btn} ${style.onboarding_btn} `}
@@ -218,7 +218,7 @@ export default function Onboarding_01() {
                 variants={variant}
                 initial="hidden"
                 animate="visible"
-                exit="exist"
+                exit="exit"
                 key="signIn"
                 onClick={anonymousSignIn}
                 className={`${sharedStyle.btn} ${style.onboarding_btn} `}
