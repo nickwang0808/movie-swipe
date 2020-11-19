@@ -29,7 +29,15 @@ export default function About() {
             <h2>Need to chat?</h2>
           </div>
           <div className={style.container_inset}>
-            <div className={`${sharedstyle.btn}`}>Hello@Movie-Sync.com</div>
+            <div
+              onClick={() => window.open("mailto:Hello@Movie-Sync.com")}
+              className={`${sharedstyle.btn}`}
+            >
+              Hello@Movie-Sync.com
+            </div>
+            {/* <p>
+              Email: <b>Hello@Movie-Sync.com</b>
+            </p> */}
           </div>
         </div>
         <div className="container_subcontent">
