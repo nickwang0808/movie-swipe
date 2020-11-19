@@ -29,9 +29,13 @@ export default function MovieDetails({
   handleLike,
 }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
-  const { likedMoviesInfos, matches, watchedMovieInfos, userAuth } = useContext(
-    UserContext
-  );
+  const {
+    likedMoviesInfos,
+    matches,
+    watchedMovieInfos,
+    userAuth,
+    dislikedMovies,
+  } = useContext(UserContext);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -195,6 +199,9 @@ export default function MovieDetails({
         showDetail="Poster"
         isLiked={
           likedMoviesInfos.find((elem) => elem.id === movieID) ? true : false
+        }
+        isDisliked={
+          dislikedMovies?.find((elem) => elem === movieID) ? true : false
         }
         changeToDisLike={() =>
           UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, false)
