@@ -41,7 +41,7 @@ export default function MyListMain() {
               className={`${style.tab} ${"heavy link"}`}
               activeClassName={style.tab_active_1}
             >
-              History
+              Watched
             </NavLink>
           </div>
           <motion.div
@@ -68,6 +68,12 @@ export default function MyListMain() {
                 />
               ))}
             </Route>
+            <div className="container_subcontent">
+            {/* NICK: HOOK THIS P UP TO "MY MOVIES" WHEN THE LIST IS EMPTY */}
+            {/* <p className="marginSides2 marginTop2">We'll put your liked movies here, and let you know when your friends also want to watch them.</p> */}
+             {/* NICK: HOOK THIS P UP TO "WATCHED" WHEN THE LIST IS EMPTY */}
+            {/* <p className="marginSides2 marginTop2">Whenever you and your friend have watched a movie together, we'll toss it in here.</p> */}
+            </div>
             <Route exact path="/mylist/watched">
               {watchedMovieInfos.map((watchedMovieInfo) => (
                 <LikedMovieInMyList

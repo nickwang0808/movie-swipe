@@ -48,7 +48,7 @@
 
 .btn_forceActive {
   background-color: var(--highlight);
-  border: var(--highlight);
+  border-color: var(--highlight);
 }
 
 .btn_forceActive svg {
