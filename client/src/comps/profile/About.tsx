@@ -7,12 +7,10 @@ import { ReactComponent as LogoTMDB } from "../../img/logo_tmdb.svg";
 export default function About() {
   return (
     <div className="container_allcontent">
-      <div className={style.container_header}>
-        <h1>
-          <BackButton linkTo="/profile" />
-          About MovieSync
-        </h1>
-      </div>
+      <h1>
+        <BackButton linkTo="/profile" />
+        About MovieSync
+      </h1>
       <div className={style.container_aboutcontent}>
         <div className="container_subcontent">
           <h2 className={style.title_bold}>

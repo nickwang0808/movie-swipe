@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { User } from "firebase/app";
-import { auth } from "../../firebase/config";
+import { auth, cloudFn, db } from "../../firebase/config";
+import BackButton from "../ButtonComps/BackButton";
+
 import { cfaSignIn } from "capacitor-firebase-auth";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import style from "./auth.module.css";
+import { UserContext } from "../../store";
+
+import firebase from "firebase/app";
+import "firebase/auth";
+import updateUserInfo from "../../db-operations/updateUserInfo";
+import { useHistory } from "react-router";
+
+var provider = new firebase.auth.GoogleAuthProvider();
 
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
@@ -11,6 +21,11 @@ export default function SignInScreen() {
   const [error, setError] = useState<any>();
 
   const [isSignUp, setIsSignUp] = useState(true);
+
+  const { userAuth } = useContext(UserContext);
+  const existingEmail = userAuth?.userInfo.email;
+
+  const history = useHistory();
 
   const handleSignInGoogle = () => {
     cfaSignIn("google.com").subscribe((user: User) =>
@@ -28,7 +43,7 @@ export default function SignInScreen() {
     });
   };
 
-  const handleSignUnEmail = (email: string, password: string) => {
+  const handleSignUpEmail = (email: string, password: string) => {
     auth.createUserWithEmailAndPassword(email, password).catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
@@ -36,6 +51,64 @@ export default function SignInScreen() {
       console.log("handleSignUnEmail -> errorCode", errorCode);
       setError(errorMessage);
       // ...
+    });
+  };
+
+  const getTempLikedMovies = async () => {
+    const oldUid = auth.currentUser?.uid;
+    const userRef = db.collection("Users").doc(oldUid);
+    const likedRef = await userRef
+      .collection("User_Details")
+      .doc("Liked_Movies")
+      .get();
+    const dislikedRef = await userRef
+      .collection("User_Details")
+      .doc("Disliked_Movies")
+      .get();
+    const liked_movies: number[] = likedRef.data()?.liked_movies;
+    const disliked_movies: number[] = dislikedRef.data()?.disliked_movies;
+
+    localStorage.setItem("liked_movies", liked_movies.join(","));
+    localStorage.setItem("disliked_movies", disliked_movies.join(","));
+    localStorage.setItem("oldUid", oldUid as string);
+    return;
+  };
+
+  const completeWithEmail = async (email: string, password: string) => {
+    const userRef = db.collection("Users").doc(auth.currentUser?.uid);
+    await getTempLikedMovies();
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        try {
+          cloudFn.httpsCallable("deleteAccount")({
+            accountToDelete: localStorage.getItem("oldUid"),
+          });
+          history.goBack();
+        } catch (err) {
+          console.log("SignInScreen -> err", err);
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("handleSignUnEmail -> errorCode", errorCode);
+        setError(errorMessage);
+      });
+  };
+
+  const completeWithSocialSignUp = async () => {
+    const userRef = db.collection("Users").doc(auth.currentUser?.uid);
+    await getTempLikedMovies();
+
+    cfaSignIn("google.com").subscribe((user: User) => {
+      console.log("SignInScreen -> user", user);
+
+      cloudFn.httpsCallable("deleteAccount")({
+        accountToDelete: localStorage.getItem("oldUid"),
+      });
+      history.goBack();
     });
   };
 
@@ -50,7 +123,9 @@ export default function SignInScreen() {
           onClick={(e) => {
             e.preventDefault();
             return isSignUp
-              ? handleSignUnEmail(email, password)
+              ? existingEmail === null
+                ? completeWithEmail(email, password)
+                : handleSignUpEmail(email, password)
               : handleSignInEmail(email, password);
           }}
         >
@@ -62,32 +137,59 @@ export default function SignInScreen() {
             return setIsSignUp((prev) => !prev);
           }}
         >
-          {isSignUp
-            ? "Already registered? Login instead"
-            : "Need an account? Sign Up"}
+          {isSignUp ? "Log In" : "Sign Up"}
         </button>
-        <button>Skip</button>
+        {/* <button
+          onClick={(e) => {
+            e.preventDefault();
+            history.goBack();
+          }}
+        >
+          back
+        </button> */}
       </form>
     </>
   );
 
   return (
-    <div className={style.login_container}>
-      <h2>
-        Create a MovieSync account so you and your friends can finally find
-        something to watch, together!
-      </h2>
-      <button
-        className={`${sharedstyle.btn} ${style.btn_login_google}`}
-        onClick={handleSignInGoogle}
+    <div className="container_allcontent">
+      <h1>
+      <div className={sharedstyle.btn_Back} onClick={(e) => {
+            e.preventDefault();
+            history.goBack();
+          }}>
+      <svg
+        width="20"
+        height="18"
+        viewBox="0 0 20 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        Sign Up or Login With Google
-      </button>
-      <p>-or-</p>
-      <div className={style.email}>
-        {error && <div className={style.error}>{error}</div>}{" "}
-        {/* log any login err below everything */}
-        {emailAuthSignIn}
+        <path d="M10.7071 1.70712L9.29292 0.292908L0.585815 9.00001L9.29292 17.7071L10.7071 16.2929L4.41423 10H19.5V8H4.41426L10.7071 1.70712Z" />
+      </svg>
+    </div>
+        Register / Log In
+      </h1>
+      <div className={style.login_container}>
+        <h2>
+          Create a free MovieSync account so you and your friends can finally
+          find something to watch, together!
+        </h2>
+        <button
+          className={`${sharedstyle.btn} ${style.btn_login_google}`}
+          onClick={
+            existingEmail === null
+              ? completeWithSocialSignUp
+              : handleSignInGoogle
+          }
+        >
+          Sign Up or Login With Google
+        </button>
+        <p>-or-</p>
+        <div className={style.email}>
+          {error && <div className={style.error}>{error}</div>}{" "}
+          {emailAuthSignIn}
+        </div>
       </div>
     </div>
   );

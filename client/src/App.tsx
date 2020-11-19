@@ -27,6 +27,7 @@ import { UserContext } from "./store";
 
 import MyProfile from "./comps/profile/MyProfile";
 import MovieDetails from "./comps/movieDetails/MovieDetails";
+import Onboarding_01 from "./comps/intro/onboarding_01";
 
 function App() {
   const { userAuth, isLoading } = useContext(UserContext);
@@ -34,34 +35,44 @@ function App() {
   if (isLoading) {
     return <div className="loader loader_center" />;
   } else if (userAuth === null) {
-    return <SignInScreen />;
+    return (
+      <>
+        <Route path="/" render={() => <Redirect to="/onboard" />} />
+        <Route path="/profile" render={() => <Redirect to="/onboard" />} />
+        <Route path="/onboard">
+          <Onboarding_01 />;
+        </Route>
+        <Route path="/auth">
+          <SignInScreen />;
+        </Route>
+      </>
+    );
   } else {
     return (
-      <IonApp>
-        <IonReactRouter>
-          <Nav />
-          <IonRouterOutlet>
-            <Route exact path="/" render={() => <Redirect to="/home" />} />
-            <Route path="/home">
-              {userAuth && (
-                <LikeOrNo userId={userAuth?.userInfo.uid as string} />
-              )}
-            </Route>
-            <Route path="/mylist">
-              <MyListMain />
-            </Route>
-            <Route path="/profile">
-              <MyProfile />
-            </Route>
-            <Route path="/detials/:id">
-              <MovieDetails
-                handleDislike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
-                handleLike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
-              />
-            </Route>
-          </IonRouterOutlet>
-        </IonReactRouter>
-      </IonApp>
+      <>
+        <Nav />
+        <Route exact path="/" render={() => <Redirect to="/home" />} />
+        <Route path="/auth" render={() => <Redirect to="/home" />} />
+        <Route path="/onboard" render={() => <Redirect to="/home" />} />
+        <Route path="/home">
+          {userAuth && <LikeOrNo userId={userAuth?.userInfo.uid as string} />}
+        </Route>
+        <Route path="/mylist">
+          <MyListMain />
+        </Route>
+        <Route path="/profile">
+          <MyProfile />
+        </Route>
+        <Route path="/detials/:id">
+          <MovieDetails
+            handleLike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
+            handleDislike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
+          />
+        </Route>
+        <Route path="/completeSignUp">
+          <SignInScreen />;
+        </Route>
+      </>
     );
   }
 }

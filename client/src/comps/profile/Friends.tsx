@@ -50,13 +50,11 @@ export default function Friends() {
         </Modal>
       )}
       <div className="container_allcontent">
-        <div className={style.container_header}>
           <h1>
             <BackButton linkTo="/profile" />
             Friends
           </h1>
-        </div>
-        <div className={style.container_subcontent}>
+        <div className="container_subcontent">
           <h2 className={style.title_bold}>
             We'll let you know when you and your friends both want to watch
             something!

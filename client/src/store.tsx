@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MovieDetail } from "./APICalls/searchMovieByID";
 import useGetAllMatches, { IMatches } from "./db-operations/useGetAllMatches";
+import useGetDislikedMovies from "./db-operations/useGetDislikedMovies";
 import useGetLikedMovies, {
   IWatchedMovieInfo,
 } from "./db-operations/useGetLikedMovies";
@@ -20,6 +21,7 @@ interface IStore {
   userAuth: IUser | undefined | null;
   userProfile: IUserProfile | undefined;
   likedMoviesInfos: MovieDetail[];
+  dislikedMovies: number[] | undefined;
   watchedMovieInfos: IWatchedMovieInfo[];
   movieListInDeck: Result[] | undefined;
   genrePref: number[] | undefined;
@@ -44,6 +46,7 @@ export default function StoreProvider({
     likedMovieIds,
     watchedMovieInfos,
   } = useGetLikedMovies(userAuth?.userInfo.uid as string);
+  const dislikedMovies = useGetDislikedMovies(userAuth?.userInfo.uid as string);
   const { movieListInDeck, handleNext, genrePref } = useGetMovies(
     userAuth?.userInfo?.uid as string
   );
@@ -81,6 +84,7 @@ export default function StoreProvider({
         userAuth,
         userProfile,
         likedMoviesInfos,
+        dislikedMovies,
         watchedMovieInfos,
         movieListInDeck,
         handleNext,
