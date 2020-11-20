@@ -32,8 +32,10 @@ export default function MyProfile() {
               if (auth.currentUser?.email !== null) {
                 await auth.currentUser?.reauthenticateWithPopup(provider);
               }
-              await db.collection("Users").doc(auth.currentUser?.uid).delete();
-              auth.currentUser?.delete().then(() => window.location.reload());
+              const accountToDelete = auth.currentUser?.uid;
+              cloudFn.httpsCallable("deleteAccount")({ accountToDelete });
+              await auth.currentUser?.delete();
+              window.location.reload();
             }}
           />
         </Modal>
