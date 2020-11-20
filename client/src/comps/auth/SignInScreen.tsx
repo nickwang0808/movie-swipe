@@ -171,10 +171,10 @@ export default function SignInScreen() {
         Register / Log In
       </h1>
       <div className={style.login_container}>
-        <h2>
+      <p>
           Create a free MovieSync account so you and your friends can finally
           find something to watch, together!
-        </h2>
+        </p>
         <button
           className={`${sharedstyle.btn} ${style.btn_login_google}`}
           onClick={
