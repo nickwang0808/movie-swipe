@@ -93,7 +93,7 @@
 }
 
 .btn_Back svg {
-  fill: var(--highlight);
+  fill: var(--light);
 }
 
 .container_votebtn {
@@ -134,7 +134,7 @@
 /* CLOSE */
 
 .btn_close {
-  fill: var(--dark);
+  fill: var(--light);
   position: absolute;
   right: 0;
   top: 0;
@@ -143,6 +143,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 6;
 }
 
 .btn_close:active {
