@@ -7,14 +7,14 @@ const deleteAccount = functions.https.onCall(async (data, context) => {
     const accountToDelete: string = data.accountToDelete;
     console.log("accountToDelete", accountToDelete);
     try {
-      await adminAuth().deleteUser(accountToDelete);
-
       await firebase_tools.firestore.delete(`/Users/${accountToDelete}`, {
         project: "movie-swipe-82f52",
         recursive: true,
         yes: true,
         token: functions.config().fb.token,
       });
+
+      await adminAuth().deleteUser(accountToDelete);
     } catch (err) {
       console.log(err);
     }
