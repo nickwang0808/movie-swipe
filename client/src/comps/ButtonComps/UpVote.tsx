@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import style from "./ButtonComps.module.css";
 
 interface IProps {
@@ -15,6 +15,8 @@ export default function UpVote({
   isDisliked,
   changeToLike,
 }: IProps) {
+  const history = useHistory();
+
   const icon = (
     <svg
       width={24}
@@ -38,6 +40,7 @@ export default function UpVote({
         className={style.container_votebtn}
         onClick={() => {
           changeToLike ? changeToLike() : handleLike();
+          history.goBack();
         }}
       >
         <div
