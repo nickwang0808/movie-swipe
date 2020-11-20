@@ -33,7 +33,7 @@ export default function MyProfile() {
                 await auth.currentUser?.reauthenticateWithPopup(provider);
               }
               const accountToDelete = auth.currentUser?.uid;
-              cloudFn.httpsCallable("deleteAccount")({ accountToDelete });
+              await cloudFn.httpsCallable("deleteAccount")({ accountToDelete });
               await auth.currentUser?.delete();
               window.location.reload();
             }}

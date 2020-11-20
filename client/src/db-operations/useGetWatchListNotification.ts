@@ -31,11 +31,13 @@ export default function useGetWatchListNotification(userId: string) {
 }
 
 export const updateOldMatchCounts = async (userId: string, counts: number) => {
-  await db
-    .collection("Users")
-    .doc(userId)
-    .collection("User_Details")
-    .doc("Match_Counts")
-    .update({ old_match_counts: counts });
-  return;
+  try {
+    await db
+      .collection("Users")
+      .doc(userId)
+      .collection("User_Details")
+      .doc("Match_Counts")
+      .update({ old_match_counts: counts });
+    return;
+  } catch (err) {}
 };

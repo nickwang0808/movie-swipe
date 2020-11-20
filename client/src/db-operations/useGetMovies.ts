@@ -88,6 +88,23 @@ export default function useGetMovies(userId: string) {
       return votedMoviesIds;
     };
 
+    const GetLocalVoted = () => {
+      const like = localStorage.getItem("liked_movies");
+      const dislike = localStorage.getItem("disliked_movies");
+
+      let voted = "";
+      if (like) {
+        voted = voted + like;
+      }
+      if (dislike) {
+        voted = voted + dislike;
+      }
+
+      if (voted !== "") {
+        return voted.split(",").map((elem) => Number(elem));
+      } else return null;
+    };
+
     const fetchGenrePreference = async () => {
       const doc = await db.collection("Users").doc(userId).get();
       const data = doc.data()?.genre_preference;
@@ -134,9 +151,18 @@ export default function useGetMovies(userId: string) {
 
     async function getMovie() {
       // console.log("getMovie()");
-      const votedMovies = await getVotedMoviesIds();
+      let votedMovies = await getVotedMoviesIds();
       const movieListUnfiltered = await fetchPopularMovies();
       const genrePreference = await fetchGenrePreference();
+
+      const localVoted = GetLocalVoted();
+      if (localVoted) {
+        votedMovies = [
+          ...localVoted,
+          // voted movie may return [0] instead of null
+          ...(votedMovies !== [0] ? votedMovies : []),
+        ];
+      }
       const filteredMovieList = () => {
         let newResults: Result[] = [];
         // filter voted movies out

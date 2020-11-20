@@ -101,14 +101,20 @@ export default function useGetUser(user_id: string) {
             .set({
               uid,
               liked_movies:
-                localStorage.getItem("liked_movies")?.split(",") || [],
+                localStorage
+                  .getItem("liked_movies")
+                  ?.split(",")
+                  .map((elem) => Number(elem)) || [],
             });
           await userRef
             .collection("User_Details")
             .doc("Disliked_Movies")
             .set({
               disliked_movies:
-                localStorage.getItem("disliked_movies")?.split(",") || [],
+                localStorage
+                  .getItem("disliked_movies")
+                  ?.split(",")
+                  .map((elem) => Number(elem)) || [],
             });
           await userRef
             .collection("User_Details")
@@ -124,7 +130,10 @@ export default function useGetUser(user_id: string) {
             .set({ friends: [], pending_sent: [], pending_received: [] });
         }
 
-        localStorage.clear();
+        if (localStorage.length > 0) {
+          localStorage.clear();
+          console.log("Clear");
+        }
       })();
     }
   }, [user_id]);
