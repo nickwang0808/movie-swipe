@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "client2",
+  "appName": "Movie Sync",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
