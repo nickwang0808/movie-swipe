@@ -1,0 +1,9 @@
+.container {
+  margin-top: 34px;
+  border-radius: 4px;
+}
+
+.container img {
+  max-width: 90vw;
+  height: auto;
+}

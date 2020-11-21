@@ -1,0 +1,7 @@
+{
+  "hosting": {
+    "public": "build",
+    "site": "movie-sync-app",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  }
+}
