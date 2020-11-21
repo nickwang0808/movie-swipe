@@ -7,6 +7,8 @@ import Title from "../comp/title/Title"
 import Video from "../comp/video/Video"
 import OR from "../comp/OR/OR"
 
+import { Link } from "gatsby"
+
 export default function Home() {
   return (
     <>
@@ -32,7 +34,7 @@ export default function Home() {
           <div className={style.footer}>
             <div className={style.contact}>Say Hello</div>
             <div className={style.links}>
-              <a href="terms">Terms of Use and Privacy Policy</a>
+              <Link href="terms">Terms of Use and Privacy Policy</Link>
               <span> © Fox & Grey LLC, 2020</span>
             </div>
           </div>
