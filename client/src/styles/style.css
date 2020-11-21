@@ -10,8 +10,6 @@ html {
 :root[mode="md"] {
   --ion-font-family: "Poppins", sans-serif !important;
   font-family: "Poppins", sans-serif !important;
-  button {
-  }
 }
 
 html,
@@ -57,9 +55,10 @@ h1 {
   font-size: 2.5em;
   font-weight: 600;
   padding: 2rem 0 2rem 2rem;
-  color: var(--highlight);
-  box-shadow: 0px 0.5px 1.75px rgba(0, 0, 0, 0.039),
-    0px 1.85px 6.25px rgba(0, 0, 0, 0.19);
+  color: var(--light);
+  /* box-shadow: 0px 0.5px 1.75px rgba(0, 0, 0, 0.039),
+    0px 1.85px 6.25px rgba(0, 0, 0, 0.19); */
+  background: linear-gradient(266.71deg, #29323c 11.43%, #485563 89.74%);
 }
 
 h2 {
@@ -133,6 +132,7 @@ a {
   position: absolute;
   left: calc(50% - 75px);
   padding-top: 1.8rem;
+  fill: linear-gradient(266.71deg, #29323c 11.43%, #485563 89.74%);
 }
 
 /* SMALL MODIFIERS */
