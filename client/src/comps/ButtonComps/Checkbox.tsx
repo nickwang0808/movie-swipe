@@ -21,7 +21,7 @@ export default function CheckboxButton({
         color="dark"
         mode="md"
         checked={isChecked}
-        onChange={() => {
+        onIonChange={() => {
           isChecked
             ? setChecked((prev) => prev.filter((elem) => elem !== id))
             : setChecked((prev) => [...prev, id]);
