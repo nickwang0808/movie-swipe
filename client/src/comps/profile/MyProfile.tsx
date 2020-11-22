@@ -69,7 +69,7 @@ export default function MyProfile() {
           <div className="listview_separator_full" />
           {userAuth?.userInfo.email && (
             <ListViewButton
-              name={`Sign Out ${userAuth?.userInfo.email}`}
+              name={`Sign Out (${userAuth?.userInfo.email})`}
               action={() => auth.signOut()}
             />
           )}
