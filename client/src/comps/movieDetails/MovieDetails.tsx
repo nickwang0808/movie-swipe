@@ -130,7 +130,7 @@ export default function MovieDetails({
             onClick={() => history.goBack()}
           />
           <div className={style.details_title}>
-            <h1>{movieDetails?.title}</h1>
+            <h1 className={style.movieDetailsTitle}>{movieDetails?.title}</h1>
           </div>
           <div className={style.details_rating}>
             <h3 className="heavy">{movieDetails?.vote_average}</h3>

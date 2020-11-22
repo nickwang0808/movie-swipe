@@ -55,10 +55,10 @@ export default function Friends() {
             Friends
           </h1>
         <div className="container_subcontent">
-          <h2 className={style.title_bold}>
+        <p className="marginSides2 marginTop2 marginBottom2">
             We'll let you know when you and your friends both want to watch
             something!
-          </h2>
+          </p>
           {userProfile && userProfile.pending_received.length > 0 && (
             <PendingInvite pendingReceived={userProfile?.pending_received} />
           )}
