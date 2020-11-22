@@ -95,26 +95,25 @@ export default function useGetUser(user_id: string) {
             genre_preference: [28,12,16,35,80,99,18,10751,14,36,27,10402,9648,10749,878,10770,53,10752,37,],
           });
 
+          const getLocalVoted = (type: "liked_movies" | "disliked_movies") => {
+            const voted = localStorage.getItem(type);
+            if (voted) {
+              return voted.split(",").map((elem) => Number(elem));
+            } else return [];
+          };
+
           await userRef
             .collection("User_Details")
             .doc("Liked_Movies")
             .set({
               uid,
-              liked_movies:
-                localStorage
-                  .getItem("liked_movies")
-                  ?.split(",")
-                  .map((elem) => Number(elem)) || [],
+              liked_movies: getLocalVoted("liked_movies"),
             });
           await userRef
             .collection("User_Details")
             .doc("Disliked_Movies")
             .set({
-              disliked_movies:
-                localStorage
-                  .getItem("disliked_movies")
-                  ?.split(",")
-                  .map((elem) => Number(elem)) || [],
+              disliked_movies: getLocalVoted("disliked_movies"),
             });
           await userRef
             .collection("User_Details")
