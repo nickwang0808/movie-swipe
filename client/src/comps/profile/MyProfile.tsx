@@ -29,13 +29,13 @@ export default function MyProfile() {
           <DeleteConfirmation
             action={async () => {
               console.log("deleted");
-              if (auth.currentUser?.email !== null) {
-                await auth.currentUser?.reauthenticateWithPopup(provider);
-              }
+              // if (auth.currentUser?.email !== null) {
+              //   await auth.currentUser?.reauthenticateWithPopup(provider);
+              // }
               const accountToDelete = auth.currentUser?.uid;
               await cloudFn.httpsCallable("deleteAccount")({ accountToDelete });
-              await auth.currentUser?.delete();
-              window.location.reload();
+              auth.signOut();
+              // window.location.reload();
             }}
           />
         </Modal>
