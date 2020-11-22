@@ -44,7 +44,7 @@ export default function VotingActions({
       />
       <div className={sharedstyle.container_detailsbtn}>
         <Link
-          to={isLiked ? "/mylist" : goTo}
+          to={isLiked || isDisliked ? "/mylist" : goTo}
           className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}
         >
           {isLiked || isDisliked ? "Watch List" : showDetail}
