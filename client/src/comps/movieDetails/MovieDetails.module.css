@@ -100,3 +100,7 @@
 .container_description .btn {
   margin-bottom: 3em;
 }
+
+.movieDetailsTitle {
+  background: rgba(0, 0, 0, 0);
+}

@@ -29,13 +29,13 @@ export default function MyProfile() {
           <DeleteConfirmation
             action={async () => {
               console.log("deleted");
-              if (auth.currentUser?.email !== null) {
-                await auth.currentUser?.reauthenticateWithPopup(provider);
-              }
+              // if (auth.currentUser?.email !== null) {
+              //   await auth.currentUser?.reauthenticateWithPopup(provider);
+              // }
               const accountToDelete = auth.currentUser?.uid;
               await cloudFn.httpsCallable("deleteAccount")({ accountToDelete });
-              await auth.currentUser?.delete();
-              window.location.reload();
+              auth.signOut();
+              // window.location.reload();
             }}
           />
         </Modal>
@@ -69,7 +69,7 @@ export default function MyProfile() {
           <div className="listview_separator_full" />
           {userAuth?.userInfo.email && (
             <ListViewButton
-              name={`Sign Out ${userAuth?.userInfo.email}`}
+              name={`Sign Out (${userAuth?.userInfo.email})`}
               action={() => auth.signOut()}
             />
           )}

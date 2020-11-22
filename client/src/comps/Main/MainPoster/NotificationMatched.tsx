@@ -27,18 +27,12 @@ export default function NotificationMatched({
         animate={{
           skew: [-15, -15, -15, -15],
           opacity: [0, 1, 1, 0],
-          left: ["40%", "50%", "50%", "50%"],
+          left: ["40%", "50%", "50%", "60%"],
           translateX: ["-50%", "-50%", "-50%", "-50%"],
-          top: [
-            "calc(40% - var(--header) + 128px + 3rem)",
-            "calc(40% - var(--header) + 128px + 3rem)",
-            "calc(40% - var(--header) + 230px + 3rem)",
-            "calc(40% - var(--header) + 230px + 3rem)",
-          ],
         }}
         transition={{
-          times: [0, 0.5, 0.8, 1],
-          duration: 1,
+          times: [0, 0.5, 1, 1.5],
+          duration: 3,
           ease: [0.16, 1, 0.3, 1],
         }}
       >
@@ -47,8 +41,8 @@ export default function NotificationMatched({
       <div className={style.container_matched}>
         <motion.div
           className={style.container_matched_styling}
-          animate={{ visibility: "visible", height: "100%", y: 0 }}
-          initial={{ visibility: "hidden", height: "0%", y: -20 }}
+          animate={{ visibility: "visible", width: "100%", x: 0 }}
+          initial={{ visibility: "hidden", width: "0%", x: -20 }}
           transition={{
             delay: 0.5,
             duration: 0.75,
@@ -71,8 +65,8 @@ export default function NotificationMatched({
         ></motion.div>
         <motion.div
           className={style.matched_details}
-          animate={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: -10 }}
           transition={{
             delay: 1,
             duration: 1,
