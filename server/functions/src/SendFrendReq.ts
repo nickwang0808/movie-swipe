@@ -43,9 +43,11 @@ const sendFrendReq = functions.https.onCall(async (data, context) => {
         console.log("friend request sent");
         // return "Friend Reqest Sent!";
         return { message: "Friend invite sent!" };
+      } else {
+        return { message: "User Not Found" };
       }
     } catch (err) {
-      return err;
+      return { message: err.errorInfo.message };
     }
   } else {
     throw new functions.https.HttpsError(
