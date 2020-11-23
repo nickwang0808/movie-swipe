@@ -50,7 +50,7 @@ export default function MovieDetails({
   const matchesUid = likedMoviesInfos.find((elem) => elem.id === movieID)
     ?.matches as string[];
   useEffect(() => {
-    if (matchesUid) {
+    if (matchesUid && matchesUid.length > 0) {
       (async () => {
         const result = await cloudFn.httpsCallable("userLookUp")({
           UserIDs: matchesUid,
