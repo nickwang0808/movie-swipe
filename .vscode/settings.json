@@ -1,8 +1,3 @@
 {
-  "todo-tree.tree.showBadges": true,
-  "workbench.colorCustomizations": {
-    "activityBar.background": "#57054D",
-    "titleBar.activeBackground": "#7A076C",
-    "titleBar.activeForeground": "#FFFAFE"
-  }
+  "todo-tree.tree.showBadges": true
 }

@@ -58,6 +58,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
         myLike: movieID,
         myFriends: userProfile?.friendsIdOnly,
       });
+      // TODO: instead of taking result, maybe look at the db to see matches
       if (response.data.length > 0) {
         setShowMatched({
           movieId: movieID,

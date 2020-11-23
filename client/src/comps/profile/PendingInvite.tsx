@@ -39,10 +39,10 @@ export default function PendingInvite({ pendingReceived }: IPendingInvite) {
         pendingReceived.map((user) => {
           return (
             <ListViewPendingInvite
-              handleDecline={() => handleDecline(user.id)}
-              handleAccept={() => handleAccept(user.id)}
+              handleDecline={() => handleDecline(user.uid)}
+              handleAccept={() => handleAccept(user.uid)}
               name={user.email}
-              key={user.id}
+              key={user.uid}
             />
           );
         })}

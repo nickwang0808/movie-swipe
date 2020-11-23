@@ -33,20 +33,20 @@ export default function useGetAllMatches(
     }
   }, [userId, myLikes, myFriends]);
 
-  useEffect(() => {
-    // if (userId && myLikes && myFriends && matches === undefined) {
-    if (matches) {
-      (async () => {
-        await db
-          .collection("Users")
-          .doc(userId)
-          .collection("User_Details")
-          .doc("Match_Counts")
-          .update({ new_match_counts: matches.length });
-      })();
-    }
-    // eslint-disable-next-line
-  }, [matches]);
+  // useEffect(() => {
+  //   // if (userId && myLikes && myFriends && matches === undefined) {
+  //   if (matches) {
+  //     (async () => {
+  //       await db
+  //         .collection("Users")
+  //         .doc(userId)
+  //         .collection("User_Details")
+  //         .doc("Match_Counts")
+  //         .update({ new_match_counts: matches.length });
+  //     })();
+  //   }
+  //   // eslint-disable-next-line
+  // }, [matches]);
 
   return matches;
 }

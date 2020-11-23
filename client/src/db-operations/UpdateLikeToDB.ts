@@ -1,5 +1,6 @@
 import { firestore } from "firebase/app";
 import { arrayRemove, db } from "../firebase/config";
+import removeLiked from "../HelperFunctions/removedLiked";
 const arrayUnion = firestore.FieldValue.arrayUnion;
 
 /*
@@ -18,6 +19,7 @@ export default async function UpdateLikeToDB(
   if (isLike) {
     await userRef.doc("Liked_Movies").update({
       liked_movies: arrayUnion(movieID),
+      liked_movies_matches: arrayUnion({ movieId: movieID, matches: [] }),
     });
     userRef.doc("Disliked_Movies").update({
       disliked_movies: arrayRemove(movieID),
@@ -26,8 +28,6 @@ export default async function UpdateLikeToDB(
     await userRef.doc("Disliked_Movies").update({
       disliked_movies: arrayUnion(movieID),
     });
-    userRef.doc("Liked_Movies").update({
-      liked_movies: arrayRemove(movieID),
-    });
+    await removeLiked(userId, movieID);
   }
 }

@@ -8,14 +8,17 @@ import { NavLink } from "react-router-dom";
 import { updateOldMatchCounts } from "../../db-operations/useGetWatchListNotification";
 
 export default function MyListMain() {
-  const { likedMoviesInfos, watchedMovieInfos, matches, userAuth } = useContext(
+  const { likedMoviesInfos, watchedMovieInfos, userAuth } = useContext(
     UserContext
   );
 
   useEffect(() => {
     if (likedMoviesInfos && userAuth) {
       console.log("update old match count");
-      updateOldMatchCounts(userAuth.userInfo.uid, likedMoviesInfos.length);
+      updateOldMatchCounts(
+        userAuth.userInfo.uid,
+        likedMoviesInfos.filter((elem) => elem.matches.length > 0).length
+      );
     }
   }, [likedMoviesInfos, userAuth]);
 
@@ -117,13 +120,7 @@ export default function MyListMain() {
                   <LikedMovieInMyList
                     key={likedMovieInfo.id}
                     movie={likedMovieInfo}
-                    matched={
-                      matches?.find(
-                        (element) => element.matchedMovie === likedMovieInfo.id
-                      )
-                        ? true
-                        : false
-                    }
+                    matched={likedMovieInfo.matches.length > 0 ? true : false}
                   />
                 ))
               )}
