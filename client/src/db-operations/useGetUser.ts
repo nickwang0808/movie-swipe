@@ -102,36 +102,36 @@ export default function useGetUser(user_id: string) {
             } else return [];
           };
 
-          await userRef
-            .collection("User_Details")
-            .doc("Liked_Movies")
-            .set({
-              uid,
-              liked_movies: getLocalVoted("liked_movies"),
-            });
-          await userRef
-            .collection("User_Details")
-            .doc("Disliked_Movies")
-            .set({
-              disliked_movies: getLocalVoted("disliked_movies"),
-            });
-          await userRef
-            .collection("User_Details")
-            .doc("Match_Counts")
-            .set({ new_match_counts: 0, old_match_counts: 0 });
-          await userRef
-            .collection("User_Details")
-            .doc("Watched")
-            .set({ watched: [] });
-          await userRef
-            .collection("User_Details")
-            .doc("Friends")
-            .set({ friends: [], pending_sent: [], pending_received: [] });
-        }
+          const batch = db.batch();
 
-        if (localStorage.length > 0) {
-          localStorage.clear();
-          console.log("Clear");
+          batch.set(userRef.collection("User_Details").doc("Liked_Movies"), {
+            uid,
+            liked_movies: getLocalVoted("liked_movies"),
+          });
+          batch.set(userRef.collection("User_Details").doc("Disliked_Movies"), {
+            disliked_movies: getLocalVoted("disliked_movies"),
+          });
+
+          batch.set(userRef.collection("User_Details").doc("Match_Counts"), {
+            new_match_counts: 0,
+            old_match_counts: 0,
+          });
+
+          batch.set(userRef.collection("User_Details").doc("Watched"), {
+            watched: [],
+          });
+          batch.set(userRef.collection("User_Details").doc("Friends"), {
+            friends: [],
+            pending_sent: [],
+            pending_received: [],
+          });
+
+          await batch.commit();
+
+          if (localStorage.length > 0) {
+            localStorage.clear();
+            console.log("Clear");
+          }
         }
       })();
     }
