@@ -64,10 +64,7 @@ function App() {
           <MyProfile />
         </Route>
         <Route path="/detials/:id">
-          <MovieDetails
-            handleLike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
-            handleDislike={() => console.log("")} // dummy function that can't be called, bypassing ts checking
-          />
+          <MovieDetails MiddleButtonText="Watch List" />
         </Route>
         <Route path="/completeSignUp">
           <SignInScreen />;

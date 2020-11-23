@@ -1,30 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import DownVote from "../ButtonComps/DownVote";
 import UpVote from "../ButtonComps/UpVote";
 import { motion } from "framer-motion";
-import { isIdentifier } from "typescript";
 interface IVotingActionsProps {
   handleDislike: () => void;
   handleLike: () => void;
-  showDetail: string;
-  goTo: string;
-  isLiked?: boolean;
-  isDisliked?: boolean;
-  changeToDisLike?: () => void;
-  changeToLike?: () => void;
+  forceActiveLikeButton?: boolean;
+  forceActiveDislikeButton?: boolean;
+  handleClickMiddleButton: () => void;
+  MiddleButtonText: string;
 }
 
 export default function VotingActions({
   handleDislike,
   handleLike,
-  showDetail,
-  goTo,
-  isLiked,
-  isDisliked,
-  changeToDisLike,
-  changeToLike,
+  forceActiveDislikeButton = false,
+  forceActiveLikeButton = false,
+  handleClickMiddleButton,
+  MiddleButtonText,
 }: IVotingActionsProps) {
   return (
     <motion.div
@@ -38,23 +32,17 @@ export default function VotingActions({
     >
       <DownVote
         handleDislike={handleDislike}
-        isLiked={isLiked}
-        isDisliked={isDisliked}
-        changeToDisLike={changeToDisLike}
+        forceActive={forceActiveDislikeButton}
       />
       <div className={sharedstyle.container_detailsbtn}>
-        <Link
-          to={isLiked || isDisliked ? "/mylist" : goTo}
+        <div
+          onClick={handleClickMiddleButton}
           className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}
         >
-          {isLiked || isDisliked ? "Watch List" : showDetail}
-        </Link>
+          {MiddleButtonText}
+        </div>
       </div>
-      <UpVote
-        handleLike={handleLike}
-        isLiked={isLiked}
-        changeToLike={changeToLike}
-      />
+      <UpVote handleLike={handleLike} forceActive={forceActiveLikeButton} />
     </motion.div>
   );
 }

@@ -4,17 +4,10 @@ import style from "./ButtonComps.module.css";
 
 interface IDownVote {
   handleDislike: () => void;
-  isLiked?: boolean;
-  isDisliked?: boolean;
-  changeToDisLike?: () => void;
+  forceActive: boolean;
 }
 
-export default function DownVote({
-  handleDislike,
-  isLiked,
-  isDisliked,
-  changeToDisLike,
-}: IDownVote) {
+export default function DownVote({ handleDislike, forceActive }: IDownVote) {
   const icon = (
     <svg
       width={24}
@@ -26,32 +19,15 @@ export default function DownVote({
     </svg>
   );
 
-  if (isLiked === undefined) {
-    return (
-      <Link
-        to="/home"
-        className={style.container_votebtn}
-        onClick={handleDislike}
-      >
-        <div className={`${style.btn} ${style.btn_down}`}>{icon}</div>
-      </Link>
-    );
-  } else {
-    return (
+  return (
+    <div className={style.container_votebtn} onClick={handleDislike}>
       <div
-        className={style.container_votebtn}
-        onClick={() => {
-          changeToDisLike ? changeToDisLike() : handleDislike();
-        }}
+        className={`${style.btn} ${style.btn_down} ${
+          forceActive && style.btn_forceActive
+        }`}
       >
-        <div
-          className={`${style.btn} ${style.btn_down} ${
-            isDisliked && style.btn_forceActive
-          }`}
-        >
-          {icon}
-        </div>
+        {icon}
       </div>
-    );
-  }
+    </div>
+  );
 }

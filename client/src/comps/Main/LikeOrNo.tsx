@@ -20,7 +20,7 @@ import {
 } from "framer-motion";
 import Deck from "./Deck/Deck";
 import { UserContext } from "../../store";
-import { Route } from "react-router";
+import { Route, useHistory } from "react-router";
 import { cloudFn } from "../../firebase/config";
 import { IUserInfo } from "../../db-operations/useGetAllMatches";
 
@@ -46,6 +46,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
     size,
   } = useContext(UserContext);
   const screenWidth = size.width;
+
+  const history = useHistory();
 
   const handleLike = async (movieID: number, poster: string, title: string) => {
     UpdateLikeToDB(userId, movieID, true);
@@ -117,6 +119,37 @@ export default function LikeOrNo({ userId }: ICompProps) {
     });
   };
 
+  const likeWithAnimation = () => {
+    if (movieListInDeck) {
+      const card = movieListInDeck[0];
+      animate(xMotionValue, 500, {
+        type: "tween",
+        duration: 0.5,
+        ease: [0.33, 1, 0.68, 1],
+        onComplete: () => {
+          xMotionValue.set(0);
+          handleLike(card.id, card.poster_path, card.title);
+        },
+      });
+      animateSliderAndThumb(screenWidth, 1);
+    }
+  };
+
+  const dislikeWithAnimation = () => {
+    if (movieListInDeck) {
+      animate(xMotionValue, -500, {
+        type: "tween",
+        duration: 0.5,
+        ease: [0.33, 1, 0.68, 1],
+        onComplete: () => {
+          xMotionValue.set(0);
+          handleDislike(movieListInDeck[0].id);
+        },
+      });
+      animateSliderAndThumb(-screenWidth, -1);
+    }
+  };
+
   return (
     <>
       {showMatched && (
@@ -131,9 +164,9 @@ export default function LikeOrNo({ userId }: ICompProps) {
       <Route path="/home/details/:id">
         {movieListInDeck && (
           <MovieDetails
-            handleDislike={handleDislike}
-            handleLike={handleLike}
-            showVoting={true}
+            handleDislike={() => dislikeWithAnimation()}
+            handleLike={() => likeWithAnimation()}
+            MiddleButtonText="Posters"
           />
         )}
       </Route>
@@ -201,32 +234,15 @@ export default function LikeOrNo({ userId }: ICompProps) {
         {movieListInDeck && (
           <VotingActions
             handleLike={() => {
-              const card = movieListInDeck[0];
-              animate(xMotionValue, 500, {
-                type: "tween",
-                duration: 0.5,
-                ease: [0.33, 1, 0.68, 1],
-                onComplete: () => {
-                  xMotionValue.set(0);
-                  handleLike(card.id, card.poster_path, card.title);
-                },
-              });
-              animateSliderAndThumb(screenWidth, 1);
+              likeWithAnimation();
             }}
             handleDislike={() => {
-              animate(xMotionValue, -500, {
-                type: "tween",
-                duration: 0.5,
-                ease: [0.33, 1, 0.68, 1],
-                onComplete: () => {
-                  xMotionValue.set(0);
-                  handleDislike(movieListInDeck[0].id);
-                },
-              });
-              animateSliderAndThumb(-screenWidth, -1);
+              dislikeWithAnimation();
             }}
-            goTo={`/home/details/${movieListInDeck[0].id}`}
-            showDetail="Details"
+            MiddleButtonText="Details"
+            handleClickMiddleButton={() =>
+              history.push(`/home/details/${movieListInDeck[0].id}`)
+            }
           />
         )}
       </Route>
