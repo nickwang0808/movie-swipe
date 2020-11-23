@@ -29,6 +29,7 @@ export default function MyProfile() {
           <DeleteConfirmation
             action={async () => {
               console.log("deleted");
+              localStorage.clear();
               // if (auth.currentUser?.email !== null) {
               //   await auth.currentUser?.reauthenticateWithPopup(provider);
               // }

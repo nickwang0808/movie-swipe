@@ -119,6 +119,37 @@ export default function LikeOrNo({ userId }: ICompProps) {
     });
   };
 
+  const likeWithAnimation = () => {
+    if (movieListInDeck) {
+      const card = movieListInDeck[0];
+      animate(xMotionValue, 500, {
+        type: "tween",
+        duration: 0.5,
+        ease: [0.33, 1, 0.68, 1],
+        onComplete: () => {
+          xMotionValue.set(0);
+          handleLike(card.id, card.poster_path, card.title);
+        },
+      });
+      animateSliderAndThumb(screenWidth, 1);
+    }
+  };
+
+  const dislikeWithAnimation = () => {
+    if (movieListInDeck) {
+      animate(xMotionValue, -500, {
+        type: "tween",
+        duration: 0.5,
+        ease: [0.33, 1, 0.68, 1],
+        onComplete: () => {
+          xMotionValue.set(0);
+          handleDislike(movieListInDeck[0].id);
+        },
+      });
+      animateSliderAndThumb(-screenWidth, -1);
+    }
+  };
+
   return (
     <>
       {showMatched && (
@@ -133,14 +164,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
       <Route path="/home/details/:id">
         {movieListInDeck && (
           <MovieDetails
-            handleDislike={() => handleDislike(movieListInDeck[0].id)}
-            handleLike={() =>
-              handleLike(
-                movieListInDeck[0].id,
-                movieListInDeck[0].poster_path,
-                movieListInDeck[0].title
-              )
-            }
+            handleDislike={() => dislikeWithAnimation()}
+            handleLike={() => likeWithAnimation()}
             MiddleButtonText="Posters"
           />
         )}
@@ -209,29 +234,10 @@ export default function LikeOrNo({ userId }: ICompProps) {
         {movieListInDeck && (
           <VotingActions
             handleLike={() => {
-              const card = movieListInDeck[0];
-              animate(xMotionValue, 500, {
-                type: "tween",
-                duration: 0.5,
-                ease: [0.33, 1, 0.68, 1],
-                onComplete: () => {
-                  xMotionValue.set(0);
-                  handleLike(card.id, card.poster_path, card.title);
-                },
-              });
-              animateSliderAndThumb(screenWidth, 1);
+              likeWithAnimation();
             }}
             handleDislike={() => {
-              animate(xMotionValue, -500, {
-                type: "tween",
-                duration: 0.5,
-                ease: [0.33, 1, 0.68, 1],
-                onComplete: () => {
-                  xMotionValue.set(0);
-                  handleDislike(movieListInDeck[0].id);
-                },
-              });
-              animateSliderAndThumb(-screenWidth, -1);
+              dislikeWithAnimation();
             }}
             MiddleButtonText="Details"
             handleClickMiddleButton={() =>

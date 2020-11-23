@@ -194,7 +194,7 @@ export default function MovieDetails({
             history.goBack();
             setTimeout(() => {
               handleDislike && handleDislike();
-            }, 1000);
+            }, 500);
           } else {
             UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, false);
           }
@@ -204,7 +204,7 @@ export default function MovieDetails({
             history.goBack();
             setTimeout(() => {
               handleLike && handleLike();
-            }, 1000);
+            }, 500);
           } else {
             UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, true);
           }
