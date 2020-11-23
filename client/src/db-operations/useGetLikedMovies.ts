@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import searchMovieByID, { MovieDetail } from "../APICalls/searchMovieByID";
 import { cloudFn, db } from "../firebase/config";
+import { updateNewMatchCounts } from "./useGetWatchListNotification";
 
 export interface IWatchedMovieInfo {
   movieId: number;
@@ -8,8 +9,19 @@ export interface IWatchedMovieInfo {
   movieDetails: MovieDetail;
 }
 
+export interface MovieDetailWithMatches extends MovieDetail {
+  matches: string[];
+}
+
+export interface LikedMovieWithMatches {
+  movieId: number;
+  matches: string[];
+}
+
 export default function useGetLikedMovies(userID: string) {
-  const [likedMoviesInfos, setLikedMoviesInfos] = useState<MovieDetail[]>([]);
+  const [likedMoviesInfos, setLikedMoviesInfos] = useState<
+    MovieDetailWithMatches[]
+  >([]);
   const [likedMovieIds, setLikedMovieIds] = useState<string[]>();
   const [watchedMovieInfos, setWatchedMovieInfos] = useState<
     IWatchedMovieInfo[]
@@ -22,18 +34,28 @@ export default function useGetLikedMovies(userID: string) {
         .doc(userID)
         .collection("User_Details")
         .doc("Liked_Movies")
-        .onSnapshot((doc) => {
+        .onSnapshot(async (doc) => {
           if (doc.exists) {
             const data = doc.data();
             if (data) {
               // here we take the fetched id and get the actual movie data
               setLikedMovieIds(data.liked_movies);
-              const tempArray: MovieDetail[] = [];
-              data.liked_movies.forEach(async (movieID: number) => {
-                const movieDetails = await searchMovieByID(movieID);
-                tempArray.unshift(movieDetails);
-              });
+              // const tempArray: MovieDetailWithMatches[] = [];
+              const tempArray: MovieDetailWithMatches[] = await Promise.all(
+                data.liked_movies_matches.map(
+                  async (movie: LikedMovieWithMatches) => {
+                    return {
+                      ...(await searchMovieByID(movie.movieId)),
+                      matches: movie.matches,
+                    };
+                  }
+                )
+              );
               setLikedMoviesInfos(tempArray);
+              updateNewMatchCounts(
+                userID,
+                tempArray.filter((elem) => elem.matches.length > 0).length
+              );
             } else {
               console.log("doc not found");
             }

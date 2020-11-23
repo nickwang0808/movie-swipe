@@ -17,6 +17,8 @@ import { IUserInfo } from "../../db-operations/useGetAllMatches";
 import Modal from "../notification/modal";
 import WatchedWithWho from "../notification/ModalContent/WatchedWithWho";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
+import { cloudFn } from "../../firebase/config";
+import { UserInfo } from "os";
 
 interface IMovieDetails {
   handleDislike?: () => void;
@@ -32,7 +34,7 @@ export default function MovieDetails({
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
   const {
     likedMoviesInfos,
-    matches,
+    // matches,
     watchedMovieInfos,
     userAuth,
     dislikedMovies,
@@ -42,11 +44,21 @@ export default function MovieDetails({
 
   const { id } = useParams<{ id: string }>();
   const movieID = Number(id);
-  const matchedFriends = matches?.find(
-    (element) => element.matchedMovie === movieID
-  )
-    ? matches?.find((element) => element.matchedMovie === movieID)?.friendInfo
-    : undefined;
+
+  const [matchedFriends, setMatchedFriends] = useState<IUserInfo[]>();
+
+  const matchesUid = likedMoviesInfos.find((elem) => elem.id === movieID)
+    ?.matches as string[];
+  useEffect(() => {
+    if (matchesUid) {
+      (async () => {
+        const result = await cloudFn.httpsCallable("userLookUp")({
+          UserIDs: matchesUid,
+        });
+        result && setMatchedFriends(result.data);
+      })();
+    }
+  }, [matchesUid]);
 
   const watchedFriends = watchedMovieInfos?.find(
     (element) => element.movieId === movieID
@@ -168,7 +180,7 @@ export default function MovieDetails({
         >
           <div className={style.container_watch}></div>
           <div className={style.container_description}>
-            {(matchedFriends || watchedFriends) && (
+            {((matchesUid && matchesUid.length > 0) || watchedFriends) && (
               <WatchedAlert
                 matches={matchedFriends}
                 watchedWith={watchedFriends}

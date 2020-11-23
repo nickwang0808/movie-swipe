@@ -4,6 +4,7 @@ import useGetAllMatches, { IMatches } from "./db-operations/useGetAllMatches";
 import useGetDislikedMovies from "./db-operations/useGetDislikedMovies";
 import useGetLikedMovies, {
   IWatchedMovieInfo,
+  MovieDetailWithMatches,
 } from "./db-operations/useGetLikedMovies";
 import useGetMovies, { Result } from "./db-operations/useGetMovies";
 import useGetUser, { IUserProfile } from "./db-operations/useGetUser";
@@ -20,7 +21,7 @@ interface IUser {
 interface IStore {
   userAuth: IUser | undefined | null;
   userProfile: IUserProfile | undefined;
-  likedMoviesInfos: MovieDetail[];
+  likedMoviesInfos: MovieDetailWithMatches[];
   dislikedMovies: number[] | undefined;
   watchedMovieInfos: IWatchedMovieInfo[];
   movieListInDeck: Result[] | undefined;
@@ -28,7 +29,7 @@ interface IStore {
   isLoading: boolean;
   handleNext: () => void;
   size: ISize;
-  matches: IMatches[] | undefined;
+  // matches: IMatches[] | undefined;
 }
 
 export const UserContext = React.createContext({} as IStore);
@@ -51,7 +52,7 @@ export default function StoreProvider({
     userAuth?.userInfo?.uid as string
   );
 
-  const matches = useGetAllMatches(
+  useGetAllMatches(
     userAuth?.userInfo.uid,
     likedMovieIds,
     userProfile?.friendsIdOnly
@@ -90,7 +91,7 @@ export default function StoreProvider({
         handleNext,
         genrePref,
         size,
-        matches,
+        // matches,
       }}
     >
       {children}
