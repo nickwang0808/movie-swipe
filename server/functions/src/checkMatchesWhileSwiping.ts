@@ -8,9 +8,59 @@ interface IUserInfo {
   uid: string;
 }
 
+export interface LikedMovieWithMatches {
+  movieId: number;
+  matches: string[];
+}
+
+const updateMatchToMyDb = async (
+  myUid: string,
+  friendUid: string[],
+  movieId: number
+) => {
+  const myDocRef = db
+    .collection("Users")
+    .doc(myUid)
+    .collection("User_Details")
+    .doc("Liked_Movies");
+
+  const liked_movies_matches: LikedMovieWithMatches[] = (
+    await myDocRef.get()
+  ).data()?.liked_movies_matches;
+
+  const foundIndex = liked_movies_matches.findIndex(
+    (elem) => elem.movieId === movieId
+  );
+  liked_movies_matches[foundIndex].matches.push(...friendUid);
+  await myDocRef.update({ liked_movies_matches });
+};
+const updateMatchToFriendDb = async (
+  myUid: string,
+  friendUid: string,
+  movieId: number
+) => {
+  const myDocRef = db
+    .collection("Users")
+    .doc(friendUid)
+    .collection("User_Details")
+    .doc("Liked_Movies");
+
+  const liked_movies_matches: LikedMovieWithMatches[] = (
+    await myDocRef.get()
+  ).data()?.liked_movies_matches;
+
+  const foundIndex = liked_movies_matches.findIndex(
+    (elem) => elem.movieId === movieId
+  );
+  liked_movies_matches[foundIndex].matches.push(myUid);
+  await myDocRef.update({ liked_movies_matches });
+};
+
 const checkMatchesWhileSwiping = functions.https.onCall(
   async (data, context) => {
     if (context.auth) {
+      const myUid = context.auth.uid;
+      // const getFriends: string[] = await (await db.collection("Users").doc(myUid).collection("User_Details").doc("Friends").get()).data()?.friends
       const myFriends: string[][] = arrayChunks(data.myFriends, 10);
       const myLike: number = data.myLike;
 
@@ -24,9 +74,16 @@ const checkMatchesWhileSwiping = functions.https.onCall(
             .where("liked_movies", "array-contains", myLike);
           const querySnapShot = await query.get();
           // look up those users detail
+          const friendUidList = querySnapShot.docs.map(
+            (doc) => doc.data().uid as string
+          );
+          await updateMatchToMyDb(myUid, friendUidList, myLike);
+
           const matchedFriendsInfo = await Promise.all(
             querySnapShot.docs.map(async (doc) => {
               const friendUid = doc.data().uid as string;
+              // update like to friend's db
+              await updateMatchToFriendDb(myUid, friendUid, myLike);
               const userInfoDoc = await db
                 .collection("Users")
                 .doc(friendUid)
