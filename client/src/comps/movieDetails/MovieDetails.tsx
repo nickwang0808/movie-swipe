@@ -11,7 +11,7 @@ import WatchedAlert from "./WatchedAlert";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
 import { UserContext } from "../../store";
 import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { IUserInfo } from "../../db-operations/useGetAllMatches";
 import Modal from "../notification/modal";
@@ -19,14 +19,15 @@ import WatchedWithWho from "../notification/ModalContent/WatchedWithWho";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 
 interface IMovieDetails {
-  showVoting?: boolean;
-  handleDislike: (movieID: number) => void;
-  handleLike: (movieID: number, poster: string, title: string) => void;
+  handleDislike?: () => void;
+  handleLike?: () => void;
+  MiddleButtonText: string;
 }
 
 export default function MovieDetails({
   handleDislike,
   handleLike,
+  MiddleButtonText,
 }: IMovieDetails) {
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
   const {
@@ -51,6 +52,7 @@ export default function MovieDetails({
     (element) => element.movieId === movieID
   )?.watchedWith;
   const history = useHistory();
+  const isFromHome = useLocation().pathname.includes("home");
 
   useEffect(() => {
     if (movieID) {
@@ -187,27 +189,33 @@ export default function MovieDetails({
         </motion.div>
       </div>
       <VotingActions
-        handleDislike={() => handleDislike(movieID)}
-        handleLike={() =>
-          handleLike(
-            movieID,
-            movieDetails?.poster_path as string,
-            movieDetails?.title as string
-          )
+        handleDislike={() => {
+          if (isFromHome) {
+            history.goBack();
+            setTimeout(() => {
+              handleDislike && handleDislike();
+            }, 1000);
+          } else {
+            UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, false);
+          }
+        }}
+        handleLike={() => {
+          if (isFromHome) {
+            history.goBack();
+            setTimeout(() => {
+              handleLike && handleLike();
+            }, 1000);
+          } else {
+            UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, true);
+          }
+        }}
+        MiddleButtonText={MiddleButtonText}
+        handleClickMiddleButton={() => history.goBack()}
+        forceActiveDislikeButton={
+          dislikedMovies?.find((id) => id === movieID) ? true : false
         }
-        goTo="/home"
-        showDetail="Poster"
-        isLiked={
-          likedMoviesInfos.find((elem) => elem.id === movieID) ? true : false
-        }
-        isDisliked={
-          dislikedMovies?.find((elem) => elem === movieID) ? true : false
-        }
-        changeToDisLike={() =>
-          UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, false)
-        }
-        changeToLike={() =>
-          UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, true)
+        forceActiveLikeButton={
+          likedMoviesInfos?.find((movie) => movie.id === movieID) ? true : false
         }
       />
     </>

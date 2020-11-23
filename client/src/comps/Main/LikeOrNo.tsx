@@ -20,7 +20,7 @@ import {
 } from "framer-motion";
 import Deck from "./Deck/Deck";
 import { UserContext } from "../../store";
-import { Route } from "react-router";
+import { Route, useHistory } from "react-router";
 import { cloudFn } from "../../firebase/config";
 import { IUserInfo } from "../../db-operations/useGetAllMatches";
 
@@ -46,6 +46,8 @@ export default function LikeOrNo({ userId }: ICompProps) {
     size,
   } = useContext(UserContext);
   const screenWidth = size.width;
+
+  const history = useHistory();
 
   const handleLike = async (movieID: number, poster: string, title: string) => {
     UpdateLikeToDB(userId, movieID, true);
@@ -131,9 +133,15 @@ export default function LikeOrNo({ userId }: ICompProps) {
       <Route path="/home/details/:id">
         {movieListInDeck && (
           <MovieDetails
-            handleDislike={handleDislike}
-            handleLike={handleLike}
-            showVoting={true}
+            handleDislike={() => handleDislike(movieListInDeck[0].id)}
+            handleLike={() =>
+              handleLike(
+                movieListInDeck[0].id,
+                movieListInDeck[0].poster_path,
+                movieListInDeck[0].title
+              )
+            }
+            MiddleButtonText="Posters"
           />
         )}
       </Route>
@@ -225,8 +233,10 @@ export default function LikeOrNo({ userId }: ICompProps) {
               });
               animateSliderAndThumb(-screenWidth, -1);
             }}
-            goTo={`/home/details/${movieListInDeck[0].id}`}
-            showDetail="Details"
+            MiddleButtonText="Details"
+            handleClickMiddleButton={() =>
+              history.push(`/home/details/${movieListInDeck[0].id}`)
+            }
           />
         )}
       </Route>

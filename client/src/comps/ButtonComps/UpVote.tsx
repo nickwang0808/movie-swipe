@@ -1,22 +1,12 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
 import style from "./ButtonComps.module.css";
 
 interface IProps {
   handleLike: () => void;
-  isLiked?: boolean;
-  isDisliked?: boolean;
-  changeToLike?: () => void;
+  forceActive: boolean;
 }
 
-export default function UpVote({
-  handleLike,
-  isLiked,
-  isDisliked,
-  changeToLike,
-}: IProps) {
-  const history = useHistory();
-
+export default function UpVote({ handleLike, forceActive }: IProps) {
   const icon = (
     <svg
       width={24}
@@ -28,29 +18,15 @@ export default function UpVote({
     </svg>
   );
 
-  if (isLiked === undefined && isDisliked === undefined) {
-    return (
-      <Link to="/home" className={style.container_votebtn} onClick={handleLike}>
-        <div className={`${style.btn} ${style.btn_up} `}>{icon}</div>
-      </Link>
-    );
-  } else {
-    return (
+  return (
+    <div className={style.container_votebtn} onClick={handleLike}>
       <div
-        className={style.container_votebtn}
-        onClick={() => {
-          changeToLike ? changeToLike() : handleLike();
-          history.goBack();
-        }}
+        className={`${style.btn} ${style.btn_up} ${
+          forceActive && style.btn_forceActive
+        }`}
       >
-        <div
-          className={`${style.btn} ${style.btn_up} ${
-            isLiked && style.btn_forceActive
-          }`}
-        >
-          {icon}
-        </div>
+        {icon}
       </div>
-    );
-  }
+    </div>
+  );
 }
