@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import DownVote from "../ButtonComps/DownVote";
 import UpVote from "../ButtonComps/UpVote";
@@ -20,6 +20,19 @@ export default function VotingActions({
   handleClickMiddleButton,
   MiddleButtonText,
 }: IVotingActionsProps) {
+  const [disabled, setDisabled] = useState(false);
+
+  const onClick = async () => {
+    if (disabled) {
+      return;
+    }
+    setDisabled(true);
+    handleLike();
+    setTimeout(() => {
+      setDisabled(false);
+    }, 1000);
+  };
+
   return (
     <motion.div
       animate={{ opacity: 1 }}
@@ -42,7 +55,11 @@ export default function VotingActions({
           {MiddleButtonText}
         </div>
       </div>
-      <UpVote handleLike={handleLike} forceActive={forceActiveLikeButton} />
+      <UpVote
+        onClick={onClick}
+        disabled={disabled}
+        forceActive={forceActiveLikeButton}
+      />
     </motion.div>
   );
 }

@@ -52,11 +52,11 @@ export default function StoreProvider({
     userAuth?.userInfo?.uid as string
   );
 
-  useGetAllMatches(
-    userAuth?.userInfo.uid,
-    likedMovieIds,
-    userProfile?.friendsIdOnly
-  );
+  // useGetAllMatches(
+  //   userAuth?.userInfo.uid,
+  //   likedMovieIds,
+  //   userProfile?.friendsIdOnly
+  // );
 
   const [isLoading, setIsLoading] = useState(true);
   const size = useGetWIndowsSizing();
