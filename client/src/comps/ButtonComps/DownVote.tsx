@@ -26,7 +26,7 @@ export default function DownVote({
 
   return (
     <button
-      disabled={disabled}
+      disabled={disabled || forceActive}
       onClick={onClick}
       className={style.container_votebtn}
     >
