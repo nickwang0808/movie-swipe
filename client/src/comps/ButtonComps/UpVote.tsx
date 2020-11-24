@@ -2,11 +2,12 @@ import React from "react";
 import style from "./ButtonComps.module.css";
 
 interface IProps {
-  handleLike: () => void;
   forceActive: boolean;
+  disabled: boolean;
+  onClick: () => void;
 }
 
-export default function UpVote({ handleLike, forceActive }: IProps) {
+export default function UpVote({ forceActive, disabled, onClick }: IProps) {
   const icon = (
     <svg
       width={24}
@@ -19,7 +20,11 @@ export default function UpVote({ handleLike, forceActive }: IProps) {
   );
 
   return (
-    <div className={style.container_votebtn} onClick={handleLike}>
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      className={style.container_votebtn}
+    >
       <div
         className={`${style.btn} ${style.btn_up} ${
           forceActive && style.btn_forceActive
@@ -27,6 +32,6 @@ export default function UpVote({ handleLike, forceActive }: IProps) {
       >
         {icon}
       </div>
-    </div>
+    </button>
   );
 }
