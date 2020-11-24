@@ -33,7 +33,7 @@ export default function MovieDetails({
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
   const {
     likedMoviesInfos,
-    // matches,
+    userProfile,
     watchedMovieInfos,
     userAuth,
     dislikedMovies,
@@ -208,6 +208,10 @@ export default function MovieDetails({
             }, 500);
           } else {
             UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, false);
+            cloudFn.httpsCallable("changeLikeToDislike")({
+              matches: matchesUid,
+              movieId: movieID,
+            });
           }
         }}
         handleLike={() => {
@@ -218,6 +222,10 @@ export default function MovieDetails({
             }, 500);
           } else {
             UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, true);
+            cloudFn.httpsCallable("checkMatchesWhileSwiping")({
+              myLike: movieID,
+              myFriends: userProfile?.friendsIdOnly,
+            });
           }
         }}
         MiddleButtonText={MiddleButtonText}

@@ -15,8 +15,6 @@ import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
 import React, { useContext } from "react";
-import { IonApp, IonRouterOutlet } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
 import "./styles/style.css";
 import LikeOrNo from "./comps/Main/LikeOrNo";
 import Nav from "./comps/Nav/Nav";
