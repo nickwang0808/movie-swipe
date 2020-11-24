@@ -1,70 +1,27 @@
 import * as functions from "firebase-functions";
 import { db } from ".";
-import arrayChunks from "./HelperFunctions/ArrayChunks";
 
-interface IUserInfo {
-  email: string;
-  name: string | null;
-  uid: string;
-}
-
-interface result {
-  matchedMovie: number;
-  friendInfo: IUserInfo[];
+export interface LikedMovieWithMatches {
+  movieId: number;
+  matches: string[];
 }
 
 const findAllMatches = functions.https.onCall(async (data, context) => {
   if (context.auth) {
-    const myFriends: string[][] = arrayChunks(data.myFriends, 10);
-    const myLikes: number[] = data.myLikes;
+    const myUid = context.auth.uid;
+    const friendUid = data.friendUid;
+    const myLikes = data.myLikes;
 
-    const matchedFriendsLikes: result[] = [];
-    await Promise.all(
-      myFriends.map(async (chunks) => {
-        const query = db
-          .collectionGroup("User_Details")
-          .where("uid", "in", chunks);
-        const querySnapShot = await query.get();
-        await Promise.all(
-          querySnapShot.docs.map(async (doc) => {
-            const data = doc.data();
-            const friendsLike: number[] = data.liked_movies;
-            const matchedMovies = myLikes.filter((element) =>
-              friendsLike.includes(element)
-            );
-            if (matchedMovies) {
-              const friendUid: string = data.uid;
-              const userInfoDoc = await db
-                .collection("Users")
-                .doc(friendUid)
-                .get();
-              const userDetails = userInfoDoc.data();
+    const friendsLike = await getFriendLikes(friendUid);
+    if (friendsLike.length === 0) return;
 
-              matchedMovies.forEach((movie) => {
-                const foundIndex = matchedFriendsLikes.findIndex(
-                  (elem) => elem.matchedMovie === movie
-                );
-                if (foundIndex === -1) {
-                  matchedFriendsLikes.push({
-                    matchedMovie: movie,
-                    friendInfo: [userDetails as IUserInfo],
-                  });
-                } else {
-                  matchedFriendsLikes[foundIndex].friendInfo.push(
-                    userDetails as IUserInfo
-                  );
-                }
-                return;
-              });
-            }
-            return;
-          })
-        );
-      })
-    );
+    const matchedMovie = checkMatches(myLikes, friendsLike);
+    if (matchedMovie.length === 0) return;
 
-    console.log("matchedFriendsLikes", matchedFriendsLikes);
-    return matchedFriendsLikes;
+    await updateMatch(myUid, friendUid, matchedMovie);
+    await updateMatch(friendUid, myUid, matchedMovie);
+
+    return;
   } else {
     throw new functions.https.HttpsError(
       "failed-precondition",
@@ -74,3 +31,52 @@ const findAllMatches = functions.https.onCall(async (data, context) => {
 });
 
 export default findAllMatches;
+
+async function updateMatch(
+  userId: string,
+  friendId: string,
+  movieList: number[]
+) {
+  const userRef = db
+    .collection("Users")
+    .doc(userId)
+    .collection("User_Details")
+    .doc("Liked_Movies");
+
+  let liked_movies_matches: LikedMovieWithMatches[] = (
+    await userRef.get()
+  ).data()?.liked_movies_matches;
+
+  await Promise.all(
+    movieList.map(async (movieId) => {
+      const foundIndex = liked_movies_matches.findIndex(
+        (elem) => elem.movieId === movieId
+      );
+      liked_movies_matches[foundIndex].matches.push(friendId);
+      return;
+    })
+  );
+
+  userRef.update({ liked_movies_matches });
+}
+
+function checkMatches(myLikes: number[], friendLikes: number[]) {
+  let tempArray: number[] = [];
+  myLikes.forEach((myLike) => {
+    if (friendLikes.includes(myLike)) {
+      tempArray.push(myLike);
+    }
+    return;
+  });
+  return tempArray;
+}
+
+async function getFriendLikes(uid: string) {
+  const userRef = db
+    .collection("Users")
+    .doc(uid)
+    .collection("User_Details")
+    .doc("Liked_Movies");
+  const friendLikes: number[] = (await userRef.get()).data()?.liked_movies;
+  return friendLikes;
+}

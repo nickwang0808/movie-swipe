@@ -5,8 +5,6 @@ const arrayUnion = admin.firestore.FieldValue.arrayUnion;
 
 const sendFrendReq = functions.https.onCall(async (data, context) => {
   if (context.auth) {
-    console.log("if (context.auth) ");
-
     const emailToFind = data.email;
     // make sure data format is correct
     if (!(typeof emailToFind === "string") || emailToFind.length === 0) {

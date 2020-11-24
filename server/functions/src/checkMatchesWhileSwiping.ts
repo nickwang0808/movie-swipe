@@ -13,49 +13,6 @@ export interface LikedMovieWithMatches {
   matches: string[];
 }
 
-const updateMatchToMyDb = async (
-  myUid: string,
-  friendUid: string[],
-  movieId: number
-) => {
-  const myDocRef = db
-    .collection("Users")
-    .doc(myUid)
-    .collection("User_Details")
-    .doc("Liked_Movies");
-
-  const liked_movies_matches: LikedMovieWithMatches[] = (
-    await myDocRef.get()
-  ).data()?.liked_movies_matches;
-
-  const foundIndex = liked_movies_matches.findIndex(
-    (elem) => elem.movieId === movieId
-  );
-  liked_movies_matches[foundIndex].matches.push(...friendUid);
-  await myDocRef.update({ liked_movies_matches });
-};
-const updateMatchToFriendDb = async (
-  myUid: string,
-  friendUid: string,
-  movieId: number
-) => {
-  const myDocRef = db
-    .collection("Users")
-    .doc(friendUid)
-    .collection("User_Details")
-    .doc("Liked_Movies");
-
-  const liked_movies_matches: LikedMovieWithMatches[] = (
-    await myDocRef.get()
-  ).data()?.liked_movies_matches;
-
-  const foundIndex = liked_movies_matches.findIndex(
-    (elem) => elem.movieId === movieId
-  );
-  liked_movies_matches[foundIndex].matches.push(myUid);
-  await myDocRef.update({ liked_movies_matches });
-};
-
 const checkMatchesWhileSwiping = functions.https.onCall(
   async (data, context) => {
     if (context.auth) {
@@ -73,6 +30,9 @@ const checkMatchesWhileSwiping = functions.https.onCall(
             .where("uid", "in", chunks)
             .where("liked_movies", "array-contains", myLike);
           const querySnapShot = await query.get();
+          if (querySnapShot.empty) {
+            return;
+          }
           // look up those users detail
           const friendUidList = querySnapShot.docs.map(
             (doc) => doc.data().uid as string
@@ -113,9 +73,48 @@ const checkMatchesWhileSwiping = functions.https.onCall(
 
 export default checkMatchesWhileSwiping;
 
-// const email = doc.data().email as string;
-// const name = doc.data().name as string | null;
-// const uid = doc.data().uid as string;
-// console.log("doc", doc.data());
+async function updateMatchToMyDb(
+  myUid: string,
+  friendUid: string[],
+  movieId: number
+) {
+  console.log("run updateMatchToMyDb");
 
-// return { email, name, uid };
+  const myDocRef = db
+    .collection("Users")
+    .doc(myUid)
+    .collection("User_Details")
+    .doc("Liked_Movies");
+
+  const liked_movies_matches: LikedMovieWithMatches[] = (
+    await myDocRef.get()
+  ).data()?.liked_movies_matches;
+
+  const foundIndex = liked_movies_matches.findIndex(
+    (elem) => elem.movieId === movieId
+  );
+  liked_movies_matches[foundIndex].matches.push(...friendUid);
+  await myDocRef.update({ liked_movies_matches });
+}
+
+async function updateMatchToFriendDb(
+  myUid: string,
+  friendUid: string,
+  movieId: number
+) {
+  const myDocRef = db
+    .collection("Users")
+    .doc(friendUid)
+    .collection("User_Details")
+    .doc("Liked_Movies");
+
+  const liked_movies_matches: LikedMovieWithMatches[] = (
+    await myDocRef.get()
+  ).data()?.liked_movies_matches;
+
+  const foundIndex = liked_movies_matches.findIndex(
+    (elem) => elem.movieId === movieId
+  );
+  liked_movies_matches[foundIndex].matches.push(myUid);
+  await myDocRef.update({ liked_movies_matches });
+}
