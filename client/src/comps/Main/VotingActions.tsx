@@ -22,15 +22,15 @@ export default function VotingActions({
 }: IVotingActionsProps) {
   const [disabled, setDisabled] = useState(false);
 
-  const onClick = async () => {
+  const onClick = async (isLike: boolean) => {
     if (disabled) {
       return;
     }
     setDisabled(true);
-    handleLike();
+    isLike ? handleLike() : handleDislike();
     setTimeout(() => {
       setDisabled(false);
-    }, 1000);
+    }, 1500);
   };
 
   return (
@@ -44,7 +44,8 @@ export default function VotingActions({
       className="container_vote"
     >
       <DownVote
-        handleDislike={handleDislike}
+        onClick={() => onClick(false)}
+        disabled={disabled}
         forceActive={forceActiveDislikeButton}
       />
       <div className={sharedstyle.container_detailsbtn}>
@@ -56,7 +57,7 @@ export default function VotingActions({
         </div>
       </div>
       <UpVote
-        onClick={onClick}
+        onClick={() => onClick(true)}
         disabled={disabled}
         forceActive={forceActiveLikeButton}
       />

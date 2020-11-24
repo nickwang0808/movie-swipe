@@ -54,6 +54,7 @@ export default function LikeOrNo({ userId }: ICompProps) {
     console.log("like");
     handleNext();
     if (userProfile && userProfile.friendsIdOnly.length > 0) {
+      // check friends on client side to sae server load
       const response = await cloudFn.httpsCallable("checkMatchesWhileSwiping")({
         myLike: movieID,
         myFriends: userProfile?.friendsIdOnly,

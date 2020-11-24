@@ -3,11 +3,16 @@ import { Link } from "react-router-dom";
 import style from "./ButtonComps.module.css";
 
 interface IDownVote {
-  handleDislike: () => void;
   forceActive: boolean;
+  disabled: boolean;
+  onClick: () => void;
 }
 
-export default function DownVote({ handleDislike, forceActive }: IDownVote) {
+export default function DownVote({
+  disabled,
+  onClick,
+  forceActive,
+}: IDownVote) {
   const icon = (
     <svg
       width={24}
@@ -20,7 +25,11 @@ export default function DownVote({ handleDislike, forceActive }: IDownVote) {
   );
 
   return (
-    <div className={style.container_votebtn} onClick={handleDislike}>
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      className={style.container_votebtn}
+    >
       <div
         className={`${style.btn} ${style.btn_down} ${
           forceActive && style.btn_forceActive
@@ -28,6 +37,6 @@ export default function DownVote({ handleDislike, forceActive }: IDownVote) {
       >
         {icon}
       </div>
-    </div>
+    </button>
   );
 }
