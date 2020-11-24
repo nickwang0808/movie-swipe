@@ -21,7 +21,7 @@ export default function UpVote({ forceActive, disabled, onClick }: IProps) {
 
   return (
     <button
-      disabled={disabled}
+      disabled={disabled || forceActive}
       onClick={onClick}
       className={style.container_votebtn}
     >

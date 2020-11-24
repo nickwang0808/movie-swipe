@@ -10,7 +10,7 @@ interface IPendingInvite {
 }
 
 export default function PendingInvite({ pendingReceived }: IPendingInvite) {
-  const { userAuth } = useContext(UserContext);
+  const { userAuth, likedMovieIds } = useContext(UserContext);
 
   const handleDecline = async (senderId: string) => {
     if (userAuth) {
@@ -26,6 +26,12 @@ export default function PendingInvite({ pendingReceived }: IPendingInvite) {
       await cloudFn.httpsCallable("acceptRequest")({
         id: senderId,
       });
+      if (likedMovieIds && likedMovieIds.length > 0) {
+        await cloudFn.httpsCallable("findAllMatches")({
+          friendUid: senderId,
+          myLikes: likedMovieIds,
+        });
+      }
     }
   };
 

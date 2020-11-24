@@ -22,7 +22,7 @@ export default function useGetLikedMovies(userID: string) {
   const [likedMoviesInfos, setLikedMoviesInfos] = useState<
     MovieDetailWithMatches[]
   >([]);
-  const [likedMovieIds, setLikedMovieIds] = useState<string[]>();
+  const [likedMovieIds, setLikedMovieIds] = useState<number[]>();
   const [watchedMovieInfos, setWatchedMovieInfos] = useState<
     IWatchedMovieInfo[]
   >([]);
@@ -76,7 +76,7 @@ export default function useGetLikedMovies(userID: string) {
         .onSnapshot(async (doc) => {
           if (doc.exists) {
             const data = doc.data();
-            if (data) {
+            if (data && data.watched.length > 0) {
               // here we take the fetched id and get the actual movie data
               const watchedResult: IWatchedMovieInfo[] = await Promise.all(
                 data.watched.map(
