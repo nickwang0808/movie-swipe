@@ -1,6 +1,5 @@
 import * as functions from "firebase-functions";
-import { arrayUnion, db, arrayRemove } from ".";
-import { LikedMovieWithMatches } from "./checkMatchesWhileSwiping";
+import { arrayUnion, db, arrayRemove, LikedMovieWithMatches } from ".";
 
 export const handleWatched = functions.https.onCall(async (data, context) => {
   if (context.auth) {
