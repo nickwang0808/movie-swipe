@@ -43,15 +43,15 @@ export default function MovieDetails({
 
   const { id } = useParams<{ id: string }>();
   const movieID = Number(id);
-
-  const [matchedFriends, setMatchedFriends] = useState<IUserInfo[]>();
-
-  const matchesUid = likedMoviesInfos.find((elem) => elem.id === movieID)
-    ?.matches as string[];
   const watchedFriends = watchedMovieInfos?.find(
     (element) => element.movieId === movieID
   )?.watchedWith;
+
+  const [matchedFriends, setMatchedFriends] = useState<IUserInfo[]>();
+
   useEffect(() => {
+    const matchesUid = likedMoviesInfos.find((elem) => elem.id === movieID)
+      ?.matches as string[];
     if (matchesUid && matchesUid.length > 0) {
       (async () => {
         const result = await cloudFn.httpsCallable("userLookUp")({
@@ -60,7 +60,7 @@ export default function MovieDetails({
         result && setMatchedFriends(result.data);
       })();
     }
-  }, [matchesUid]);
+  }, [likedMoviesInfos]);
 
   const history = useHistory();
   const isFromHome = useLocation().pathname.includes("home");
@@ -179,13 +179,14 @@ export default function MovieDetails({
         >
           <div className={style.container_watch}></div>
           <div className={style.container_description}>
-            {((matchesUid && matchesUid.length > 0) || watchedFriends) && (
+            {(matchedFriends || watchedFriends) && (
               <WatchedAlert
                 matches={matchedFriends}
                 watchedWith={watchedFriends}
                 setShowModal={setShowModal}
                 movieId={movieID}
                 userId={userAuth?.userInfo.uid as string}
+                setMatchedFriends={() => setMatchedFriends(undefined)}
               />
             )}
 
@@ -210,7 +211,7 @@ export default function MovieDetails({
             } else {
               UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, false);
               cloudFn.httpsCallable("changeLikeToDislike")({
-                matches: matchesUid,
+                matches: matchedFriends?.map((elem) => elem.uid),
                 movieId: movieID,
               });
             }

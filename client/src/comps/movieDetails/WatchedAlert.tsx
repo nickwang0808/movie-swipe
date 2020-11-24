@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./WatchedAlert.module.css";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import { AnimatePresence, motion } from "framer-motion";
@@ -11,6 +11,7 @@ interface IMovieDetails {
   watchedWith?: { email: string; name: string; uid: string }[] | undefined;
   setShowModal: (arg: boolean) => void;
   userId: string;
+  setMatchedFriends: () => void;
 }
 
 const Ease = [0.16, 1, 0.3, 1];
@@ -21,7 +22,10 @@ export default function WatchedAlert({
   setShowModal,
   movieId,
   userId,
+  setMatchedFriends,
 }: IMovieDetails) {
+  const [disabled, setDisabled] = useState(false);
+
   return (
     <>
       <AnimatePresence>
@@ -89,19 +93,24 @@ export default function WatchedAlert({
           </div>
         </div>
         {matches && (
-          <motion.div
+          <motion.button
             key="watched4"
+            disabled={disabled}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.5, ease: Ease }}
             className={`${sharedstyle.btn} ${sharedstyle.btn_outline} ${style.btn_watched}`}
-            onClick={() => {
-              matches.length > 1
-                ? setShowModal(true)
-                : handleWatched(userId, movieId, [matches[0].uid]);
+            onClick={async () => {
+              setDisabled(true);
+              if (matches.length > 1) {
+                setShowModal(true);
+              } else {
+                await handleWatched(userId, movieId, [matches[0].uid]);
+                setMatchedFriends();
+              }
             }}
           >
             We've watched this!
-          </motion.div>
+          </motion.button>
         )}
       </AnimatePresence>
     </>
