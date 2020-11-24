@@ -16,21 +16,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
 }
 
 .card_grid {
-  width: 50%;
-  margin-top: 56px;
-  display: grid;
-  // grid-template-columns: repeat(3, 1fr);
-  grid-template-columns: repeat(auto-fit, minmax(174px, 1fr));
-  gap: 2rem;
-  justify-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .button {
+  cursor: pointer;
   margin-top: 64px;
   display: flex;
   flex-direction: row;
@@ -40,58 +39,69 @@
   background: #da0f3f;
   border-radius: 60px;
   color: white;
-
   width: 287px;
-
   font-size: 20px;
-
   & + div {
-    margin-top: 8px;
-    margin-bottom: 12px;
+    margin-top: 24px;
+    margin-bottom: 24px;
   }
 }
 
+.button:hover {
+  background: rgb(230, 38, 83);
+}
+
+.button:active {
+  background: rgb(161, 11, 46);
+}
+
 .get_it {
-  margin-top: 24px;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 5px;
-
   border: 2px solid #000000;
   box-sizing: border-box;
   border-radius: 30px;
   width: 291px;
-
   font-size: 16px;
 }
 
-.footer {
-  margin-top: 129px;
-  margin-bottom: 32px;
-  width: 100vw;
+.get_it:hover {
+  border-color: #6d6d6d;
+  color: #6d6d6d;
+}
 
+.footer {
+  margin-top: 130px;
+  margin-bottom: 10px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  border-top: 1px solid #000000;
+  border-top: 1px solid #a7a7a7;
 }
 
 .contact {
-  margin-top: 40px;
+  cursor: pointer;
+  margin-top: 25px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 10px 0;
-
-  width: 133px;
-
+  width: 150px;
   border: 2px solid #000000;
   box-sizing: border-box;
   border-radius: 30px;
+  font-size: 16px;
+}
+
+.contact:hover {
+  border-color: #6d6d6d;
+  color: #6d6d6d;
 }
 
 .links {

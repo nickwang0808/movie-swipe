@@ -1,6 +1,6 @@
 .card {
   height: 174px;
-  width: 174px;
+  width: 180px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -8,13 +8,19 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   text-align: center;
+  line-height: 150%;
+  margin: 0 1rem;
+}
+
+.card h3 {
+  margin: 1rem 0;
 }
 
 .center_card {
@@ -33,3 +39,4 @@
       -ms-flex-align: center;
           align-items: center;
 }
+/*# sourceMappingURL=card.module.css.map */

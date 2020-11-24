@@ -13,7 +13,6 @@ export default function Home() {
   return (
     <>
       <div className={style.container}>
-        <div />
         <div className={style.content}>
           <Title />
           <Video />
@@ -23,22 +22,21 @@ export default function Home() {
             <Card3 />
           </div>
           <div className={style.button}>Start Swiping</div>
-          <div>(Must use mobile device)</div>
+          {/* <div>(Must use mobile device)</div> */}
           <OR />
 
           <div className={style.get_it}>
             Get it on
             <img src="googleplay.png" />
           </div>
-
-          <div className={style.footer}>
+        </div>
+        <div className={style.footer}>
             <div className={style.contact}>Say Hello</div>
             <div className={style.links}>
               <Link href="terms">Terms of Use and Privacy Policy</Link>
               <span> © Fox & Grey LLC, 2020</span>
             </div>
           </div>
-        </div>
       </div>
     </>
   )

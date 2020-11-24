@@ -1,11 +1,17 @@
 .card {
   height: 174px;
-  width: 174px;
+  width: 180px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
+  line-height: 150%;
+  margin: 0 1rem;
+}
+
+.card h3 {
+  margin: 1rem 0;
 }
 
 .center_card {
