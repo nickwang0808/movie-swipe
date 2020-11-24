@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { MovieDetail } from "./APICalls/searchMovieByID";
-import useGetAllMatches, { IMatches } from "./db-operations/useGetAllMatches";
 import useGetDislikedMovies from "./db-operations/useGetDislikedMovies";
 import useGetLikedMovies, {
   IWatchedMovieInfo,
@@ -13,6 +11,12 @@ import useGetWIndowsSizing, {
   ISize,
 } from "./HelperFunctions/useGetWIndowsSizing";
 
+export interface IUserInfo {
+  email: string;
+  name: string | null;
+  uid: string;
+}
+
 interface IUser {
   isLoggedIn: boolean;
   userInfo: firebase.User;
@@ -22,6 +26,7 @@ interface IStore {
   userAuth: IUser | undefined | null;
   userProfile: IUserProfile | undefined;
   likedMoviesInfos: MovieDetailWithMatches[];
+  likedMovieIds: number[] | undefined;
   dislikedMovies: number[] | undefined;
   watchedMovieInfos: IWatchedMovieInfo[];
   movieListInDeck: Result[] | undefined;
@@ -29,7 +34,6 @@ interface IStore {
   isLoading: boolean;
   handleNext: () => void;
   size: ISize;
-  // matches: IMatches[] | undefined;
 }
 
 export const UserContext = React.createContext({} as IStore);
@@ -51,12 +55,6 @@ export default function StoreProvider({
   const { movieListInDeck, handleNext, genrePref } = useGetMovies(
     userAuth?.userInfo?.uid as string
   );
-
-  // useGetAllMatches(
-  //   userAuth?.userInfo.uid,
-  //   likedMovieIds,
-  //   userProfile?.friendsIdOnly
-  // );
 
   const [isLoading, setIsLoading] = useState(true);
   const size = useGetWIndowsSizing();
@@ -85,13 +83,13 @@ export default function StoreProvider({
         userAuth,
         userProfile,
         likedMoviesInfos,
+        likedMovieIds,
         dislikedMovies,
         watchedMovieInfos,
         movieListInDeck,
         handleNext,
         genrePref,
         size,
-        // matches,
       }}
     >
       {children}

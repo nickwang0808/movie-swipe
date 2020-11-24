@@ -19,10 +19,9 @@ import {
   useTransform,
 } from "framer-motion";
 import Deck from "./Deck/Deck";
-import { UserContext } from "../../store";
+import { IUserInfo, UserContext } from "../../store";
 import { Route, useHistory } from "react-router";
 import { cloudFn } from "../../firebase/config";
-import { IUserInfo } from "../../db-operations/useGetAllMatches";
 
 interface ICompProps {
   userId: string;

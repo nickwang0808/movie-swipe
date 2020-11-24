@@ -22,7 +22,7 @@ export default function useGetLikedMovies(userID: string) {
   const [likedMoviesInfos, setLikedMoviesInfos] = useState<
     MovieDetailWithMatches[]
   >([]);
-  const [likedMovieIds, setLikedMovieIds] = useState<string[]>();
+  const [likedMovieIds, setLikedMovieIds] = useState<number[]>();
   const [watchedMovieInfos, setWatchedMovieInfos] = useState<
     IWatchedMovieInfo[]
   >([]);
