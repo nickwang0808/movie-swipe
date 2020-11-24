@@ -5,7 +5,6 @@ const db = admin.firestore();
 const userLookUp = functions.https.onCall(async (data, context) => {
   if (context.auth) {
     const IDsToLookUp: string[] = data.UserIDs;
-    // console.log("IDsToLookUp", IDsToLookUp);
 
     if (IDsToLookUp.length > 0) {
       return await Promise.all(
@@ -14,7 +13,6 @@ const userLookUp = functions.https.onCall(async (data, context) => {
           const data = doc.data();
 
           if (data) {
-            // console.log("data", data);
             return { email: data?.email, uid: data?.uid, name: data?.name };
           } else {
             throw new functions.https.HttpsError(

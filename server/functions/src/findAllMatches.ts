@@ -1,10 +1,5 @@
 import * as functions from "firebase-functions";
-import { db } from ".";
-
-export interface LikedMovieWithMatches {
-  movieId: number;
-  matches: string[];
-}
+import { db, LikedMovieWithMatches } from ".";
 
 const findAllMatches = functions.https.onCall(async (data, context) => {
   if (context.auth) {

@@ -1,16 +1,11 @@
 import * as functions from "firebase-functions";
-import { db } from ".";
+import { db, LikedMovieWithMatches } from ".";
 import arrayChunks from "./HelperFunctions/ArrayChunks";
 
 interface IUserInfo {
   email: string;
   name: string | null;
   uid: string;
-}
-
-export interface LikedMovieWithMatches {
-  movieId: number;
-  matches: string[];
 }
 
 const checkMatchesWhileSwiping = functions.https.onCall(
