@@ -2,8 +2,8 @@ import React from "react";
 import style from "./WatchedAlert.module.css";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import { AnimatePresence, motion } from "framer-motion";
-import { IUserInfo } from "../../db-operations/useGetAllMatches";
 import handleWatched from "../../db-operations/handleWatched";
+import { IUserInfo } from "../../store";
 
 interface IMovieDetails {
   matches?: IUserInfo[] | undefined;
