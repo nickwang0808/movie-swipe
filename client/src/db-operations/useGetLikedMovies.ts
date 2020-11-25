@@ -1,3 +1,4 @@
+import { firestore } from "firebase";
 import { useEffect, useState } from "react";
 import searchMovieByID, { MovieDetail } from "../APICalls/searchMovieByID";
 import { cloudFn, db } from "../firebase/config";
@@ -9,13 +10,18 @@ export interface IWatchedMovieInfo {
   movieDetails: MovieDetail;
 }
 
-export interface MovieDetailWithMatches extends MovieDetail {
-  matches: string[];
+export interface MovieDetailWithMatches
+  extends MovieDetail,
+    WithMatchesAndTime {}
+
+export interface LikedMovieWithMatches extends WithMatchesAndTime {
+  movieId: number;
 }
 
-export interface LikedMovieWithMatches {
-  movieId: number;
+export interface WithMatchesAndTime {
   matches: string[];
+  like_time: number;
+  match_time: number | null;
 }
 
 export default function useGetLikedMovies(userID: string) {
@@ -47,6 +53,8 @@ export default function useGetLikedMovies(userID: string) {
                     return {
                       ...(await searchMovieByID(movie.movieId)),
                       matches: movie.matches,
+                      like_time: movie.like_time,
+                      match_time: movie.match_time,
                     };
                   }
                 )
