@@ -9,14 +9,15 @@ import style from "./MovieDetails.module.css";
 import VotingActions from "../Main/VotingActions";
 import WatchedAlert from "./WatchedAlert";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
-import { UserContext } from "../../store";
+import { IUserInfo, UserContext } from "../../store";
 import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { IUserInfo } from "../../db-operations/useGetAllMatches";
 import Modal from "../notification/modal";
 import WatchedWithWho from "../notification/ModalContent/WatchedWithWho";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
+import { cloudFn } from "../../firebase/config";
+import { UserInfo } from "os";
 
 interface IMovieDetails {
   handleDislike?: () => void;
@@ -32,7 +33,7 @@ export default function MovieDetails({
   const [movieDetails, setMovieDetails] = useState<MovieDetail>();
   const {
     likedMoviesInfos,
-    matches,
+    userProfile,
     watchedMovieInfos,
     userAuth,
     dislikedMovies,
@@ -42,15 +43,25 @@ export default function MovieDetails({
 
   const { id } = useParams<{ id: string }>();
   const movieID = Number(id);
-  const matchedFriends = matches?.find(
-    (element) => element.matchedMovie === movieID
-  )
-    ? matches?.find((element) => element.matchedMovie === movieID)?.friendInfo
-    : undefined;
-
   const watchedFriends = watchedMovieInfos?.find(
     (element) => element.movieId === movieID
   )?.watchedWith;
+
+  const [matchedFriends, setMatchedFriends] = useState<IUserInfo[]>();
+
+  useEffect(() => {
+    const matchesUid = likedMoviesInfos.find((elem) => elem.id === movieID)
+      ?.matches as string[];
+    if (matchesUid && matchesUid.length > 0) {
+      (async () => {
+        const result = await cloudFn.httpsCallable("userLookUp")({
+          UserIDs: matchesUid,
+        });
+        result && setMatchedFriends(result.data);
+      })();
+    }
+  }, [likedMoviesInfos]);
+
   const history = useHistory();
   const isFromHome = useLocation().pathname.includes("home");
 
@@ -175,6 +186,7 @@ export default function MovieDetails({
                 setShowModal={setShowModal}
                 movieId={movieID}
                 userId={userAuth?.userInfo.uid as string}
+                setMatchedFriends={() => setMatchedFriends(undefined)}
               />
             )}
 
@@ -188,36 +200,48 @@ export default function MovieDetails({
         </div> */}
         </motion.div>
       </div>
-      <VotingActions
-        handleDislike={() => {
-          if (isFromHome) {
-            history.goBack();
-            setTimeout(() => {
-              handleDislike && handleDislike();
-            }, 500);
-          } else {
-            UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, false);
+      {!watchedFriends && (
+        <VotingActions
+          handleDislike={() => {
+            if (isFromHome) {
+              history.goBack();
+              setTimeout(() => {
+                handleDislike && handleDislike();
+              }, 500);
+            } else {
+              UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, false);
+              cloudFn.httpsCallable("changeLikeToDislike")({
+                matches: matchedFriends?.map((elem) => elem.uid),
+                movieId: movieID,
+              });
+            }
+          }}
+          handleLike={() => {
+            if (isFromHome) {
+              history.goBack();
+              setTimeout(() => {
+                handleLike && handleLike();
+              }, 500);
+            } else {
+              UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, true);
+              cloudFn.httpsCallable("checkMatchesWhileSwiping")({
+                myLike: movieID,
+                myFriends: userProfile?.friendsIdOnly,
+              });
+            }
+          }}
+          MiddleButtonText={MiddleButtonText}
+          handleClickMiddleButton={() => history.goBack()}
+          forceActiveDislikeButton={
+            dislikedMovies?.find((id) => id === movieID) ? true : false
           }
-        }}
-        handleLike={() => {
-          if (isFromHome) {
-            history.goBack();
-            setTimeout(() => {
-              handleLike && handleLike();
-            }, 500);
-          } else {
-            UpdateLikeToDB(userAuth?.userInfo.uid as string, movieID, true);
+          forceActiveLikeButton={
+            likedMoviesInfos?.find((movie) => movie.id === movieID)
+              ? true
+              : false
           }
-        }}
-        MiddleButtonText={MiddleButtonText}
-        handleClickMiddleButton={() => history.goBack()}
-        forceActiveDislikeButton={
-          dislikedMovies?.find((id) => id === movieID) ? true : false
-        }
-        forceActiveLikeButton={
-          likedMoviesInfos?.find((movie) => movie.id === movieID) ? true : false
-        }
-      />
+        />
+      )}
     </>
   );
 }

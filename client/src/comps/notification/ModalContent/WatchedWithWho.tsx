@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import handleWatched from "../../../db-operations/handleWatched";
-import { IUserInfo } from "../../../db-operations/useGetAllMatches";
 import style from "../notification.module.css";
 import sharedstyle from "../../ButtonComps/ButtonComps.module.css";
 import { IonCheckbox, IonItem, IonLabel } from "@ionic/react";
+import { IUserInfo } from "../../../store";
 
 interface IWatchedWithWho {
   uid: string;

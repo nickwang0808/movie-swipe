@@ -18,6 +18,7 @@ import checkMatchesWhileSwipingRoute from "./checkMatchesWhileSwiping";
 import handleWatchRoute from "./handleWatched";
 import deleteAllAccountRoute from "./DeleteAllAccount";
 import deleteAccountRoute from "./deleteAccount";
+import changeLikeToDislikeRoute from "./changeLikeToDislike";
 
 export const sendFriendReq = snedFriendReqRoute;
 export const userLookUp = userLookUpRoute;
@@ -29,3 +30,9 @@ export const checkMatchesWhileSwiping = checkMatchesWhileSwipingRoute;
 export const handleWatched = handleWatchRoute;
 export const deleteAllAccount = deleteAllAccountRoute;
 export const deleteAccount = deleteAccountRoute;
+export const changeLikeToDislike = changeLikeToDislikeRoute;
+
+export interface LikedMovieWithMatches {
+  movieId: number;
+  matches: string[];
+}

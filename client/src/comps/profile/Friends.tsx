@@ -24,6 +24,8 @@ export default function Friends() {
       setMessage("you can't add yourself as friend");
     } else if (emailInput.length === 0) {
       setMessage("please input email");
+    } else if (emailInput === userAuth?.userInfo.email) {
+      setMessage("You can't add yourself as friends");
     } else {
       setDisableInvite(true);
       const frienReqStatus = await cloudFn.httpsCallable("sendFriendReq")({
@@ -50,12 +52,12 @@ export default function Friends() {
         </Modal>
       )}
       <div className="container_allcontent">
-          <h1>
-            <BackButton linkTo="/profile" />
-            Friends
-          </h1>
+        <h1>
+          <BackButton linkTo="/profile" />
+          Friends
+        </h1>
         <div className="container_subcontent">
-        <p className="marginSides2 marginTop2 marginBottom2">
+          <p className="marginSides2 marginTop2 marginBottom2">
             We'll let you know when you and your friends both want to watch
             something!
           </p>
@@ -75,7 +77,7 @@ export default function Friends() {
                   return (
                     <ListViewFriendsButton
                       name={user.name}
-                      key={user.id}
+                      key={user.uid}
                       action={() => setFriendToDelete(user)}
                     />
                   );

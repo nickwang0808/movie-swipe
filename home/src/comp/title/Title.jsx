@@ -70,7 +70,7 @@ export default function Title() {
           />
         </svg>
       </div>
-      <h3>Find something to watch together... finally.</h3>
+      <h2>Find something to watch together... finally.</h2>
     </div>
   )
 }

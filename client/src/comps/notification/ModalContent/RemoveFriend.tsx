@@ -20,26 +20,28 @@ export default function RemoveFriend({
     <>
       <h1>Remove friend?</h1>
       <div className={style.modal_body}>
-        <p>Are you sure you want to remove {friendInfo.name} from your friends list?
+        <p>
+          Are you sure you want to remove {friendInfo.name} from your friends
+          list?
         </p>
-          <div className={style.container_actions}>
-            {/* <div
+        <div className={style.container_actions}>
+          {/* <div
               onClick={closeAction}
               className={`${sharedstyle.btn} ${sharedstyle.secondary}`}
             >
               Cancel
             </div> */}
-            <div
-              onClick={() => {
-                deleteAction(userId, friendInfo.id);
-                closeAction();
-              }}
-              className={`${sharedstyle.btn} ${style.primary}`}
-            >
-              Yes, do it!
-            </div>
+          <div
+            onClick={() => {
+              deleteAction(userId, friendInfo.uid);
+              closeAction();
+            }}
+            className={`${sharedstyle.btn} ${style.primary}`}
+          >
+            Yes, do it!
           </div>
         </div>
+      </div>
     </>
   );
 }

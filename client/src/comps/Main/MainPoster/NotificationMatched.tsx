@@ -1,9 +1,9 @@
 import React from "react";
 import style from "./NotificationMatched.module.css";
 import { motion } from "framer-motion";
-import { IUserInfo } from "../../../db-operations/useGetAllMatches";
 import baseUrl from "../../../HelperFunctions/ImgBaseUrl";
 import { Link } from "react-router-dom";
+import { IUserInfo } from "../../../store";
 
 interface INotificationMatched {
   setShowMatched: () => void;

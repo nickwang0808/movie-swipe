@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { arrayUnion, db, arrayRemove } from ".";
+import { arrayUnion, db, arrayRemove, LikedMovieWithMatches } from ".";
 
 export const handleWatched = functions.https.onCall(async (data, context) => {
   if (context.auth) {
@@ -20,8 +20,17 @@ export const handleWatched = functions.https.onCall(async (data, context) => {
           ...myWatchedWith.filter((id) => id !== friendId),
           userId,
         ];
-        await userRef.doc("Liked_Movies").update({
+        await userRef.doc("Watched").update({
           watched: arrayUnion({ movieId, watchedWith }),
+        });
+
+        const oldLikes: LikedMovieWithMatches[] = (
+          await userRef.doc("Liked_Movies").get()
+        ).data()?.liked_movies_matches;
+        const newLikes = oldLikes.filter((elem) => elem.movieId !== movieId);
+        await userRef.doc("Liked_Movies").update({
+          liked_movies_matches: newLikes,
+          liked_movies: arrayRemove(movieId),
         });
       })
     );

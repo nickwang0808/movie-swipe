@@ -19,10 +19,9 @@ import {
   useTransform,
 } from "framer-motion";
 import Deck from "./Deck/Deck";
-import { UserContext } from "../../store";
+import { IUserInfo, UserContext } from "../../store";
 import { Route, useHistory } from "react-router";
 import { cloudFn } from "../../firebase/config";
-import { IUserInfo } from "../../db-operations/useGetAllMatches";
 
 interface ICompProps {
   userId: string;
@@ -54,10 +53,12 @@ export default function LikeOrNo({ userId }: ICompProps) {
     console.log("like");
     handleNext();
     if (userProfile && userProfile.friendsIdOnly.length > 0) {
+      // check friends on client side to sae server load
       const response = await cloudFn.httpsCallable("checkMatchesWhileSwiping")({
         myLike: movieID,
         myFriends: userProfile?.friendsIdOnly,
       });
+      // TODO: instead of taking result, maybe look at the db to see matches
       if (response.data.length > 0) {
         setShowMatched({
           movieId: movieID,

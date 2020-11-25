@@ -4,6 +4,14 @@
   padding: 0;
 }
 
-body {
-  font-family: Poppins;
+html {
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+:root[mode="ios"],
+:root[mode="md"] {
+  --ion-font-family: "Poppins", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
