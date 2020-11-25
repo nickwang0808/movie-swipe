@@ -32,9 +32,13 @@ export interface OriginalLanguage {
 }
 
 export default function useGetMovies(userId: string) {
+  const storedPageNum = localStorage.getItem("pageNum");
+  const [pageNum, setPageNum] = useState(
+    storedPageNum ? Number(storedPageNum) : 1
+  );
+
   const [movieList, setMovieList] = useState<Result[]>();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [pageNum, setPageNum] = useState(1);
   const [genrePref, setGenrePref] = useState<number[]>();
 
   const [movieListInDeck, setMovieListInDeck] = useState<Result[]>();
@@ -207,7 +211,11 @@ export default function useGetMovies(userId: string) {
     if (movieList) {
       if ((movieList?.length as number) - currentIndex < 5) {
         console.log("refetch");
-        setPageNum((prev) => prev + 1);
+        setPageNum((prev) => {
+          localStorage.setItem("pageNum", String(prev + 1));
+          return prev + 1;
+        });
+
         setCurrentIndex(0);
       }
     }
