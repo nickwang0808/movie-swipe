@@ -15,7 +15,6 @@ export default function MyListMain() {
 
   useEffect(() => {
     if (likedMoviesInfos && userAuth) {
-      console.log("update old match count");
       updateOldMatchCounts(
         userAuth.userInfo.uid,
         likedMoviesInfos.filter((elem) => elem.matches.length > 0).length

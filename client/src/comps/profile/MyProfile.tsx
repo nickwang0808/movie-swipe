@@ -2,8 +2,7 @@ import React, { useContext, useState } from "react";
 import ListViewButton from "../ButtonComps/ListViewButton";
 import style from "./MyProfile.module.css";
 import Modal from "../notification/modal";
-import { cfaSignOut } from "capacitor-firebase-auth";
-import { auth, cloudFn, db } from "../../firebase/config";
+import { auth, cloudFn } from "../../firebase/config";
 import Friends from "./Friends";
 import About from "./About";
 import DislikedMovies from "./DislikedMovies";
@@ -11,11 +10,11 @@ import { motion } from "framer-motion";
 import { Link, Route } from "react-router-dom";
 import DeleteConfirmation from "./DeleteConfirmation";
 
-import firebase from "firebase/app";
+// import firebase from "firebase/app";
 import "firebase/auth";
 import { UserContext } from "../../store";
 
-var provider = new firebase.auth.GoogleAuthProvider();
+// var provider = new firebase.auth.GoogleAuthProvider();
 
 export default function MyProfile() {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -28,7 +27,6 @@ export default function MyProfile() {
         <Modal closeAction={() => setShowDeleteConfirmation(false)}>
           <DeleteConfirmation
             action={async () => {
-              console.log("deleted");
               localStorage.clear();
               const accountToDelete = auth.currentUser?.uid;
               if (!auth.currentUser?.email) {

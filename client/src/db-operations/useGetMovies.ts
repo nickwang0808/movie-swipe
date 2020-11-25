@@ -43,12 +43,14 @@ export default function useGetMovies(userId: string) {
 
   const [movieListInDeck, setMovieListInDeck] = useState<Result[]>();
 
+  // take the first 4 cards in the movie list
   useEffect(() => {
     if (movieList) {
       setMovieListInDeck(movieList?.slice(0, 4));
     }
   }, [movieList]);
 
+  // remove first card, and get another card from the movieList,
   const handleNext = () => {
     if (movieList && movieListInDeck) {
       let movieListInDeckCopy = [...movieListInDeck];
@@ -60,105 +62,12 @@ export default function useGetMovies(userId: string) {
   };
 
   useEffect(() => {
-    let tempStorage: Result[] = [];
-
-    const getVotedMoviesIds = async () => {
-      let votedMoviesIds: number[] = [];
-      const votedMoviesRef = db
-        .collection("Users")
-        .doc(userId)
-        .collection("User_Details");
-
-      const likedMoviesDoc = await votedMoviesRef.doc("Liked_Movies").get();
-      if (likedMoviesDoc.exists) {
-        const data = likedMoviesDoc.data()?.liked_movies;
-        votedMoviesIds = [...votedMoviesIds, ...data];
-      }
-
-      const watchedMoviesDoc = await votedMoviesRef.doc("Watched").get();
-      if (likedMoviesDoc.exists) {
-        const rawData = watchedMoviesDoc.data()?.watched as IWatchedMovieInfo[];
-        const data = rawData.map((watchedMovie) => watchedMovie.movieId);
-        votedMoviesIds = [...votedMoviesIds, ...data];
-      }
-
-      const dislikedMoviesDoc = await votedMoviesRef
-        .doc("Disliked_Movies")
-        .get();
-      if (dislikedMoviesDoc.exists) {
-        const data = dislikedMoviesDoc.data()?.disliked_movies;
-        votedMoviesIds = [...votedMoviesIds, ...data];
-      }
-      return votedMoviesIds;
-    };
-
-    const GetLocalVoted = () => {
-      const like = localStorage.getItem("liked_movies");
-      const dislike = localStorage.getItem("disliked_movies");
-
-      let voted = "";
-      if (like) {
-        voted = voted + like;
-      }
-      if (dislike) {
-        voted = voted + dislike;
-      }
-
-      if (voted !== "") {
-        return voted.split(",").map((elem) => Number(elem));
-      } else return null;
-    };
-
-    const fetchGenrePreference = async () => {
-      const doc = await db.collection("Users").doc(userId).get();
-      const data = doc.data()?.genre_preference;
-      if (data && data.length > 0) {
-        setGenrePref(data as number[]);
-        return data as number[];
-      } else {
-        setGenrePref(genreList.movie.map((elem) => elem.id));
-        return genreList.movie.map((elem) => elem.id);
-      }
-    };
-
-    const genreFiltering = (
-      genreIds: number[],
-      userPreference: number[] | undefined
-    ) => {
-      if (userPreference !== undefined) {
-        const result = genreIds.map((genreId) => {
-          const found = userPreference.includes(genreId);
-          if (found) {
-            // true is not allowed
-            return "pass";
-          } else {
-            return "fail";
-          }
-        });
-        if (result.includes("pass")) {
-          // no true allowed
-          return "pass";
-        } else {
-          return "fail";
-        }
-      } else return "pass";
-    };
-
-    const fetchPopularMovies = async () => {
-      const REACT_APP_TMDB_KEY = process.env.REACT_APP_TMDB_KEY;
-      const url = `https://api.themoviedb.org/3/movie/popular?api_key=${REACT_APP_TMDB_KEY}&language=en-US&page=${pageNum}`;
-      const response: IPopularMovies = await fetch(url).then((res) =>
-        res.json()
-      );
-      return response;
-    };
-
     async function getMovie() {
-      // console.log("getMovie()");
-      let votedMovies = await getVotedMoviesIds();
-      const movieListUnfiltered = await fetchPopularMovies();
-      const genrePreference = await fetchGenrePreference();
+      let votedMovies = await getVotedMoviesIds(userId);
+      const movieListUnfiltered = await fetchPopularMovies(pageNum);
+      const genrePreference = await fetchGenrePreference(userId, setGenrePref);
 
+      // join local voted with db votes
       const localVoted = GetLocalVoted();
       if (localVoted) {
         votedMovies = [
@@ -171,13 +80,10 @@ export default function useGetMovies(userId: string) {
         let newResults: Result[] = [];
         // filter voted movies out
         movieListUnfiltered.results.forEach((result) => {
-          if (!result.backdrop_path) return; // make sure movie has a poster
-          if (votedMovies.includes(result.id)) {
-            return;
-          }
+          if (!result.backdrop_path) return; // if movie hs no poster skip
+          if (votedMovies.includes(result.id)) return; // if voted skip
           if (genreFiltering(result.genre_ids, genrePreference) === "fail") {
-            console.log("genre check failed");
-            return;
+            return; // if filtered in genre, skip
           }
           newResults.push(result);
         });
@@ -193,9 +99,9 @@ export default function useGetMovies(userId: string) {
 
       setMovieList(() => {
         if (movieListInDeck) {
-          return [...movieListInDeck, ...tempStorage, ...filteredMovieList()];
+          return [...movieListInDeck, ...filteredMovieList()];
         } else {
-          return [...tempStorage, ...filteredMovieList()];
+          return [...filteredMovieList()];
         }
       });
       setPageNum(movieListUnfiltered.page);
@@ -207,19 +113,110 @@ export default function useGetMovies(userId: string) {
     // eslint-disable-next-line
   }, [userId, pageNum]);
 
+  // keep track of the index vs the movieList length, and refetch once below 6
   useEffect(() => {
     if (movieList) {
       if ((movieList?.length as number) - currentIndex < 5) {
-        console.log("refetch");
         setPageNum((prev) => {
-          localStorage.setItem("pageNum", String(prev + 1));
+          localStorage.setItem("pageNum", String(prev + 1)); // use local storage for pageNum save, keep future loading faster
           return prev + 1;
         });
-
         setCurrentIndex(0);
       }
     }
   }, [currentIndex, movieList]);
 
   return { movieListInDeck, handleNext, genrePref };
+}
+
+// ==================================================== End of Hook
+
+async function fetchGenrePreference(
+  userId: string,
+  setGenrePref: React.Dispatch<React.SetStateAction<number[] | undefined>>
+) {
+  const doc = await db.collection("Users").doc(userId).get();
+  const data = doc.data()?.genre_preference;
+  if (data && data.length > 0) {
+    setGenrePref(data as number[]);
+    return data as number[];
+  } else {
+    setGenrePref(genreList.movie.map((elem) => elem.id));
+    return genreList.movie.map((elem) => elem.id);
+  }
+}
+
+async function getVotedMoviesIds(userId: string) {
+  let votedMoviesIds: number[] = [];
+  const votedMoviesRef = db
+    .collection("Users")
+    .doc(userId)
+    .collection("User_Details");
+
+  const likedMoviesDoc = await votedMoviesRef.doc("Liked_Movies").get();
+  if (likedMoviesDoc.exists) {
+    const data = likedMoviesDoc.data()?.liked_movies;
+    votedMoviesIds = [...votedMoviesIds, ...data];
+  }
+
+  const watchedMoviesDoc = await votedMoviesRef.doc("Watched").get();
+  if (likedMoviesDoc.exists) {
+    const rawData = watchedMoviesDoc.data()?.watched as IWatchedMovieInfo[];
+    const data = rawData.map((watchedMovie) => watchedMovie.movieId);
+    votedMoviesIds = [...votedMoviesIds, ...data];
+  }
+
+  const dislikedMoviesDoc = await votedMoviesRef.doc("Disliked_Movies").get();
+  if (dislikedMoviesDoc.exists) {
+    const data = dislikedMoviesDoc.data()?.disliked_movies;
+    votedMoviesIds = [...votedMoviesIds, ...data];
+  }
+  return votedMoviesIds;
+}
+
+async function fetchPopularMovies(pageNum: number) {
+  const REACT_APP_TMDB_KEY = process.env.REACT_APP_TMDB_KEY;
+  const url = `https://api.themoviedb.org/3/movie/popular?api_key=${REACT_APP_TMDB_KEY}&language=en-US&page=${pageNum}`;
+  const response: IPopularMovies = await fetch(url).then((res) => res.json());
+  return response;
+}
+
+function genreFiltering(
+  genreIds: number[],
+  userPreference: number[] | undefined
+) {
+  if (userPreference !== undefined) {
+    const result = genreIds.map((genreId) => {
+      const found = userPreference.includes(genreId);
+      if (found) {
+        // true is not allowed
+        return "pass";
+      } else {
+        return "fail";
+      }
+    });
+    if (result.includes("pass")) {
+      // no true allowed
+      return "pass";
+    } else {
+      return "fail";
+    }
+  } else return "pass";
+}
+
+function GetLocalVoted() {
+  const like = localStorage.getItem("liked_movies");
+  const dislike = localStorage.getItem("disliked_movies");
+
+  let voted = "";
+  if (like) {
+    voted = voted + like;
+  }
+  if (dislike) {
+    voted = voted + dislike;
+  }
+
+  if (voted !== "") {
+    return voted.split(",").map((elem) => Number(elem));
+  } else return null;
 }

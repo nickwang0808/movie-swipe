@@ -3,9 +3,7 @@ import getGenres from "../../HelperFunctions/getGenres";
 import searchMovieByID, { MovieDetail } from "../../APICalls/searchMovieByID";
 import baseUrl from "../../HelperFunctions/ImgBaseUrl";
 import posterStyleMaker from "../../HelperFunctions/posterStyleMaker";
-// import StreamingServiceButton from "../ButtonComps/StreamingService";
 import style from "./MovieDetails.module.css";
-// import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import VotingActions from "../Main/VotingActions";
 import WatchedAlert from "./WatchedAlert";
 import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
@@ -17,7 +15,6 @@ import Modal from "../notification/modal";
 import WatchedWithWho from "../notification/ModalContent/WatchedWithWho";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 import { cloudFn } from "../../firebase/config";
-import { UserInfo } from "os";
 
 interface IMovieDetails {
   handleDislike?: () => void;
@@ -60,6 +57,7 @@ export default function MovieDetails({
         result && setMatchedFriends(result.data);
       })();
     }
+    // eslint-disable-next-line
   }, [likedMoviesInfos]);
 
   const history = useHistory();
@@ -88,7 +86,6 @@ export default function MovieDetails({
       try {
         return `https://www.youtube.com/embed/${trailerKey}?rel=0;controls=1;showinfo=0;fs=1;modestbranding=1`;
       } catch (err) {
-        console.log("err, can't find trailer url on youtube");
         return undefined;
       }
     }

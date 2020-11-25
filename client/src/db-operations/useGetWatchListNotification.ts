@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
-import { UserContext } from "../store";
 
 export default function useGetWatchListNotification(userId: string) {
   const [matchDiff, setMatchDiff] = useState(0);
-  const { likedMoviesInfos } = useContext(UserContext);
 
   useEffect(() => {
     if (userId) {
@@ -15,17 +13,15 @@ export default function useGetWatchListNotification(userId: string) {
         .doc("Match_Counts")
         .onSnapshot((doc) => {
           const new_match_counts: number = doc.data()?.new_match_counts;
-          // const new_match_counts = likedMoviesInfos.filter(
-          //   (liked) => liked.matches.length > 0
-          // )?.length;
-          console.log(new_match_counts);
           const old_match_counts: number = doc.data()?.old_match_counts;
 
           let diff = new_match_counts - old_match_counts;
           if (diff < 0) {
             diff = 0;
           }
-          setMatchDiff(diff);
+          if (!isNaN(diff)) {
+            setMatchDiff(diff);
+          }
         });
 
       return () => cleanUp();

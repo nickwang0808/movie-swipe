@@ -14,8 +14,6 @@ export default async function UpdateLikeToDB(
 ) {
   const userRef = db.collection("Users").doc(userId).collection("User_Details");
 
-  console.log("update");
-
   if (isLike) {
     await userRef.doc("Liked_Movies").update({
       liked_movies: arrayUnion(movieID),

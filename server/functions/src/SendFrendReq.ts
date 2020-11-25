@@ -16,12 +16,10 @@ const sendFrendReq = functions.https.onCall(async (data, context) => {
     }
 
     const currentUserUid = context.auth.uid;
-    console.log("currentUserUid", currentUserUid);
     // make sure user is authenticated
     try {
       const userFound = await admin.auth().getUserByEmail(emailToFind);
       if (userFound) {
-        console.log("user found");
         const userFoundUid = userFound.uid;
         const UsersRef = db.collection("Users");
         // add to current user pending send
@@ -38,7 +36,6 @@ const sendFrendReq = functions.https.onCall(async (data, context) => {
           .update({
             pending_received: arrayUnion(currentUserUid),
           });
-        console.log("friend request sent");
         // return "Friend Reqest Sent!";
         return { message: "Friend invite sent!" };
       } else {

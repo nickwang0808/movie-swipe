@@ -92,9 +92,7 @@ async function userInit(user_id: string) {
   const userRef = db.collection("Users").doc(user_id);
 
   // if no user found in db, init docs for them
-  // console.log("init user create");
   const userInfo = auth.currentUser;
-  // console.log("userInfo", userInfo);
   const name = userInfo?.displayName;
   const email = userInfo?.email;
   const uid = userInfo?.uid;
@@ -106,20 +104,18 @@ async function userInit(user_id: string) {
     genre_preference: [28,12,16,35,80,99,18,10751,14,36,27,10402,9648,10749,878,10770,53,10752,37,],
   });
 
-  const getLocalVoted = (type: "liked_movies" | "disliked_movies") => {
-    const voted = localStorage.getItem(type);
-    if (voted) {
-      return voted.split(",").map((elem) => Number(elem));
-    } else return [];
-  };
-
   const batch = db.batch();
 
   batch.set(userRef.collection("User_Details").doc("Liked_Movies"), {
     uid,
     liked_movies: getLocalVoted("liked_movies"),
     liked_movies_matches: getLocalVoted("liked_movies").map((elem) => {
-      return { movieId: elem, matches: [] };
+      return {
+        movieId: elem,
+        matches: [],
+        like_time: Date.now(),
+        match_time: null,
+      };
     }),
   });
   batch.set(userRef.collection("User_Details").doc("Disliked_Movies"), {
@@ -144,6 +140,12 @@ async function userInit(user_id: string) {
 
   if (localStorage.length > 0) {
     localStorage.clear();
-    console.log("Clear");
   }
+}
+
+function getLocalVoted(type: "liked_movies" | "disliked_movies") {
+  const voted = localStorage.getItem(type);
+  if (voted) {
+    return voted.split(",").map((elem) => Number(elem));
+  } else return [];
 }
