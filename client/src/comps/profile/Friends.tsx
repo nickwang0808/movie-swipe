@@ -28,12 +28,17 @@ export default function Friends() {
       setMessage("You can't add yourself as friends");
     } else {
       setDisableInvite(true);
-      const frienReqStatus = await cloudFn.httpsCallable("sendFriendReq")({
+      const friendReqStatus = await cloudFn.httpsCallable("sendFriendReq")({
         email: emailInput,
       });
-      console.log("Friends -> frienReqStatus", frienReqStatus.data.message);
-
-      setMessage(frienReqStatus.data.message);
+      if (
+        friendReqStatus.data.message ===
+        "There is no user record corresponding to the provided identifier."
+      ) {
+        setMessage("No users with this email");
+      } else {
+        setMessage(friendReqStatus.data.message);
+      }
       setEmailInput("");
       setDisableInvite(false);
     }
