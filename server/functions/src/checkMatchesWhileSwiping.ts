@@ -89,6 +89,7 @@ async function updateMatchToMyDb(
     (elem) => elem.movieId === movieId
   );
   liked_movies_matches[foundIndex].matches.push(...friendUid);
+  liked_movies_matches[foundIndex].match_time = Date.now();
   await myDocRef.update({ liked_movies_matches });
 }
 
@@ -111,5 +112,6 @@ async function updateMatchToFriendDb(
     (elem) => elem.movieId === movieId
   );
   liked_movies_matches[foundIndex].matches.push(myUid);
+  liked_movies_matches[foundIndex].match_time = Date.now();
   await myDocRef.update({ liked_movies_matches });
 }

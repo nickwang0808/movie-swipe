@@ -48,6 +48,7 @@ async function updateMatch(
         (elem) => elem.movieId === movieId
       );
       liked_movies_matches[foundIndex].matches.push(friendId);
+      liked_movies_matches[foundIndex].match_time = Date.now();
       return;
     })
   );
