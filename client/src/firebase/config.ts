@@ -25,4 +25,6 @@ export const arrayRemove = firebase.firestore.FieldValue.arrayRemove;
 
 // firebase.firestore().settings({ host: "localhost:8080", ssl: false });
 // firebase.auth().useEmulator("http://localhost:9099/");
-firebase.functions().useFunctionsEmulator("http://35.241.124.138:5001");
+if (window.location.host.includes("localhost")) {
+  firebase.functions().useFunctionsEmulator("http://35.241.124.138:5001");
+}
