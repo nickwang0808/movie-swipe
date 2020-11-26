@@ -52,7 +52,7 @@ export default function MovieDetails({
     if (matchesUid && matchesUid.length > 0) {
       (async () => {
         const result = await cloudFn.httpsCallable("userLookUp")({
-          UserIDs: matchesUid,
+          UserIDs: Array.from(new Set(matchesUid)), // random err causing double match
         });
         result && setMatchedFriends(result.data);
       })();
