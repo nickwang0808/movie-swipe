@@ -13,16 +13,10 @@
   cursor: pointer;
   margin: auto 0;
   padding: 0 3rem;
-  line-height: 5rem;
+  /* line-height: 5rem; */
   font-weight: 600;
   font-size: 2rem;
   outline: none;
-}
-
-@media (max-width: 376px) {
-  .btn {
-    font-size: 1.5rem;
-  }
 }
 
 .secondary {
@@ -183,7 +177,7 @@
   padding-left: 2rem;
   font-size: 2em;
   height: 6rem;
-  line-height: 6rem;
+  line-height: 2rem;
   border-bottom: var(--border-bottom);
   cursor: pointer;
 }
