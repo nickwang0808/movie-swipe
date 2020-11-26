@@ -177,7 +177,7 @@
   padding-left: 2rem;
   font-size: 2em;
   height: 6rem;
-  line-height: 2rem;
+  line-height: 6rem;
   border-bottom: var(--border-bottom);
   cursor: pointer;
 }
