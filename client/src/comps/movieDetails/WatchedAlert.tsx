@@ -12,6 +12,8 @@ interface IMovieDetails {
   setShowModal: (arg: boolean) => void;
   userId: string;
   setMatchedFriends: () => void;
+  disabledWatchedButton: boolean;
+  setDisabledWatchedButton: () => void;
 }
 
 const Ease = [0.16, 1, 0.3, 1];
@@ -23,9 +25,9 @@ export default function WatchedAlert({
   movieId,
   userId,
   setMatchedFriends,
+  disabledWatchedButton,
+  setDisabledWatchedButton,
 }: IMovieDetails) {
-  const [disabled, setDisabled] = useState(false);
-
   return (
     <>
       <AnimatePresence>
@@ -95,12 +97,12 @@ export default function WatchedAlert({
         {matches && (
           <motion.button
             key="watched4"
-            disabled={disabled}
+            disabled={disabledWatchedButton}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.5, ease: Ease }}
             className={`${sharedstyle.btn} ${sharedstyle.btn_outline} ${style.btn_watched}`}
             onClick={async () => {
-              setDisabled(true);
+              setDisabledWatchedButton();
               if (matches.length > 1) {
                 setShowModal(true);
               } else {

@@ -50,7 +50,6 @@ export default function LikeOrNo({ userId }: ICompProps) {
 
   const handleLike = async (movieID: number, poster: string, title: string) => {
     UpdateLikeToDB(userId, movieID, true);
-    console.log("like");
     handleNext();
     if (userProfile && userProfile.friendsIdOnly.length > 0) {
       // check friends on client side to sae server load
@@ -71,7 +70,6 @@ export default function LikeOrNo({ userId }: ICompProps) {
   };
   const handleDislike = (movieID: number) => {
     UpdateLikeToDB(userId, movieID, false);
-    console.log("dislike");
     handleNext();
   };
 

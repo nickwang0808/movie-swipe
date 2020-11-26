@@ -35,4 +35,6 @@ export const changeLikeToDislike = changeLikeToDislikeRoute;
 export interface LikedMovieWithMatches {
   movieId: number;
   matches: string[];
+  liked_time: number;
+  match_time: number | null;
 }

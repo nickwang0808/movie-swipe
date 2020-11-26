@@ -20,7 +20,7 @@ export default function WatchedWithWho({
 
   return (
     <>
-      <h1>Who did you watch with?</h1>
+      <h1>Watched with whom?</h1>
       <div className={style.container_modalcontent}>
         {matches?.map((match) => (
           <IonItem key={match.uid}>
@@ -49,7 +49,7 @@ export default function WatchedWithWho({
           </IonItem>
         ))}
         <div
-          className={`${sharedstyle.btn} ${sharedstyle.btn_outline}`}
+          className={`${sharedstyle.btn} ${sharedstyle.btn_outline} ${style.btn_watchedwith}`}
           onClick={() => handleWatched(uid, movieId, selectedMatches)}
         >
           Save

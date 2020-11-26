@@ -13,7 +13,7 @@
   cursor: pointer;
   margin: auto 0;
   padding: 0 3rem;
-  line-height: 5rem;
+  /* line-height: 5rem; */
   font-weight: 600;
   font-size: 2rem;
   outline: none;

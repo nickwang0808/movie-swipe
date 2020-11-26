@@ -63,6 +63,7 @@
 .matched_text {
   padding-top: 1em;
   flex-grow: 1;
+  overflow-wrap: anywhere;
 }
 
 .matched_text p {

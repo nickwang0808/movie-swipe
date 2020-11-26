@@ -25,7 +25,7 @@ import { UserContext } from "./store";
 
 import MyProfile from "./comps/profile/MyProfile";
 import MovieDetails from "./comps/movieDetails/MovieDetails";
-import Onboarding_01 from "./comps/intro/onboarding_01";
+import Onboarding from "./comps/intro/onboarding";
 
 function App() {
   const { userAuth, isLoading } = useContext(UserContext);
@@ -38,7 +38,7 @@ function App() {
         <Route path="/" render={() => <Redirect to="/onboard" />} />
         <Route path="/profile" render={() => <Redirect to="/onboard" />} />
         <Route path="/onboard">
-          <Onboarding_01 />;
+          <Onboarding />;
         </Route>
         <Route path="/auth">
           <SignInScreen />;

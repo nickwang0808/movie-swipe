@@ -6,7 +6,6 @@ export const handleWatched = functions.https.onCall(async (data, context) => {
     const userId = context.auth.uid;
     const movieId = data.movieId as number;
     const myWatchedWith = data.watchedWith as string[];
-    console.log("matchedWith", myWatchedWith);
     await Promise.all(
       myWatchedWith.map(async (friendId) => {
         const userRef = db

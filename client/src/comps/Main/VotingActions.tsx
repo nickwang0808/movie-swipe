@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
+import style from "./style.module.css";
 import DownVote from "../ButtonComps/DownVote";
 import UpVote from "../ButtonComps/UpVote";
 import { motion } from "framer-motion";
@@ -51,7 +52,7 @@ export default function VotingActions({
       <div className={sharedstyle.container_detailsbtn}>
         <div
           onClick={handleClickMiddleButton}
-          className={`${sharedstyle.btn} ${sharedstyle.btn_details}`}
+          className={`${sharedstyle.btn} ${sharedstyle.btn_details} ${style.details}`}
         >
           {MiddleButtonText}
         </div>

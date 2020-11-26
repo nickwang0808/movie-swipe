@@ -24,7 +24,6 @@ export async function accept(userId: string, senderId: string) {
 }
 
 export async function deleteFriend(userId: string, friendId: string) {
-  console.log("delete friend");
   await db
     .collection("Users")
     .doc(userId)

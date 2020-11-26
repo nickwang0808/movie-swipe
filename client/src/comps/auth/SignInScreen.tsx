@@ -1,19 +1,13 @@
 import React, { useContext, useState } from "react";
 import { User } from "firebase/app";
 import { auth, cloudFn, db } from "../../firebase/config";
-import BackButton from "../ButtonComps/BackButton";
 
 import { cfaSignIn } from "capacitor-firebase-auth";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import style from "./auth.module.css";
 import { UserContext } from "../../store";
 
-import firebase from "firebase/app";
-import "firebase/auth";
-import updateUserInfo from "../../db-operations/updateUserInfo";
 import { useHistory } from "react-router";
-
-var provider = new firebase.auth.GoogleAuthProvider();
 
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
@@ -28,17 +22,13 @@ export default function SignInScreen() {
   const history = useHistory();
 
   const handleSignInGoogle = () => {
-    cfaSignIn("google.com").subscribe((user: User) =>
-      console.log(user.displayName)
-    );
+    cfaSignIn("google.com").subscribe();
   };
 
   const handleSignInEmail = (email: string, password: string) => {
     auth.signInWithEmailAndPassword(email, password).catch((error) => {
       // Handle Errors here.
-      const errorCode = error.code;
       const errorMessage = error.message;
-      console.log("handleSignInEmail -> errorCode", errorCode);
       setError(errorMessage);
     });
   };
@@ -46,9 +36,7 @@ export default function SignInScreen() {
   const handleSignUpEmail = (email: string, password: string) => {
     auth.createUserWithEmailAndPassword(email, password).catch((error) => {
       // Handle Errors here.
-      const errorCode = error.code;
       const errorMessage = error.message;
-      console.log("handleSignUnEmail -> errorCode", errorCode);
       setError(errorMessage);
       // ...
     });
@@ -75,7 +63,6 @@ export default function SignInScreen() {
   };
 
   const completeWithEmail = async (email: string, password: string) => {
-    const userRef = db.collection("Users").doc(auth.currentUser?.uid);
     await getTempLikedMovies();
 
     auth
@@ -86,25 +73,18 @@ export default function SignInScreen() {
             accountToDelete: localStorage.getItem("oldUid"),
           });
           history.goBack();
-        } catch (err) {
-          console.log("SignInScreen -> err", err);
-        }
+        } catch (err) {}
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
-        console.log("handleSignUnEmail -> errorCode", errorCode);
         setError(errorMessage);
       });
   };
 
   const completeWithSocialSignUp = async () => {
-    const userRef = db.collection("Users").doc(auth.currentUser?.uid);
     await getTempLikedMovies();
 
     cfaSignIn("google.com").subscribe((user: User) => {
-      console.log("SignInScreen -> user", user);
-
       cloudFn.httpsCallable("deleteAccount")({
         accountToDelete: localStorage.getItem("oldUid"),
       });

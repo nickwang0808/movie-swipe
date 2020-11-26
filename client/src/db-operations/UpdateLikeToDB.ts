@@ -14,12 +14,15 @@ export default async function UpdateLikeToDB(
 ) {
   const userRef = db.collection("Users").doc(userId).collection("User_Details");
 
-  console.log("update");
-
   if (isLike) {
     await userRef.doc("Liked_Movies").update({
       liked_movies: arrayUnion(movieID),
-      liked_movies_matches: arrayUnion({ movieId: movieID, matches: [] }),
+      liked_movies_matches: arrayUnion({
+        movieId: movieID,
+        matches: [],
+        like_time: Date.now(),
+        match_time: null,
+      }),
     });
     userRef.doc("Disliked_Movies").update({
       disliked_movies: arrayRemove(movieID),

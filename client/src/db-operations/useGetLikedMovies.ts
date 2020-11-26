@@ -9,13 +9,18 @@ export interface IWatchedMovieInfo {
   movieDetails: MovieDetail;
 }
 
-export interface MovieDetailWithMatches extends MovieDetail {
-  matches: string[];
+export interface MovieDetailWithMatches
+  extends MovieDetail,
+    WithMatchesAndTime {}
+
+export interface LikedMovieWithMatches extends WithMatchesAndTime {
+  movieId: number;
 }
 
-export interface LikedMovieWithMatches {
-  movieId: number;
+export interface WithMatchesAndTime {
   matches: string[];
+  like_time: number;
+  match_time: number | null;
 }
 
 export default function useGetLikedMovies(userID: string) {
@@ -35,30 +40,28 @@ export default function useGetLikedMovies(userID: string) {
         .collection("User_Details")
         .doc("Liked_Movies")
         .onSnapshot(async (doc) => {
-          if (doc.exists) {
-            const data = doc.data();
-            if (data) {
-              // here we take the fetched id and get the actual movie data
-              setLikedMovieIds(data.liked_movies);
-              // const tempArray: MovieDetailWithMatches[] = [];
-              const tempArray: MovieDetailWithMatches[] = await Promise.all(
-                data.liked_movies_matches.map(
-                  async (movie: LikedMovieWithMatches) => {
-                    return {
-                      ...(await searchMovieByID(movie.movieId)),
-                      matches: movie.matches,
-                    };
-                  }
-                )
-              );
-              setLikedMoviesInfos(tempArray);
-              updateNewMatchCounts(
-                userID,
-                tempArray.filter((elem) => elem.matches.length > 0).length
-              );
-            } else {
-              console.log("doc not found");
-            }
+          const data = doc.data();
+          if (data) {
+            // here we take the fetched id and get the actual movie data
+            setLikedMovieIds(data.liked_movies);
+            // const tempArray: MovieDetailWithMatches[] = [];
+            const tempArray: MovieDetailWithMatches[] = await Promise.all(
+              data.liked_movies_matches.map(
+                async (movie: LikedMovieWithMatches) => {
+                  return {
+                    ...(await searchMovieByID(movie.movieId)),
+                    matches: movie.matches,
+                    like_time: movie.like_time,
+                    match_time: movie.match_time,
+                  };
+                }
+              )
+            );
+            setLikedMoviesInfos(tempArray);
+            updateNewMatchCounts(
+              userID,
+              tempArray.filter((elem) => elem.matches.length > 0).length
+            );
           }
         });
 
@@ -74,33 +77,26 @@ export default function useGetLikedMovies(userID: string) {
         .collection("User_Details")
         .doc("Watched")
         .onSnapshot(async (doc) => {
-          if (doc.exists) {
-            const data = doc.data();
-            if (data && data.watched.length > 0) {
-              // here we take the fetched id and get the actual movie data
-              const watchedResult: IWatchedMovieInfo[] = await Promise.all(
-                data.watched.map(
-                  async (watched: {
-                    movieId: number;
-                    watchedWith: string[];
-                  }) => {
-                    const movieDetails = await searchMovieByID(watched.movieId);
-                    const watchedWithInfo = await cloudFn.httpsCallable(
-                      "userLookUp"
-                    )({ UserIDs: watched.watchedWith });
+          const watched = doc.data()?.watched;
+          if (watched && watched.length > 0) {
+            // here we take the fetched id and get the actual movie data
+            const watchedResult: IWatchedMovieInfo[] = await Promise.all(
+              watched.map(
+                async (watched: { movieId: number; watchedWith: string[] }) => {
+                  const movieDetails = await searchMovieByID(watched.movieId);
+                  const watchedWithInfo = await cloudFn.httpsCallable(
+                    "userLookUp"
+                  )({ UserIDs: watched.watchedWith });
 
-                    return {
-                      movieId: watched.movieId,
-                      watchedWith: watchedWithInfo.data,
-                      movieDetails: movieDetails,
-                    };
-                  }
-                )
-              );
-              setWatchedMovieInfos(watchedResult);
-            } else {
-              console.log("doc not found");
-            }
+                  return {
+                    movieId: watched.movieId,
+                    watchedWith: watchedWithInfo.data,
+                    movieDetails: movieDetails,
+                  };
+                }
+              )
+            );
+            setWatchedMovieInfos(watchedResult);
           }
         });
 
