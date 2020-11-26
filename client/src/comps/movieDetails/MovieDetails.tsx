@@ -37,6 +37,7 @@ export default function MovieDetails({
   } = useContext(UserContext);
 
   const [showModal, setShowModal] = useState(false);
+  const [disabledWatchedButton, setDisabledWatchedButton] = useState(false);
 
   const { id } = useParams<{ id: string }>();
   const movieID = Number(id);
@@ -94,7 +95,12 @@ export default function MovieDetails({
   return (
     <>
       {showModal && (
-        <Modal closeAction={() => setShowModal(false)}>
+        <Modal
+          closeAction={() => {
+            setDisabledWatchedButton(false);
+            setShowModal(false);
+          }}
+        >
           <WatchedWithWho
             uid={userAuth?.userInfo.uid as string}
             movieId={movieID}
@@ -184,6 +190,8 @@ export default function MovieDetails({
                 movieId={movieID}
                 userId={userAuth?.userInfo.uid as string}
                 setMatchedFriends={() => setMatchedFriends(undefined)}
+                disabledWatchedButton={disabledWatchedButton}
+                setDisabledWatchedButton={() => setDisabledWatchedButton(true)}
               />
             )}
 
