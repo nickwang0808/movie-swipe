@@ -72,6 +72,11 @@
   margin-bottom: 24px;
 }
 
+.button a {
+  color: white;
+  text-decoration: none;
+}
+
 .button:hover {
   background: #e62653;
 }
@@ -169,4 +174,3 @@
           align-items: center;
   text-align: center;
 }
-/*# sourceMappingURL=index.module.css.map */

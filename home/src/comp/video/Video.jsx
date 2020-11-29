@@ -5,7 +5,13 @@ export default function Video() {
   return (
     <>
       <div className={style.container}>
-        <img src="thumbnail.png" alt="" />
+        <div class={style.embedContainer}>
+          <iframe
+            src="https://www.youtube.com/embed/ENDTjt_PXVo"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </div>
       </div>
     </>
   )
