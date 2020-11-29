@@ -29,7 +29,7 @@ export default function Home() {
 
           <div className={style.get_it}>
             Get it on
-            <img src="googleplay.png" />
+            <img src="googleplay.png" alt="google play icoc" />
           </div>
         </div>
         <div className={style.footer}>

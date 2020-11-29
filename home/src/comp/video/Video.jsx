@@ -7,6 +7,7 @@ export default function Video() {
       <div className={style.container}>
         <div class={style.embedContainer}>
           <iframe
+            title="movie-sync demo video"
             src="https://www.youtube.com/embed/ENDTjt_PXVo"
             frameborder="0"
             allowfullscreen
