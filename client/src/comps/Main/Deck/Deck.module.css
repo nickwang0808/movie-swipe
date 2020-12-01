@@ -1,8 +1,7 @@
-.card {
+.card_container {
   position: absolute;
-  width: var(--poster-width);
+  width: 100vw;
   height: var(--poster-height);
-  max-width: 95%;
   margin: 0 auto;
   left: 0;
   right: 0;

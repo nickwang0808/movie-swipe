@@ -21,18 +21,11 @@ export default function MainPoster({ imgUrl }: IMainPosterProps) {
   };
 
   return (
-    <>
+    <div className={style.card}>
       <div
         className={style.poster_vote}
         style={{ backgroundImage: assignUrlToPoster(baseUrl + imgUrl) }}
-      >
-        {/* {voteType && (
-          <div className={style.voted_thumb}>
-            {voteType === "like" && <VoteLarge_Up />}
-            {voteType === "dislike" && <VoteLarge_Down />}
-          </div>
-        )} */}
-      </div>
-    </>
+      ></div>
+    </div>
   );
 }

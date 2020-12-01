@@ -1,5 +1,6 @@
 import { animate, motion, MotionValue } from "framer-motion";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { start } from "repl";
 import { Result } from "../../../db-operations/useGetMovies";
 import { UserContext } from "../../../store";
 import MainPoster from "../MainPoster/MainPoster";
@@ -25,8 +26,11 @@ export default function Deck({
   thumbOpacityMotionValue,
 }: IDeckProp) {
   const { size } = useContext(UserContext);
-  const XCenter = size.XCenter;
   const screenWidth = size.width;
+
+  const swipeDistance = screenWidth * 0.15;
+
+  const [startPosition, setStartPosition] = useState<number>();
 
   const animateSliderAndThumb = (direction: number, thumbDirection: 1 | -1) => {
     animate(likeSlider, direction * 1.2, {
@@ -61,7 +65,7 @@ export default function Deck({
               if (i !== 0)
                 return (
                   <motion.div
-                    className={style.card}
+                    className={style.card_container}
                     key={movie.id}
                     layout
                     style={{
@@ -79,7 +83,7 @@ export default function Deck({
                 );
               return (
                 <motion.div
-                  className={style.card}
+                  className={style.card_container}
                   key={movie.id}
                   drag
                   onViewportBoxUpdate={(_, delta) => {
@@ -87,32 +91,48 @@ export default function Deck({
                     thumbMotionValue.set(delta.x.translate);
                     thumbOpacityMotionValue.set(delta.x.translate);
                   }}
+                  onDragStart={(e, info) => {
+                    const xPosition = info.point.x;
+                    setStartPosition(xPosition);
+                  }}
                   onDragEnd={(e, info) => {
                     const xPosition = info.point.x;
-                    if (xPosition > XCenter * 1.2) {
-                      animate(xMotionValue, screenWidth, {
-                        type: "tween",
-                        duration: 0.5,
-                        ease: [0.16, 1, 0.3, 1],
-                        onComplete: () => {
-                          xMotionValue.set(0);
-                          /* not pulling it out because handlelike is a pain is the 
+                    if (startPosition) {
+                      if (
+                        xPosition >
+                        (startPosition as number) + swipeDistance
+                      ) {
+                        animate(xMotionValue, screenWidth, {
+                          type: "tween",
+                          duration: 0.5,
+                          ease: [0.16, 1, 0.3, 1],
+                          onComplete: () => {
+                            xMotionValue.set(0);
+                            /* not pulling it out because handlelike is a pain is the
                           ass to assign types  */
-                          handleLike(movie.id, movie.poster_path, movie.title);
-                        },
-                      });
-                      animateSliderAndThumb(screenWidth, 1);
-                    } else if (xPosition < XCenter * 0.8) {
-                      animate(xMotionValue, -screenWidth, {
-                        type: "tween",
-                        duration: 0.5,
-                        ease: [0.16, 1, 0.3, 1],
-                        onComplete: () => {
-                          xMotionValue.set(0);
-                          handleDislike(movie.id);
-                        },
-                      });
-                      animateSliderAndThumb(-screenWidth, -1);
+                            handleLike(
+                              movie.id,
+                              movie.poster_path,
+                              movie.title
+                            );
+                          },
+                        });
+                        animateSliderAndThumb(screenWidth, 1);
+                      } else if (
+                        xPosition <
+                        (startPosition as number) - swipeDistance
+                      ) {
+                        animate(xMotionValue, -screenWidth, {
+                          type: "tween",
+                          duration: 0.5,
+                          ease: [0.16, 1, 0.3, 1],
+                          onComplete: () => {
+                            xMotionValue.set(0);
+                            handleDislike(movie.id);
+                          },
+                        });
+                        animateSliderAndThumb(-screenWidth, -1);
+                      }
                     }
                   }}
                   dragElastic={1}
