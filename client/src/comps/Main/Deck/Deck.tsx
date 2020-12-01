@@ -89,7 +89,7 @@ export default function Deck({
                   }}
                   onDragEnd={(e, info) => {
                     const xPosition = info.point.x;
-                    if (xPosition > XCenter * 1.6) {
+                    if (xPosition > XCenter * 1.3) {
                       animate(xMotionValue, screenWidth, {
                         type: "tween",
                         duration: 0.5,
@@ -102,7 +102,7 @@ export default function Deck({
                         },
                       });
                       animateSliderAndThumb(screenWidth, 1);
-                    } else if (xPosition < XCenter * 0.4) {
+                    } else if (xPosition < XCenter * 0.7) {
                       animate(xMotionValue, -screenWidth, {
                         type: "tween",
                         duration: 0.5,
@@ -115,7 +115,7 @@ export default function Deck({
                       animateSliderAndThumb(-screenWidth, -1);
                     }
                   }}
-                  dragElastic={0.8}
+                  dragElastic={1}
                   dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
                   style={{
                     originY: 1,
