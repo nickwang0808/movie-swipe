@@ -1,6 +1,6 @@
 .card {
   height: 174px;
-  width: 180px;
+  width: 200px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -21,6 +21,8 @@
 
 .card h3 {
   margin: 1rem 0;
+  font-size: 20px;
+  line-height: 125%;
 }
 
 .center_card {
@@ -39,3 +41,4 @@
       -ms-flex-align: center;
           align-items: center;
 }
+/*# sourceMappingURL=card.module.css.map */
