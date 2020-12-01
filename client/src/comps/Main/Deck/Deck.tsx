@@ -89,7 +89,7 @@ export default function Deck({
                   }}
                   onDragEnd={(e, info) => {
                     const xPosition = info.point.x;
-                    if (xPosition > XCenter * 1.3) {
+                    if (xPosition > XCenter * 1.2) {
                       animate(xMotionValue, screenWidth, {
                         type: "tween",
                         duration: 0.5,
@@ -102,7 +102,7 @@ export default function Deck({
                         },
                       });
                       animateSliderAndThumb(screenWidth, 1);
-                    } else if (xPosition < XCenter * 0.7) {
+                    } else if (xPosition < XCenter * 0.8) {
                       animate(xMotionValue, -screenWidth, {
                         type: "tween",
                         duration: 0.5,

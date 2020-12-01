@@ -13,15 +13,14 @@ export default function About() {
       </h1>
       <div className={style.container_aboutcontent}>
         <div className="container_subcontent">
-        <p className="marginSides2 marginTop2 marginBottom2">
-
+          <p className="marginSides2 marginTop2 marginBottom2">
             MovieSync is an easy way to find something new for you and your
             friends to watch together, finally.
           </p>
           <p className="marginSides2">
             {" "}
-            It's developed by Nick Wang (NickWangTech.com) and designed
-            by Trevor Wernisch (No-Tec.com).
+            It's developed by Nick Wang (NickWangTech.com) and designed by
+            Trevor Wernisch (No-Tec.com).
           </p>
         </div>
         <div className="container_subcontent">
@@ -55,6 +54,7 @@ export default function About() {
               This product uses the TMDb API but is not endorsed or certified by
               TMDb.
             </p>
+            <p>Version: 1.1.2</p>
           </div>
         </div>
       </div>

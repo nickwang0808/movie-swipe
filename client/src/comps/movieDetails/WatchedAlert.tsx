@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import style from "./WatchedAlert.module.css";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import { AnimatePresence, motion } from "framer-motion";
