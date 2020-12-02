@@ -3,7 +3,7 @@
   flex-direction: column;
 
   &:first-child {
-    height: 287px;
+    height: 30rem;
     background: radial-gradient(
       40.14% 188.5% at 51.04% 19.16%,
       #485563 0%,
@@ -16,14 +16,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 650px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 .card_grid {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -35,7 +35,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 10px 0;
+  padding: 15px 0;
   background: #da0f3f;
   border-radius: 60px;
   color: white;
@@ -66,10 +66,10 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 5px;
+  padding: 10px;
   border: 2px solid #000000;
   box-sizing: border-box;
-  border-radius: 30px;
+  border-radius: 40px;
   width: 291px;
   font-size: 16px;
 }

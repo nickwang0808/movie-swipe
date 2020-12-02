@@ -5,3 +5,13 @@
   background-position: center;
   z-index: 5;
 }
+
+.card {
+  position: absolute;
+  width: var(--poster-width);
+  height: var(--poster-height);
+  max-width: 95%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+}

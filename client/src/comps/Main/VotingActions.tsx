@@ -1,9 +1,9 @@
+import { motion } from "framer-motion";
 import React, { useState } from "react";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
-import style from "./style.module.css";
 import DownVote from "../ButtonComps/DownVote";
 import UpVote from "../ButtonComps/UpVote";
-import { motion } from "framer-motion";
+import style from "./style.module.css";
 interface IVotingActionsProps {
   handleDislike: () => void;
   handleLike: () => void;
@@ -31,7 +31,7 @@ export default function VotingActions({
     isLike ? handleLike() : handleDislike();
     setTimeout(() => {
       setDisabled(false);
-    }, 1500);
+    }, 800);
   };
 
   return (
