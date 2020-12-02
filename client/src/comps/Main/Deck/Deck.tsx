@@ -1,6 +1,5 @@
 import { animate, motion, MotionValue } from "framer-motion";
 import React, { useContext, useState } from "react";
-import { start } from "repl";
 import { Result } from "../../../db-operations/useGetMovies";
 import { UserContext } from "../../../store";
 import MainPoster from "../MainPoster/MainPoster";

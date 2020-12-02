@@ -1,16 +1,3 @@
-import React, { useContext, useEffect, useState } from "react";
-import FilterButton from "../ButtonComps/FilterButton";
-import Logo from "../Decorators/Logo";
-import Filters from "../filter/Filters";
-import NotificationMatched from "./MainPoster/NotificationMatched";
-import VoteLargeDown from "./CardAnimationParts/VoteLargeDown";
-import VoteLargeUp from "./CardAnimationParts/VoteLargeUp";
-import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
-import MovieDetails from "../movieDetails/MovieDetails";
-import baseUrl from "../../HelperFunctions/ImgBaseUrl";
-import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
-import VotingActions from "./VotingActions";
-import style from "./style.module.css";
 import {
   animate,
   AnimatePresence,
@@ -18,10 +5,23 @@ import {
   useMotionValue,
   useTransform,
 } from "framer-motion";
-import Deck from "./Deck/Deck";
-import { IUserInfo, UserContext } from "../../store";
+import React, { useContext, useEffect, useState } from "react";
 import { Route, useHistory } from "react-router";
+import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 import { cloudFn } from "../../firebase/config";
+import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
+import baseUrl from "../../HelperFunctions/ImgBaseUrl";
+import { IUserInfo, UserContext } from "../../store";
+import FilterButton from "../ButtonComps/FilterButton";
+import Logo from "../Decorators/Logo";
+import Filters from "../filter/Filters";
+import MovieDetails from "../movieDetails/MovieDetails";
+import VoteLargeDown from "./CardAnimationParts/VoteLargeDown";
+import VoteLargeUp from "./CardAnimationParts/VoteLargeUp";
+import Deck from "./Deck/Deck";
+import NotificationMatched from "./MainPoster/NotificationMatched";
+import style from "./style.module.css";
+import VotingActions from "./VotingActions";
 
 interface ICompProps {
   userId: string;
@@ -49,7 +49,6 @@ export default function LikeOrNo({ userId }: ICompProps) {
   const history = useHistory();
 
   const handleLike = async (movieID: number, poster: string, title: string) => {
-    UpdateLikeToDB(userId, movieID, true);
     handleNext();
     if (userProfile && userProfile.friendsIdOnly.length > 0) {
       // check friends on client side to sae server load
@@ -67,6 +66,10 @@ export default function LikeOrNo({ userId }: ICompProps) {
         });
       }
     }
+    UpdateLikeToDB(userId, movieID, true);
+    // setTimeout(() => {
+    //   /* this function is causing major frame drop, delaying it will remedy the problem */
+    // }, 250);
   };
   const handleDislike = (movieID: number) => {
     UpdateLikeToDB(userId, movieID, false);
