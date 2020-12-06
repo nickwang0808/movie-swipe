@@ -122,7 +122,12 @@ export default function MovieDetails({
           }}
         >
           {getTrailerUrl() === undefined ? (
-            <div className="loader loader_center" />
+            // <div className="loader loader_center" />
+            <img
+              className={style.backdrop}
+              src={baseUrl + movieDetails?.backdrop_path}
+              alt="movie backdrop"
+            />
           ) : (
             <iframe
               allowFullScreen={true}
