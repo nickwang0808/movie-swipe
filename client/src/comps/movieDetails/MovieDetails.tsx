@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
-import getGenres from "../../HelperFunctions/getGenres";
-import searchMovieByID, { MovieDetail } from "../../APICalls/searchMovieByID";
-import baseUrl from "../../HelperFunctions/ImgBaseUrl";
-import posterStyleMaker from "../../HelperFunctions/posterStyleMaker";
-import style from "./MovieDetails.module.css";
-import VotingActions from "../Main/VotingActions";
-import WatchedAlert from "./WatchedAlert";
-import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
-import { IUserInfo, UserContext } from "../../store";
-import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
-import { useHistory, useLocation, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import Modal from "../notification/modal";
-import WatchedWithWho from "../notification/ModalContent/WatchedWithWho";
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import searchMovieByID, { MovieDetail } from "../../APICalls/searchMovieByID";
 import UpdateLikeToDB from "../../db-operations/UpdateLikeToDB";
 import { cloudFn } from "../../firebase/config";
+import backgroundStyle from "../../HelperFunctions/backgroundStyleMaker";
+import getGenres from "../../HelperFunctions/getGenres";
+import getMovieCertificate from "../../HelperFunctions/getMovieCertificate";
+import baseUrl from "../../HelperFunctions/ImgBaseUrl";
+import posterStyleMaker from "../../HelperFunctions/posterStyleMaker";
+import { IUserInfo, UserContext } from "../../store";
+import VotingActions from "../Main/VotingActions";
+import Modal from "../notification/modal";
+import WatchedWithWho from "../notification/ModalContent/WatchedWithWho";
+import style from "./MovieDetails.module.css";
+import WatchedAlert from "./WatchedAlert";
 
 interface IMovieDetails {
   handleDislike?: () => void;
@@ -83,8 +83,8 @@ export default function MovieDetails({
 
   const getTrailerUrl = () => {
     if (movieDetails) {
-      const trailerKey = movieDetails.videos.results[0].key;
       try {
+        const trailerKey = movieDetails.videos.results[0].key;
         return `https://www.youtube.com/embed/${trailerKey}?rel=0;controls=1;showinfo=0;fs=1;modestbranding=1`;
       } catch (err) {
         return undefined;
