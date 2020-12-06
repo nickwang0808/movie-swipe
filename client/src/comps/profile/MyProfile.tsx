@@ -1,18 +1,17 @@
-import React, { useContext, useState } from "react";
-import ListViewButton from "../ButtonComps/ListViewButton";
-import style from "./MyProfile.module.css";
-import Modal from "../notification/modal";
-import { auth, cloudFn } from "../../firebase/config";
-import Friends from "./Friends";
-import About from "./About";
-import DislikedMovies from "./DislikedMovies";
-import { motion } from "framer-motion";
-import { Link, Route } from "react-router-dom";
-import DeleteConfirmation from "./DeleteConfirmation";
-
 // import firebase from "firebase/app";
 import "firebase/auth";
+import { motion } from "framer-motion";
+import React, { useContext, useState } from "react";
+import { Link, Route } from "react-router-dom";
+import { auth, cloudFn } from "../../firebase/config";
 import { UserContext } from "../../store";
+import ListViewButton from "../ButtonComps/ListViewButton";
+import Modal from "../notification/modal";
+import About from "./About";
+import DeleteConfirmation from "./DeleteConfirmation";
+import DislikedMovies from "./DislikedMovies";
+import Friends from "./Friends";
+import style from "./MyProfile.module.css";
 
 // var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -35,6 +34,7 @@ export default function MyProfile() {
                 });
               }
               auth.signOut();
+              window.location.reload();
               // window.location.reload();
             }}
           />
@@ -70,7 +70,10 @@ export default function MyProfile() {
           {userAuth?.userInfo.email && (
             <ListViewButton
               name={`Sign Out (${userAuth?.userInfo.email})`}
-              action={() => auth.signOut()}
+              action={() => {
+                auth.signOut();
+                window.location.reload();
+              }}
             />
           )}
 
