@@ -8,6 +8,7 @@ export default function FilterButton({
 }) {
   return (
     <div className={style.btn_filter} onClick={() => setFilterOn(true)}>
+      <span>Filters</span>
       <svg
         width={24}
         height={24}
