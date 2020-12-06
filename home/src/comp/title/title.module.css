@@ -1,5 +1,5 @@
 .container {
-  margin-top: 27px;
+  margin: 5rem 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -21,3 +21,4 @@
   font-size: 18px;
   text-align: center;
 }
+/*# sourceMappingURL=title.module.css.map */

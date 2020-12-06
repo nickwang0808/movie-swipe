@@ -1,6 +1,6 @@
 .card {
   height: 174px;
-  width: 180px;
+  width: 200px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -12,6 +12,8 @@
 
 .card h3 {
   margin: 1rem 0;
+  font-size: 20px;
+  line-height: 125%;
 }
 
 .center_card {
