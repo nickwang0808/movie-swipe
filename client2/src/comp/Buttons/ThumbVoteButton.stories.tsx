@@ -3,7 +3,7 @@ import React, { ComponentProps } from "react";
 import ThumbVoteButton from "./ThumbVoteButton";
 
 export default {
-  title: "ThumbVoteButton",
+  title: "Buttons/ThumbVoteButton",
   component: ThumbVoteButton,
 };
 

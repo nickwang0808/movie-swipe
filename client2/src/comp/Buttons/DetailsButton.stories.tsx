@@ -3,17 +3,8 @@ import React, { ComponentProps } from "react";
 import DetailsButton from "./DetailsButton";
 
 export default {
-  title: "Middle Detail Button ",
+  title: "Buttons/Middle Detail Button ",
   component: DetailsButton,
-  parameters: {
-    backgrounds: {
-      values: [
-        { name: "red", value: "#f00" },
-        { name: "green", value: "#0f0" },
-        { name: "blue", value: "#00f" },
-      ],
-    },
-  },
 };
 
 const template: Story<ComponentProps<typeof DetailsButton>> = (arg) => (
