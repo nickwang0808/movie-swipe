@@ -29,4 +29,5 @@ const Content = styled.div`
   flex-direction: column;
   width: 100%;
   justify-content: center;
+  box-sizing: border-box;
 `;

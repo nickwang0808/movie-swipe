@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Btn = styled.div`
@@ -17,4 +18,20 @@ export const Btn = styled.div`
   font-weight: 600;
   font-size: 2rem;
   outline: none;
+`;
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: var(--dark);
+`;
+
+export const Separator = styled.div`
+  height: 1rem;
+  width: 100%;
+  background-color: var(--gray);
+`;
+
+export const ErrorMessage = styled.p`
+  margin: 1rem 0;
+  color: #ff0000;
 `;
