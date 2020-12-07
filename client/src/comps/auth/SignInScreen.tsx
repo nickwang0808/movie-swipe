@@ -1,4 +1,3 @@
-import { IonInput } from "@ionic/react";
 import { cfaSignIn } from "capacitor-firebase-auth";
 import { User } from "firebase/app";
 import React, { useContext, useState } from "react";
@@ -98,15 +97,16 @@ export default function SignInScreen() {
     <>
       <form>
         <label>Email</label>
-        <IonInput
-          autocomplete="on"
-          onIonChange={(e) => setEmail(e.detail.value!)}
+        <input
+          autoComplete="true"
+          onChange={(e) => setEmail(e.target.value)}
           value={email}
         />
         <label>Password</label>
-        <IonInput
+        <input
+          autoComplete="true"
           type="password"
-          onIonChange={(e) => setPassword(e.detail.value!)}
+          onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
         <button
