@@ -14,7 +14,6 @@ const template: Story<ComponentProps<typeof PendingInviteItem>> = (arg) => (
 export const Default = template.bind({});
 
 Default.args = {
-  action: () => console.log("action"),
   handleAccept: () => console.log("action"),
   handleDecline: () => console.log("action"),
   name: "Nick Wang",

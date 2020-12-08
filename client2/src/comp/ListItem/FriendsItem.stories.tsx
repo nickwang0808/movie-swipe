@@ -14,6 +14,5 @@ const template: Story<ComponentProps<typeof FriendsItem>> = (arg) => (
 export const Default = template.bind({});
 
 Default.args = {
-  action: () => console.log("Remove friend"),
   name: "Nick",
 };

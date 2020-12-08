@@ -3,11 +3,12 @@ import React from "react";
 import { addDecorator } from "@storybook/react";
 import { MemoryRouter } from "react-router";
 import BottomNav from "../src/comp/NavBar/BottomNav";
+import WindowSizingProvider from "../src/comp/Layout/WindowSizingProvider";
 
 addDecorator((story) => (
   <>
     <MemoryRouter initialEntries={["/"]}>
-      {story()}
+      <WindowSizingProvider>{story()}</WindowSizingProvider>
       <BottomNav />
     </MemoryRouter>
   </>

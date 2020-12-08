@@ -15,6 +15,7 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
 import React from "react";
 import "./App.css";
+import MovieDetailsScreen from "./Screens/MovieDetailsScreen/MovieDetailsScreen";
 
 const App: React.FC = () => (
   <IonApp>
@@ -22,6 +23,7 @@ const App: React.FC = () => (
       <IonRouterOutlet>
         {/* <Route path="/home" component={Home} exact={true} />
         <Route exact path="/" render={() => <Redirect to="/home" />} /> */}
+        <MovieDetailsScreen />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

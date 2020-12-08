@@ -52,7 +52,7 @@ const Background = styled.div<IProp>`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: -1;
+  z-index: -10;
   height: 100%;
   min-height: 100%;
 `;
