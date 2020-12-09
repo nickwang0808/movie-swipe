@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import StarIcon from "../../Assets/svg/StarIcon";
 
 export default function Ratings({ rating }: { rating: number }) {

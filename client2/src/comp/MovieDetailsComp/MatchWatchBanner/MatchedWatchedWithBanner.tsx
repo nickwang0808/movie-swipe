@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import SolidThumbUp from "../../../Assets/svg/SolidThumbUp";
 import { Btn } from "../../../theme/BaseComp";
 import Matches from "./Matches";

@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ThumbDownForButton from "../../Assets/svg/ThumbDownForButton";
 import ThumbUpForButton from "../../Assets/svg/ThumbUpForButton";
 import { Btn } from "../../theme/BaseComp";

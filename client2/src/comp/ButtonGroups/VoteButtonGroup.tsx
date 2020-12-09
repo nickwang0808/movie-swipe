@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import DetailsButton from "../Buttons/DetailsButton";
 import ThumbVoteButton from "../Buttons/ThumbVoteButton";
 interface IVotingActionsProps {

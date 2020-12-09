@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
 import MatchedWatchedWithBanner from "../../comp/MovieDetailsComp/MatchWatchBanner/MatchedWatchedWithBanner";
 import TitleBox from "../../comp/MovieDetailsComp/TitleBox";

@@ -102,6 +102,9 @@ a {
       2rem
   );
   --poster-width: calc(var(--poster-height) * 0.65);
+  /* below is for movie details I guess */
+  --poster_height: 170px;
+  --poster_width: calc(var(--poster_height) * 0.665);
   --border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 

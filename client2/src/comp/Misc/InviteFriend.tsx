@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { Btn, ErrorMessage } from "../../theme/BaseComp";
 
 export default function InviteFriend({ message }: { message: string }) {

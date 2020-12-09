@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import BottomaNavIcon1 from "../../Assets/svg/BottomaNavIcon1";
 import BottomaNavIcon2 from "../../Assets/svg/BottomaNavIcon2";
 import BottomaNavIcon3 from "../../Assets/svg/BottomaNavIcon3";
