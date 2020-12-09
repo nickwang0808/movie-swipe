@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components/macro";
 import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
+import MainBackground from "../../comp/Layout/MainBackground";
 import MatchedWatchedWithBanner from "../../comp/MovieDetailsComp/MatchWatchBanner/MatchedWatchedWithBanner";
 import TitleBox from "../../comp/MovieDetailsComp/TitleBox";
 import Trailer from "../../comp/MovieDetailsComp/Trailer";
-import MainBackground from "../../comp/Poster/MainBackground";
 
 const dummy = {
   ImgUrl: "/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
