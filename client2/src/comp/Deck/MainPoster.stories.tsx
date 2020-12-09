@@ -3,7 +3,7 @@ import React, { ComponentProps } from "react";
 import MainPoster from "./MainPoster";
 
 export default {
-  title: "Main/MainPoster",
+  title: "Deck/MainPoster",
   component: MainPoster,
 } as Meta;
 

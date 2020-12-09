@@ -8,7 +8,7 @@ const LogoWrapper = styled.div`
   fill: linear-gradient(266.71deg, #29323c 11.43%, #485563 89.74%);
 `;
 
-export default function FilterButton() {
+export default function Logo() {
   return (
     <LogoWrapper>
       <svg

@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import React from "react";
+import { motion, MotionValue } from "framer-motion";
+import React, { useState } from "react";
 import styled from "styled-components";
 import MainPoster from "./MainPoster";
 
@@ -7,51 +7,51 @@ interface IProps {
   key: number;
   imgUrl: string;
   index: number;
+
+  xMotionValue: MotionValue<number>;
+  likeSlider: MotionValue<number>;
+  thumbMotionValue: MotionValue<number>;
+  thumbOpacityMotionValue: MotionValue<number>;
+  screenWidth: number;
+  VoteWithAnimation: (arg: boolean) => void;
 }
 
-export default function LeadCard({ imgUrl, key, index }: IProps) {
+export default function LeadCard({
+  imgUrl,
+  key,
+  index,
+  likeSlider,
+  thumbMotionValue,
+  thumbOpacityMotionValue,
+  xMotionValue,
+  screenWidth,
+  VoteWithAnimation,
+}: IProps) {
+  const [startPosition, setStartPosition] = useState<number>();
+  const swipeDistance = screenWidth * 0.15;
+
   return (
     <StyledMotionDiv
       key={key}
       drag
       onViewportBoxUpdate={(_, delta) => {
-        // likeSlider.set(delta.x.translate);
-        // thumbMotionValue.set(delta.x.translate);
-        // thumbOpacityMotionValue.set(delta.x.translate);
+        likeSlider.set(delta.x.translate);
+        thumbMotionValue.set(delta.x.translate);
+        thumbOpacityMotionValue.set(delta.x.translate);
       }}
       onDragStart={(e, info) => {
-        // const xPosition = info.point.x;
-        // setStartPosition(xPosition);
+        const xPosition = info.point.x;
+        setStartPosition(xPosition);
       }}
       onDragEnd={(e, info) => {
-        // const xPosition = info.point.x;
-        // if (startPosition) {
-        //   if (xPosition > (startPosition as number) + swipeDistance) {
-        //     animate(xMotionValue, screenWidth, {
-        //       type: "tween",
-        //       duration: 0.5,
-        //       ease: [0.16, 1, 0.3, 1],
-        //       onComplete: () => {
-        //         xMotionValue.set(0);
-        //         /* not pulling it out because handlelike is a pain is the
-        //     ass to assign types  */
-        //         handleLike(movie.id, movie.poster_path, movie.title);
-        //       },
-        //     });
-        //     animateSliderAndThumb(screenWidth, 1);
-        //   } else if (xPosition < (startPosition as number) - swipeDistance) {
-        //     animate(xMotionValue, -screenWidth, {
-        //       type: "tween",
-        //       duration: 0.5,
-        //       ease: [0.16, 1, 0.3, 1],
-        //       onComplete: () => {
-        //         xMotionValue.set(0);
-        //         handleDislike(movie.id);
-        //       },
-        //     });
-        //     animateSliderAndThumb(-screenWidth, -1);
-        //   }
-        // }
+        const xPosition = info.point.x;
+        if (startPosition) {
+          if (xPosition > (startPosition as number) + swipeDistance) {
+            VoteWithAnimation(true);
+          } else if (xPosition < (startPosition as number) - swipeDistance) {
+            VoteWithAnimation(false);
+          }
+        }
       }}
       dragElastic={1}
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
@@ -59,7 +59,7 @@ export default function LeadCard({ imgUrl, key, index }: IProps) {
         originY: 1,
         top: 4 * index,
         scale: 1 - index * 0.07,
-        // x: xMotionValue,
+        x: xMotionValue,
       }}
       layout
       transition={{

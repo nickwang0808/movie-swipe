@@ -8,6 +8,7 @@ interface IProps {
 export default function FilterButton({ setFilterOn }: IProps) {
   return (
     <FilterIconWrapper onClick={setFilterOn}>
+      <span>Filters</span>
       <svg
         width={24}
         height={24}
@@ -23,9 +24,15 @@ export default function FilterButton({ setFilterOn }: IProps) {
 const FilterIconWrapper = styled.div`
   cursor: pointer;
   fill: var(--dark);
+  display: flex;
+  align-items: center;
+
+  & span {
+    font-size: 1.8rem;
+  }
 
   & svg {
-    margin: 2.5rem;
+    margin: 2.5rem 2.5rem 2rem 1rem;
   }
 
   &:active {
