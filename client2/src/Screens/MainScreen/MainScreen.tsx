@@ -14,10 +14,10 @@ export default function MainScreen() {
   const { width: screenWidth } = useGetWIndowsSizing();
 
   const xMotionValue = useMotionValue(0); // to control the deck via button
-  const likeSlider = useMotionValue(0); // let deck control other stuff
+  const likeSlider = useMotionValue(0); // let deck control slider
   const backgroundSlide = useTransform(likeSlider, (value) => value * 2.5);
 
-  const thumbMotionValue = useMotionValue(0); // let deck control other stuff
+  const thumbMotionValue = useMotionValue(0); // let deck control thumb
   const thumbX = useTransform(thumbMotionValue, (value) => value / 1.5);
   const thumbOpacityMotionValue = useMotionValue(0);
   const thumbOpacity = useTransform(
