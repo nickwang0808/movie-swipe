@@ -162,3 +162,8 @@ a {
   width: 100%;
   background-color: var(--gray);
 }
+
+/* override space between */
+.ion-page {
+  justify-content: unset;
+}

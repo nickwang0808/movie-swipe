@@ -6,8 +6,8 @@ import { Separator } from "../../theme/BaseComp";
 export default function ProfileMainScreen() {
   return (
     <ScreenWIthHeader title="Profile">
-      <ProfileItem title="hello" />
-      <ProfileItem title="hello" />
+      <ProfileItem title="SignIn or Register" />
+      <ProfileItem title="About Movie Sync" />
       <Separator />
       <ProfileItem title="hello" />
       <ProfileItem title="hello" />

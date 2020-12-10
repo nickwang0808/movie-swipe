@@ -28,6 +28,6 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  justify-content: center;
-  box-sizing: border-box;
+  justify-content: flex-start;
+  /* box-sizing: border-box; */
 `;
