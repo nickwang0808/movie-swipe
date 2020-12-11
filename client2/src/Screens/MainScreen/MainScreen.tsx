@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
 import DeckWrapper from "../../comp/Deck/DeckWrapper";
 import LeadCard from "../../comp/Deck/LeadCard";
@@ -8,18 +8,13 @@ import TrailCards from "../../comp/Deck/TrailCards";
 import { dummyMovieList } from "../../DevTools/dummyData";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
 import useGetWIndowsSizing from "../../Helper/useGetWIndowsSizing";
+import useTimeOutStateChange from "../../Helper/useTimeOutStateChange";
 import MainScreenMisc from "./MainScreenMisc";
 
 export default function MainScreen() {
-  // eslint-disable-next-line
-  const [_, setLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 300);
-  }, []);
-
   const { width: screenWidth } = useGetWIndowsSizing();
+  // eslint-disable-next-line
+  const _ = useTimeOutStateChange(); // card wont stack without this
   // prettier-ignore
   const {VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,} = useAnimateDeck(screenWidth);
 
