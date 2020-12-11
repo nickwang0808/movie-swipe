@@ -167,3 +167,10 @@ a {
 .ion-page {
   justify-content: unset;
 }
+
+/* can't do this in styled component, polyfill for now */
+.Bottom_nav_active,
+.Bottom_nav_active * {
+  color: var(--highlight);
+  fill: var(--highlight);
+}

@@ -17,7 +17,7 @@ export default function BottomNav({
 }: INavProps) {
   return (
     <Wrapper>
-      <StyledNavLink to="/mylist">
+      <StyledNavLink activeClassName="Bottom_nav_active" to="/mylist">
         <NavItem>
           {watchListBadgeCounter > 0 && (
             <Badge counter={watchListBadgeCounter} />
@@ -27,14 +27,14 @@ export default function BottomNav({
           Watch List
         </NavItem>
       </StyledNavLink>
-      <StyledNavLink to="/home">
+      <StyledNavLink activeClassName="Bottom_nav_active" to="/home">
         <NavItem>
           <BottomaNavIcon2 />
           <br />
           Find Media
         </NavItem>
       </StyledNavLink>
-      <StyledNavLink to="/profile">
+      <StyledNavLink activeClassName="Bottom_nav_active" to="/profile">
         <NavItem>
           {profileBadgeCounter > 0 && <Badge counter={profileBadgeCounter} />}
           <BottomaNavIcon3 />
@@ -67,11 +67,6 @@ const StyledNavLink = styled(NavLink)`
   color: var(--dark);
   flex-grow: 1;
   width: 33%;
-
-  &:active {
-    color: var(--highlight);
-    fill: var(--highlight);
-  }
 `;
 
 const NavItem = styled.div`
