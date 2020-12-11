@@ -4,7 +4,6 @@ import styled from "styled-components";
 import MainPoster from "./MainPoster";
 
 interface IProps {
-  key: number;
   imgUrl: string;
   index: number;
 
@@ -18,7 +17,6 @@ interface IProps {
 
 export default function LeadCard({
   imgUrl,
-  key,
   index,
   likeSlider,
   thumbMotionValue,
@@ -32,7 +30,6 @@ export default function LeadCard({
 
   return (
     <StyledMotionDiv
-      key={key}
       drag
       onViewportBoxUpdate={(_, delta) => {
         likeSlider.set(delta.x.translate);

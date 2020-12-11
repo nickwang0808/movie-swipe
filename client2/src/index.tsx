@@ -1,12 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import App from "./App";
 import WindowSizingProvider from "./comp/Layout/WindowSizingProvider";
 import * as serviceWorker from "./serviceWorker";
+import { rrfProps, store } from "./store";
 
 ReactDOM.render(
   <WindowSizingProvider>
-    <App />
+    <Provider store={store}>
+      <ReactReduxFirebaseProvider {...rrfProps}>
+        <App />
+      </ReactReduxFirebaseProvider>
+    </Provider>
   </WindowSizingProvider>,
   document.getElementById("root")
 );
