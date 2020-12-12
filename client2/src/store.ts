@@ -2,10 +2,14 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore"; // <- needed if using firestore
 import "firebase/functions"; // <- needed if using httpsCallable
-import { firebaseReducer } from "react-redux-firebase";
+import { firebaseReducer, getFirebase } from "react-redux-firebase";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { createFirestoreInstance, firestoreReducer } from "redux-firestore"; // <- needed if using firestore
+import {
+  createFirestoreInstance,
+  firestoreReducer,
+  getFirestore,
+} from "redux-firestore"; // <- needed if using firestore
 import ReduxThunk from "redux-thunk";
 import { genrePreference } from "./Helper/variables";
 import movieListSliceReducer from "./redux/MovieList/MovieListReducer";
@@ -34,15 +38,13 @@ const rrfConfig = {
 };
 
 firebase.initializeApp(fbConfig);
-export const db = firebase.firestore();
-export const auth = firebase.auth();
-export const cloudFn = firebase.functions();
-db.useEmulator("127.0.0.1", 8080);
-firebase.auth().useEmulator("http://127.0.0.1:9099/");
-firebase.functions().useEmulator("http://localhost", 5001);
-// db.useEmulator("35.220.182.160", 8080);
-// firebase.auth().useEmulator("http://35.220.182.160:9099/");
-// firebase.functions().useEmulator("http://35.220.182.160", 5001);
+
+// firebase.firestore().useEmulator("127.0.0.1", 8080);
+// firebase.auth().useEmulator("http://127.0.0.1:9099/");
+// firebase.functions().useEmulator("http://localhost", 5001);
+firebase.firestore().useEmulator("35.220.182.160", 8080);
+firebase.auth().useEmulator("http://35.220.182.160:9099/");
+firebase.functions().useEmulator("http://35.220.182.160", 5001);
 
 export const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
 export const arrayRemove = firebase.firestore.FieldValue.arrayRemove;
@@ -59,7 +61,9 @@ const initialState = {};
 export const store = createStore(
   rootReducer,
   initialState,
-  composeWithDevTools(applyMiddleware(ReduxThunk))
+  composeWithDevTools(
+    applyMiddleware(ReduxThunk.withExtraArgument({ getFirebase, getFirestore }))
+  )
 );
 
 export type IAppState = ReturnType<typeof rootReducer>;

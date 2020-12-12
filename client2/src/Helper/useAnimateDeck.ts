@@ -1,11 +1,16 @@
 import { animate, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
+import { useFirestore } from "react-redux-firebase";
 import { voteMovie } from "../redux/MovieList/MovieListReducer";
 import { store } from "../store";
 
 export default function useAnimateDeck() {
+  const db = useFirestore();
+  const { uid } = store.getState().firebase.auth;
+
   const screenWidth = store.getState().windowSizing.width;
   const [startPosition, setStartPosition] = useState<number>();
+
   const swipeDistance = screenWidth * 0.15;
   const xMotionValue = useMotionValue(0); // to control the deck via button
   const likeSlider = useMotionValue(0); // let deck control slider
@@ -44,7 +49,14 @@ export default function useAnimateDeck() {
     });
   };
 
-  const VoteWithAnimation = (isLike: boolean) => {
+  const VoteWithAnimation = (isLike: boolean, movieId: number) => {
+    db.collection("users")
+      .doc(uid)
+      .collection(isLike ? "Liked" : "Disliked")
+      .doc(String(movieId))
+      .set({
+        movieId,
+      });
     animate(xMotionValue, isLike ? screenWidth : -screenWidth, {
       type: "tween",
       duration: 0.5,

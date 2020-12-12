@@ -25,8 +25,8 @@ const fetchMovie = createAsyncThunk<
 
     const result = await fetchAndFilterMovies(
       pageNum,
-      LikedMovieIds,
-      DislikedMovieIds,
+      LikedMovieIds.map((elem: any) => elem.movieId),
+      DislikedMovieIds.map((elem: any) => elem.movieId),
       genrePreference,
       movieList.length
     );

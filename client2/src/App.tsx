@@ -1,4 +1,4 @@
-import { IonApp, IonRouterOutlet } from "@ionic/react";
+import { IonApp, IonContent, IonPage, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import "@ionic/react/css/core.css";
 import "@ionic/react/css/display.css";
@@ -32,7 +32,11 @@ const App: React.FC = () => {
           <IonRouterOutlet>
             <Route exact path="/" render={() => <Redirect to="/home" />} />
             <Route path="/home">
-              <MainScreen />
+              <IonPage>
+                <IonContent>
+                  <MainScreen />
+                </IonContent>
+              </IonPage>
             </Route>
             <Route path="/mylist">
               <WatchList />

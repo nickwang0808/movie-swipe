@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { isEmpty, isLoaded, useFirebase } from "react-redux-firebase";
 import styled from "styled-components";
+import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import { IAppState } from "../../store";
 
 export default function AuthChecker({
@@ -16,7 +17,7 @@ export default function AuthChecker({
   }
 
   const auth = useSelector((state: IAppState) => state.firebase.auth);
-  if (!isLoaded(auth)) return <div>splash screen...</div>;
+  if (!isLoaded(auth)) return <CenterLoader />;
   if (isEmpty(auth))
     return <StyledButton onClick={loginWithGoogle}>Sign In</StyledButton>;
   return <>{children}</>;

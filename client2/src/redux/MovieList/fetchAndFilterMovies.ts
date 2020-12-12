@@ -13,6 +13,7 @@ export default async function fetchAndFilterMovies(
     ...(likedMoviesIds || []),
     ...(disLikedMovieIds || []),
   ];
+
   let localPageNum = pageNum;
   const processedMovieLists: Result[] = [];
 
