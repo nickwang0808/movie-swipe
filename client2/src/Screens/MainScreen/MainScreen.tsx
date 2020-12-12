@@ -1,29 +1,35 @@
 import { IonContent, IonPage } from "@ionic/react";
-import React from "react";
+import { motion } from "framer-motion";
+import React, { useLayoutEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useFirestoreConnect } from "react-redux-firebase";
+import styled from "styled-components";
 import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
 import DeckWrapper from "../../comp/Deck/DeckWrapper";
-import LeadCard from "../../comp/Deck/LeadCard";
+import MainPoster from "../../comp/Deck/MainPoster";
 import SlideInThumb from "../../comp/Deck/SlideInThumb";
 import SliderBlock from "../../comp/Deck/SliderBlock";
-import TrailCards from "../../comp/Deck/TrailCards";
 import { dummyMovieList } from "../../DevTools/dummyData";
+import { likedAndDislikedIds } from "../../Helper/firestoreListenerMakers";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
-import useGetWIndowsSizing from "../../Helper/useGetWIndowsSizing";
-import useTimeOutStateChange from "../../Helper/useTimeOutStateChange";
+import fetchMovie from "../../redux/MovieList/fetchMovieThunk";
+import { IAppState } from "../../store";
 import MainScreenMisc from "./MainScreenMisc";
 
 export default function MainScreen() {
-  const { width: screenWidth } = useGetWIndowsSizing();
-  // eslint-disable-next-line
-  const _ = useTimeOutStateChange(); // card wont stack without this
+  const dispatch = useDispatch();
+  useLayoutEffect(() => {
+    dispatch(fetchMovie());
+  }, []);
   // prettier-ignore
-  const {VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,} = useAnimateDeck(screenWidth);
+  const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,} = useAnimateDeck();
+  useFirestoreConnect(likedAndDislikedIds());
+  const { movieList } = useSelector((state: IAppState) => state.movieList);
 
   return (
     <IonPage>
       <IonContent>
         <MainScreenMisc imgUrl={dummyMovieList.results[0].poster_path} />
-
         <SliderBlock type="like" backgroundSlide={backgroundSlide} />
         <SliderBlock type="dislike" backgroundSlide={backgroundSlide} />
         <SlideInThumb type="like" thumbX={thumbX} thumbOpacity={thumbOpacity} />
@@ -33,31 +39,75 @@ export default function MainScreen() {
           thumbOpacity={thumbOpacity}
         />
 
+        {/* layout animation does not work across children components */}
         <DeckWrapper>
-          {dummyMovieList.results
+          {movieList
             .slice(0, 4)
             .map((movie, i) => {
               if (i !== 0)
                 return (
-                  <TrailCards
+                  <StyledMotionDiv
                     key={movie.id}
-                    index={i}
-                    imgUrl={movie.poster_path}
-                  />
+                    style={{
+                      scale: 1 - i * 0.07,
+                      originY: 1,
+                      top: 4 * i,
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      ease: "circOut",
+                    }}
+                    layout
+                  >
+                    <MainPoster imgUrl={movie.poster_path} />
+                  </StyledMotionDiv>
                 );
 
               return (
-                <LeadCard
+                <StyledMotionDiv
                   key={movie.id}
-                  index={i}
-                  imgUrl={movie.poster_path}
-                  likeSlider={likeSlider}
-                  thumbMotionValue={thumbMotionValue}
-                  thumbOpacityMotionValue={thumbOpacityMotionValue}
-                  xMotionValue={xMotionValue}
-                  screenWidth={screenWidth}
-                  VoteWithAnimation={VoteWithAnimation}
-                />
+                  drag
+                  onViewportBoxUpdate={(_, delta) => {
+                    likeSlider.set(delta.x.translate);
+                    thumbMotionValue.set(delta.x.translate);
+                    thumbOpacityMotionValue.set(delta.x.translate);
+                  }}
+                  onDragStart={(e, info) => {
+                    const xPosition = info.point.x;
+                    setStartPosition(xPosition);
+                  }}
+                  onDragEnd={(e, info) => {
+                    const xPosition = info.point.x;
+                    if (startPosition) {
+                      if (
+                        xPosition >
+                        (startPosition as number) + swipeDistance
+                      ) {
+                        VoteWithAnimation(true);
+                      } else if (
+                        xPosition <
+                        (startPosition as number) - swipeDistance
+                      ) {
+                        VoteWithAnimation(false);
+                      }
+                    }
+                  }}
+                  dragElastic={1}
+                  dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+                  style={{
+                    originY: 1,
+                    top: 4 * i,
+                    scale: 1 - i * 0.07,
+                    x: xMotionValue,
+                  }}
+                  layout
+                  transition={{
+                    duration: 0.5,
+                    ease: "circOut",
+                  }}
+                >
+                  <MainPoster imgUrl={movie.poster_path} />
+                </StyledMotionDiv>
               );
             })
             .reverse()}
@@ -73,3 +123,12 @@ export default function MainScreen() {
     </IonPage>
   );
 }
+
+export const StyledMotionDiv = styled(motion.div)`
+  position: absolute;
+  width: 100vw;
+  height: var(--poster-height);
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+`;

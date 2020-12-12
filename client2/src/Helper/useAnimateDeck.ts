@@ -1,6 +1,12 @@
 import { animate, useMotionValue, useTransform } from "framer-motion";
+import { useState } from "react";
+import { voteMovie } from "../redux/MovieList/MovieListReducer";
+import { store } from "../store";
 
-export default function useAnimateDeck(screenWidth: number) {
+export default function useAnimateDeck() {
+  const screenWidth = store.getState().windowSizing.width;
+  const [startPosition, setStartPosition] = useState<number>();
+  const swipeDistance = screenWidth * 0.15;
   const xMotionValue = useMotionValue(0); // to control the deck via button
   const likeSlider = useMotionValue(0); // let deck control slider
   const backgroundSlide = useTransform(likeSlider, (value) => value * 2.5);
@@ -45,6 +51,7 @@ export default function useAnimateDeck(screenWidth: number) {
       ease: [0.33, 1, 0.68, 1],
       onComplete: () => {
         xMotionValue.set(0);
+        store.dispatch(voteMovie());
       },
     });
     animateSliderAndThumb(isLike ? screenWidth : -screenWidth, isLike ? 1 : -1);
@@ -59,5 +66,9 @@ export default function useAnimateDeck(screenWidth: number) {
     thumbOpacityMotionValue,
     thumbOpacity,
     VoteWithAnimation,
+    screenWidth,
+    startPosition,
+    setStartPosition,
+    swipeDistance,
   };
 }

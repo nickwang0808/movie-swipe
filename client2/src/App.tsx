@@ -14,6 +14,7 @@ import React from "react";
 import { Redirect, Route } from "react-router";
 import "./App.css";
 import BottomNav from "./comp/NavBar/BottomNav";
+import useGetWIndowsSizing from "./Helper/useGetWIndowsSizing";
 import AuthChecker from "./Screens/Auth/AuthChecker";
 import MainScreen from "./Screens/MainScreen/MainScreen";
 import MovieDetailsScreen from "./Screens/MovieDetailsScreen/MovieDetailsScreen";
@@ -21,6 +22,8 @@ import ProfileMainScreen from "./Screens/Profile/ProfileMainScreen";
 import WatchList from "./Screens/WatchList/WatchList";
 
 const App: React.FC = () => {
+  useGetWIndowsSizing();
+
   return (
     <AuthChecker>
       <IonApp>
@@ -37,7 +40,7 @@ const App: React.FC = () => {
             <Route path="/profile">
               <ProfileMainScreen />
             </Route>
-            <Route path="/detials/:id">
+            <Route path="/details/:id">
               <MovieDetailsScreen />
             </Route>
           </IonRouterOutlet>

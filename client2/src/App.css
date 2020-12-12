@@ -118,6 +118,10 @@ a {
   --ion-color-base: var(--ion-color-header);
 }
 
+ion-title {
+  font-weight: 600;
+}
+
 .loader {
   height: 80px;
   width: 80px;
