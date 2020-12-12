@@ -18,14 +18,16 @@ import MainScreenMisc from "./MainScreenMisc";
 
 export default function MainScreen() {
   const dispatch = useDispatch();
-  useLayoutEffect(() => {
-    dispatch(fetchMovie());
-  }, []);
   // prettier-ignore
   const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,} = useAnimateDeck();
   useFirestoreConnect(likedAndDislikedIds());
   const { movieList } = useSelector((state: IAppState) => state.movieList);
 
+  useLayoutEffect(() => {
+    if (movieList.length < 4) {
+      dispatch(fetchMovie());
+    }
+  }, [movieList]);
   return (
     <IonPage>
       <IonContent>

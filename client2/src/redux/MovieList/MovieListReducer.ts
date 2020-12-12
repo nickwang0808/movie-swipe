@@ -30,7 +30,10 @@ const movieListSlice = createSlice({
     });
     builder.addCase(fetchMovie.fulfilled, (state, action) => {
       state.status = "succeeded";
-      state.movieList = action.payload.processedMovieLists;
+      state.movieList = [
+        ...state.movieList,
+        ...action.payload.processedMovieLists,
+      ];
       state.pageNum = action.payload.pageNum;
     });
     builder.addCase(fetchMovie.rejected, (state, action) => {
