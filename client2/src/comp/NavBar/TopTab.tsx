@@ -5,10 +5,14 @@ import styled from "styled-components/macro";
 export default function TopTab() {
   return (
     <Wrapper>
-      <StyledNavLink exact to="/mylist">
+      <StyledNavLink exact to="/mylist/liked" activeClassName="top_nav_active">
         My Movies
       </StyledNavLink>
-      <StyledNavLink exact to="/mylist/watched">
+      <StyledNavLink
+        exact
+        to="/mylist/watched"
+        activeClassName="top_nav_active"
+      >
         Watched
       </StyledNavLink>
     </Wrapper>
@@ -37,16 +41,4 @@ const StyledNavLink = styled(NavLink)`
   font-weight: 600;
   text-decoration: none;
   color: var(--dark);
-
-  &:active {
-    background-color: var(--highlight);
-    display: flex;
-    color: var(--light);
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    border-radius: 23px;
-    margin: 1px;
-    height: calc(100% - 2px);
-  }
 `;

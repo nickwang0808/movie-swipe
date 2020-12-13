@@ -2,21 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
 import baseUrl from "../../Helper/TmdbBaseUrl";
+import { Result } from "../../MovieTypes/IPopularMovies";
 import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 import MatchTag from "../Misc/MatchTag";
 import Ratings from "../Misc/Ratings";
 import WatchedTag from "../Misc/WatchedTag";
 
 interface ILikedMovieInMyList {
-  movie: IMovie;
+  movie: Result;
   matched?: boolean;
   watched?: boolean;
-}
-
-interface IMovie {
-  poster_path: string;
-  title: string;
-  id: number;
 }
 
 export default function WatchListItem({
@@ -42,7 +37,10 @@ export default function WatchListItem({
 
           <Ratings rating={5} />
 
-          <GenreRunTimeYear />
+          <GenreRunTimeYear
+            genreIds={movie.genre_ids}
+            year={String(movie.release_date).slice(0, 4)}
+          />
         </div>
       </StyledWrapperLink>
     </>

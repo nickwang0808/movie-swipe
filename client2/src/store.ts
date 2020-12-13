@@ -39,12 +39,12 @@ const rrfConfig = {
 
 firebase.initializeApp(fbConfig);
 
-// firebase.firestore().useEmulator("127.0.0.1", 8080);
-// firebase.auth().useEmulator("http://127.0.0.1:9099/");
-// firebase.functions().useEmulator("http://localhost", 5001);
-firebase.firestore().useEmulator("35.220.182.160", 8080);
-firebase.auth().useEmulator("http://35.220.182.160:9099/");
-firebase.functions().useEmulator("http://35.220.182.160", 5001);
+firebase.firestore().useEmulator("127.0.0.1", 8080);
+firebase.auth().useEmulator("http://127.0.0.1:9099/");
+firebase.functions().useEmulator("http://localhost", 5001);
+// firebase.firestore().useEmulator("35.220.182.160", 8080);
+// firebase.auth().useEmulator("http://35.220.182.160:9099/");
+// firebase.functions().useEmulator("http://35.220.182.160", 5001);
 
 export const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
 export const arrayRemove = firebase.firestore.FieldValue.arrayRemove;

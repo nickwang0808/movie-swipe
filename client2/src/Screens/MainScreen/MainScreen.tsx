@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useFirestoreConnect } from "react-redux-firebase";
 import styled from "styled-components";
 import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
 import DeckWrapper from "../../comp/Deck/DeckWrapper";
@@ -9,7 +8,6 @@ import MainPoster from "../../comp/Deck/MainPoster";
 import SlideInThumb from "../../comp/Deck/SlideInThumb";
 import SliderBlock from "../../comp/Deck/SliderBlock";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
-import { likedAndDislikedIds } from "../../Helper/firestoreListenerMakers";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
 import fetchMovie from "../../redux/MovieList/fetchMovieThunk";
 import { IAppState } from "../../store";
@@ -19,22 +17,26 @@ export default function MainScreen() {
   const dispatch = useDispatch();
   // prettier-ignore
   const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,} = useAnimateDeck();
-  useFirestoreConnect(likedAndDislikedIds());
   const { movieList, status, error } = useSelector(
     (state: IAppState) => state.movieList
   );
-  const LikedMovieIds = useSelector(
-    (state: IAppState) => state.firestore.ordered.LikedMovieIds
+  const { LikedMovies, DislikedMovies, WatchedMovies } = useSelector(
+    (state: IAppState) => state.firestore.ordered
   );
 
   useEffect(() => {
-    if (movieList.length < 4 && LikedMovieIds) {
+    if (
+      movieList.length < 4 &&
+      LikedMovies &&
+      DislikedMovies &&
+      WatchedMovies
+    ) {
       dispatch(fetchMovie());
     }
-  }, [movieList, LikedMovieIds]);
+  }, [movieList, LikedMovies, DislikedMovies, WatchedMovies]);
 
-  const handleVote = (isLike: boolean, movieId = movieList[0].id) =>
-    VoteWithAnimation(isLike, movieId);
+  const handleVote = (isLike: boolean, movie = movieList[0]) =>
+    VoteWithAnimation(isLike, movie);
 
   if (status === "failed")
     return <h2>Something Wrong happened, refresh or restart the App</h2>;

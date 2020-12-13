@@ -1,6 +1,6 @@
 import { store } from "../store";
 
-export const likedAndDislikedIds = () => {
+export const likedDislikedWatched = () => {
   const { uid } = store.getState().firebase.auth;
   return [
     {
@@ -11,7 +11,7 @@ export const likedAndDislikedIds = () => {
           collection: "Liked",
         },
       ],
-      storeAs: "LikedMovieIds",
+      storeAs: "LikedMovies",
     },
     {
       collection: "users",
@@ -21,7 +21,17 @@ export const likedAndDislikedIds = () => {
           collection: "Disliked",
         },
       ],
-      storeAs: "DislikedMovieIds",
+      storeAs: "DislikedMovies",
+    },
+    {
+      collection: "users",
+      doc: uid,
+      subcollections: [
+        {
+          collection: "Watched",
+        },
+      ],
+      storeAs: "WatchedMovies",
     },
   ];
 };

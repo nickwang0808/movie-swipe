@@ -1,6 +1,7 @@
 import { animate, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
+import { Result } from "../MovieTypes/IPopularMovies";
 import { voteMovie } from "../redux/MovieList/MovieListReducer";
 import { store } from "../store";
 
@@ -49,13 +50,14 @@ export default function useAnimateDeck() {
     });
   };
 
-  const VoteWithAnimation = (isLike: boolean, movieId: number) => {
+  const VoteWithAnimation = (isLike: boolean, movie: Result) => {
     db.collection("users")
       .doc(uid)
       .collection(isLike ? "Liked" : "Disliked")
-      .doc(String(movieId))
+      .doc(String(movie.id))
       .set({
-        movieId,
+        ...movie,
+        timeLiked: Date.now(),
       });
     animate(xMotionValue, isLike ? screenWidth : -screenWidth, {
       type: "tween",

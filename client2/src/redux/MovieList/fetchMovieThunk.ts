@@ -20,13 +20,18 @@ const fetchMovie = createAsyncThunk<
   async (_, { getState }) => {
     const store = getState();
     const genrePreference = store.firebase.profile.genrePreference;
-    const { LikedMovieIds, DislikedMovieIds } = store.firestore.ordered;
+    const {
+      LikedMovies,
+      DislikedMovies,
+      WatchedMovies,
+    } = store.firestore.ordered;
     const { pageNum, movieList } = store.movieList;
 
     const result = await fetchAndFilterMovies(
       pageNum,
-      LikedMovieIds.map((elem: any) => elem.movieId),
-      DislikedMovieIds.map((elem: any) => elem.movieId),
+      LikedMovies.map((elem: any) => elem.id),
+      DislikedMovies.map((elem: any) => elem.id),
+      WatchedMovies.map((elem: any) => elem.id),
       genrePreference,
       movieList.length
     );

@@ -189,3 +189,15 @@ ion-title {
   color: var(--highlight);
   fill: var(--highlight);
 }
+
+.top_nav_active {
+  background-color: var(--highlight);
+  display: flex;
+  color: var(--light) !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 23px;
+  margin: 1px;
+  height: calc(100% - 2px);
+}

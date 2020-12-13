@@ -1,9 +1,13 @@
-import { IonContent, IonPage } from "@ionic/react";
+import { IonContent } from "@ionic/react";
 import React from "react";
+import { useSelector } from "react-redux";
+import { Redirect, Route } from "react-router";
 import MainHeader from "../../comp/Layout/MainHeader";
 import WatchListItem from "../../comp/ListItem/WatchListItem";
 import WatchListEmpty from "../../comp/Misc/WatchListEmpty";
 import TopTab from "../../comp/NavBar/TopTab";
+import { Result } from "../../MovieTypes/IPopularMovies";
+import { IAppState } from "../../store";
 
 const dummy = {
   matched: false,
@@ -16,19 +20,40 @@ const dummy = {
 };
 
 export default function WatchList() {
+  const LikedMovies: Result[] = useSelector(
+    (state: IAppState) => state.firestore.ordered.LikedMovies
+  );
+  const WatchedMovies: Result[] = useSelector(
+    (state: IAppState) => state.firestore.ordered.WatchedMovies
+  );
+
   return (
-    <IonPage>
+    <>
       <MainHeader title="My Watch List" disableBackButton />
       <IonContent>
         <TopTab />
-        <WatchListEmpty type="like" />
-        <WatchListItem {...dummy} />
-        <WatchListItem {...dummy} />
-        <WatchListItem {...dummy} />
-        <WatchListItem {...dummy} />
-        <WatchListItem {...dummy} />
-        <WatchListItem {...dummy} />
+        <Route path="/mylist/liked">
+          {LikedMovies && LikedMovies.length > 0 ? (
+            LikedMovies.map((movie) => (
+              <WatchListItem key={movie.id} movie={movie} />
+            ))
+          ) : (
+            <WatchListEmpty type="like" />
+          )}
+        </Route>
+        <Route
+          exact
+          path="/mylist"
+          render={() => <Redirect to="/mylist/liked" />}
+        />
+        <Route exact path="/mylist/Watched">
+          {WatchedMovies && WatchedMovies.length > 0 ? (
+            WatchedMovies.map((movie) => <WatchListItem movie={movie} />)
+          ) : (
+            <WatchListEmpty type="watch" />
+          )}
+        </Route>
       </IonContent>
-    </IonPage>
+    </>
   );
 }

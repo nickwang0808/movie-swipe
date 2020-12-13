@@ -4,6 +4,7 @@ export default async function fetchAndFilterMovies(
   pageNum: number,
   likedMoviesIds: number[] | null,
   disLikedMovieIds: number[] | null,
+  watchedMovieIds: number[] | null,
   genrePreference: number[],
   currentMovieListLength: number
 ) {
@@ -12,6 +13,7 @@ export default async function fetchAndFilterMovies(
     ...(localVoted || []),
     ...(likedMoviesIds || []),
     ...(disLikedMovieIds || []),
+    ...(watchedMovieIds || []),
   ];
 
   let localPageNum = pageNum;

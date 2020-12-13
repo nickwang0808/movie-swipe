@@ -9,13 +9,13 @@ export default function DeckWrapper({
 }) {
   return (
     <StyledMotionDiv
-      animate={{ opacity: 1, marginTop: "0rem" }}
-      initial={{ opacity: 0, marginTop: " 2rem" }}
-      transition={{
-        delay: 0,
-        duration: 1,
-        ease: [0.16, 1, 0.3, 1],
-      }}
+    // animate={{ opacity: 1, marginTop: "0rem" }}
+    // initial={{ opacity: 0, marginTop: " 2rem" }}
+    // transition={{
+    //   delay: 0,
+    //   duration: 1,
+    //   ease: [0.16, 1, 0.3, 1],
+    // }}
     >
       {children}
     </StyledMotionDiv>
