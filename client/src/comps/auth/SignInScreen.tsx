@@ -1,13 +1,11 @@
-import React, { useContext, useState } from "react";
-import { User } from "firebase/app";
-import { auth, cloudFn, db } from "../../firebase/config";
-
 import { cfaSignIn } from "capacitor-firebase-auth";
+import { User } from "firebase/app";
+import React, { useContext, useState } from "react";
+import { useHistory } from "react-router";
+import { auth, cloudFn, db } from "../../firebase/config";
+import { UserContext } from "../../store";
 import sharedstyle from "../ButtonComps/ButtonComps.module.css";
 import style from "./auth.module.css";
-import { UserContext } from "../../store";
-
-import { useHistory } from "react-router";
 
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
@@ -99,9 +97,18 @@ export default function SignInScreen() {
     <>
       <form>
         <label>Email</label>
-        <input onChange={(e) => setEmail(e.target.value)} value={email} />
+        <input
+          autoComplete="true"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        />
         <label>Password</label>
-        <input onChange={(e) => setPassword(e.target.value)} value={password} />
+        <input
+          autoComplete="true"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+        />
         <button
           onClick={(e) => {
             e.preventDefault();
