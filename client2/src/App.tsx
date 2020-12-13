@@ -14,6 +14,7 @@ import React from "react";
 import { Redirect, Route } from "react-router";
 import "./App.css";
 import BottomNav from "./comp/NavBar/BottomNav";
+import useVotedMovieListener from "./firebase/FirestoreListeners/useVotedListener";
 import useGetWIndowsSizing from "./Helper/useGetWIndowsSizing";
 import MainScreen from "./Screens/MainScreen/MainScreen";
 import MovieDetailsScreen from "./Screens/MovieDetailsScreen/MovieDetailsScreen";
@@ -22,6 +23,9 @@ import WatchList from "./Screens/WatchList/WatchList";
 
 const App: React.FC = () => {
   useGetWIndowsSizing();
+  useVotedMovieListener("Liked");
+  useVotedMovieListener("Disliked");
+  useVotedMovieListener("Watched");
 
   return (
     <IonApp>

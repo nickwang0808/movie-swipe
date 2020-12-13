@@ -3,30 +3,30 @@ import { Result } from "../../MovieTypes/IPopularMovies";
 
 interface IVotedMovieReducer {
   isLoaded: boolean;
-  Liked: Result[];
-  DisLiked: Result[];
-  Watched: Result[];
+  Liked: Result[] | null;
+  DisLiked: Result[] | null;
+  Watched: Result[] | null;
 }
 
 const initialState: IVotedMovieReducer = {
   isLoaded: false,
-  Liked: [],
-  DisLiked: [],
-  Watched: [],
+  Liked: null,
+  DisLiked: null,
+  Watched: null,
 };
 
 const votedMovieReducer = createSlice({
   name: "firestore",
   initialState,
   reducers: {
-    setLiked: ({ Liked }, action: PayloadAction<Result[]>) => {
-      Liked = [...Liked, ...action.payload];
+    setLiked: (state, action: PayloadAction<Result[]>) => {
+      state.Liked = action.payload;
     },
-    setWatched: ({ Watched }, action: PayloadAction<Result[]>) => {
-      Watched = [...Watched, ...action.payload];
+    setWatched: (state, action: PayloadAction<Result[]>) => {
+      state.Watched = action.payload;
     },
-    setDisLiked: ({ DisLiked }, action: PayloadAction<Result[]>) => {
-      DisLiked = [...DisLiked, ...action.payload];
+    setDisLiked: (state, action: PayloadAction<Result[]>) => {
+      state.DisLiked = action.payload;
     },
   },
 });

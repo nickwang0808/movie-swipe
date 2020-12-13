@@ -16,7 +16,8 @@ import MainScreenMisc from "./MainScreenMisc";
 export default function MainScreen() {
   const dispatch = useDispatch();
   // prettier-ignore
-  const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,} = useAnimateDeck();
+  const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,}
+   = useAnimateDeck();
   const { movieList, status, error } = useSelector(
     (state: IAppState) => state.movieList
   );
