@@ -11,11 +11,9 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
 import React from "react";
-import { useFirestoreConnect } from "react-redux-firebase";
 import { Redirect, Route } from "react-router";
 import "./App.css";
 import BottomNav from "./comp/NavBar/BottomNav";
-import { likedDislikedWatched } from "./Helper/firestoreListenerMakers";
 import useGetWIndowsSizing from "./Helper/useGetWIndowsSizing";
 import MainScreen from "./Screens/MainScreen/MainScreen";
 import MovieDetailsScreen from "./Screens/MovieDetailsScreen/MovieDetailsScreen";
@@ -24,7 +22,6 @@ import WatchList from "./Screens/WatchList/WatchList";
 
 const App: React.FC = () => {
   useGetWIndowsSizing();
-  useFirestoreConnect(likedDislikedWatched());
 
   return (
     <IonApp>

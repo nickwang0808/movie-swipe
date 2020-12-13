@@ -20,20 +20,15 @@ export default function MainScreen() {
   const { movieList, status, error } = useSelector(
     (state: IAppState) => state.movieList
   );
-  const { LikedMovies, DislikedMovies, WatchedMovies } = useSelector(
-    (state: IAppState) => state.firestore.ordered
+  const { DisLiked, Liked, Watched } = useSelector(
+    (state: IAppState) => state.voted
   );
 
   useEffect(() => {
-    if (
-      movieList.length < 4 &&
-      LikedMovies &&
-      DislikedMovies &&
-      WatchedMovies
-    ) {
+    if (movieList.length < 4 && DisLiked && Liked && Watched) {
       dispatch(fetchMovie());
     }
-  }, [movieList, LikedMovies, DislikedMovies, WatchedMovies]);
+  }, [movieList, DisLiked, Liked, Watched]);
 
   const handleVote = (isLike: boolean, movie = movieList[0]) =>
     VoteWithAnimation(isLike, movie);

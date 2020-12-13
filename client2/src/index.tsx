@@ -1,19 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import App from "./App";
 import AuthChecker from "./Screens/Auth/AuthChecker";
 import * as serviceWorker from "./serviceWorker";
-import { rrfProps, store } from "./store";
+import { store } from "./store";
 
 ReactDOM.render(
   <Provider store={store}>
-    <ReactReduxFirebaseProvider {...rrfProps}>
-      <AuthChecker>
-        <App />
-      </AuthChecker>
-    </ReactReduxFirebaseProvider>
+    <AuthChecker>
+      <App />
+    </AuthChecker>
   </Provider>,
   document.getElementById("root")
 );

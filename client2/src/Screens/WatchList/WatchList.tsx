@@ -6,7 +6,6 @@ import MainHeader from "../../comp/Layout/MainHeader";
 import WatchListItem from "../../comp/ListItem/WatchListItem";
 import WatchListEmpty from "../../comp/Misc/WatchListEmpty";
 import TopTab from "../../comp/NavBar/TopTab";
-import { Result } from "../../MovieTypes/IPopularMovies";
 import { IAppState } from "../../store";
 
 const dummy = {
@@ -20,12 +19,7 @@ const dummy = {
 };
 
 export default function WatchList() {
-  const LikedMovies: Result[] = useSelector(
-    (state: IAppState) => state.firestore.ordered.LikedMovies
-  );
-  const WatchedMovies: Result[] = useSelector(
-    (state: IAppState) => state.firestore.ordered.WatchedMovies
-  );
+  const { Liked, Watched } = useSelector((state: IAppState) => state.voted);
 
   return (
     <>
@@ -33,10 +27,8 @@ export default function WatchList() {
       <IonContent>
         <TopTab />
         <Route path="/mylist/liked">
-          {LikedMovies && LikedMovies.length > 0 ? (
-            LikedMovies.map((movie) => (
-              <WatchListItem key={movie.id} movie={movie} />
-            ))
+          {Liked && Liked.length > 0 ? (
+            Liked.map((movie) => <WatchListItem key={movie.id} movie={movie} />)
           ) : (
             <WatchListEmpty type="like" />
           )}
@@ -47,8 +39,8 @@ export default function WatchList() {
           render={() => <Redirect to="/mylist/liked" />}
         />
         <Route exact path="/mylist/Watched">
-          {WatchedMovies && WatchedMovies.length > 0 ? (
-            WatchedMovies.map((movie) => <WatchListItem movie={movie} />)
+          {Watched && Watched.length > 0 ? (
+            Watched.map((movie) => <WatchListItem movie={movie} />)
           ) : (
             <WatchListEmpty type="watch" />
           )}

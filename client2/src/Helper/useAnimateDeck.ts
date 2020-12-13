@@ -1,13 +1,11 @@
 import { animate, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
-import { useFirestore } from "react-redux-firebase";
 import { Result } from "../MovieTypes/IPopularMovies";
 import { voteMovie } from "../redux/MovieList/MovieListReducer";
 import { store } from "../store";
 
 export default function useAnimateDeck() {
-  const db = useFirestore();
-  const { uid } = store.getState().firebase.auth;
+  const uid = store.getState().auth.user?.uid as string;
 
   const screenWidth = store.getState().windowSizing.width;
   const [startPosition, setStartPosition] = useState<number>();
@@ -51,14 +49,14 @@ export default function useAnimateDeck() {
   };
 
   const VoteWithAnimation = (isLike: boolean, movie: Result) => {
-    db.collection("users")
-      .doc(uid)
-      .collection(isLike ? "Liked" : "Disliked")
-      .doc(String(movie.id))
-      .set({
-        ...movie,
-        timeLiked: Date.now(),
-      });
+    // db.collection("users")
+    //   .doc(uid)
+    //   .collection(isLike ? "Liked" : "Disliked")
+    //   .doc(String(movie.id))
+    //   .set({
+    //     ...movie,
+    //     timeLiked: Date.now(),
+    //   });
     animate(xMotionValue, isLike ? screenWidth : -screenWidth, {
       type: "tween",
       duration: 0.5,
