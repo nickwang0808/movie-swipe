@@ -18,6 +18,7 @@ import useVotedMovieListener from "./firebase/FirestoreListeners/useVotedListene
 import useGetWIndowsSizing from "./Helper/useGetWIndowsSizing";
 import MainScreen from "./Screens/MainScreen/MainScreen";
 import MovieDetailsScreen from "./Screens/MovieDetailsScreen/MovieDetailsScreen";
+import FriendsScreen from "./Screens/Profile/FriendsScreen";
 import ProfileMainScreen from "./Screens/Profile/ProfileMainScreen";
 import WatchList from "./Screens/WatchList/WatchList";
 
@@ -40,13 +41,16 @@ const App: React.FC = () => {
               </IonContent>
             </IonPage>
           </Route>
-          <Route path="/mylist">
+          <Route exact path="/mylist">
             <IonPage>
               <WatchList />
             </IonPage>
           </Route>
-          <Route path="/profile">
+          <Route exact path="/profile">
             <ProfileMainScreen />
+          </Route>
+          <Route exact path="/profile/friend">
+            <FriendsScreen />
           </Route>
           <Route path="/details/:id">
             <MovieDetailsScreen />

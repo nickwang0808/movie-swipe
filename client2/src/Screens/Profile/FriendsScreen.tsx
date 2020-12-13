@@ -1,33 +1,37 @@
+import { IonContent, IonPage } from "@ionic/react";
 import React from "react";
+import MainHeader from "../../comp/Layout/MainHeader";
 import SubContent from "../../comp/Layout/SubContent";
 import FriendsItem from "../../comp/ListItem/FriendsItem";
 import InviteFriend from "../../comp/Misc/InviteFriend";
 
 export default function FriendsScreen() {
   return (
-    <>
-      <p className="marginSides2 marginTop2 marginBottom2">
-        We'll let you know when you and your friends both want to watch
-        something!
-      </p>
+    <IonPage>
+      <MainHeader title="Friends" />
+      <IonContent>
+        <p className="marginSides2 marginTop2 marginBottom2">
+          We'll let you know when you and your friends both want to watch
+          something!
+        </p>
 
-      {/* <SubContent>
+        {/* <SubContent>
         <PendingInviteItem
           name="Nick Wang"
           handleAccept={() => console.log("Accpet")}
           handleDecline={() => console.log("Accpet")}
         />
       </SubContent> */}
+        <SubContent title="Friends">
+          <FriendsItem name="Nick Wang" />
+          <FriendsItem name="Nick Wang" />
+          <FriendsItem name="Nick Wang" />
+        </SubContent>
 
-      <SubContent title="Friends">
-        <FriendsItem name="Nick Wang" />
-        <FriendsItem name="Nick Wang" />
-        <FriendsItem name="Nick Wang" />
-      </SubContent>
-
-      <SubContent title="Invite New Friends">
-        <InviteFriend message="Something went wrong" />
-      </SubContent>
-    </>
+        <SubContent title="Invite New Friends">
+          <InviteFriend message="Something went wrong" />
+        </SubContent>
+      </IonContent>
+    </IonPage>
   );
 }
