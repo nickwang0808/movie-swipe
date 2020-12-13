@@ -1,10 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IUserAuth } from "../Auth/AuthReducer";
 
-interface IProfileDetails {
-  displayName: string;
-  email: string;
+export interface IProfileDetails extends IUserAuth {
   genrePreference: number[];
-  avatarUrl: string;
 }
 
 interface IProfile {

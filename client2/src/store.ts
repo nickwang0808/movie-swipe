@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSliceReducer from "./redux/Auth/AuthReducer";
+import friendsReducer from "./redux/Friends/friendsReducer";
 import MovieListReducer from "./redux/MovieList/MovieListReducer";
 import profileReducer from "./redux/Profile/profileReducer";
 import votedMovieReducer from "./redux/Voted/votedMovieReducer";
@@ -12,6 +13,7 @@ export const store = configureStore({
     windowSizing: WindowSizingReducer,
     voted: votedMovieReducer,
     movieList: MovieListReducer,
+    friends: friendsReducer,
   },
 });
 

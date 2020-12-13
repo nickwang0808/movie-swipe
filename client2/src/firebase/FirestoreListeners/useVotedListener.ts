@@ -1,41 +1,47 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Result } from "../../MovieTypes/IPopularMovies";
 import {
   setDisLiked,
   setLiked,
   setWatched,
 } from "../../redux/Voted/votedMovieReducer";
-import { IAppState } from "../../store";
+import { store } from "../../store";
 import { db } from "../config";
 
-export default function useVotedMovieListener(
-  type: "Liked" | "Watched" | "Disliked"
-) {
-  const uid = useSelector((state: IAppState) => state.auth.user?.uid as string);
+enum type {
+  Liked = "Liked",
+  Watched = "Watched",
+  Disliked = "Disliked",
+}
+
+export default function useVotedMovieListener() {
   const dispatch = useDispatch();
+  const uid = store.getState().auth.user?.uid as string;
+  const userRef = db.collection("users").doc(uid);
+  useEffect(() => {
+    const cleanUp = userRef.collection(type.Liked).onSnapshot((snap) => {
+      const data = snap.docs.map((doc) => doc.data()) as Result[];
+      dispatch(setLiked(data));
+    });
+
+    return () => cleanUp();
+  }, []);
 
   useEffect(() => {
-    const cleanUp = db
-      .collection("users")
-      .doc(uid)
-      .collection(type)
-      .onSnapshot((snap) => {
-        const data = snap.docs.map((doc) => doc.data()) as Result[];
-        switch (type) {
-          case "Liked":
-            dispatch(setLiked(data));
-            break;
-          case "Disliked":
-            dispatch(setDisLiked(data));
-            break;
-          case "Watched":
-            dispatch(setWatched(data));
-            break;
-          default:
-            break;
-        }
-      });
+    const cleanUp = userRef.collection(type.Disliked).onSnapshot((snap) => {
+      const data = snap.docs.map((doc) => doc.data()) as Result[];
+      dispatch(setDisLiked(data));
+    });
+
+    return () => cleanUp();
+  }, []);
+
+  useEffect(() => {
+    const cleanUp = userRef.collection(type.Watched).onSnapshot((snap) => {
+      const data = snap.docs.map((doc) => doc.data()) as Result[];
+      dispatch(setWatched(data));
+    });
 
     return () => cleanUp();
   }, []);

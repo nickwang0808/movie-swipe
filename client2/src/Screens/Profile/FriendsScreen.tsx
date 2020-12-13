@@ -3,6 +3,7 @@ import React from "react";
 import MainHeader from "../../comp/Layout/MainHeader";
 import SubContent from "../../comp/Layout/SubContent";
 import FriendsItem from "../../comp/ListItem/FriendsItem";
+import PendingInviteItem from "../../comp/ListItem/PendingInviteItem";
 import InviteFriend from "../../comp/Misc/InviteFriend";
 
 export default function FriendsScreen() {
@@ -15,13 +16,13 @@ export default function FriendsScreen() {
           something!
         </p>
 
-        {/* <SubContent>
-        <PendingInviteItem
-          name="Nick Wang"
-          handleAccept={() => console.log("Accpet")}
-          handleDecline={() => console.log("Accpet")}
-        />
-      </SubContent> */}
+        <SubContent title="Requests">
+          <PendingInviteItem
+            name="Nick Wang"
+            handleAccept={() => console.log("Accpet")}
+            handleDecline={() => console.log("Accpet")}
+          />
+        </SubContent>
         <SubContent title="Friends">
           <FriendsItem name="Nick Wang" />
           <FriendsItem name="Nick Wang" />
@@ -29,7 +30,7 @@ export default function FriendsScreen() {
         </SubContent>
 
         <SubContent title="Invite New Friends">
-          <InviteFriend message="Something went wrong" />
+          <InviteFriend />
         </SubContent>
       </IonContent>
     </IonPage>

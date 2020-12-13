@@ -1,21 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components/macro";
+import { cloudFn } from "../../firebase/config";
+import { IAppState } from "../../store";
 import { Btn, ErrorMessage } from "../../theme/BaseComp";
 
-export default function InviteFriend({ message }: { message: string }) {
+export default function InviteFriend() {
+  const [emailInput, setEmailInput] = useState("");
+  const [message, setMessage] = useState<string>();
+  const [disableInvite, setDisableInvite] = useState(false);
+  const myEmail = useSelector(
+    (state: IAppState) => state.profile.profile?.email as string
+  );
+
+  const handleInvite = async () => {
+    console.log("handleInvite");
+
+    if (emailInput === myEmail) {
+      setMessage("you can't add yourself as friend");
+    } else if (emailInput.length === 0) {
+      setMessage("please input email");
+    } else {
+      setDisableInvite(true);
+      const friendReqStatus = await cloudFn.httpsCallable("sendFriendReq")({
+        email: emailInput,
+      });
+      if (
+        friendReqStatus.data.message ===
+        "There is no user record corresponding to the provided identifier."
+      ) {
+        setMessage("No users with this email");
+      } else {
+        setMessage(friendReqStatus.data.message);
+      }
+      setEmailInput("");
+      setDisableInvite(false);
+    }
+  };
+
   return (
     <>
       <StyledInputWrapper>
         <input
           type="text"
           placeholder="Enter email..."
-          // onChange={(e) => setEmailInput(e.target.value)}
-          // value={emailInput}
+          onChange={(e) => setEmailInput(e.target.value)}
+          value={emailInput}
         />
         <StyledButton
           as="button"
-          // disabled={disableInvite}
-          // onClick={handleInvite}
+          disabled={disableInvite}
+          onClick={handleInvite}
         >
           Invite
         </StyledButton>
