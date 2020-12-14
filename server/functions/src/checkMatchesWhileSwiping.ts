@@ -57,7 +57,11 @@ export const checkMatchesWhileSwiping = functions.firestore
               .doc(votedMovie.uid) // friend's uid
               .collection(collectionName.Liked)
               .doc(String(votedMovie.id)),
-            { matchedWith: arrayUnion(myProfile), timeMatched: Date.now() }
+            {
+              matchedWith: arrayUnion(myProfile),
+              timeMatched: Date.now(),
+              notify: true,
+            }
           );
 
           // now set friends notification
@@ -84,6 +88,7 @@ export const checkMatchesWhileSwiping = functions.firestore
             {
               matchedWith: arrayUnion(...myMatches),
               timeMatched: Date.now(),
+              notify: true,
             }
           );
 
