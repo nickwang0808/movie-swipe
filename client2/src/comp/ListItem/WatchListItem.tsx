@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import { Result } from "../../MovieTypes/IPopularMovies";
+import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 import MatchTag from "../Misc/MatchTag";
 import Ratings from "../Misc/Ratings";
@@ -10,13 +11,13 @@ import WatchedTag from "../Misc/WatchedTag";
 
 interface ILikedMovieInMyList {
   movie: Result;
-  matched?: boolean;
+  matched?: IProfileDetails[];
   watched?: boolean;
 }
 
 export default function WatchListItem({
   movie,
-  matched = false,
+  matched,
   watched = false,
 }: ILikedMovieInMyList) {
   return (
@@ -27,7 +28,7 @@ export default function WatchListItem({
           alt="Post Image"
         />
         <div style={{ width: "100%" }}>
-          {matched && <MatchTag />}
+          {matched && matched?.length > 0 && <MatchTag />}
 
           <StyledTitleContainer>
             <h2>{movie.title}</h2>

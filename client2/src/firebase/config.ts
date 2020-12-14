@@ -23,10 +23,10 @@ export const cloudFn = firebase.functions();
 export const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
 export const arrayRemove = firebase.firestore.FieldValue.arrayRemove;
 
-// db.useEmulator("35.220.182.160", 8080);
-// firebase.auth().useEmulator("http://35.220.182.160:9099/");
-// firebase.functions().useEmulator("35.220.182.160", 5001);
+db.useEmulator("35.220.182.160", 8080);
+firebase.auth().useEmulator("http://35.220.182.160:9099/");
+firebase.functions().useEmulator("35.220.182.160", 5001);
 
-firebase.firestore().useEmulator("127.0.0.1", 8080);
-firebase.auth().useEmulator("http://127.0.0.1:9099/");
-firebase.functions().useEmulator("localhost", 5001);
+// firebase.firestore().useEmulator("127.0.0.1", 8080);
+// firebase.auth().useEmulator("http://127.0.0.1:9099/");
+// firebase.functions().useEmulator("localhost", 5001);

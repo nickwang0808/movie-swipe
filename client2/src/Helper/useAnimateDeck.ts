@@ -1,10 +1,9 @@
 import { animate, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
-import { db } from "../firebase/config";
+import voteMovieToDB from "../firebase/firestoreOperations/voteMovieToDB";
 import { Result } from "../MovieTypes/IPopularMovies";
 import { voteMovie } from "../redux/MovieList/MovieListReducer";
 import { store } from "../store";
-
 export default function useAnimateDeck() {
   const uid = store.getState().auth.user?.uid as string;
 
@@ -50,14 +49,7 @@ export default function useAnimateDeck() {
   };
 
   const VoteWithAnimation = (isLike: boolean, movie: Result) => {
-    db.collection("users")
-      .doc(uid)
-      .collection(isLike ? "Liked" : "Disliked")
-      .doc(String(movie.id))
-      .set({
-        ...movie,
-        timeVoted: Date.now(),
-      });
+    voteMovieToDB(isLike, movie); // let this run in sub thread
     animate(xMotionValue, isLike ? screenWidth : -screenWidth, {
       type: "tween",
       duration: 0.5,

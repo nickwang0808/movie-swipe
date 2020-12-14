@@ -28,7 +28,13 @@ export default function WatchList() {
         <TopTab />
         <Route path="/mylist/liked">
           {Liked && Liked.length > 0 ? (
-            Liked.map((movie) => <WatchListItem key={movie.id} movie={movie} />)
+            Liked.map((movie) => (
+              <WatchListItem
+                key={movie.id}
+                movie={movie}
+                matched={movie.matchedWith || []}
+              />
+            ))
           ) : (
             <WatchListEmpty type="like" />
           )}
