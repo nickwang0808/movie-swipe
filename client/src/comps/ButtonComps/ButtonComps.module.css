@@ -121,10 +121,13 @@
 .btn_filter {
   cursor: pointer;
   fill: var(--dark);
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
 }
 
 .btn_filter svg {
-  margin: 2.5rem;
+  margin: 2.5rem 2.5rem 2rem 1rem;
 }
 
 .btn_filter:active {

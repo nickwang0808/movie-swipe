@@ -1,52 +1,30 @@
 import * as functions from "firebase-functions";
-import { arrayUnion, db, arrayRemove } from ".";
+import { arrayRemove, db, IProfileDetails, collectionName } from ".";
 
-export const acceptRequest = functions.https.onCall(async (data, context) => {
-  if (context.auth) {
+export const acceptRequest = functions.firestore
+  .document("Users/{myUid}/Friends/{friendUid}")
+  .onCreate(async (snap, context) => {
+    console.log("test");
+    const userToUpdate = snap.data() as IProfileDetails;
 
-    const incomingDocRef = db
-      .collection("Users")
-      .doc(data.id)
-      .collection("User_Details")
-      .doc("Friends");
-    await incomingDocRef.update({
-      pending_sent: arrayRemove(context.auth.uid),
-      friends: arrayUnion(context.auth.uid),
+    await db.runTransaction((t) => {
+      return t
+        .get(db.collection(collectionName.User).doc(context.params.myUid))
+        .then((doc) => {
+          const data = doc.data();
+
+          db.collection(collectionName.User)
+            .doc(userToUpdate.uid)
+            .collection(collectionName.Friends)
+            .doc(context.params.myUid)
+            .set({ ...data });
+        });
     });
-
-    return { message: "Accept Request Successful" };
-  } else {
-    throw new functions.https.HttpsError(
-      "failed-precondition",
-      "The function must be called while authenticated."
-    );
-  }
-});
-
-export const declineRequest = functions.https.onCall(async (data, context) => {
-  if (context.auth) {
-
-    const incomingDocRef = db
-      .collection("Users")
-      .doc(data.id)
-      .collection("User_Details")
-      .doc("Friends");
-    await incomingDocRef.update({
-      pending_sent: arrayRemove(context.auth.uid),
-    });
-
-    return { message: "Decline Request Successful" };
-  } else {
-    throw new functions.https.HttpsError(
-      "failed-precondition",
-      "The function must be called while authenticated."
-    );
-  }
-});
+    return;
+  });
 
 export const deleteFriend = functions.https.onCall(async (data, context) => {
   if (context.auth) {
-
     const friendDocRef = db
       .collection("Users")
       .doc(data.id)

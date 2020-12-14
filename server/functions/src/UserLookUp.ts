@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 const db = admin.firestore();
 
-const userLookUp = functions.https.onCall(async (data, context) => {
+export const userLookUp = functions.https.onCall(async (data, context) => {
   if (context.auth) {
     const IDsToLookUp: string[] = data.UserIDs;
 
@@ -35,5 +35,3 @@ const userLookUp = functions.https.onCall(async (data, context) => {
     );
   }
 });
-
-export default userLookUp;
