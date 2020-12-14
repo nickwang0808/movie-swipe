@@ -60,7 +60,7 @@ export interface IVotedMovies extends Result, IProfileDetails {
 }
 
 export interface INotification extends Result {
-  matchedWith: IProfileDetails[] | null;
+  matchedWith: IProfileDetails[];
   isLike: boolean;
   timeVoted: string;
 }
