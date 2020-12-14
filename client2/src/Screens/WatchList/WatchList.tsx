@@ -6,6 +6,7 @@ import MainHeader from "../../comp/Layout/MainHeader";
 import WatchListItem from "../../comp/ListItem/WatchListItem";
 import WatchListEmpty from "../../comp/Misc/WatchListEmpty";
 import TopTab from "../../comp/NavBar/TopTab";
+import sortByLikedAndMatched from "../../Helper/sortByLikedAndMatched";
 import { IAppState } from "../../store";
 
 const dummy = {
@@ -28,13 +29,15 @@ export default function WatchList() {
         <TopTab />
         <Route path="/mylist/liked">
           {Liked && Liked.length > 0 ? (
-            Liked.map((movie) => (
-              <WatchListItem
-                key={movie.id}
-                movie={movie}
-                matched={movie.matchedWith || []}
-              />
-            ))
+            Liked.slice()
+              .sort(sortByLikedAndMatched)
+              .map((movie) => (
+                <WatchListItem
+                  key={movie.id}
+                  movie={movie}
+                  matched={movie.matchedWith || []}
+                />
+              ))
           ) : (
             <WatchListEmpty type="like" />
           )}

@@ -27,8 +27,8 @@ export interface IVotedMovies extends Result, IProfileDetails {
   uid: string;
   isLike: boolean;
   matchedWith: IProfileDetails[];
-  timeMatched: string | null;
-  timeVoted: string;
+  timeMatched: number | null;
+  timeVoted: number;
 }
 
 /* 
