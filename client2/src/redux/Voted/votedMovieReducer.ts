@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Result } from "../../MovieTypes/IPopularMovies";
+import { IVotedMovies } from "../../MovieTypes/IPopularMovies";
 
 interface IVotedMovieReducer {
   isLoaded: boolean;
-  Liked: Result[] | null;
-  DisLiked: Result[] | null;
-  Watched: Result[] | null;
+  Liked: IVotedMovies[] | null;
+  DisLiked: IVotedMovies[] | null;
+  Watched: IVotedMovies[] | null;
 }
 
 const initialState: IVotedMovieReducer = {
@@ -19,13 +19,13 @@ const votedMovieReducer = createSlice({
   name: "firestore",
   initialState,
   reducers: {
-    setLiked: (state, action: PayloadAction<Result[]>) => {
+    setLiked: (state, action: PayloadAction<IVotedMovies[]>) => {
       state.Liked = action.payload;
     },
-    setWatched: (state, action: PayloadAction<Result[]>) => {
+    setWatched: (state, action: PayloadAction<IVotedMovies[]>) => {
       state.Watched = action.payload;
     },
-    setDisLiked: (state, action: PayloadAction<Result[]>) => {
+    setDisLiked: (state, action: PayloadAction<IVotedMovies[]>) => {
       state.DisLiked = action.payload;
     },
   },

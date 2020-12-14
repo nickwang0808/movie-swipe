@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components/macro";
 import { cloudFn } from "../../firebase/config";
+import { cloudFnNames } from "../../firebase/names";
 import { IAppState } from "../../store";
 import { Btn, ErrorMessage } from "../../theme/BaseComp";
 
@@ -13,18 +14,28 @@ export default function InviteFriend() {
     (state: IAppState) => state.profile.profile?.email as string
   );
 
+  const { profile } = useSelector((state: IAppState) => state.profile);
+
   const handleInvite = async () => {
     console.log("handleInvite");
+    setDisableInvite(true);
 
     if (emailInput === myEmail) {
       setMessage("you can't add yourself as friend");
     } else if (emailInput.length === 0) {
       setMessage("please input email");
+    } else if (!profile) {
+      setMessage("Your profile is empty, something wrong has happened");
     } else {
-      setDisableInvite(true);
-      const friendReqStatus = await cloudFn.httpsCallable("sendFriendReq")({
+      const friendReqStatus = await cloudFn.httpsCallable(
+        cloudFnNames.sendFriendReq
+      )({
         email: emailInput,
+        myInfo: profile,
       });
+
+      console.log(friendReqStatus.data);
+
       if (
         friendReqStatus.data.message ===
         "There is no user record corresponding to the provided identifier."
@@ -34,8 +45,8 @@ export default function InviteFriend() {
         setMessage(friendReqStatus.data.message);
       }
       setEmailInput("");
-      setDisableInvite(false);
     }
+    setDisableInvite(false);
   };
 
   return (

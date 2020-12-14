@@ -1,3 +1,5 @@
+import { IProfileDetails } from "../redux/Profile/profileReducer";
+
 export interface IPopularMovies {
   page: number;
   total_results: number;
@@ -19,6 +21,15 @@ export interface Result {
   vote_average: number;
   overview: string;
   release_date: Date;
+}
+
+export interface IVotedMovies extends Result, IProfileDetails {
+  uid: string;
+  isLike: boolean;
+  matchedWith: IProfileDetails[];
+  timeMatched: number | null;
+  timeVoted: number;
+  notify: boolean;
 }
 
 /* 

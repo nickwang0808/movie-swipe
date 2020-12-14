@@ -6,6 +6,7 @@ import MainHeader from "../../comp/Layout/MainHeader";
 import WatchListItem from "../../comp/ListItem/WatchListItem";
 import WatchListEmpty from "../../comp/Misc/WatchListEmpty";
 import TopTab from "../../comp/NavBar/TopTab";
+import sortByLikedAndMatched from "../../Helper/sortByLikedAndMatched";
 import { IAppState } from "../../store";
 
 const dummy = {
@@ -28,7 +29,16 @@ export default function WatchList() {
         <TopTab />
         <Route path="/mylist/liked">
           {Liked && Liked.length > 0 ? (
-            Liked.map((movie) => <WatchListItem key={movie.id} movie={movie} />)
+            Liked.slice()
+              .sort(sortByLikedAndMatched)
+              .map((movie) => (
+                <WatchListItem
+                  key={movie.id}
+                  movie={movie}
+                  matched={movie.matchedWith || []}
+                  notify={movie.notify}
+                />
+              ))
           ) : (
             <WatchListEmpty type="like" />
           )}
@@ -38,13 +48,13 @@ export default function WatchList() {
           path="/mylist"
           render={() => <Redirect to="/mylist/liked" />}
         />
-        <Route exact path="/mylist/Watched">
+        {/* <Route exact path="/mylist/Watched">
           {Watched && Watched.length > 0 ? (
             Watched.map((movie) => <WatchListItem movie={movie} />)
           ) : (
             <WatchListEmpty type="watch" />
           )}
-        </Route>
+        </Route> */}
       </IonContent>
     </>
   );
