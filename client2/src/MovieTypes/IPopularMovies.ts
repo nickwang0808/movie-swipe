@@ -29,6 +29,7 @@ export interface IVotedMovies extends Result, IProfileDetails {
   matchedWith: IProfileDetails[];
   timeMatched: number | null;
   timeVoted: number;
+  notify: boolean;
 }
 
 /* 

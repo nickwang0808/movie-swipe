@@ -19,5 +19,6 @@ export default function voteMovieToDB(isLike: boolean, movie: Result) {
       timeVoted: Date.now(),
       matchedWith: [],
       timeMatched: null,
+      notify: false,
     });
 }

@@ -36,6 +36,7 @@ export default function WatchList() {
                   key={movie.id}
                   movie={movie}
                   matched={movie.matchedWith || []}
+                  notify={movie.notify}
                 />
               ))
           ) : (
@@ -47,13 +48,13 @@ export default function WatchList() {
           path="/mylist"
           render={() => <Redirect to="/mylist/liked" />}
         />
-        <Route exact path="/mylist/Watched">
+        {/* <Route exact path="/mylist/Watched">
           {Watched && Watched.length > 0 ? (
             Watched.map((movie) => <WatchListItem movie={movie} />)
           ) : (
             <WatchListEmpty type="watch" />
           )}
-        </Route>
+        </Route> */}
       </IonContent>
     </>
   );

@@ -13,12 +13,14 @@ interface ILikedMovieInMyList {
   movie: Result;
   matched?: IProfileDetails[];
   watched?: boolean;
+  notify: boolean;
 }
 
 export default function WatchListItem({
   movie,
   matched,
   watched = false,
+  notify,
 }: ILikedMovieInMyList) {
   return (
     <>
