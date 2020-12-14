@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import { adminAuth } from ".";
 const firebase_tools = require("firebase-tools");
 
-const deleteAccount = functions.https.onCall(async (data, context) => {
+export const deleteAccount = functions.https.onCall(async (data, context) => {
   if (context.auth) {
     const accountToDelete: string = data.accountToDelete;
     console.log("accountToDelete", accountToDelete);
@@ -26,4 +26,3 @@ const deleteAccount = functions.https.onCall(async (data, context) => {
     );
   }
 });
-export default deleteAccount;

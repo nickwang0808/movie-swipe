@@ -8,7 +8,7 @@ interface IUserInfo {
   uid: string;
 }
 
-const checkMatchesWhileSwiping = functions.https.onCall(
+export const checkMatchesWhileSwiping = functions.https.onCall(
   async (data, context) => {
     if (context.auth) {
       const myUid = context.auth.uid;
@@ -65,8 +65,6 @@ const checkMatchesWhileSwiping = functions.https.onCall(
     }
   }
 );
-
-export default checkMatchesWhileSwiping;
 
 async function updateMatchToMyDb(
   myUid: string,
