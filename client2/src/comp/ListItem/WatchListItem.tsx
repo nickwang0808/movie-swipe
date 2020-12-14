@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components/macro";
+import styled, { css } from "styled-components/macro";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import { Result } from "../../MovieTypes/IPopularMovies";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
@@ -26,6 +26,7 @@ export default function WatchListItem({
     <>
       <StyledWrapperLink to={`/detials/${movie.id}`}>
         <PosterThumbnail
+          notify={notify}
           src={`${baseUrl}${movie.poster_path}`}
           alt="Post Image"
         />
@@ -59,10 +60,15 @@ const StyledWrapperLink = styled(Link)`
   text-decoration: none;
 `;
 
-const PosterThumbnail = styled.img`
+const PosterThumbnail = styled.img<{ notify: boolean }>`
   height: 110px;
   width: 73px;
   margin: 0 2em 0 0;
+  ${(props) =>
+    props.notify &&
+    css`
+      border: 2px solid red;
+    `}
 `;
 
 const StyledTitleContainer = styled.div`
