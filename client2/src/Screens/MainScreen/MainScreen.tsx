@@ -11,7 +11,9 @@ import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import MatchNotification from "../../comp/Modals/MatchedNotification/MatchNotification";
 import deleteNotification from "../../firebase/firestoreOperations/deleteNotification";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
+import { IPopulatedResult } from "../../MovieTypes";
 import fetchMovie from "../../redux/MovieList/fetchMovieThunk";
+import { populateMovieDetailsThunk } from "../../redux/MovieList/populateMovieDetailsThunk";
 import { IAppState } from "../../store";
 import MainScreenMisc from "./MainScreenMisc";
 
@@ -40,15 +42,28 @@ export default function MainScreen() {
   // prettier-ignore
   const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,}
    = useAnimateDeck();
+
   useEffect(() => {
     if (movieList.length < 5 && DisLiked && Liked && Watched) {
       dispatch(fetchMovie());
     }
   }, [movieList, DisLiked, Liked, Watched]);
 
-  const handleVote = (isLike: boolean, movie = movieList[0]) =>
-    VoteWithAnimation(isLike, movie);
+  useEffect(() => {
+    if (movieList.length > 0) {
+      console.log("release_dates" in movieList[0]);
+      if ("release_dates" in movieList[0] === false) {
+        dispatch(populateMovieDetailsThunk());
+        console.log("populate");
+      }
+    }
+  }, [movieList]);
 
+  const handleVote = (isLike: boolean, movie = movieList[0]) => {
+    if ("release_dates" in movieList[0]) {
+      VoteWithAnimation(isLike, movie as IPopulatedResult);
+    }
+  };
   console.log("Main Screen Render");
 
   if (status === "failed")

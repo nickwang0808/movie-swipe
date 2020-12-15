@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components/macro";
 import baseUrl from "../../Helper/TmdbBaseUrl";
-import { Result } from "../../MovieTypes/IPopularMovies";
+import { IFetchedMovieListResult } from "../../MovieTypes";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 import MatchTag from "../Misc/MatchTag";
@@ -10,7 +10,7 @@ import Ratings from "../Misc/Ratings";
 import WatchedTag from "../Misc/WatchedTag";
 
 interface ILikedMovieInMyList {
-  movie: Result;
+  movie: IFetchedMovieListResult;
   matched?: IProfileDetails[];
   watched?: boolean;
   notify: boolean;

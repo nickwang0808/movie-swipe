@@ -1,13 +1,14 @@
 import { IProfileDetails } from "../redux/Profile/profileReducer";
+import { IMovieDetails, IReleaseDates } from "./IGetMovieDetails";
 
 export interface IPopularMovies {
   page: number;
   total_results: number;
   total_pages: number;
-  results: Result[];
+  results: IFetchedMovieListResult[];
 }
 
-export interface Result {
+export interface IFetchedMovieListResult {
   popularity: number;
   vote_count: number;
   video: boolean;
@@ -23,7 +24,13 @@ export interface Result {
   release_date: Date;
 }
 
-export interface IVotedMovies extends Result, IProfileDetails {
+export interface IAdditionalMovieInfo extends IMovieDetails {
+  genre_ids: number[];
+  release_dates: IReleaseDates;
+}
+export interface IPopulatedResult extends IAdditionalMovieInfo {}
+
+export interface IVotedMovies extends IAdditionalMovieInfo, IProfileDetails {
   uid: string;
   isLike: boolean;
   matchedWith: IProfileDetails[];

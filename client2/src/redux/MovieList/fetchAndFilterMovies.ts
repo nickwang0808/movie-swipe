@@ -1,24 +1,24 @@
-import { IPopularMovies, Result } from "../../MovieTypes/IPopularMovies";
+import {
+  IFetchedMovieListResult,
+  IPopularMovies,
+  IPopulatedResult,
+} from "../../MovieTypes";
 
 export default async function fetchAndFilterMovies(
   pageNum: number,
-  likedMoviesIds: number[] | null,
-  disLikedMovieIds: number[] | null,
-  watchedMovieIds: number[] | null,
+  VotedMovies: number[] | null,
   genrePreference: number[],
-  currentMovieList: Result[]
+  currentMovieList: Array<IFetchedMovieListResult | IPopulatedResult>
 ) {
   const localVoted = GetLocalVoted();
   const votedMovies: number[] = [
     ...(localVoted || []),
-    ...(likedMoviesIds || []),
-    ...(disLikedMovieIds || []),
-    ...(watchedMovieIds || []),
+    ...(VotedMovies || []),
     ...(currentMovieList.map((elem) => elem.id) || []), // drop this in to prevent weird dupes
   ];
 
   let localPageNum = pageNum;
-  const processedMovieLists: Result[] = [];
+  const processedMovieLists: IFetchedMovieListResult[] = [];
   // TODO: something seriously wrong here, infinite loops
   while (processedMovieLists.length + currentMovieList.length <= 4) {
     const fetchedMovies = await fetchPopularMovies(localPageNum);

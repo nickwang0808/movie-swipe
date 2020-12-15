@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import baseUrl from "../../../Helper/TmdbBaseUrl";
-import { IVotedMovies } from "../../../MovieTypes/IPopularMovies";
+import { IVotedMovies } from "../../../MovieTypes";
 import MatchTag from "../../Misc/MatchTag";
 import Banner from "./Banner";
 

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IVotedMovies } from "../../MovieTypes/IPopularMovies";
+import { IVotedMovies } from "../../MovieTypes";
 
 interface INotification {
   notification: IVotedMovies | null;

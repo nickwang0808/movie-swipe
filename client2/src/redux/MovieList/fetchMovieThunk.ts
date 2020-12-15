@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Result } from "../../MovieTypes/IPopularMovies";
+import { IFetchedMovieListResult } from "../../MovieTypes";
 import { IAppDispatch, IAppState } from "../../store";
 import fetchAndFilterMovies from "./fetchAndFilterMovies";
 
 interface IFetchResult {
   pageNum: number;
-  processedMovieLists: Result[];
+  processedMovieLists: IFetchedMovieListResult[];
 }
 
 const fetchMovie = createAsyncThunk<
@@ -23,11 +23,15 @@ const fetchMovie = createAsyncThunk<
     const { DisLiked, Watched, Liked } = store.voted;
     const { pageNum, movieList } = store.movieList;
 
+    const VotedMovieIds = [
+      ...(DisLiked || []),
+      ...(Watched || []),
+      ...(Liked || []),
+    ].map((elem) => elem.id);
+
     const result = await fetchAndFilterMovies(
       pageNum,
-      (DisLiked as Result[]).map((elem) => elem.id),
-      (Watched as Result[]).map((elem) => elem.id),
-      (Liked as Result[]).map((elem) => elem.id),
+      VotedMovieIds,
       genrePreference,
       movieList
     );

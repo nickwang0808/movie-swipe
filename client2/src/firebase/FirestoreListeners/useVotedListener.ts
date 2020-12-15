@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import sortByLikedAndMatched from "../../Helper/sortByLikedAndMatched";
-import { IVotedMovies } from "../../MovieTypes/IPopularMovies";
+import { IVotedMovies } from "../../MovieTypes";
 import { setNotification } from "../../redux/Notification/notificationReducer";
 import {
   setDisLiked,
