@@ -55,6 +55,7 @@ export default function MatchedWatchedWithBanner({
         </div>
         {matches && (
           <StyledButton
+            key="watchedButton" // don't remove this
             // disabled={disabledWatchedButton}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.5, ease: Ease }}

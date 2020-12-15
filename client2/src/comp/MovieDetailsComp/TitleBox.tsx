@@ -1,29 +1,39 @@
-import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components/macro";
+import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
+import { IMovieDetailsForDetailsScreen } from "../../MovieTypes/IDetialsScreen";
 import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 import Ratings from "../Misc/Ratings";
 
-export default function TitleBox({ poster_path }: { poster_path: string }) {
+interface IProps {
+  movieInfo: IMovieDetailsForDetailsScreen;
+}
+
+export default function TitleBox({ movieInfo }: IProps) {
   return (
     <Wrapper
-      animate={{ opacity: 1, paddingTop: "0rem" }}
-      initial={{ opacity: 0, paddingTop: "2rem" }}
-      transition={{
-        duration: 0.5,
-        ease: [0.16, 1, 0.3, 1],
-      }}
+    // animate={{ opacity: 1, paddingTop: "0rem" }}
+    // initial={{ opacity: 0, paddingTop: "2rem" }}
+    // transition={{
+    //   duration: 0.5,
+    //   ease: [0.16, 1, 0.3, 1],
+    // }}
     >
-      <StyledPoster url={poster_path} />
+      <StyledPoster url={movieInfo.poster_path} />
 
       <TitleWrapper>
-        <h1>Movie Title</h1>
+        <h1>{movieInfo.title}</h1>
       </TitleWrapper>
 
-      <Ratings rating={7.2} />
+      <Ratings rating={movieInfo.popularity} />
 
-      <GenreRunTimeYear />
+      <GenreRunTimeYear
+        certs={parseCerts(movieInfo.release_dates)}
+        runTime={movieInfo.runtime}
+        genreIds={movieInfo.genres.map((elem) => elem.id)}
+        year={String(movieInfo.release_date).slice(0, 4)}
+      />
     </Wrapper>
   );
 }
@@ -64,7 +74,7 @@ const TitleWrapper = styled.div`
   }
 `;
 
-const Wrapper = styled(motion.div)`
+const Wrapper = styled.div`
   padding: 0 2rem;
   position: relative;
   padding-left: calc(var(--poster_width) + 4rem);

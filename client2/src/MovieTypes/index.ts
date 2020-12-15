@@ -1,5 +1,6 @@
 import { IProfileDetails } from "../redux/Profile/profileReducer";
-import { IMovieDetails, IReleaseDates } from "./IGetMovieDetails";
+import { ReleaseDates } from "./IDetialsScreen";
+import { IMovieDetails } from "./IGetMovieDetails";
 
 export interface IPopularMovies {
   page: number;
@@ -26,7 +27,7 @@ export interface IFetchedMovieListResult {
 
 export interface IAdditionalMovieInfo extends IMovieDetails {
   genre_ids: number[];
-  release_dates: IReleaseDates;
+  release_dates: ReleaseDates;
 }
 export interface IPopulatedResult extends IAdditionalMovieInfo {}
 

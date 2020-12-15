@@ -10,13 +10,11 @@ export const populateMovieDetailsThunk = createAsyncThunk<
     state: IAppState;
   }
 >("movieList/populate", async (_, { getState }) => {
-  console.log("populateMovieDetailsThunk start: ");
   const leadCardMovieInfo = getState().movieList.movieList[0];
   const additionalInfo = await fetchAdditionalMovieDetails(
     leadCardMovieInfo.id
   );
 
-  console.log("populateMovieDetailsThunk end: ", additionalInfo);
   return { ...leadCardMovieInfo, ...additionalInfo };
 });
 

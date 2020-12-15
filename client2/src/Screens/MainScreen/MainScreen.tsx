@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
 import DeckWrapper from "../../comp/Deck/DeckWrapper";
@@ -9,62 +10,38 @@ import SlideInThumb from "../../comp/Deck/SlideInThumb";
 import SliderBlock from "../../comp/Deck/SliderBlock";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import MatchNotification from "../../comp/Modals/MatchedNotification/MatchNotification";
-import deleteNotification from "../../firebase/firestoreOperations/deleteNotification";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
+import useMatchModalControl from "../../Helper/useMatchModalControl";
 import { IPopulatedResult } from "../../MovieTypes";
-import fetchMovie from "../../redux/MovieList/fetchMovieThunk";
-import { populateMovieDetailsThunk } from "../../redux/MovieList/populateMovieDetailsThunk";
 import { IAppState } from "../../store";
 import MainScreenMisc from "./MainScreenMisc";
 
 export default function MainScreen() {
+  // const _ = useTimeOutStateChange();
   const { movieList, status, error } = useSelector(
     (state: IAppState) => state.movieList
-  );
-  const { DisLiked, Liked, Watched } = useSelector(
-    (state: IAppState) => state.voted
   );
   const { notification } = useSelector(
     (state: IAppState) => state.notification
   );
 
-  const [showModal, setShowModal] = useState(Boolean(notification));
-  useEffect(() => {
-    if (showModal) {
-      setTimeout(() => {
-        setShowModal(false);
-        deleteNotification(String(notification?.id as number));
-      }, 5000);
-    }
-  }, [notification, showModal]);
+  const { showModal, setShowModal } = useMatchModalControl(notification);
 
   const dispatch = useDispatch();
   // prettier-ignore
   const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,}
    = useAnimateDeck();
 
-  useEffect(() => {
-    if (movieList.length < 5 && DisLiked && Liked && Watched) {
-      dispatch(fetchMovie());
-    }
-  }, [movieList, DisLiked, Liked, Watched]);
-
-  useEffect(() => {
-    if (movieList.length > 0) {
-      console.log("release_dates" in movieList[0]);
-      if ("release_dates" in movieList[0] === false) {
-        dispatch(populateMovieDetailsThunk());
-        console.log("populate");
-      }
-    }
-  }, [movieList]);
-
   const handleVote = (isLike: boolean, movie = movieList[0]) => {
+    // VoteWithAnimation(isLike, movie as IPopulatedResult);
     if ("release_dates" in movieList[0]) {
       VoteWithAnimation(isLike, movie as IPopulatedResult);
     }
   };
-  console.log("Main Screen Render");
+
+  const history = useHistory();
+
+  // console.log("main scree render");
 
   if (status === "failed")
     return <h2>Something Wrong happened, refresh or restart the App</h2>;
@@ -91,6 +68,7 @@ export default function MainScreen() {
       />
 
       {/* layout animation does not work across children components */}
+
       <DeckWrapper>
         {movieList
           .slice(0, 4)
@@ -161,7 +139,9 @@ export default function MainScreen() {
         MiddleButtonText="Details"
         handleLike={() => handleVote(true)}
         handleDislike={() => handleVote(false)}
-        handleClickMiddleButton={() => console.log("goto detials")}
+        handleClickMiddleButton={() =>
+          history.push(`/details/${movieList[0].id}`)
+        }
       />
     </>
   );
