@@ -1,9 +1,12 @@
-import { Result } from "../../MovieTypes/IPopularMovies";
+import { IPopulatedResult } from "../../MovieTypes";
 import { store } from "../../store";
 import { db } from "../config";
 import { collectionName } from "../names";
 
-export default function voteMovieToDB(isLike: boolean, movie: Result) {
+export default function voteMovieToDB(
+  isLike: boolean,
+  movie: IPopulatedResult
+) {
   const uid = store.getState().auth.user?.uid as string;
   const profile = store.getState().profile.profile;
 

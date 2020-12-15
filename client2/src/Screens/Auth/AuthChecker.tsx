@@ -21,8 +21,6 @@ export default function AuthChecker({
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      console.log("auth listener mounted", user);
-
       if (user) {
         const { displayName, email, isAnonymous, photoURL, uid } = user;
         dispatch(

@@ -1,43 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { RouteComponentProps, useHistory } from "react-router";
 import styled from "styled-components/macro";
 import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
 import MainBackground from "../../comp/Layout/MainBackground";
+import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import MatchedWatchedWithBanner from "../../comp/MovieDetailsComp/MatchWatchBanner/MatchedWatchedWithBanner";
 import TitleBox from "../../comp/MovieDetailsComp/TitleBox";
 import Trailer from "../../comp/MovieDetailsComp/Trailer";
+import fetchVidActorProvider from "../../Helper/fetchVidActorProvider";
+import { IMovieDetailsForDetailsScreen } from "../../MovieTypes/IDetialsScreen";
 
-const dummy = {
-  ImgUrl: "/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
-  trailerUrl:
-    "https://www.youtube.com/embed/DWfPGIMDhNw?rel=0;controls=1;showinfo=0;fs=1;modestbranding=1",
-  text:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet ipsum repellendus recusandae modi dolor tenetur ut iste dignissimos id ea quasi repellat, et commodi. Sed hic doloribus fugiat rem distinctio?",
-};
+interface IProps
+  extends RouteComponentProps<{
+    id: string;
+  }> {}
 
-const voteDummy = {
-  MiddleButtonText: "Details",
-  handleClickMiddleButton: () => console.log("Click middle"),
-  handleDislike: () => console.log("dislike"),
-  handleLike: () => console.log("Like"),
-};
+const MovieDetailsScreen: React.FC<IProps> = ({ match }) => {
+  const id = match.params.id;
+  const [movieInfo, setMovieInfo] = useState<IMovieDetailsForDetailsScreen>();
 
-export default function MovieDetailsScreen() {
+  useEffect(() => {
+    if (!movieInfo || Number(id) != Number(movieInfo.id))
+      (async () => {
+        const res = await fetchVidActorProvider(id);
+        setMovieInfo(res);
+      })();
+  }, [id]);
+
+  const history = useHistory();
+
+  if (!movieInfo || "release_dates" in movieInfo === false)
+    return <CenterLoader />;
   return (
     <>
-      <MainBackground ImgUrl={dummy.ImgUrl} />
+      <MainBackground ImgUrl={movieInfo.poster_path} />
       <MakeTitleBgTransparent>
-        <Trailer trailerUrl={dummy.trailerUrl} />
-        <TitleBox poster_path={dummy.ImgUrl} />
+        <Trailer
+          trailerUrl={movieInfo.videos.results[0]?.key}
+          backDrop={movieInfo.backdrop_path}
+        />
+        <TitleBox movieInfo={movieInfo} />
         <Content>
           <MatchedWatchedWithBanner matches />
-          <p>{dummy.text}</p>
+          <p>{movieInfo.overview}</p>
         </Content>
       </MakeTitleBgTransparent>
-      <VoteButtonGroup {...voteDummy} />
+      <VoteButtonGroup
+        MiddleButtonText="Back"
+        handleLike={() => console.log("like")}
+        handleDislike={() => console.log("dislike")}
+        handleClickMiddleButton={() => history.goBack()}
+      />
     </>
   );
-}
+};
 
+export default MovieDetailsScreen;
 const MakeTitleBgTransparent = styled.div`
   padding-bottom: calc(var(--nav) + 7rem);
   position: fixed;

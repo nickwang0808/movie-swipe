@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { Result } from "../../MovieTypes/IPopularMovies";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IFetchedMovieListResult, IPopulatedResult } from "../../MovieTypes";
 import fetchMovie from "./fetchMovieThunk";
+import { populateMovieDetailsThunk } from "./populateMovieDetailsThunk";
 
 interface IMovieListState {
-  movieList: Result[];
+  movieList: Array<IFetchedMovieListResult | IPopulatedResult>;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   pageNum: number;
@@ -13,7 +14,7 @@ const initialState: IMovieListState = {
   movieList: [],
   error: null,
   status: "idle",
-  pageNum: 1,
+  pageNum: 1, // pageNum is for next fetch action, not current pageNum
 };
 
 const movieListSlice = createSlice({
@@ -40,6 +41,25 @@ const movieListSlice = createSlice({
       state.status = "failed";
       if (!action.error.message) {
         state.error = null;
+      } else {
+        state.error = action.error.message;
+      }
+    });
+
+    builder.addCase(
+      populateMovieDetailsThunk.fulfilled,
+      (state, action: PayloadAction<IPopulatedResult>) => {
+        state.status = "succeeded";
+        state.movieList[0] = action.payload;
+      }
+    );
+    builder.addCase(populateMovieDetailsThunk.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(populateMovieDetailsThunk.rejected, (state, action) => {
+      state.status = "failed";
+      if (!action.error.message) {
+        state.error = "something wrong happened";
       } else {
         state.error = action.error.message;
       }

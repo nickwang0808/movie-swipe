@@ -17,7 +17,6 @@ export default function InviteFriend() {
   const { profile } = useSelector((state: IAppState) => state.profile);
 
   const handleInvite = async () => {
-    console.log("handleInvite");
     setDisableInvite(true);
 
     if (emailInput === myEmail) {
@@ -33,8 +32,6 @@ export default function InviteFriend() {
         email: emailInput,
         myInfo: profile,
       });
-
-      console.log(friendReqStatus.data);
 
       if (
         friendReqStatus.data.message ===

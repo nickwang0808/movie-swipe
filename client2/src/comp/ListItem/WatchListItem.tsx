@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components/macro";
+import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
-import { Result } from "../../MovieTypes/IPopularMovies";
+import { IPopulatedResult, IVotedMovies } from "../../MovieTypes";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 import MatchTag from "../Misc/MatchTag";
@@ -10,7 +11,7 @@ import Ratings from "../Misc/Ratings";
 import WatchedTag from "../Misc/WatchedTag";
 
 interface ILikedMovieInMyList {
-  movie: Result;
+  movie: IVotedMovies | IPopulatedResult;
   matched?: IProfileDetails[];
   watched?: boolean;
   notify: boolean;
@@ -24,7 +25,7 @@ export default function WatchListItem({
 }: ILikedMovieInMyList) {
   return (
     <>
-      <StyledWrapperLink to={`/detials/${movie.id}`}>
+      <StyledWrapperLink to={`/details/${movie.id}`}>
         <PosterThumbnail
           notify={notify}
           src={`${baseUrl}${movie.poster_path}`}
@@ -42,6 +43,8 @@ export default function WatchListItem({
           <Ratings rating={5} />
 
           <GenreRunTimeYear
+            certs={parseCerts(movie.release_dates)}
+            runTime={movie.runtime}
             genreIds={movie.genre_ids}
             year={String(movie.release_date).slice(0, 4)}
           />

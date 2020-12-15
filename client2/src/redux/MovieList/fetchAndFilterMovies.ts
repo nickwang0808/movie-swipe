@@ -1,43 +1,44 @@
-import { IPopularMovies, Result } from "../../MovieTypes/IPopularMovies";
+import {
+  IFetchedMovieListResult,
+  IPopularMovies,
+  IPopulatedResult,
+} from "../../MovieTypes";
 
 export default async function fetchAndFilterMovies(
   pageNum: number,
-  likedMoviesIds: number[] | null,
-  disLikedMovieIds: number[] | null,
-  watchedMovieIds: number[] | null,
+  VotedMovies: number[] | null,
   genrePreference: number[],
-  currentMovieListLength: number
+  currentMovieList: Array<IFetchedMovieListResult | IPopulatedResult>
 ) {
   const localVoted = GetLocalVoted();
   const votedMovies: number[] = [
     ...(localVoted || []),
-    ...(likedMoviesIds || []),
-    ...(disLikedMovieIds || []),
-    ...(watchedMovieIds || []),
+    ...(VotedMovies || []),
+    ...(currentMovieList.map((elem) => elem.id) || []), // drop this in to prevent weird dupes
   ];
 
   let localPageNum = pageNum;
-  const processedMovieLists: Result[] = [];
-
-  while (processedMovieLists.length + currentMovieListLength < 4) {
-    const fetchedMovies = await fetchPopularMovies(pageNum);
-
-    (() => {
-      // filter voted movies out
-      fetchedMovies.results.forEach((result) => {
-        if (!result.backdrop_path) return; // if movie hs no poster skip
-        if (votedMovies.includes(result.id)) return; // if voted skip
-        if (genreFiltering(result.genre_ids, genrePreference) === "fail") {
-          return; // if filtered in genre, skip
-        }
-        processedMovieLists.push(result);
-      });
-    })();
+  const processedMovieLists: IFetchedMovieListResult[] = [];
+  // TODO: something seriously wrong here, infinite loops
+  while (processedMovieLists.length + currentMovieList.length <= 4) {
+    const fetchedMovies = await fetchPopularMovies(localPageNum);
+    // filter voted movies out
+    fetchedMovies.results.forEach((result) => {
+      if (!result.backdrop_path) return; // if movie hs no poster skip
+      if (votedMovies.includes(result.id)) return; // if voted skip
+      if (genreFiltering(result.genre_ids, genrePreference) === "fail") {
+        return; // if filtered in genre, skip
+      }
+      processedMovieLists.push(result);
+    });
 
     localPageNum++;
   }
 
-  return { pageNum: localPageNum, processedMovieLists };
+  return {
+    pageNum: localPageNum,
+    processedMovieLists,
+  };
 }
 
 async function fetchPopularMovies(pageNum: number) {

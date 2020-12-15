@@ -3,25 +3,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import baseUrl from "../../../Helper/TmdbBaseUrl";
+import { IVotedMovies } from "../../../MovieTypes";
 import MatchTag from "../../Misc/MatchTag";
 import Banner from "./Banner";
 
 interface INotificationMatched {
   closeModal: () => void;
-  movieId: number;
-  name: string[];
-  poster: string;
-  title: string;
   showModal: boolean;
+  movie: IVotedMovies;
 }
 
 export default function MatchNotification({
-  movieId,
-  name,
   closeModal,
-  poster,
-  title,
   showModal,
+  movie,
 }: INotificationMatched) {
   if (!showModal) return null;
 
@@ -41,7 +36,7 @@ export default function MatchNotification({
         />
         <StyledPoster
           onClick={closeModal} // close the modal
-          style={{ backgroundImage: `url(${baseUrl + poster})` }}
+          style={{ backgroundImage: `url(${baseUrl + movie.poster_path})` }}
           animate={{ scale: 1 }}
           initial={{ scale: 0 }}
           transition={{
@@ -65,12 +60,14 @@ export default function MatchNotification({
 
           <StyledMatchText>
             <p>
-              <strong>{name.map(() => name).join(", ")}</strong>
-              &nbsp;want to watch&nbsp;<strong>{title}</strong>&nbsp;too!
+              <strong>
+                {movie.matchedWith[0].displayName || movie.matchedWith[0].email}
+              </strong>
+              &nbsp;wants to watch&nbsp;<strong>{movie.title}</strong>&nbsp;too!
             </p>
           </StyledMatchText>
           <StyledDetails>
-            <Link onClick={closeModal} to={`/home/details/${movieId}`}>
+            <Link onClick={closeModal} to={`/home/details/${movie.id}`}>
               Details
             </Link>
           </StyledDetails>

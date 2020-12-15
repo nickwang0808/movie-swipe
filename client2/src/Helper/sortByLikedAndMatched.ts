@@ -1,4 +1,4 @@
-import { IVotedMovies } from "../MovieTypes/IPopularMovies";
+import { IVotedMovies } from "../MovieTypes";
 
 export default function sortByLikedAndMatched(
   a: IVotedMovies,
