@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
@@ -8,25 +8,40 @@ import MainPoster from "../../comp/Deck/MainPoster";
 import SlideInThumb from "../../comp/Deck/SlideInThumb";
 import SliderBlock from "../../comp/Deck/SliderBlock";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
+import MatchNotification from "../../comp/Modals/MatchedNotification/MatchNotification";
+import deleteNotification from "../../firebase/firestoreOperations/deleteNotification";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
 import fetchMovie from "../../redux/MovieList/fetchMovieThunk";
 import { IAppState } from "../../store";
 import MainScreenMisc from "./MainScreenMisc";
 
 export default function MainScreen() {
-  const dispatch = useDispatch();
-  // prettier-ignore
-  const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,}
-   = useAnimateDeck();
   const { movieList, status, error } = useSelector(
     (state: IAppState) => state.movieList
   );
   const { DisLiked, Liked, Watched } = useSelector(
     (state: IAppState) => state.voted
   );
+  const { notification } = useSelector(
+    (state: IAppState) => state.notification
+  );
 
+  const [showModal, setShowModal] = useState(Boolean(notification));
   useEffect(() => {
-    if (movieList.length < 4 && DisLiked && Liked && Watched) {
+    if (showModal) {
+      setTimeout(() => {
+        setShowModal(false);
+        deleteNotification(String(notification?.id as number));
+      }, 5000);
+    }
+  }, [notification, showModal]);
+
+  const dispatch = useDispatch();
+  // prettier-ignore
+  const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,}
+   = useAnimateDeck();
+  useEffect(() => {
+    if (movieList.length < 5 && DisLiked && Liked && Watched) {
       dispatch(fetchMovie());
     }
   }, [movieList, DisLiked, Liked, Watched]);
@@ -34,11 +49,22 @@ export default function MainScreen() {
   const handleVote = (isLike: boolean, movie = movieList[0]) =>
     VoteWithAnimation(isLike, movie);
 
+  console.log("Main Screen Render");
+
   if (status === "failed")
     return <h2>Something Wrong happened, refresh or restart the App</h2>;
-  if (status === "loading" || status === "idle") return <CenterLoader />;
+  if (movieList.length === 0 && (status === "loading" || status === "idle"))
+    return <CenterLoader />;
   return (
     <>
+      {notification && (
+        <MatchNotification
+          movie={notification}
+          showModal={showModal}
+          closeModal={() => setShowModal(false)}
+        />
+      )}
+
       <MainScreenMisc imgUrl={movieList[0]?.poster_path || ""} />
       <SliderBlock type="like" backgroundSlide={backgroundSlide} />
       <SliderBlock type="dislike" backgroundSlide={backgroundSlide} />

@@ -29,7 +29,7 @@ const fetchMovie = createAsyncThunk<
       (Watched as Result[]).map((elem) => elem.id),
       (Liked as Result[]).map((elem) => elem.id),
       genrePreference,
-      movieList.length
+      movieList
     );
 
     console.log("fetchMovies");
@@ -38,7 +38,7 @@ const fetchMovie = createAsyncThunk<
   {
     condition: (_, { getState, extra }) => {
       const { movieList } = getState().movieList;
-      if (movieList.length > 4) return false;
+      if (movieList.length > 5) return false;
     },
   }
 );
