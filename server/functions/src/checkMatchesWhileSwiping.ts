@@ -18,10 +18,7 @@ export const checkMatchesWhileSwiping = functions.firestore
       // get all friends first
       const allFriendsDocs = await t.get(allFriends);
 
-      console.log("checkMatchesWhileSwiping");
-
       if (allFriendsDocs.empty) return;
-      console.log("friends found");
 
       const friendsIds: string[] = [];
       allFriendsDocs.forEach((doc) => {
