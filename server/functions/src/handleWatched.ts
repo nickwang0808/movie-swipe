@@ -44,13 +44,17 @@ array with current user */
     const newProfile = watchedWithProfiles.find(
       (elem) => elem.uid === watchedWithUid
     ) as IProfileDetails;
-    const newProfileIndex = watchedWithProfiles.findIndex(
-      (elem) => elem.uid === watchedWithUid
-    );
+    // const newProfileIndex = watchedWithProfiles.findIndex(
+    //   (elem) => elem.uid === watchedWithUid
+    // );
+    const updatedWatchedWith = [
+      currentUserProfile,
+      ...watchedWithProfiles.filter((elem) => elem.uid !== watchedWithUid),
+    ];
     // swap watchedWith profile out with currentUser
     let swappedTopLevel = swapTopLevelProfile(watchedMovieInfo, newProfile);
-    swappedTopLevel.watchedWith[newProfileIndex] = currentUserProfile;
-    batch.set(docRef, swappedTopLevel);
+    // swappedTopLevel.watchedWith[newProfileIndex] = currentUserProfile;
+    batch.set(docRef, { ...swappedTopLevel, watchedWith: updatedWatchedWith });
     batch.delete(
       db
         .collection(collectionName.User)
