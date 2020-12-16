@@ -8,17 +8,19 @@ import Ratings from "../Misc/Ratings";
 
 interface IProps {
   movieInfo: IMovieDetailsForDetailsScreen;
+  onClick: () => void;
 }
 
-export default function TitleBox({ movieInfo }: IProps) {
+export default function TitleBox({ movieInfo, onClick }: IProps) {
   return (
     <Wrapper
-    // animate={{ opacity: 1, paddingTop: "0rem" }}
-    // initial={{ opacity: 0, paddingTop: "2rem" }}
-    // transition={{
-    //   duration: 0.5,
-    //   ease: [0.16, 1, 0.3, 1],
-    // }}
+      // animate={{ opacity: 1, paddingTop: "0rem" }}
+      // initial={{ opacity: 0, paddingTop: "2rem" }}
+      // transition={{
+      //   duration: 0.5,
+      //   ease: [0.16, 1, 0.3, 1],
+      // }}
+      onClick={onClick}
     >
       <StyledPoster url={movieInfo.poster_path} />
 

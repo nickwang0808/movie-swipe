@@ -1,7 +1,7 @@
 import { IVotedMovies } from "../../MovieTypes";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import { store } from "../../store";
-import { db } from "../config";
+import { cloudFn, db } from "../config";
 import { collectionName } from "../names";
 
 export default async function watchedMovie(
@@ -37,6 +37,8 @@ export default async function watchedMovie(
     // delete movie from liked
     t.delete(likedRef);
   });
+
+  await cloudFn.httpsCallable("handleWatched")({ movieId });
 }
 
 function parseMatchToWatched(

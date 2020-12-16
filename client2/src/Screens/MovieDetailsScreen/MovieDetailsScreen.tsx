@@ -64,7 +64,7 @@ const MovieDetailsScreen: React.FC<IProps> = ({
     return <CenterLoader />;
   return (
     <>
-      <IonPopover isOpen={popOver}>
+      <IonPopover isOpen={popOver} onDidDismiss={() => setPopOver(false)}>
         <WatchedWithWho
           handleWatched={handleWatched}
           closePopUp={() => setPopOver(false)}
@@ -78,7 +78,10 @@ const MovieDetailsScreen: React.FC<IProps> = ({
           trailerUrl={movieInfo.videos.results[0]?.key}
           backDrop={movieInfo.backdrop_path}
         />
-        <TitleBox movieInfo={movieInfo} />
+        <TitleBox
+          movieInfo={movieInfo}
+          onClick={() => setShowDetailModal(undefined)}
+        />
         <Content>
           {matchOrWatched}
           <p>{movieInfo.overview}</p>
