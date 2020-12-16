@@ -1,4 +1,5 @@
 import * as admin from "firebase-admin";
+import { IMovieDetails, IReleaseDates } from "./IGetMovieDetails";
 const serviceAccount = require("./secret.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -24,7 +25,7 @@ export interface LikedMovieWithMatches {
   matches: string[];
   liked_time: number;
   match_time: number | null;
-}
+} // pending delete
 
 export interface IProfileDetails {
   displayName: string | null;
@@ -35,35 +36,18 @@ export interface IProfileDetails {
   genrePreference: number[];
 }
 
-export interface Result {
-  popularity: number;
-  vote_count: number;
-  video: boolean;
-  poster_path: string;
-  id: number;
-  adult: boolean;
-  backdrop_path: string;
-  original_title: string;
+export interface IAdditionalMovieInfo extends IMovieDetails {
   genre_ids: number[];
-  title: string;
-  vote_average: number;
-  overview: string;
-  release_date: Date;
+  release_dates: IReleaseDates;
 }
 
-export interface IVotedMovies extends Result, IProfileDetails {
+export interface IVotedMovies extends IAdditionalMovieInfo, IProfileDetails {
   uid: string;
   isLike: boolean;
-  matchedWith: IProfileDetails;
+  matchedWith: IProfileDetails[];
   timeMatched: number | null;
   timeVoted: number;
   notify: boolean;
-}
-
-export interface INotification extends Result {
-  matchedWith: IProfileDetails[];
-  isLike: boolean;
-  timeVoted: string;
 }
 
 export const enum collectionName {
