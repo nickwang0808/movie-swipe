@@ -9,17 +9,13 @@ import Banner from "./Banner";
 
 interface INotificationMatched {
   closeModal: () => void;
-  showModal: boolean;
   movie: IVotedMovies;
 }
 
 export default function MatchNotification({
   closeModal,
-  showModal,
   movie,
 }: INotificationMatched) {
-  if (!showModal) return null;
-
   return (
     <>
       <Banner />

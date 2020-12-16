@@ -2,20 +2,27 @@ import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components/macro";
 import SolidThumbUp from "../../../Assets/svg/SolidThumbUp";
+import { IProfileDetails } from "../../../redux/Profile/profileReducer";
 import { Btn } from "../../../theme/BaseComp";
 import Matches from "./Matches";
 
-interface IMovieDetails {
-  matches?: boolean;
-  watchedWith?: boolean;
+interface IProps {
+  matches?: IProfileDetails[];
+  watchedWith?: IProfileDetails[];
+  movieId: string | number;
+  openPopOver: () => void;
+  handleWatched: (arg: string[]) => void;
 }
 
 const Ease = [0.16, 1, 0.3, 1];
 
 export default function MatchedWatchedWithBanner({
-  matches = false,
-  watchedWith = false,
-}: IMovieDetails) {
+  matches,
+  watchedWith,
+  movieId,
+  openPopOver,
+  handleWatched,
+}: IProps) {
   return (
     <>
       <AnimatePresence>
@@ -33,8 +40,11 @@ export default function MatchedWatchedWithBanner({
                 <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                   Watched with{" "}
                   <strong>
-                    Nickolas Wang
-                    {/* {watchedWith?.map((info) => info.name).join(", ")} */}
+                    {watchedWith
+                      ?.map(
+                        (info) => info.displayName || info.email || info.uid
+                      )
+                      .join(", ")}
                   </strong>
                 </motion.p>
               </WatchedAnimatedBlock>
@@ -50,7 +60,7 @@ export default function MatchedWatchedWithBanner({
               <SolidThumbUp />
             </ThumbUpWrapper>
 
-            {matches && <Matches />}
+            {matches && <Matches matches={matches} />}
           </Wrapper>
         </div>
         {matches && (
@@ -59,8 +69,13 @@ export default function MatchedWatchedWithBanner({
             // disabled={disabledWatchedButton}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.5, ease: Ease }}
+            onClick={() => {
+              matches.length > 1
+                ? openPopOver()
+                : handleWatched([matches[0].uid]);
+            }}
           >
-            We've watched this!
+            {matches.length > 1 ? "Watched with..." : "We've watched this!"}
           </StyledButton>
         )}
       </AnimatePresence>

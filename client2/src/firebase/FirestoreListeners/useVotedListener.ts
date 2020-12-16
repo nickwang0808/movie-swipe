@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import sortByLikedAndMatched from "../../Helper/sortByLikedAndMatched";
-import { IVotedMovies } from "../../MovieTypes";
+import { IVotedMovies, IWatchedMovies } from "../../MovieTypes";
 import { setNotification } from "../../redux/Notification/notificationReducer";
 import {
   setDisLiked,
@@ -42,7 +42,7 @@ export default function useVotedMovieListener() {
     const cleanUp = userRef
       .collection(collectionName.Watched)
       .onSnapshot((snap) => {
-        const data = snap.docs.map((doc) => doc.data()) as IVotedMovies[];
+        const data = snap.docs.map((doc) => doc.data()) as IWatchedMovies[];
         dispatch(setWatched(data));
       });
 

@@ -1,38 +1,77 @@
+import { IonPopover } from "@ionic/react";
 import React, { useEffect, useState } from "react";
-import { RouteComponentProps, useHistory } from "react-router";
+import { useSelector } from "react-redux";
 import styled from "styled-components/macro";
 import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
 import MainBackground from "../../comp/Layout/MainBackground";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
+import WatchedWithWho from "../../comp/Modals/WatchedWithWho";
 import MatchedWatchedWithBanner from "../../comp/MovieDetailsComp/MatchWatchBanner/MatchedWatchedWithBanner";
 import TitleBox from "../../comp/MovieDetailsComp/TitleBox";
 import Trailer from "../../comp/MovieDetailsComp/Trailer";
+import watchedMovie from "../../firebase/firestoreOperations/watchedMovie";
 import fetchVidActorProvider from "../../Helper/fetchVidActorProvider";
 import { IMovieDetailsForDetailsScreen } from "../../MovieTypes/IDetialsScreen";
+import { IProfileDetails } from "../../redux/Profile/profileReducer";
+import { IAppState } from "../../store";
 
-interface IProps
-  extends RouteComponentProps<{
-    id: string;
-  }> {}
+interface IProps {
+  showDetailModal: number | undefined;
+  setShowDetailModal: (arg: undefined) => void;
+}
 
-const MovieDetailsScreen: React.FC<IProps> = ({ match }) => {
-  const id = match.params.id;
+const MovieDetailsScreen: React.FC<IProps> = ({
+  showDetailModal,
+  setShowDetailModal,
+}) => {
   const [movieInfo, setMovieInfo] = useState<IMovieDetailsForDetailsScreen>();
 
+  const liked = useSelector((state: IAppState) =>
+    state.voted.Liked?.find((elem) => elem.id === showDetailModal)
+  );
+  const watched = useSelector((state: IAppState) =>
+    state.voted.Watched?.find((elem) => elem.id === showDetailModal)
+  );
+
   useEffect(() => {
-    if (!movieInfo || Number(id) != Number(movieInfo.id))
+    if (!movieInfo || showDetailModal !== undefined) {
+      // fetch movie details
       (async () => {
-        const res = await fetchVidActorProvider(id);
+        const res = await fetchVidActorProvider(showDetailModal as number);
         setMovieInfo(res);
       })();
-  }, [id]);
+    }
+  }, [showDetailModal, movieInfo]);
+  const [popOver, setPopOver] = useState(false);
 
-  const history = useHistory();
+  const handleWatched = (matchedWithIds: string[]) =>
+    watchedMovie(matchedWithIds, showDetailModal as number);
+
+  let matchOrWatched;
+  if ((liked && liked.matchedWith.length > 0) || watched) {
+    matchOrWatched = (
+      <MatchedWatchedWithBanner
+        openPopOver={() => setPopOver(true)}
+        matches={liked?.matchedWith}
+        watchedWith={watched?.watchedWith}
+        movieId={showDetailModal as number}
+        handleWatched={handleWatched}
+      />
+    );
+  }
 
   if (!movieInfo || "release_dates" in movieInfo === false)
     return <CenterLoader />;
   return (
     <>
+      <IonPopover isOpen={popOver}>
+        <WatchedWithWho
+          handleWatched={handleWatched}
+          closePopUp={() => setPopOver(false)}
+          matches={liked?.matchedWith as IProfileDetails[]}
+        />
+      </IonPopover>
+
       <MainBackground ImgUrl={movieInfo.poster_path} />
       <MakeTitleBgTransparent>
         <Trailer
@@ -41,7 +80,7 @@ const MovieDetailsScreen: React.FC<IProps> = ({ match }) => {
         />
         <TitleBox movieInfo={movieInfo} />
         <Content>
-          <MatchedWatchedWithBanner matches />
+          {matchOrWatched}
           <p>{movieInfo.overview}</p>
         </Content>
       </MakeTitleBgTransparent>
@@ -49,7 +88,7 @@ const MovieDetailsScreen: React.FC<IProps> = ({ match }) => {
         MiddleButtonText="Back"
         handleLike={() => console.log("like")}
         handleDislike={() => console.log("dislike")}
-        handleClickMiddleButton={() => history.goBack()}
+        handleClickMiddleButton={() => setShowDetailModal(undefined)}
       />
     </>
   );

@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import deleteNotification from "../firebase/firestoreOperations/deleteNotification";
 import { IVotedMovies } from "../MovieTypes";
 
 export default function useMatchModalControl(
   notification: IVotedMovies | null
 ) {
-  const [showModal, setShowModal] = useState(Boolean(notification));
+  const delNotificationHOF = () =>
+    deleteNotification(String(notification?.id as number));
+
   useEffect(() => {
-    if (showModal) {
+    if (notification) {
       setTimeout(() => {
-        setShowModal(false);
-        deleteNotification(String(notification?.id as number));
+        delNotificationHOF();
       }, 5000);
     }
-  }, [notification, showModal]);
+  }, [notification]);
 
-  return { showModal, setShowModal };
+  return delNotificationHOF;
 }

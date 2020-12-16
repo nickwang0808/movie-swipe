@@ -1,28 +1,29 @@
 import { IonCheckbox, IonItem, IonLabel } from "@ionic/react";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import { Btn } from "../../theme/BaseComp";
 
 interface IWatchedWithWho {
-  movieId: number;
-  matches: IUserInfo[];
+  matches: IProfileDetails[];
+  handleWatched: (arg: string[]) => void;
+  closePopUp: () => void;
 }
 
-interface IUserInfo {
-  uid: string;
-  name: string;
-}
-
-export default function WatchedWithWho({ matches, movieId }: IWatchedWithWho) {
+export default function WatchedWithWho({
+  matches,
+  handleWatched,
+  closePopUp,
+}: IWatchedWithWho) {
   const [selectedMatches, setSelectedMatches] = useState<string[]>([]);
 
   return (
     <>
       <h1>Watched with whom?</h1>
-      <div>
-        {matches?.map((match) => (
+      <ContentWrapper>
+        {matches.map((match) => (
           <IonItem key={match.uid}>
-            <IonLabel>{match.name}</IonLabel>
+            <IonLabel>{match.displayName}</IonLabel>
             <IonCheckbox
               color="dark"
               slot="start"
@@ -47,11 +48,16 @@ export default function WatchedWithWho({ matches, movieId }: IWatchedWithWho) {
           </IonItem>
         ))}
         <StyledSaveButton
-        // onClick={() => handleWatched(uid, movieId, selectedMatches)}
+          onClick={() => {
+            if (selectedMatches.length > 0) {
+              handleWatched(selectedMatches);
+            }
+            closePopUp();
+          }}
         >
           Save
         </StyledSaveButton>
-      </div>
+      </ContentWrapper>
     </>
   );
 }
@@ -61,4 +67,8 @@ const StyledSaveButton = styled(Btn)`
     border-color: var(--highlight);
     color: var(--highlight);
   }
+`;
+
+const ContentWrapper = styled.div`
+  padding: 0 16px 16px 16px;
 `;

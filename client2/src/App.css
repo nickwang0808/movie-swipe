@@ -177,12 +177,6 @@ ion-title {
   background-color: var(--gray);
 }
 
-/* override space between */
-.ion-page {
-  /* justify-content: unset; */
-  /* display: unset; */
-}
-
 /* can't do this in styled component, polyfill for now */
 .Bottom_nav_active,
 .Bottom_nav_active * {

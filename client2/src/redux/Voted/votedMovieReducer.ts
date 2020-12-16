@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IVotedMovies } from "../../MovieTypes";
+import { IVotedMovies, IWatchedMovies } from "../../MovieTypes";
 
 interface IVotedMovieReducer {
   isLoaded: boolean;
   Liked: IVotedMovies[] | null;
   DisLiked: IVotedMovies[] | null;
-  Watched: IVotedMovies[] | null;
+  Watched: IWatchedMovies[] | null;
 }
 
 const initialState: IVotedMovieReducer = {
@@ -22,7 +22,7 @@ const votedMovieReducer = createSlice({
     setLiked: (state, action: PayloadAction<IVotedMovies[]>) => {
       state.Liked = action.payload;
     },
-    setWatched: (state, action: PayloadAction<IVotedMovies[]>) => {
+    setWatched: (state, action: PayloadAction<IWatchedMovies[]>) => {
       state.Watched = action.payload;
     },
     setDisLiked: (state, action: PayloadAction<IVotedMovies[]>) => {

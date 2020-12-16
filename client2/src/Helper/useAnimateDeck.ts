@@ -5,8 +5,6 @@ import { IPopulatedResult } from "../MovieTypes";
 import { voteMovie } from "../redux/MovieList/MovieListReducer";
 import { store } from "../store";
 export default function useAnimateDeck() {
-  const uid = store.getState().auth.user?.uid as string;
-
   const screenWidth = store.getState().windowSizing.width;
   const [startPosition, setStartPosition] = useState<number>();
 

@@ -30,7 +30,7 @@ export default function AuthChecker({
         dispatch(userNotSigned());
       }
     });
-  }, []);
+  }, [dispatch]);
 
   function loginWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();

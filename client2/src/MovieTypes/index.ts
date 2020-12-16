@@ -40,6 +40,11 @@ export interface IVotedMovies extends IAdditionalMovieInfo, IProfileDetails {
   notify: boolean;
 }
 
+export interface IWatchedMovies extends IVotedMovies {
+  watchedWith: IProfileDetails[];
+  timeWatched: number;
+}
+
 /* 
 match: [
 

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled, { css } from "styled-components/macro";
 import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
@@ -15,6 +14,7 @@ interface ILikedMovieInMyList {
   matched?: IProfileDetails[];
   watched?: boolean;
   notify: boolean;
+  onClick: () => void;
 }
 
 export default function WatchListItem({
@@ -22,10 +22,11 @@ export default function WatchListItem({
   matched,
   watched = false,
   notify,
+  onClick,
 }: ILikedMovieInMyList) {
   return (
     <>
-      <StyledWrapperLink to={`/details/${movie.id}`}>
+      <Wrapper onClick={onClick}>
         <PosterThumbnail
           notify={notify}
           src={`${baseUrl}${movie.poster_path}`}
@@ -49,18 +50,16 @@ export default function WatchListItem({
             year={String(movie.release_date).slice(0, 4)}
           />
         </div>
-      </StyledWrapperLink>
+      </Wrapper>
     </>
   );
 }
 
-const StyledWrapperLink = styled(Link)`
+const Wrapper = styled.div`
   display: flex;
   padding: 2em;
   border-bottom: var(--border-bottom);
   position: relative;
-  color: #111111;
-  text-decoration: none;
 `;
 
 const PosterThumbnail = styled.img<{ notify: boolean }>`

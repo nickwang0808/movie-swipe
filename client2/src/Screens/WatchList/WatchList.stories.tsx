@@ -6,4 +6,4 @@ export default {
   component: WatchList,
 };
 
-export const Default = () => <WatchList />;
+export const Default = () => <WatchList setShowDetailModal={() => {}} />;

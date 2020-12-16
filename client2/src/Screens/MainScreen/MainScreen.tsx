@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
 import DeckWrapper from "../../comp/Deck/DeckWrapper";
@@ -16,7 +15,11 @@ import { IPopulatedResult } from "../../MovieTypes";
 import { IAppState } from "../../store";
 import MainScreenMisc from "./MainScreenMisc";
 
-export default function MainScreen() {
+interface IProps {
+  setShowDetailModal: (args: number) => void;
+}
+
+export default function MainScreen({ setShowDetailModal }: IProps) {
   // const _ = useTimeOutStateChange();
   const { movieList, status, error } = useSelector(
     (state: IAppState) => state.movieList
@@ -25,9 +28,8 @@ export default function MainScreen() {
     (state: IAppState) => state.notification
   );
 
-  const { showModal, setShowModal } = useMatchModalControl(notification);
+  const delNotificationHOF = useMatchModalControl(notification);
 
-  const dispatch = useDispatch();
   // prettier-ignore
   const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,}
    = useAnimateDeck();
@@ -38,8 +40,6 @@ export default function MainScreen() {
       VoteWithAnimation(isLike, movie as IPopulatedResult);
     }
   };
-
-  const history = useHistory();
 
   // console.log("main scree render");
 
@@ -52,8 +52,7 @@ export default function MainScreen() {
       {notification && (
         <MatchNotification
           movie={notification}
-          showModal={showModal}
-          closeModal={() => setShowModal(false)}
+          closeModal={() => delNotificationHOF()}
         />
       )}
 
@@ -139,9 +138,7 @@ export default function MainScreen() {
         MiddleButtonText="Details"
         handleLike={() => handleVote(true)}
         handleDislike={() => handleVote(false)}
-        handleClickMiddleButton={() =>
-          history.push(`/details/${movieList[0].id}`)
-        }
+        handleClickMiddleButton={() => setShowDetailModal(movieList[0].id)}
       />
     </>
   );

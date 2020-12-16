@@ -1,8 +1,13 @@
 import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components/macro";
+import { IProfileDetails } from "../../../redux/Profile/profileReducer";
 
-export default function Matches() {
+interface IProps {
+  matches?: IProfileDetails[];
+}
+
+export default function Matches({ matches }: IProps) {
   return (
     <MatchedWrapper
       exit={{ opacity: 0, margin: "0rem" }}
@@ -14,8 +19,9 @@ export default function Matches() {
     >
       <div>
         <span className="heavy">
-          {/* {matches?.map((match) => match.name).join(", ")} */}
-          Nick Wang
+          {matches
+            ?.map((match) => match.displayName || match.email || match.uid)
+            .join(", ")}
         </span>
         &nbsp;wants to watch this too!
       </div>

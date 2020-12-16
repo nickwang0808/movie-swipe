@@ -19,7 +19,7 @@ export default function MainHeader({
   return (
     <>
       <IonHeader>
-        <IonToolbar color="header">
+        <IonToolbar color="header" mode="md">
           {!disableBackButton && (
             <IonButtons slot="start">
               <IonBackButton color="light" defaultHref="/" />

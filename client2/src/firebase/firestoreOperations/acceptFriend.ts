@@ -17,14 +17,11 @@ export default async function acceptFriend(friendUid: string) {
     .collection(collectionName.Friends)
     .doc(friendUid);
 
-  await db.runTransaction((transaction) => {
-    return transaction.get(inviterDocRef).then((doc) => {
-      if (!doc.exists) {
-        throw "no invites found";
-      }
+  await db.runTransaction(async (t) => {
+    const doc = await t.get(inviterDocRef);
 
-      myFriendDocRef.set({ ...doc.data() });
-      inviterDocRef.delete();
-    });
+    t.set(myFriendDocRef, { ...doc.data() });
+
+    t.delete(inviterDocRef);
   });
 }
