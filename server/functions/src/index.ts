@@ -50,6 +50,11 @@ export interface IVotedMovies extends IAdditionalMovieInfo, IProfileDetails {
   notify: boolean;
 }
 
+export interface IWatchedMovies extends IVotedMovies {
+  watchedWith: IProfileDetails[];
+  timeWatched: number;
+}
+
 export const enum collectionName {
   User = "Users",
 

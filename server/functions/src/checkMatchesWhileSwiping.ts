@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import { arrayUnion, collectionName, db, IVotedMovies } from ".";
+import extractProfile from "./HelperFunctions/extractProfile";
 
 export const checkMatchesWhileSwiping = functions.firestore
   .document(
@@ -124,17 +125,4 @@ function removeProfile(input: any) {
   delete input.genrePreference;
 
   return input;
-}
-
-function extractProfile(data: IVotedMovies) {
-  const {
-    displayName,
-    email,
-    isAnonymous,
-    photoURL,
-    uid,
-    genrePreference,
-  } = data;
-
-  return { displayName, email, isAnonymous, photoURL, uid, genrePreference };
 }
