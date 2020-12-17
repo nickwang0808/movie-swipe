@@ -21,7 +21,9 @@ import { IonApp } from "@ionic/react";
 addDecorator((story) => (
   <>
     <IonApp>
-      <MemoryRouter initialEntries={["/"]}>{story()}</MemoryRouter>
+      <MemoryRouter initialEntries={["/"]}>
+        <WindowSizingProvider>{story()}</WindowSizingProvider>
+      </MemoryRouter>
     </IonApp>
   </>
 ));

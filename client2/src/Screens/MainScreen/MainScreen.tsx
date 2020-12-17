@@ -9,6 +9,7 @@ import SlideInThumb from "../../comp/Deck/SlideInThumb";
 import SliderBlock from "../../comp/Deck/SliderBlock";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import MatchNotification from "../../comp/Modals/MatchedNotification/MatchNotification";
+import parseCerts from "../../Helper/parseCerts";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
 import useMatchModalControl from "../../Helper/useMatchModalControl";
 import { IPopulatedResult } from "../../MovieTypes";
@@ -35,7 +36,6 @@ export default function MainScreen({ setShowDetailModal }: IProps) {
    = useAnimateDeck();
 
   const handleVote = (isLike: boolean, movie = movieList[0]) => {
-    // VoteWithAnimation(isLike, movie as IPopulatedResult);
     if ("release_dates" in movieList[0]) {
       VoteWithAnimation(isLike, movie as IPopulatedResult);
     }
@@ -127,7 +127,20 @@ export default function MainScreen({ setShowDetailModal }: IProps) {
                   ease: "circOut",
                 }}
               >
-                <MainPoster imgUrl={movie.poster_path} />
+                <MainPoster
+                  imgUrl={movie.poster_path}
+                  showAdditionalInfo
+                  additionalInfo={
+                    "release_dates" in movie
+                      ? {
+                          certs: parseCerts(movie.release_dates),
+                          runTime: movie.runtime,
+                          genreIds: movie.genre_ids,
+                          year: String(movie.release_date).slice(0, 4),
+                        }
+                      : undefined
+                  }
+                />
               </StyledMotionDiv>
             );
           })

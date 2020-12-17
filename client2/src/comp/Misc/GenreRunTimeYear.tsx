@@ -17,12 +17,8 @@ export default function GenreRunTimeYear({
 }: IProps) {
   return (
     <Wrapper>
-      {/* <h3>{getGenres(movie)}</h3> */}
       {genreIds && <h3>{genreMaker(genreIds)}</h3>}
-      <h3>{`${certs} | ${runTime} | ${year}`}</h3>
-      {/* <h3>{`${getMovieCertificate(movie)} | ${
-        movie.runtime
-      }min | ${movie.release_date.toString().slice(0, 4)}`}</h3> */}
+      <h3>{`${certs} | ${runTime}min | ${year}`}</h3>
     </Wrapper>
   );
 }
