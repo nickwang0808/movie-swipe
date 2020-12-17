@@ -28,7 +28,7 @@ export default function TitleBox({ movieInfo, onClick }: IProps) {
         <h1>{movieInfo.title}</h1>
       </TitleWrapper>
 
-      <Ratings rating={movieInfo.popularity} />
+      <Ratings rating={movieInfo.vote_average} />
 
       <GenreRunTimeYear
         certs={parseCerts(movieInfo.release_dates)}

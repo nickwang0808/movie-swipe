@@ -47,7 +47,7 @@ export default function WatchListItem({
             />
           )}
 
-          <Ratings rating={5} />
+          <Ratings rating={movie.vote_average} />
 
           <GenreRunTimeYear
             certs={parseCerts(movie.release_dates)}
