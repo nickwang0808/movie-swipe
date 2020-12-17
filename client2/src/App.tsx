@@ -92,7 +92,9 @@ const App: React.FC = () => {
 
               <IonLabel>Watch List</IonLabel>
               {/* <IonBadge color="warning">6</IonBadge> */}
-              <Badge counter={5} />
+              <Badge
+                counter={Liked?.filter((elem) => elem.notify === true).length}
+              />
             </IonTabButton>
 
             <IonTabButton tab="discovery" href="/home">

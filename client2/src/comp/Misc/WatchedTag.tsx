@@ -2,12 +2,11 @@ import React from "react";
 import styled from "styled-components/macro";
 import EyeIcon from "../../Assets/svg/EyeIcon";
 
-export default function WatchedTag({ name }: { name: string }) {
+export default function WatchedTag({ name }: { name: string[] }) {
   return (
     <Wrapper>
       <EyeIcon />
-      {/* <p>Watched with {watched.map((elem) => elem.name).join(", ")}</p> */}
-      <p>Watched with {name}</p>
+      <p>Watched with {name.join(", ")}</p>
     </Wrapper>
   );
 }

@@ -12,7 +12,7 @@ import WatchedTag from "../Misc/WatchedTag";
 interface ILikedMovieInMyList {
   movie: IVotedMovies | IPopulatedResult;
   matched?: IProfileDetails[];
-  watched?: boolean;
+  watched?: IProfileDetails[];
   notify: boolean;
   onClick: () => void;
 }
@@ -20,7 +20,7 @@ interface ILikedMovieInMyList {
 export default function WatchListItem({
   movie,
   matched,
-  watched = false,
+  watched,
   notify,
   onClick,
 }: ILikedMovieInMyList) {
@@ -39,7 +39,13 @@ export default function WatchListItem({
             <h2>{movie.title}</h2>
           </StyledTitleContainer>
 
-          {watched && <WatchedTag name="Nick Wang" />}
+          {watched && (
+            <WatchedTag
+              name={watched.map(
+                (elem) => elem.displayName || elem.email || elem.uid
+              )}
+            />
+          )}
 
           <Ratings rating={5} />
 

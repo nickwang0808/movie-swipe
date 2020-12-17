@@ -19,7 +19,7 @@ export default function SegmentBar({ setView, view }: IProps) {
         }}
       >
         <StyledSegButton value="liked">
-          <IonLabel>Liked</IonLabel>
+          <IonLabel>My Movies</IonLabel>
         </StyledSegButton>
         <StyledSegButton value="watched">
           <IonLabel>Watched</IonLabel>
@@ -43,4 +43,9 @@ const StyledSegButton = styled(IonSegmentButton)`
   --ion-background-color: var(--highlight);
   --color-checked: white;
   --border-radius: 3rem;
+
+  & ion-label {
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
 `;

@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components/macro";
 
-export default function Badge({ counter }: { counter: number }) {
+export default function Badge({ counter }: { counter: number | undefined }) {
+  if (!counter || counter === 0) return null;
   return (
     <BadgeElement
       animate={{ scale: [0, 1.5, 1, 1], rotateZ: [0, 15, 0, 0] }}

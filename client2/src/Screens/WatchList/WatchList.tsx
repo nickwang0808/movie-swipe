@@ -5,6 +5,7 @@ import MainHeader from "../../comp/Layout/MainHeader";
 import WatchListItem from "../../comp/ListItem/WatchListItem";
 import WatchListEmpty from "../../comp/Misc/WatchListEmpty";
 import SegmentBar from "../../comp/NavBar/SegmentBar";
+import removeNotification from "../../firebase/firestoreOperations/removeNotification";
 import sortByLikedAndMatched from "../../Helper/sortByLikedAndMatched";
 import { IAppState } from "../../store";
 
@@ -22,7 +23,10 @@ export default function WatchList({ setShowDetailModal }: IProps) {
         .sort(sortByLikedAndMatched)
         .map((movie) => (
           <WatchListItem
-            onClick={() => setShowDetailModal(movie.id)}
+            onClick={() => {
+              setShowDetailModal(movie.id);
+              removeNotification(movie.id);
+            }}
             key={movie.id}
             movie={movie}
             matched={movie.matchedWith || []}
@@ -40,7 +44,7 @@ export default function WatchList({ setShowDetailModal }: IProps) {
           onClick={() => setShowDetailModal(movie.id)}
           key={movie.id}
           movie={movie}
-          matched={movie.matchedWith || []}
+          watched={movie.watchedWith}
           notify={false}
         />
       ))
