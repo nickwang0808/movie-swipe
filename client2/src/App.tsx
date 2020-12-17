@@ -1,6 +1,5 @@
 import {
   IonApp,
-  IonBadge,
   IonContent,
   IonIcon,
   IonLabel,
@@ -29,6 +28,7 @@ import "./App.css";
 import BottomNavIcon1 from "./Assets/svg/BottomaNavIcon1.svg";
 import BottomNavIcon2 from "./Assets/svg/BottomaNavIcon2.svg";
 import BottomNavIcon3 from "./Assets/svg/BottomaNavIcon3.svg";
+import Badge from "./comp/Misc/Badge";
 import { CenterLoader } from "./comp/Misc/LoadingSpinner";
 import useFriendsListener from "./firebase/FirestoreListeners/useFriendsListener";
 import useProfileListener from "./firebase/FirestoreListeners/useProfileListener";
@@ -91,7 +91,8 @@ const App: React.FC = () => {
               <IonIcon src={BottomNavIcon1} size="large" />
 
               <IonLabel>Watch List</IonLabel>
-              <IonBadge color="warning">6</IonBadge>
+              {/* <IonBadge color="warning">6</IonBadge> */}
+              <Badge counter={5} />
             </IonTabButton>
 
             <IonTabButton tab="discovery" href="/home">

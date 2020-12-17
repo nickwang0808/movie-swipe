@@ -29,4 +29,5 @@ const BadgeElement = styled(motion.div)`
   text-align: center;
   line-height: 2rem;
   left: 55%;
+  top: 0;
 `;

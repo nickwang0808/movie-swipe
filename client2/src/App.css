@@ -195,3 +195,10 @@ ion-title {
   margin: 1px;
   height: calc(100% - 2px);
 }
+
+ion-tab-button {
+  --color-selected: var(--highlight);
+  font-size: 1.8rem;
+  font-weight: 600;
+  --ripple-color: var(--highlight);
+}
