@@ -1,3 +1,4 @@
+import { menuController } from "@ionic/core";
 import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
@@ -22,7 +23,7 @@ export default function MainScreenMisc({ imgUrl }: IProps) {
       // }}
       >
         <Logo />
-        <FilterButton setFilterOn={() => console.log("filter modal")} />
+        <FilterButton setFilterOn={() => menuController.toggle()} />
       </StyledMotionDiv>
     </>
   );

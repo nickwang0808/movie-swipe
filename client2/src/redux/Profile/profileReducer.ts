@@ -1,8 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUserAuth } from "../Auth/AuthReducer";
 
+export type movieListTypes =
+  | "upcoming"
+  | "top_rated"
+  | "popular"
+  | "now_playing"
+  | "latest";
+
+export const movieListTypesObj = [
+  { name: "Upcoming", value: "upcoming" },
+  { name: "Top Rated", value: "top_rated" },
+  { name: "Popular", value: "popular" },
+  { name: "Now Playing", value: "now_playing" },
+  { name: "Latest", value: "latest" },
+];
+
 export interface IProfileDetails extends IUserAuth {
   genrePreference: number[];
+  movieListTypePref: movieListTypes;
 }
 
 interface IProfile {

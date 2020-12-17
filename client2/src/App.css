@@ -107,20 +107,20 @@ a {
   --poster_width: calc(var(--poster_height) * 0.665);
   --border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
-  --ion-color-header: linear-gradient(
+  /* --ion-color-header: linear-gradient(
     266.71deg,
     #29323c 11.43%,
     #485563 89.74%
-  );
+  ); */
 }
 
-.ion-color-header {
+/* .ion-color-header {
   --ion-color-base: var(--ion-color-header);
 }
 
 ion-title {
   font-weight: 600;
-}
+} */
 
 .loader {
   height: 80px;
@@ -178,13 +178,13 @@ ion-title {
 }
 
 /* can't do this in styled component, polyfill for now */
-.Bottom_nav_active,
+/* .Bottom_nav_active,
 .Bottom_nav_active * {
   color: var(--highlight);
   fill: var(--highlight);
-}
+} */
 
-.top_nav_active {
+/* .top_nav_active {
   background-color: var(--highlight);
   display: flex;
   color: var(--light) !important;
@@ -194,8 +194,9 @@ ion-title {
   border-radius: 23px;
   margin: 1px;
   height: calc(100% - 2px);
-}
+} */
 
+/* unable to use this in styled comp for some reason */
 ion-tab-button {
   --color-selected: var(--highlight);
   font-size: 1.8rem;

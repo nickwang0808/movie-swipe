@@ -29,6 +29,7 @@ import BottomNavIcon1 from "./Assets/svg/BottomaNavIcon1.svg";
 import BottomNavIcon2 from "./Assets/svg/BottomaNavIcon2.svg";
 import BottomNavIcon3 from "./Assets/svg/BottomaNavIcon3.svg";
 import Badge from "./comp/Misc/Badge";
+import FilterMenu from "./comp/Misc/FilterMenu/FilterMenu";
 import { CenterLoader } from "./comp/Misc/LoadingSpinner";
 import useFriendsListener from "./firebase/FirestoreListeners/useFriendsListener";
 import useProfileListener from "./firebase/FirestoreListeners/useProfileListener";
@@ -84,14 +85,13 @@ const App: React.FC = () => {
         </IonContent>
       </IonModal>
       <IonReactRouter>
-        {/* <BottomNav profileBadgeCounter={0} watchListBadgeCounter={0} /> */}
+        <FilterMenu /> {/* !!!!! Menu Here !!!!! */}
         <IonTabs>
           <IonTabBar slot="bottom">
             <IonTabButton tab="Watch_List" href="/mylist">
               <IonIcon src={BottomNavIcon1} size="large" />
 
               <IonLabel>Watch List</IonLabel>
-              {/* <IonBadge color="warning">6</IonBadge> */}
               <Badge
                 counter={Liked?.filter((elem) => elem.notify === true).length}
               />
@@ -107,26 +107,34 @@ const App: React.FC = () => {
               <IonLabel>Profile</IonLabel>
             </IonTabButton>
           </IonTabBar>
-          <IonRouterOutlet>
+          <IonRouterOutlet id="main">
             <Route exact path="/" render={() => <Redirect to="/home" />} />
-            <Route path="/home">
-              <IonPage>
-                <IonContent>
-                  <MainScreen setShowDetailModal={setShowDetailModal} />
-                </IonContent>
-              </IonPage>
-            </Route>
-            <Route exact path="/mylist">
-              <IonPage>
-                <WatchList setShowDetailModal={setShowDetailModal} />
-              </IonPage>
-            </Route>
-            <Route exact path="/profile">
-              <ProfileMainScreen />
-            </Route>
-            <Route exact path="/profile/friend">
-              <FriendsScreen />
-            </Route>
+            <Route
+              path="/home"
+              render={() => (
+                <IonPage>
+                  <IonContent>
+                    <MainScreen setShowDetailModal={setShowDetailModal} />
+                  </IonContent>
+                </IonPage>
+              )}
+            />
+            <Route
+              exact
+              path="/mylist"
+              render={() => (
+                <IonPage>
+                  <WatchList setShowDetailModal={setShowDetailModal} />
+                </IonPage>
+              )}
+            />
+
+            <Route exact path="/profile" render={() => <ProfileMainScreen />} />
+            <Route
+              exact
+              path="/profile/friend"
+              render={() => <FriendsScreen />}
+            />
           </IonRouterOutlet>
         </IonTabs>
       </IonReactRouter>
