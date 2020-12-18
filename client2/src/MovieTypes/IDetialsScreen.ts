@@ -117,12 +117,12 @@ export interface Results {
 
 export interface USAvailability {
   link: string;
-  rent: Buy[];
-  flatrate?: Buy[];
-  buy: Buy[];
+  rent: From[];
+  flatrate?: From[];
+  buy: From[];
 }
 
-export interface Buy {
+export interface From {
   display_priority: number;
   logo_path: string;
   provider_id: number;
