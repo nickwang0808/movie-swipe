@@ -1,5 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import userSliceReducer from "./Auth/AuthReducer";
+import MovieDetailsReducer from "./DetailsScreenState/DetailsScreenReducer";
 import friendsReducer from "./Friends/friendsReducer";
 import MovieListReducer from "./MovieList/MovieListReducer";
 import notificationReducer from "./Notification/notificationReducer";
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   movieList: MovieListReducer,
   friends: friendsReducer,
   notification: notificationReducer,
+  detailsState: MovieDetailsReducer,
 });
 
 export default rootReducer;

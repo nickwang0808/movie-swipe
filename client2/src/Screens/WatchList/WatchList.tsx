@@ -1,19 +1,17 @@
 import { IonContent } from "@ionic/react";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MainHeader from "../../comp/Layout/MainHeader";
 import WatchListItem from "../../comp/ListItem/WatchListItem";
 import WatchListEmpty from "../../comp/Misc/WatchListEmpty";
 import SegmentBar from "../../comp/NavBar/SegmentBar";
 import removeNotification from "../../firebase/firestoreOperations/removeNotification";
 import sortByLikedAndMatched from "../../Helper/sortByLikedAndMatched";
+import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
 import { IAppState } from "../../store";
 
-interface IProps {
-  setShowDetailModal: (arg: number) => void;
-}
-
-export default function WatchList({ setShowDetailModal }: IProps) {
+export default function WatchList() {
+  const dispatch = useDispatch();
   const { Liked, Watched } = useSelector((state: IAppState) => state.voted);
   const [view, setView] = useState<"liked" | "watched">("liked");
 
@@ -24,7 +22,7 @@ export default function WatchList({ setShowDetailModal }: IProps) {
         .map((movie) => (
           <WatchListItem
             onClick={() => {
-              setShowDetailModal(movie.id);
+              dispatch(setModalToShow(movie.id));
               removeNotification(movie.id);
             }}
             key={movie.id}
@@ -41,7 +39,7 @@ export default function WatchList({ setShowDetailModal }: IProps) {
     Watched && Watched.length > 0 ? (
       Watched.map((movie) => (
         <WatchListItem
-          onClick={() => setShowDetailModal(movie.id)}
+          onClick={() => dispatch(setModalToShow(movie.id))}
           key={movie.id}
           movie={movie}
           watched={movie.watchedWith}

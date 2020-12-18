@@ -21,7 +21,7 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router";
 import "./App.css";
@@ -35,6 +35,7 @@ import useFriendsListener from "./firebase/FirestoreListeners/useFriendsListener
 import useProfileListener from "./firebase/FirestoreListeners/useProfileListener";
 import useVotedMovieListener from "./firebase/FirestoreListeners/useVotedListener";
 import useGetWIndowsSizing from "./Helper/useGetWIndowsSizing";
+import { fetchDetailsThunk } from "./redux/DetailsScreenState/fetchDetailsThunk";
 import fetchMovie from "./redux/MovieList/fetchMovieThunk";
 import { populateMovieDetailsThunk } from "./redux/MovieList/populateMovieDetailsThunk";
 import MainScreen from "./Screens/MainScreen/MainScreen";
@@ -45,14 +46,19 @@ import WatchList from "./Screens/WatchList/WatchList";
 import { IAppState } from "./store";
 
 const App: React.FC = () => {
-  const [showDetailModal, setShowDetailModal] = useState<number>();
-
   useGetWIndowsSizing();
   useProfileListener();
   useVotedMovieListener();
   useFriendsListener();
 
-  const { Liked, movieList, status, inviteCount } = useAppHelper(); // all logics are here
+  const {
+    Liked,
+    movieList,
+    status,
+    inviteCount,
+    movieToShow,
+    dispatch,
+  } = useAppHelper(); // all logics are here
 
   console.log(process.env.NODE_ENV);
 
@@ -62,12 +68,12 @@ const App: React.FC = () => {
     return <CenterLoader />;
   return (
     <IonApp>
-      <IonModal isOpen={Boolean(showDetailModal)}>
+      <IonModal
+        isOpen={Boolean(movieToShow)}
+        onWillPresent={() => dispatch(fetchDetailsThunk())}
+      >
         <IonContent>
-          <MovieDetailsScreen
-            showDetailModal={showDetailModal}
-            setShowDetailModal={setShowDetailModal}
-          />
+          <MovieDetailsScreen />
         </IonContent>
       </IonModal>
 
@@ -102,7 +108,7 @@ const App: React.FC = () => {
               render={() => (
                 <IonPage>
                   <IonContent>
-                    <MainScreen setShowDetailModal={setShowDetailModal} />
+                    <MainScreen />
                   </IonContent>
                 </IonPage>
               )}
@@ -112,7 +118,7 @@ const App: React.FC = () => {
               path="/mylist"
               render={() => (
                 <IonPage>
-                  <WatchList setShowDetailModal={setShowDetailModal} />
+                  <WatchList />
                 </IonPage>
               )}
             />
@@ -143,6 +149,9 @@ function useAppHelper() {
   const inviteCount = useSelector(
     (state: IAppState) => state.friends.received?.length
   );
+
+  const { movieToShow } = useSelector((state: IAppState) => state.detailsState);
+
   useEffect(() => {
     if (movieList.length < 5 && DisLiked && Liked && Watched) {
       dispatch(fetchMovie());
@@ -154,5 +163,5 @@ function useAppHelper() {
     }
   }, [movieList, DisLiked, Liked, Watched, dispatch]);
 
-  return { Liked, movieList, status, inviteCount };
+  return { Liked, movieList, status, inviteCount, movieToShow, dispatch };
 }

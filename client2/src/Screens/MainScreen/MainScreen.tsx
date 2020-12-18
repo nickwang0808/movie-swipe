@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
 import DeckWrapper from "../../comp/Deck/DeckWrapper";
@@ -13,15 +13,13 @@ import parseCerts from "../../Helper/parseCerts";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
 import useMatchModalControl from "../../Helper/useMatchModalControl";
 import { IPopulatedResult } from "../../MovieTypes";
+import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
 import { IAppState } from "../../store";
 import MainScreenMisc from "./MainScreenMisc";
 
-interface IProps {
-  setShowDetailModal: (args: number) => void;
-}
-
-export default function MainScreen({ setShowDetailModal }: IProps) {
+export default function MainScreen() {
   // const _ = useTimeOutStateChange();
+  const dispatch = useDispatch();
   const { movieList, status, error } = useSelector(
     (state: IAppState) => state.movieList
   );
@@ -29,7 +27,7 @@ export default function MainScreen({ setShowDetailModal }: IProps) {
     (state: IAppState) => state.notification
   );
 
-  const delNotificationHOF = useMatchModalControl(notification);
+  const { delNotificationHOF } = useMatchModalControl(notification);
 
   // prettier-ignore
   const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,}
@@ -40,8 +38,6 @@ export default function MainScreen({ setShowDetailModal }: IProps) {
       VoteWithAnimation(isLike, movie as IPopulatedResult);
     }
   };
-
-  // console.log("main scree render");
 
   if (status === "failed")
     return <h2>Something Wrong happened, refresh or restart the App</h2>;
@@ -151,7 +147,9 @@ export default function MainScreen({ setShowDetailModal }: IProps) {
         MiddleButtonText="Details"
         handleLike={() => handleVote(true)}
         handleDislike={() => handleVote(false)}
-        handleClickMiddleButton={() => setShowDetailModal(movieList[0].id)}
+        handleClickMiddleButton={() =>
+          dispatch(setModalToShow(movieList[0].id))
+        }
       />
     </>
   );
