@@ -3,12 +3,14 @@ import {
   IPopularMovies,
   IPopulatedResult,
 } from "../../MovieTypes";
+import { movieListTypes } from "../Profile/profileReducer";
 
 export default async function fetchAndFilterMovies(
   pageNum: number,
   VotedMovies: number[] | null,
   genrePreference: number[],
-  currentMovieList: Array<IFetchedMovieListResult | IPopulatedResult>
+  currentMovieList: Array<IFetchedMovieListResult | IPopulatedResult>,
+  movieListTypePref?: movieListTypes
 ) {
   const localVoted = GetLocalVoted();
   const votedMovies: number[] = [
@@ -21,7 +23,10 @@ export default async function fetchAndFilterMovies(
   const processedMovieLists: IFetchedMovieListResult[] = [];
   // TODO: something seriously wrong here, infinite loops
   while (processedMovieLists.length + currentMovieList.length <= 4) {
-    const fetchedMovies = await fetchPopularMovies(localPageNum);
+    const fetchedMovies = await fetchPopularMovies(
+      localPageNum,
+      movieListTypePref
+    );
     // filter voted movies out
     fetchedMovies.results.forEach((result) => {
       if (!result.backdrop_path) return; // if movie hs no poster skip
@@ -41,9 +46,12 @@ export default async function fetchAndFilterMovies(
   };
 }
 
-async function fetchPopularMovies(pageNum: number) {
+async function fetchPopularMovies(
+  pageNum: number,
+  movieListTypePref: movieListTypes = "popular"
+) {
   const REACT_APP_TMDB_KEY = process.env.REACT_APP_TMDB_KEY;
-  const url = `https://api.themoviedb.org/3/movie/popular?api_key=${REACT_APP_TMDB_KEY}&language=en-US&page=${pageNum}`;
+  const url = `https://api.themoviedb.org/3/movie/${movieListTypePref}?api_key=${REACT_APP_TMDB_KEY}&language=en-US&page=${pageNum}`;
   const response: IPopularMovies = await fetch(url).then((res) => res.json());
   return response;
 }

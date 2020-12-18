@@ -12,7 +12,8 @@ export default function newUserDBInit(user: IUserAuth) {
         // proceed
         docRef.set({
           ...user,
-          genrePreference,
+          genrePreference: genrePreference.sort(), // sort it to for the update compare function
+          movieListTypePref: "popular",
         });
       }
     });

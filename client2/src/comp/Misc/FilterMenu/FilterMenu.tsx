@@ -10,11 +10,14 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import updatePreferences from "../../../firebase/firestoreOperations/updatePreferences";
 import { genreList } from "../../../Helper/variables";
 import {
   movieListTypes,
   movieListTypesObj,
 } from "../../../redux/Profile/profileReducer";
+import { IAppState } from "../../../store";
 import GenreSelection from "./genreSection";
 import MovieListSelection from "./MovieListSelection";
 
@@ -23,10 +26,19 @@ export default function FilterMenu() {
     genreList.movie.map((elem) => elem.id)
   );
 
-  const [listType, setListType] = useState<movieListTypes>();
+  const movieListTypePref = useSelector(
+    (state: IAppState) => state.profile.profile?.movieListTypePref
+  ) as movieListTypes;
+  const [listType, setListType] = useState<movieListTypes>(
+    movieListTypePref || undefined
+  );
 
   return (
-    <IonMenu contentId="main" side="end">
+    <IonMenu
+      contentId="main"
+      side="end"
+      onIonWillClose={() => updatePreferences(checked, listType)}
+    >
       <IonHeader mode="md">
         <IonToolbar color="light">
           <IonTitle>Refine Suggestions</IonTitle>

@@ -20,6 +20,7 @@ const fetchMovie = createAsyncThunk<
   async (_, { getState }) => {
     const store = getState();
     const genrePreference = store.profile.profile?.genrePreference as number[];
+    const movieListTypePref = store.profile.profile?.movieListTypePref;
     const { DisLiked, Watched, Liked } = store.voted;
     const { pageNum, movieList } = store.movieList;
 
@@ -33,7 +34,8 @@ const fetchMovie = createAsyncThunk<
       pageNum,
       VotedMovieIds,
       genrePreference,
-      movieList
+      movieList,
+      movieListTypePref
     );
 
     console.log("fetchMovies");

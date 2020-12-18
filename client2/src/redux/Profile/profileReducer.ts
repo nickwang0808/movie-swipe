@@ -5,15 +5,13 @@ export type movieListTypes =
   | "upcoming"
   | "top_rated"
   | "popular"
-  | "now_playing"
-  | "latest";
+  | "now_playing";
 
 export const movieListTypesObj = [
   { name: "Upcoming", value: "upcoming" },
   { name: "Top Rated", value: "top_rated" },
   { name: "Popular", value: "popular" },
   { name: "Now Playing", value: "now_playing" },
-  { name: "Latest", value: "latest" },
 ];
 
 export interface IProfileDetails extends IUserAuth {

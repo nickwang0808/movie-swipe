@@ -1,4 +1,4 @@
-import fetchMovie from "../../redux/MovieList/fetchMovieThunk";
+import { ResetPageNum } from "../../redux/MovieList/MovieListReducer";
 import {
   IProfileDetails,
   movieListTypes,
@@ -18,24 +18,29 @@ export default async function updatePreferences(
 
   // compare genre
   const genreChanged =
-    JSON.stringify(newGenre.sort()) !== JSON.stringify(genrePreference.sort);
+    JSON.stringify(newGenre.sort()) !==
+    JSON.stringify(genrePreference.slice().sort());
   // compare movielist type
   const moviePrefChanged = movieListTypePref !== newMovieListType;
 
   if (genreChanged || moviePrefChanged) {
     const uid = store.getState().auth.user?.uid as string;
     const userRef = db.collection(collectionName.User).doc(uid);
+
+    const batch = db.batch();
     if (genreChanged) {
-      await userRef.update({
+      batch.update(userRef, {
         genrePreference: newGenre,
       });
     }
     if (moviePrefChanged) {
-      await userRef.update({
-        movieListTypePref: movieListTypePref,
+      batch.update(userRef, {
+        movieListTypePref: newMovieListType,
       });
     }
-    store.dispatch(fetchMovie());
+    store.dispatch(ResetPageNum());
+    await batch.commit();
+    window.location.reload();
   }
 
   return;
