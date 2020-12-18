@@ -4,13 +4,29 @@ import DetailsButtonV2 from "../Buttons/DetailsButtonV2";
 import VoteDownButtonV2 from "../Buttons/VoteDownButtonV2";
 import VoteUpButtonV2 from "../Buttons/VoteUpButtonV2";
 
-export default function VoteButtonGroupV2() {
+interface IProps {
+  handleDislike: () => void;
+  handleLike: () => void;
+  forceActiveLikeButton?: boolean;
+  forceActiveDislikeButton?: boolean;
+  handleDetails: () => void;
+  handleTrailer: () => void;
+}
+
+export default function VoteButtonGroupV2({
+  handleDislike,
+  handleLike,
+  forceActiveDislikeButton = false,
+  forceActiveLikeButton = false,
+  handleDetails,
+  handleTrailer,
+}: IProps) {
   return (
     <StyledContainer>
-      <VoteDownButtonV2 />
-      <DetailsButtonV2 />
-      <DetailsButtonV2 isDetails={false} />
-      <VoteUpButtonV2 />
+      <VoteDownButtonV2 onClick={handleDislike} />
+      <DetailsButtonV2 onClick={handleDetails} />
+      <DetailsButtonV2 onClick={handleTrailer} isDetails={false} />
+      <VoteUpButtonV2 onClick={handleLike} />
     </StyledContainer>
   );
 }
@@ -18,7 +34,10 @@ export default function VoteButtonGroupV2() {
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-space-around;
+  justify-content: space-around;
   align-items: center;
   height: 48px;
+  margin: auto;
+  min-width: 300px;
+  max-width: 400px;
 `;

@@ -108,9 +108,7 @@ const App: React.FC = () => {
               path="/home"
               render={() => (
                 <IonPage>
-                  <IonContent>
-                    <MainScreen />
-                  </IonContent>
+                  <MainScreen />
                 </IonPage>
               )}
             />

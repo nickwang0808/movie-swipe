@@ -5,9 +5,10 @@ import TrailerIcon from "../../Assets/svg/TrailerIcon";
 
 interface IProps {
   isDetails?: boolean;
+  onClick: () => void;
 }
 
-export default function DetailsButtonV2({ isDetails = true }: IProps) {
+export default function DetailsButtonV2({ isDetails = true, onClick }: IProps) {
   const details = (
     <>
       <DetailsIcon />
@@ -22,7 +23,11 @@ export default function DetailsButtonV2({ isDetails = true }: IProps) {
     </>
   );
 
-  return <StyledButton>{isDetails ? details : trailer}</StyledButton>;
+  return (
+    <StyledButton onClick={onClick}>
+      {isDetails ? details : trailer}
+    </StyledButton>
+  );
 }
 
 const StyledButton = styled.button`
@@ -40,6 +45,15 @@ const StyledButton = styled.button`
 
   outline: none !important;
   background: transparent;
+
+  &:active {
+    border-color: var(--highlight);
+  }
+
+  &:active * {
+    fill: var(--highlight);
+    color: var(--highlight);
+  }
 
   & svg {
     margin-left: 2px;

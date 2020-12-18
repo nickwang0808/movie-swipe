@@ -3,10 +3,14 @@ import styled from "styled-components/macro";
 import ArrowSquare from "../../Assets/svg/ArrowSquare";
 import ThumbUpForButton from "../../Assets/svg/ThumbUpForButton";
 
-export default function VoteDownButtonV2() {
+interface IProps {
+  onClick: () => void;
+}
+
+export default function VoteDownButtonV2({ onClick }: IProps) {
   return (
     <div>
-      <StyledWrapper>
+      <StyledWrapper onClick={onClick}>
         <ArrowSquare />
 
         <ThumbUpForButton />
@@ -21,6 +25,7 @@ const StyledWrapper = styled.button`
   border: none;
   background: transparent;
   padding: 0;
+  margin-top: 4px; /* button is off horizontal center for some reason */
 
   & svg:first-of-type {
     transform: rotate(180deg);
