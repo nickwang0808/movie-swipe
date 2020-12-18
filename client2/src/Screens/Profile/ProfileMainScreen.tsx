@@ -15,7 +15,10 @@ export default function ProfileMainScreen() {
     (state: IAppState) => state.auth.user
   ) as IUserAuth;
 
-  const handleSignOut = () => auth.signOut();
+  const handleSignOut = async () => {
+    await auth.signOut();
+    window.location.reload();
+  };
 
   if (!isAnonymous) {
     return (
