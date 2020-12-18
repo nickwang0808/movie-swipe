@@ -52,23 +52,9 @@ const App: React.FC = () => {
   useVotedMovieListener();
   useFriendsListener();
 
-  const dispatch = useDispatch();
-  const { movieList, status } = useSelector(
-    (state: IAppState) => state.movieList
-  );
-  const { DisLiked, Liked, Watched } = useSelector(
-    (state: IAppState) => state.voted
-  );
-  useEffect(() => {
-    if (movieList.length < 5 && DisLiked && Liked && Watched) {
-      dispatch(fetchMovie());
-    }
-    if (movieList.length > 0) {
-      if ("release_dates" in movieList[0] === false) {
-        dispatch(populateMovieDetailsThunk());
-      }
-    }
-  }, [movieList, DisLiked, Liked, Watched, dispatch]);
+  const { Liked, movieList, status, inviteCount } = useAppHelper(); // all logics are here
+
+  console.log(process.env.NODE_ENV);
 
   if (status === "failed")
     return <h2>Something Wrong happened, refresh or restart the App</h2>;
@@ -84,6 +70,7 @@ const App: React.FC = () => {
           />
         </IonContent>
       </IonModal>
+
       <IonReactRouter>
         <FilterMenu /> {/* !!!!! Menu Here !!!!! */}
         <IonTabs>
@@ -105,6 +92,7 @@ const App: React.FC = () => {
             <IonTabButton tab="profile" href="/profile">
               <IonIcon src={BottomNavIcon3} size="large" />
               <IonLabel>Profile</IonLabel>
+              <Badge counter={inviteCount} />
             </IonTabButton>
           </IonTabBar>
           <IonRouterOutlet id="main">
@@ -143,3 +131,28 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+function useAppHelper() {
+  const dispatch = useDispatch();
+  const { movieList, status } = useSelector(
+    (state: IAppState) => state.movieList
+  );
+  const { DisLiked, Liked, Watched } = useSelector(
+    (state: IAppState) => state.voted
+  );
+  const inviteCount = useSelector(
+    (state: IAppState) => state.friends.received?.length
+  );
+  useEffect(() => {
+    if (movieList.length < 5 && DisLiked && Liked && Watched) {
+      dispatch(fetchMovie());
+    }
+    if (movieList.length > 0) {
+      if ("release_dates" in movieList[0] === false) {
+        dispatch(populateMovieDetailsThunk());
+      }
+    }
+  }, [movieList, DisLiked, Liked, Watched, dispatch]);
+
+  return { Liked, movieList, status, inviteCount };
+}

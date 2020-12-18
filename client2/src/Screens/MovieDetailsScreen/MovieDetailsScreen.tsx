@@ -98,6 +98,7 @@ const MovieDetailsScreen: React.FC<IProps> = ({
 };
 
 export default MovieDetailsScreen;
+
 const MakeTitleBgTransparent = styled.div`
   padding-bottom: calc(var(--nav) + 7rem);
   position: fixed;
