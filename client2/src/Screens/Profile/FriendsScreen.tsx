@@ -19,7 +19,7 @@ export default function FriendsScreen() {
     <IonPage>
       <MainHeader title="Friends" />
       <IonContent>
-        <p className="marginSides2 marginTop2 marginBottom2">
+        <p className="ion-margin">
           We'll let you know when you and your friends both want to watch
           something!
         </p>

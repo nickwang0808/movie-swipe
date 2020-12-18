@@ -49,11 +49,7 @@ export default function ProfileMainScreen() {
           <ProfileItem title="SignIn or Register" />
           <ProfileItem title="About Movie Sync" />
           <Separator />
-          <ProfileItem
-            title="Friends"
-            action={() => history.push("/profile/friend")}
-          />
-          <ProfileItem title="hello" />
+          <ProfileItem title="Delete Account" />
         </IonContent>
       </IonPage>
     );

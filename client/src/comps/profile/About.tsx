@@ -1,8 +1,8 @@
 import React from "react";
-import style from "./MyProfile.module.css";
-import sharedstyle from "../ButtonComps/ButtonComps.module.css";
-import BackButton from "../ButtonComps/BackButton";
 import { ReactComponent as LogoTMDB } from "../../img/logo_tmdb.svg";
+import BackButton from "../ButtonComps/BackButton";
+import sharedstyle from "../ButtonComps/ButtonComps.module.css";
+import style from "./MyProfile.module.css";
 
 export default function About() {
   return (
