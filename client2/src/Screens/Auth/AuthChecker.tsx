@@ -1,16 +1,10 @@
-import firebase from "firebase/app";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import { auth } from "../../firebase/config";
-import newUserDBInit from "../../Helper/newUserDBInit";
-import {
-  signInError,
-  userNotSigned,
-  userSignedIn,
-} from "../../redux/Auth/AuthReducer";
+import { userNotSigned, userSignedIn } from "../../redux/Auth/AuthReducer";
 import { IAppState } from "../../store";
+import SignInScreen from "./SignInScreen";
 
 export default function AuthChecker({
   children,
@@ -32,32 +26,8 @@ export default function AuthChecker({
     });
   }, [dispatch]);
 
-  function loginWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth
-      .signInWithPopup(provider)
-      .then((result) => {
-        if (result.user) {
-          const {
-            displayName,
-            email,
-            isAnonymous,
-            photoURL,
-            uid,
-          } = result.user;
-          newUserDBInit({ displayName, email, isAnonymous, photoURL, uid });
-        }
-      })
-      .catch((err) => dispatch(signInError(err)));
-  }
-
   const authState = useSelector((state: IAppState) => state.auth);
   if (!authState.isLoaded) return <CenterLoader />;
-  if (!authState.authenticated)
-    return <StyledButton onClick={loginWithGoogle}>Sign In</StyledButton>;
+  if (!authState.authenticated) return <SignInScreen />;
   return <>{children}</>;
 }
-
-const StyledButton = styled.button`
-  font-size: 30px;
-`;
