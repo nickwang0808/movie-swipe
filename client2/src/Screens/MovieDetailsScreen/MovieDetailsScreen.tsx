@@ -91,7 +91,7 @@ const MakeTitleBgTransparent = styled.div`
   bottom: 0;
   overflow-y: auto;
 
-  -webkit-mask-image: linear-gradient(to top, transparent 110px, black 140px);
+  mask-image: linear-gradient(to top, transparent 110px, black 140px);
 `;
 
 const Content = styled.div`

@@ -171,9 +171,13 @@ ion-title {
   margin-right: 2rem;
 }
 
+.container_subcontent {
+  margin-bottom: 2rem;
+}
+
 .listview_separator_full {
   height: 1rem;
-  width: 100%;
+  width: 100vw;
   background-color: var(--gray);
 }
 

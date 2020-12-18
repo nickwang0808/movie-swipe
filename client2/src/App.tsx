@@ -40,6 +40,7 @@ import fetchMovie from "./redux/MovieList/fetchMovieThunk";
 import { populateMovieDetailsThunk } from "./redux/MovieList/populateMovieDetailsThunk";
 import MainScreen from "./Screens/MainScreen/MainScreen";
 import MovieDetailsScreen from "./Screens/MovieDetailsScreen/MovieDetailsScreen";
+import AboutUs from "./Screens/Profile/AboutUsScreen";
 import FriendsScreen from "./Screens/Profile/FriendsScreen";
 import ProfileMainScreen from "./Screens/Profile/ProfileMainScreen";
 import WatchList from "./Screens/WatchList/WatchList";
@@ -129,6 +130,7 @@ const App: React.FC = () => {
               path="/profile/friend"
               render={() => <FriendsScreen />}
             />
+            <Route exact path="/profile/about" render={() => <AboutUs />} />
           </IonRouterOutlet>
         </IonTabs>
       </IonReactRouter>
