@@ -35,12 +35,12 @@ export default function VoteButtonGroup({
 
   return (
     <Wrapper
-      animate={{ opacity: 1 }}
-      initial={{ opacity: 0 }}
-      transition={{
-        duration: 0.5,
-        ease: [0.16, 1, 0.3, 1],
-      }}
+    // animate={{ opacity: 1 }}
+    // initial={{ opacity: 0 }}
+    // transition={{
+    //   duration: 0.5,
+    //   ease: [0.16, 1, 0.3, 1],
+    // }}
     >
       <ThumbVoteButton
         onClick={() => onClick(false)}
@@ -70,7 +70,7 @@ const Wrapper = styled(motion.div)`
   align-items: center;
   z-index: 998;
   position: absolute;
-  bottom: var(--nav);
+  bottom: 0;
   width: 100%;
   height: 10rem;
 `;

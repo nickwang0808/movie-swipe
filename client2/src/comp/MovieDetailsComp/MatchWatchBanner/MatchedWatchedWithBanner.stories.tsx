@@ -14,6 +14,6 @@ const template: Story<ComponentProps<typeof MatchedWatchedWithBanner>> = (
 export const Default = template.bind({});
 
 Default.args = {
-  matches: true,
-  watchedWith: false,
+  // matches: true,
+  // watchedWith: false,
 };

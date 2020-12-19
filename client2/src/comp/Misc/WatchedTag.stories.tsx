@@ -14,5 +14,5 @@ const template: Story<ComponentProps<typeof WatchedTag>> = (arg) => (
 export const Default = template.bind({});
 
 Default.args = {
-  name: "Nick Wang",
+  name: ["Nick Wang"],
 };

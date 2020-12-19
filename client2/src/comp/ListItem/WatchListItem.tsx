@@ -1,67 +1,83 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components/macro";
+import styled, { css } from "styled-components/macro";
+import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
+import { IVotedMovies } from "../../MovieTypes";
+import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 import MatchTag from "../Misc/MatchTag";
 import Ratings from "../Misc/Ratings";
 import WatchedTag from "../Misc/WatchedTag";
 
 interface ILikedMovieInMyList {
-  movie: IMovie;
-  matched?: boolean;
-  watched?: boolean;
-}
-
-interface IMovie {
-  poster_path: string;
-  title: string;
-  id: number;
+  movie: IVotedMovies | IMovieDetailsForDetailsExtended;
+  matched?: IProfileDetails[];
+  watched?: IProfileDetails[];
+  notify: boolean;
+  onClick: () => void;
 }
 
 export default function WatchListItem({
   movie,
-  matched = false,
-  watched = false,
+  matched,
+  watched,
+  notify,
+  onClick,
 }: ILikedMovieInMyList) {
   return (
     <>
-      <StyledWrapperLink to={`/detials/${movie.id}`}>
+      <Wrapper onClick={onClick}>
         <PosterThumbnail
+          notify={notify}
           src={`${baseUrl}${movie.poster_path}`}
           alt="Post Image"
         />
         <div style={{ width: "100%" }}>
-          {matched && <MatchTag />}
+          {matched && matched?.length > 0 && <MatchTag />}
 
           <StyledTitleContainer>
             <h2>{movie.title}</h2>
           </StyledTitleContainer>
 
-          {watched && <WatchedTag name="Nick Wang" />}
+          {watched && (
+            <WatchedTag
+              name={watched.map(
+                (elem) => elem.displayName || elem.email || elem.uid
+              )}
+            />
+          )}
 
-          <Ratings rating={5} />
+          <Ratings rating={movie.vote_average} />
 
-          <GenreRunTimeYear />
+          <GenreRunTimeYear
+            certs={parseCerts(movie.release_dates)}
+            runTime={movie.runtime}
+            genreIds={movie.genres.map((elem) => elem.id)}
+            year={String(movie.release_date).slice(0, 4)}
+          />
         </div>
-      </StyledWrapperLink>
+      </Wrapper>
     </>
   );
 }
 
-const StyledWrapperLink = styled(Link)`
+const Wrapper = styled.div`
   display: flex;
   padding: 2em;
   border-bottom: var(--border-bottom);
   position: relative;
-  color: #111111;
-  text-decoration: none;
 `;
 
-const PosterThumbnail = styled.img`
+const PosterThumbnail = styled.img<{ notify: boolean }>`
   height: 110px;
   width: 73px;
   margin: 0 2em 0 0;
+  ${(props) =>
+    props.notify &&
+    css`
+      border: 2px solid red;
+    `}
 `;
 
 const StyledTitleContainer = styled.div`

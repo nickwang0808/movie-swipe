@@ -17,16 +17,17 @@ import { MemoryRouter } from "react-router";
 import BottomNav from "../src/comp/NavBar/BottomNav";
 import WindowSizingProvider from "../src/comp/Layout/WindowSizingProvider";
 import { IonApp } from "@ionic/react";
+import { Provider } from "react-redux";
+import { store } from "../src/store";
 
 addDecorator((story) => (
-  <>
+  <Provider store={store}>
     <IonApp>
       <MemoryRouter initialEntries={["/"]}>
         <WindowSizingProvider>{story()}</WindowSizingProvider>
-        <BottomNav />
       </MemoryRouter>
     </IonApp>
-  </>
+  </Provider>
 ));
 
 export const parameters = {

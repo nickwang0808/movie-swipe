@@ -1,20 +1,42 @@
-import React from "react";
-import styled from "styled-components";
+import { IonSpinner } from "@ionic/react";
+import React, { ComponentProps } from "react";
+import styled from "styled-components/macro";
+import circularRating from "../../Assets/svg/circularRating.svg";
 import baseUrl from "../../Helper/TmdbBaseUrl";
+import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 
 interface IProps {
   imgUrl: string;
+  showAdditionalInfo?: boolean;
+  additionalInfo?: ComponentProps<typeof GenreRunTimeYear>;
 }
 
-export default function MainPoster({ imgUrl }: IProps) {
+export default function MainPoster({
+  imgUrl,
+  additionalInfo,
+  showAdditionalInfo = false,
+}: IProps) {
+  const additionalInfoElem = additionalInfo ? (
+    <>
+      <img src={circularRating} alt="rating" />
+      <GenreRunTimeYear {...additionalInfo} />
+    </>
+  ) : (
+    <StyledSpinner name="crescent" color="light" />
+  );
+
   return (
     <Wrapper imgUrl={imgUrl}>
-      <div /> {/* this div contains the img */}
+      <div>
+        {showAdditionalInfo && (
+          <AdditionALInfoWrapper>{additionalInfoElem}</AdditionALInfoWrapper>
+        )}
+      </div>
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div<IProps>`
+const Wrapper = styled.div<{ imgUrl: string }>`
   position: absolute;
   width: var(--poster-width);
   height: var(--poster-height);
@@ -23,7 +45,7 @@ const Wrapper = styled.div<IProps>`
   left: 0;
   right: 0;
 
-  & div {
+  & > div {
     width: 100%;
     height: 100%;
     background-size: cover;
@@ -38,5 +60,45 @@ const Wrapper = styled.div<IProps>`
         rgba(255, 255, 255, 0.2) 100%
       ),
       url(${(props) => baseUrl + props.imgUrl});
+
+    display: flex; /* layout additional info */
+    flex-direction: column;
+    justify-content: flex-end;
   }
+`;
+
+const AdditionALInfoWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 12px;
+
+  height: 75px;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 212, 255, 0) 100%
+  );
+
+  & > div {
+    /* make sure both icon and text are centered horizontaly */
+    margin-bottom: 2px;
+  }
+
+  & * {
+    /* over ride opacity set in GenreRunTimeYear comp */
+    opacity: 1;
+  }
+
+  & h3 {
+    color: white;
+  }
+
+  & img {
+    /* svg icon */
+    margin: 0 8px;
+  }
+`;
+
+const StyledSpinner = styled(IonSpinner)`
+  margin: 0 8px;
 `;

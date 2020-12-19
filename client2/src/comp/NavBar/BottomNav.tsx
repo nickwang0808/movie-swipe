@@ -1,10 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components/macro";
-import BottomaNavIcon1 from "../../Assets/svg/BottomaNavIcon1";
-import BottomaNavIcon2 from "../../Assets/svg/BottomaNavIcon2";
-import BottomaNavIcon3 from "../../Assets/svg/BottomaNavIcon3";
-import Badge from "../Misc/Badge";
 
 interface INavProps {
   watchListBadgeCounter: number;
@@ -16,33 +12,34 @@ export default function BottomNav({
   watchListBadgeCounter,
 }: INavProps) {
   return (
-    <Wrapper>
-      <StyledNavLink to="/mylist">
-        <NavItem>
-          {watchListBadgeCounter > 0 && (
-            <Badge counter={watchListBadgeCounter} />
-          )}
-          <BottomaNavIcon1 />
-          <br />
-          Watch List
-        </NavItem>
-      </StyledNavLink>
-      <StyledNavLink to="/home">
-        <NavItem>
-          <BottomaNavIcon2 />
-          <br />
-          Find Media
-        </NavItem>
-      </StyledNavLink>
-      <StyledNavLink to="/profile">
-        <NavItem>
-          {profileBadgeCounter > 0 && <Badge counter={profileBadgeCounter} />}
-          <BottomaNavIcon3 />
-          <br />
-          Profile
-        </NavItem>
-      </StyledNavLink>
-    </Wrapper>
+    <></>
+    // <Wrapper>
+    //   <StyledNavLink activeClassName="Bottom_nav_active" to="/mylist">
+    //     <NavItem>
+    //       {watchListBadgeCounter > 0 && (
+    //         <Badge counter={watchListBadgeCounter} />
+    //       )}
+    //       <BottomaNavIcon1 />
+    //       <br />
+    //       Watch List
+    //     </NavItem>
+    //   </StyledNavLink>
+    //   <StyledNavLink activeClassName="Bottom_nav_active" to="/home">
+    //     <NavItem>
+    //       <BottomaNavIcon2 />
+    //       <br />
+    //       Find Media
+    //     </NavItem>
+    //   </StyledNavLink>
+    //   <StyledNavLink activeClassName="Bottom_nav_active" to="/profile">
+    //     <NavItem>
+    //       {profileBadgeCounter > 0 && <Badge counter={profileBadgeCounter} />}
+    //       <BottomaNavIcon3 />
+    //       <br />
+    //       Profile
+    //     </NavItem>
+    //   </StyledNavLink>
+    // </Wrapper>
   );
 }
 
@@ -67,11 +64,6 @@ const StyledNavLink = styled(NavLink)`
   color: var(--dark);
   flex-grow: 1;
   width: 33%;
-
-  &:active {
-    color: var(--highlight);
-    fill: var(--highlight);
-  }
 `;
 
 const NavItem = styled.div`

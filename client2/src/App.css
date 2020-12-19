@@ -106,7 +106,21 @@ a {
   --poster_height: 170px;
   --poster_width: calc(var(--poster_height) * 0.665);
   --border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+  /* --ion-color-header: linear-gradient(
+    266.71deg,
+    #29323c 11.43%,
+    #485563 89.74%
+  ); */
 }
+
+/* .ion-color-header {
+  --ion-color-base: var(--ion-color-header);
+}
+
+ion-title {
+  font-weight: 600;
+} */
 
 .loader {
   height: 80px;
@@ -140,25 +154,56 @@ a {
 
 /* SMALL MODIFIERS */
 
-.marginBottom2 {
+/* .marginBottom2 {
   margin-bottom: 2rem;
-}
+} */
 
-.marginTop2 {
+/* .marginTop2 {
   margin-top: 2rem;
-}
+} */
 
-.marginTop6 {
+/* .marginTop6 {
   margin-top: 6rem;
-}
+} */
 
-.marginSides2 {
+/* .marginSides2 {
   margin-left: 2rem;
   margin-right: 2rem;
-}
+} */
+
+/* .container_subcontent {
+  margin-bottom: 2rem;
+} */
 
 .listview_separator_full {
   height: 1rem;
-  width: 100%;
+  width: 100vw;
   background-color: var(--gray);
+}
+
+/* can't do this in styled component, polyfill for now */
+/* .Bottom_nav_active,
+.Bottom_nav_active * {
+  color: var(--highlight);
+  fill: var(--highlight);
+} */
+
+/* .top_nav_active {
+  background-color: var(--highlight);
+  display: flex;
+  color: var(--light) !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 23px;
+  margin: 1px;
+  height: calc(100% - 2px);
+} */
+
+/* unable to use this in styled comp for some reason */
+ion-tab-button {
+  --color-selected: var(--highlight);
+  font-size: 1.8rem;
+  font-weight: 600;
+  --ripple-color: var(--highlight);
 }

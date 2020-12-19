@@ -1,117 +1,125 @@
 import * as functions from "firebase-functions";
-import { db, LikedMovieWithMatches } from ".";
-import arrayChunks from "./HelperFunctions/ArrayChunks";
+import { arrayUnion, collectionName, db, IVotedMovies } from ".";
+import extractProfile from "./HelperFunctions/extractProfile";
 
-interface IUserInfo {
-  email: string;
-  name: string | null;
-  uid: string;
-}
+export const checkMatchesWhileSwiping = functions.firestore
+  .document(
+    `${collectionName.User}/{myUid}/${collectionName.Liked}/{likedMovie}`
+  )
+  .onCreate(async (snap, context) => {
+    const myUid: string = context.params.myUid;
+    const likedMovie: string = context.params.likedMovie;
 
-const checkMatchesWhileSwiping = functions.https.onCall(
-  async (data, context) => {
-    if (context.auth) {
-      const myUid = context.auth.uid;
-      // const getFriends: string[] = await (await db.collection("Users").doc(myUid).collection("User_Details").doc("Friends").get()).data()?.friends
-      const myFriends: string[][] = arrayChunks(data.myFriends, 10);
-      const myLike: number = data.myLike;
+    await db.runTransaction(async (t) => {
+      const allFriends = db
+        .collection(collectionName.User)
+        .doc(myUid)
+        .collection(collectionName.Friends);
+      // get all friends first
+      const allFriendsDocs = await t.get(allFriends);
 
-      const matchedFriends: IUserInfo[] = [];
-      // find all user that liked the movie
+      if (allFriendsDocs.empty) return;
+
+      const friendsIds: string[] = [];
+      allFriendsDocs.forEach((doc) => {
+        const friendId = doc.id;
+        friendsIds.push(friendId);
+      });
+
+      const query = db
+        .collectionGroup(collectionName.Liked)
+        .where("uid", "in", friendsIds)
+        .where("id", "==", Number(likedMovie));
+
+      const queryDocs = await query.get();
+
+      let matchedVotedMovies: IVotedMovies[] = [];
+      queryDocs.forEach((doc) => {
+        // grad all matched movies and add to my notifiation
+        matchedVotedMovies.push(doc.data() as IVotedMovies);
+      });
+
+      // my profile
+      const myProfile = extractProfile(snap.data() as IVotedMovies);
+
+      const myMatches = matchedVotedMovies.map((elem) => extractProfile(elem));
+
       await Promise.all(
-        myFriends.map(async (chunks) => {
-          const query = db
-            .collectionGroup("User_Details")
-            .where("uid", "in", chunks)
-            .where("liked_movies", "array-contains", myLike);
-          const querySnapShot = await query.get();
-          if (querySnapShot.empty) {
-            return;
-          }
-          // look up those users detail
-          const friendUidList = querySnapShot.docs.map(
-            (doc) => doc.data().uid as string
-          );
-          await updateMatchToMyDb(myUid, friendUidList, myLike);
+        matchedVotedMovies.map(async (votedMovie) => {
+          const batch = db.batch();
 
-          const matchedFriendsInfo = await Promise.all(
-            querySnapShot.docs.map(async (doc) => {
-              const friendUid = doc.data().uid as string;
-              // update like to friend's db
-              await updateMatchToFriendDb(myUid, friendUid, myLike);
-              const userInfoDoc = await db
-                .collection("Users")
-                .doc(friendUid)
-                .get();
-              const data = userInfoDoc.data();
-              const email = data?.email as string;
-              const name = data?.name as string | null;
-              const uid = data?.uid as string;
-              console.log("doc", doc.data());
-              return { email, name, uid };
-            })
+          // set friends notification and swap my info in
+          batch.update(
+            db
+              .collection(collectionName.User)
+              .doc(votedMovie.uid) // friend's uid
+              .collection(collectionName.Liked)
+              .doc(String(votedMovie.id)),
+            {
+              matchedWith: arrayUnion(myProfile),
+              timeMatched: Date.now(),
+              notify: true,
+            }
           );
-          matchedFriends.push(...matchedFriendsInfo);
+
+          // now set friends notification
+          batch.set(
+            db
+              .collection(collectionName.User)
+              .doc(votedMovie.uid) // friend's uid
+              .collection(collectionName.Notifications)
+              .doc(String(votedMovie.id)),
+            {
+              ...removeProfile(votedMovie),
+              matchedWith: [myProfile],
+              timeMatched: Date.now(),
+            }
+          );
+
+          // set my like
+          batch.update(
+            db
+              .collection(collectionName.User)
+              .doc(myUid)
+              .collection(collectionName.Liked)
+              .doc(String(votedMovie.id)),
+            {
+              matchedWith: arrayUnion(...myMatches),
+              timeMatched: Date.now(),
+              notify: true,
+            }
+          );
+
+          // set my notification
+          batch.set(
+            db
+              .collection(collectionName.User)
+              .doc(myUid)
+              .collection(collectionName.Notifications)
+              .doc(String(votedMovie.id)),
+            {
+              ...removeProfile(votedMovie),
+              matchedWith: myMatches,
+              timeMatched: Date.now(),
+            }
+          );
+
+          batch.commit();
+          return;
         })
       );
+      return;
+    });
+    return;
+  });
 
-      console.log("matchedFriendsLikes", matchedFriends);
-      return matchedFriends;
-    } else {
-      throw new functions.https.HttpsError(
-        "failed-precondition",
-        "The function must be called while authenticated."
-      );
-    }
-  }
-);
+function removeProfile(input: any) {
+  delete input.displayName;
+  delete input.email;
+  delete input.isAnonymous;
+  delete input.photoURL;
+  delete input.uid;
+  delete input.genrePreference;
 
-export default checkMatchesWhileSwiping;
-
-async function updateMatchToMyDb(
-  myUid: string,
-  friendUid: string[],
-  movieId: number
-) {
-  console.log("run updateMatchToMyDb");
-
-  const myDocRef = db
-    .collection("Users")
-    .doc(myUid)
-    .collection("User_Details")
-    .doc("Liked_Movies");
-
-  const liked_movies_matches: LikedMovieWithMatches[] = (
-    await myDocRef.get()
-  ).data()?.liked_movies_matches;
-
-  const foundIndex = liked_movies_matches.findIndex(
-    (elem) => elem.movieId === movieId
-  );
-  liked_movies_matches[foundIndex].matches.push(...friendUid);
-  liked_movies_matches[foundIndex].match_time = Date.now();
-  await myDocRef.update({ liked_movies_matches });
-}
-
-async function updateMatchToFriendDb(
-  myUid: string,
-  friendUid: string,
-  movieId: number
-) {
-  const myDocRef = db
-    .collection("Users")
-    .doc(friendUid)
-    .collection("User_Details")
-    .doc("Liked_Movies");
-
-  const liked_movies_matches: LikedMovieWithMatches[] = (
-    await myDocRef.get()
-  ).data()?.liked_movies_matches;
-
-  const foundIndex = liked_movies_matches.findIndex(
-    (elem) => elem.movieId === movieId
-  );
-  liked_movies_matches[foundIndex].matches.push(myUid);
-  liked_movies_matches[foundIndex].match_time = Date.now();
-  await myDocRef.update({ liked_movies_matches });
+  return input;
 }

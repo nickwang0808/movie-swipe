@@ -1,5 +1,4 @@
-import { Story } from "@storybook/react/types-6-0";
-import React, { ComponentProps } from "react";
+import React from "react";
 import InviteFriend from "./InviteFriend";
 
 export default {
@@ -7,12 +6,6 @@ export default {
   component: InviteFriend,
 };
 
-const template: Story<ComponentProps<typeof InviteFriend>> = (arg) => (
-  <InviteFriend {...arg} />
-);
+const template = () => <InviteFriend />;
 
 export const Default = template.bind({});
-
-Default.args = {
-  message: "Something happened",
-};

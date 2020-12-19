@@ -20,8 +20,8 @@ export default function WatchListEmpty({ type }: IProps) {
 
   return (
     <Wrapper>
-      <div className="marginTop6">{icon}</div>
-      <p className="marginSides2 marginTop2">{message}</p>
+      <IconWithMargin>{icon}</IconWithMargin>
+      <p className="ion-margin">{message}</p>
     </Wrapper>
   );
 }
@@ -30,4 +30,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+`;
+
+const IconWithMargin = styled.div`
+  margin-top: 6rem;
 `;

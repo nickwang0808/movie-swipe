@@ -9,7 +9,7 @@ interface IProps {
 
 export default function SubContent({ title, children }: IProps) {
   return (
-    <Wrapper className="container_subcontent">
+    <Wrapper className="ion-margin-bottom">
       <div>
         <Separator />
         <h2>{title}</h2>

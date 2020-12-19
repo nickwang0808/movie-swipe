@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import { db, LikedMovieWithMatches } from ".";
 
-const findAllMatches = functions.https.onCall(async (data, context) => {
+export const findAllMatches = functions.https.onCall(async (data, context) => {
   if (context.auth) {
     const myUid = context.auth.uid;
     const friendUid = data.friendUid;
@@ -24,8 +24,6 @@ const findAllMatches = functions.https.onCall(async (data, context) => {
     );
   }
 });
-
-export default findAllMatches;
 
 async function updateMatch(
   userId: string,

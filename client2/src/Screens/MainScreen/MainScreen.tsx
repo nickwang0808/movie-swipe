@@ -1,116 +1,185 @@
-import { animate, useMotionValue, useTransform } from "framer-motion";
-import React from "react";
-import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
+import {
+  IonContent,
+  IonFooter,
+  useIonViewDidEnter,
+  useIonViewWillLeave,
+} from "@ionic/react";
+import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import VoteButtonGroupV2 from "../../comp/ButtonGroups/VoteButtonGroupV2";
 import DeckWrapper from "../../comp/Deck/DeckWrapper";
-import LeadCard from "../../comp/Deck/LeadCard";
+import MainPoster from "../../comp/Deck/MainPoster";
 import SlideInThumb from "../../comp/Deck/SlideInThumb";
 import SliderBlock from "../../comp/Deck/SliderBlock";
-import TrailCards from "../../comp/Deck/TrailCards";
-import { dummyMovieList } from "../../DevTools/dummyData";
-import useGetWIndowsSizing from "../../Helper/useGetWIndowsSizing";
+import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
+import MatchNotification from "../../comp/Modals/MatchedNotification/MatchNotification";
+import useNotificationListener from "../../firebase/FirestoreListeners/useNotificationListener";
+import parseCerts from "../../Helper/parseCerts";
+import useAnimateDeck from "../../Helper/useAnimateDeck";
+import useMatchModalControl from "../../Helper/useMatchModalControl";
+import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import {
+  setModalToShow,
+  setTrailerToShow,
+} from "../../redux/DetailsScreenState/DetailsScreenReducer";
+import { IAppState } from "../../store";
 import MainScreenMisc from "./MainScreenMisc";
 
 export default function MainScreen() {
-  const { width: screenWidth } = useGetWIndowsSizing();
-
-  const xMotionValue = useMotionValue(0); // to control the deck via button
-  const likeSlider = useMotionValue(0); // let deck control slider
-  const backgroundSlide = useTransform(likeSlider, (value) => value * 2.5);
-
-  const thumbMotionValue = useMotionValue(0); // let deck control thumb
-  const thumbX = useTransform(thumbMotionValue, (value) => value / 1.5);
-  const thumbOpacityMotionValue = useMotionValue(0);
-  const thumbOpacity = useTransform(
-    thumbOpacityMotionValue,
-    (value) => Math.abs(value / 300) // the higher num the slower it adds opacity
+  // const _ = useTimeOutStateChange();
+  const dispatch = useDispatch();
+  const { movieList, status, error } = useSelector(
+    (state: IAppState) => state.movieList
+  );
+  const { notification } = useSelector(
+    (state: IAppState) => state.notification
   );
 
-  const animateSliderAndThumb = (direction: number, thumbDirection: 1 | -1) => {
-    animate(likeSlider, direction * 1.2, {
-      type: "tween",
-      duration: 1,
-      ease: [0.33, 1, 0.68, 1],
-      onComplete: () => {
-        likeSlider.set(0); // don't remove this
-      },
-    });
+  const { delNotificationHOF } = useMatchModalControl(notification);
 
-    // this controls where the thumb to animate to
-    animate(thumbMotionValue, screenWidth * thumbDirection, {
-      type: "tween",
-      duration: 0.5,
-      ease: [0.33, 1, 0.68, 1],
-    });
+  // prettier-ignore
+  const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,}
+   = useAnimateDeck();
 
-    // this controls thumb opacity
-    animate(thumbOpacityMotionValue, [300, 0], {
-      ease: "easeIn",
-      duration: 0.5,
-      onComplete: () => {},
-    });
+  const handleVote = (isLike: boolean, movie = movieList[0]) => {
+    if ("release_dates" in movieList[0]) {
+      VoteWithAnimation(isLike, movie as IMovieDetailsForDetailsExtended);
+    }
   };
 
-  const VoteWithAnimation = (isLike: boolean) => {
-    animate(xMotionValue, isLike ? screenWidth : -screenWidth, {
-      type: "tween",
-      duration: 0.5,
-      ease: [0.33, 1, 0.68, 1],
-      onComplete: () => {
-        xMotionValue.set(0);
-      },
-    });
-    animateSliderAndThumb(isLike ? screenWidth : -screenWidth, isLike ? 1 : -1);
-  };
+  useNotificationListener();
 
+  // framer bug: card won't scale stack when trail card layout inited with true
+  const [toggleLayout, setToggleLayout] = useState(false);
+  useIonViewDidEnter(() => setToggleLayout(true));
+  useIonViewWillLeave(() => setToggleLayout(false));
+
+  if (status === "failed")
+    return <h2>Something Wrong happened, refresh or restart the App</h2>;
+  if (movieList.length === 0 && (status === "loading" || status === "idle"))
+    return <CenterLoader />;
   return (
-    <div>
-      <MainScreenMisc imgUrl={dummyMovieList.results[0].poster_path} />
+    <>
+      <IonContent fullscreen>
+        {notification && (
+          <MatchNotification
+            movie={notification}
+            closeModal={() => delNotificationHOF()}
+          />
+        )}
 
-      <SliderBlock type="like" backgroundSlide={backgroundSlide} />
-      <SliderBlock type="dislike" backgroundSlide={backgroundSlide} />
-      <SlideInThumb type="like" thumbX={thumbX} thumbOpacity={thumbOpacity} />
-      <SlideInThumb
-        type="dislike"
-        thumbX={thumbX}
-        thumbOpacity={thumbOpacity}
-      />
+        <MainScreenMisc imgUrl={movieList[0]?.poster_path || ""} />
+        <SliderBlock type="like" backgroundSlide={backgroundSlide} />
+        <SliderBlock type="dislike" backgroundSlide={backgroundSlide} />
+        <SlideInThumb type="like" thumbX={thumbX} thumbOpacity={thumbOpacity} />
+        <SlideInThumb
+          type="dislike"
+          thumbX={thumbX}
+          thumbOpacity={thumbOpacity}
+        />
 
-      <DeckWrapper>
-        {dummyMovieList.results
-          .slice(0, 4)
-          .map((movie, i) => {
-            if (i !== 0)
+        {/* layout animation does not work across children components */}
+
+        <DeckWrapper>
+          {movieList
+            .slice(0, 4)
+            .map((movie, i) => {
+              if (i !== 0)
+                return (
+                  <StyledMotionDiv
+                    key={movie.id}
+                    style={{
+                      scale: 1 - i * 0.07,
+                      originY: 1,
+                      top: 4 * i,
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      ease: "circOut",
+                    }}
+                    layout={toggleLayout}
+                  >
+                    <MainPoster imgUrl={movie.poster_path} />
+                  </StyledMotionDiv>
+                );
+
               return (
-                <TrailCards
+                <StyledMotionDiv
                   key={movie.id}
-                  index={i}
-                  imgUrl={movie.poster_path}
-                />
+                  drag
+                  onViewportBoxUpdate={(_, delta) => {
+                    likeSlider.set(delta.x.translate);
+                    thumbMotionValue.set(delta.x.translate);
+                    thumbOpacityMotionValue.set(delta.x.translate);
+                  }}
+                  onDragStart={(e, info) => {
+                    const xPosition = info.point.x;
+                    setStartPosition(xPosition);
+                  }}
+                  onDragEnd={(e, info) => {
+                    const xPosition = info.point.x;
+                    if (startPosition) {
+                      xPosition > (startPosition as number) + swipeDistance &&
+                        handleVote(true);
+                      xPosition < (startPosition as number) - swipeDistance &&
+                        handleVote(false);
+                    }
+                  }}
+                  dragElastic={1}
+                  dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+                  style={{
+                    originY: 1,
+                    top: 4 * i,
+                    scale: 1 - i * 0.07,
+                    x: xMotionValue,
+                  }}
+                  layout
+                  transition={{
+                    duration: 0.5,
+                    ease: "circOut",
+                  }}
+                >
+                  <MainPoster
+                    imgUrl={movie.poster_path}
+                    showAdditionalInfo
+                    additionalInfo={
+                      "release_dates" in movie
+                        ? {
+                            certs: parseCerts(movie.release_dates),
+                            runTime: movie.runtime,
+                            genreIds: movie.genres.map((elem) => elem.id),
+                            year: String(movie.release_date).slice(0, 4),
+                          }
+                        : undefined
+                    }
+                  />
+                </StyledMotionDiv>
               );
+            })
+            .reverse()}
+        </DeckWrapper>
+      </IonContent>
 
-            return (
-              <LeadCard
-                key={movie.id}
-                index={i}
-                imgUrl={movie.poster_path}
-                likeSlider={likeSlider}
-                thumbMotionValue={thumbMotionValue}
-                thumbOpacityMotionValue={thumbOpacityMotionValue}
-                xMotionValue={xMotionValue}
-                screenWidth={screenWidth}
-                VoteWithAnimation={VoteWithAnimation}
-              />
-            );
-          })
-          .reverse()}
-      </DeckWrapper>
-
-      <VoteButtonGroup
-        MiddleButtonText="Details"
-        handleLike={() => VoteWithAnimation(true)}
-        handleDislike={() => VoteWithAnimation(false)}
-        handleClickMiddleButton={() => console.log("goto detials")}
-      />
-    </div>
+      <IonFooter>
+        <VoteButtonGroupV2
+          handleLike={() => handleVote(true)}
+          handleDislike={() => handleVote(false)}
+          handleDetails={() => dispatch(setModalToShow(movieList[0].id))}
+          handleTrailer={() => dispatch(setTrailerToShow(movieList[0].id))}
+        />
+        <div className="ion-margin" />
+      </IonFooter>
+    </>
   );
 }
+
+export const StyledMotionDiv = styled(motion.div)`
+  position: absolute;
+  width: 100vw;
+  height: var(--poster-height);
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+`;
