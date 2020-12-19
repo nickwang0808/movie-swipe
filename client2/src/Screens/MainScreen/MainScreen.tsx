@@ -1,6 +1,11 @@
-import { IonContent, IonFooter } from "@ionic/react";
+import {
+  IonContent,
+  IonFooter,
+  useIonViewDidEnter,
+  useIonViewWillLeave,
+} from "@ionic/react";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import VoteButtonGroupV2 from "../../comp/ButtonGroups/VoteButtonGroupV2";
@@ -46,6 +51,11 @@ export default function MainScreen() {
 
   useNotificationListener();
 
+  // framer bug: card won't scale stack when trail card layout inited with true
+  const [toggleLayout, setToggleLayout] = useState(false);
+  useIonViewDidEnter(() => setToggleLayout(true));
+  useIonViewWillLeave(() => setToggleLayout(false));
+
   if (status === "failed")
     return <h2>Something Wrong happened, refresh or restart the App</h2>;
   if (movieList.length === 0 && (status === "loading" || status === "idle"))
@@ -89,7 +99,7 @@ export default function MainScreen() {
                       duration: 0.5,
                       ease: "circOut",
                     }}
-                    layout
+                    layout={toggleLayout}
                   >
                     <MainPoster imgUrl={movie.poster_path} />
                   </StyledMotionDiv>

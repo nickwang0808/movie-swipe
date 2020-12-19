@@ -60,8 +60,6 @@ const App: React.FC = () => {
     dispatch,
   } = useAppHelper(); // all logics are here
 
-  console.log(process.env.NODE_ENV);
-
   if (status === "failed")
     return <h2>Something Wrong happened, refresh or restart the App</h2>;
   if (movieList.length === 0 && (status === "loading" || status === "idle"))
