@@ -40,6 +40,7 @@ import fetchMovie from "./redux/MovieList/fetchMovieThunk";
 import { populateMovieDetailsThunk } from "./redux/MovieList/populateMovieDetailsThunk";
 import MainScreen from "./Screens/MainScreen/MainScreen";
 import MovieDetailsScreen from "./Screens/MovieDetailsScreen/MovieDetailsScreen";
+import TrailerModalScreen from "./Screens/MovieDetailsScreen/TrailerModalScreen";
 import AboutUs from "./Screens/Profile/AboutUsScreen";
 import FriendsScreen from "./Screens/Profile/FriendsScreen";
 import ProfileMainScreen from "./Screens/Profile/ProfileMainScreen";
@@ -59,6 +60,7 @@ const App: React.FC = () => {
     inviteCount,
     movieToShow,
     dispatch,
+    trailerToShow,
   } = useAppHelper(); // all logics are here
 
   console.log(process.env.NODE_ENV);
@@ -78,8 +80,10 @@ const App: React.FC = () => {
         </IonContent>
       </IonModal>
 
+      <TrailerModalScreen />
+
       <IonReactRouter>
-        <FilterMenu /> {/* !!!!! Menu Here !!!!! */}
+        <FilterMenu /> {/* side menu */}
         <IonTabs>
           <IonTabBar slot="bottom">
             <IonTabButton tab="Watch_List" href="/mylist">
@@ -150,7 +154,9 @@ function useAppHelper() {
     (state: IAppState) => state.friends.received?.length
   );
 
-  const { movieToShow } = useSelector((state: IAppState) => state.detailsState);
+  const { movieToShow, trailerToShow } = useSelector(
+    (state: IAppState) => state.detailsState
+  );
 
   useEffect(() => {
     if (movieList.length < 5 && DisLiked && Liked && Watched) {
@@ -163,5 +169,13 @@ function useAppHelper() {
     }
   }, [movieList, DisLiked, Liked, Watched, dispatch]);
 
-  return { Liked, movieList, status, inviteCount, movieToShow, dispatch };
+  return {
+    Liked,
+    movieList,
+    status,
+    inviteCount,
+    movieToShow,
+    dispatch,
+    trailerToShow,
+  };
 }

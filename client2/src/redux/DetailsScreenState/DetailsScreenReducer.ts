@@ -6,6 +6,7 @@ interface IState {
   movieInfo: IMovieDetailsForDetailsScreen | null;
   loading: boolean;
   error: string | null;
+  trailerToShow: number | null;
 }
 
 const initialState: IState = {
@@ -13,6 +14,7 @@ const initialState: IState = {
   movieToShow: null,
   loading: false,
   error: null,
+  trailerToShow: null,
 };
 
 const MovieDetailsReducer = createSlice({
@@ -21,6 +23,9 @@ const MovieDetailsReducer = createSlice({
   reducers: {
     setModalToShow: (state, action: PayloadAction<number | null>) => {
       state.movieToShow = action.payload;
+    },
+    setTrailerToShow: (state, action: PayloadAction<number | null>) => {
+      state.trailerToShow = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -38,5 +43,5 @@ const MovieDetailsReducer = createSlice({
   },
 });
 
-export const { setModalToShow } = MovieDetailsReducer.actions;
+export const { setModalToShow, setTrailerToShow } = MovieDetailsReducer.actions;
 export default MovieDetailsReducer.reducer;

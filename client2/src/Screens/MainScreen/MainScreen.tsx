@@ -14,7 +14,10 @@ import parseCerts from "../../Helper/parseCerts";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
 import useMatchModalControl from "../../Helper/useMatchModalControl";
 import { IPopulatedResult } from "../../MovieTypes";
-import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
+import {
+  setModalToShow,
+  setTrailerToShow,
+} from "../../redux/DetailsScreenState/DetailsScreenReducer";
 import { IAppState } from "../../store";
 import MainScreenMisc from "./MainScreenMisc";
 
@@ -151,7 +154,7 @@ export default function MainScreen() {
           handleLike={() => handleVote(true)}
           handleDislike={() => handleVote(false)}
           handleDetails={() => dispatch(setModalToShow(movieList[0].id))}
-          handleTrailer={() => {}}
+          handleTrailer={() => dispatch(setTrailerToShow(movieList[0].id))}
         />
         <div className="ion-margin" />
       </IonFooter>
