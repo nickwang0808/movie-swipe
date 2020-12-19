@@ -2,7 +2,8 @@ import React from "react";
 import styled, { css } from "styled-components/macro";
 import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
-import { IPopulatedResult, IVotedMovies } from "../../MovieTypes";
+import { IVotedMovies } from "../../MovieTypes";
+import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 import MatchTag from "../Misc/MatchTag";
@@ -10,7 +11,7 @@ import Ratings from "../Misc/Ratings";
 import WatchedTag from "../Misc/WatchedTag";
 
 interface ILikedMovieInMyList {
-  movie: IVotedMovies | IPopulatedResult;
+  movie: IVotedMovies | IMovieDetailsForDetailsExtended;
   matched?: IProfileDetails[];
   watched?: IProfileDetails[];
   notify: boolean;
@@ -52,7 +53,7 @@ export default function WatchListItem({
           <GenreRunTimeYear
             certs={parseCerts(movie.release_dates)}
             runTime={movie.runtime}
-            genreIds={movie.genre_ids}
+            genreIds={movie.genres.map((elem) => elem.id)}
             year={String(movie.release_date).slice(0, 4)}
           />
         </div>

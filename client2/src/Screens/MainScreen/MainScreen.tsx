@@ -10,10 +10,11 @@ import SlideInThumb from "../../comp/Deck/SlideInThumb";
 import SliderBlock from "../../comp/Deck/SliderBlock";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import MatchNotification from "../../comp/Modals/MatchedNotification/MatchNotification";
+import useNotificationListener from "../../firebase/FirestoreListeners/useNotificationListener";
 import parseCerts from "../../Helper/parseCerts";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
 import useMatchModalControl from "../../Helper/useMatchModalControl";
-import { IPopulatedResult } from "../../MovieTypes";
+import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
 import {
   setModalToShow,
   setTrailerToShow,
@@ -39,9 +40,11 @@ export default function MainScreen() {
 
   const handleVote = (isLike: boolean, movie = movieList[0]) => {
     if ("release_dates" in movieList[0]) {
-      VoteWithAnimation(isLike, movie as IPopulatedResult);
+      VoteWithAnimation(isLike, movie as IMovieDetailsForDetailsExtended);
     }
   };
+
+  useNotificationListener();
 
   if (status === "failed")
     return <h2>Something Wrong happened, refresh or restart the App</h2>;
@@ -136,7 +139,7 @@ export default function MainScreen() {
                         ? {
                             certs: parseCerts(movie.release_dates),
                             runTime: movie.runtime,
-                            genreIds: movie.genre_ids,
+                            genreIds: movie.genres.map((elem) => elem.id),
                             year: String(movie.release_date).slice(0, 4),
                           }
                         : undefined

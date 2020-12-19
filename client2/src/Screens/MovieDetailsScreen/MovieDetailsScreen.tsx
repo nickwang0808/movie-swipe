@@ -10,15 +10,25 @@ import MatchedWatchedWithBanner from "../../comp/MovieDetailsComp/MatchWatchBann
 import TitleBox from "../../comp/MovieDetailsComp/TitleBox";
 import Trailer from "../../comp/MovieDetailsComp/Trailer";
 import watchedMovie from "../../firebase/firestoreOperations/watchedMovie";
+import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
 import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
-import { IAppState } from "../../store";
+import { IAppState, store } from "../../store";
 
 const MovieDetailsScreen: React.FC = () => {
   const dispatch = useDispatch();
   const { movieToShow, loading, movieInfo } = useSelector(
     (state: IAppState) => state.detailsState
   );
+
+  // pull data from movie list first, if no data then pull from refetched list
+  let newMovieInfo;
+  if (movieToShow === store.getState().movieList.movieList[0].id) {
+    newMovieInfo = store.getState().movieList
+      .movieList[0] as IMovieDetailsForDetailsExtended;
+  } else {
+    newMovieInfo = movieInfo;
+  }
 
   const liked = useSelector((state: IAppState) =>
     state.voted.Liked?.find((elem) => elem.id === movieToShow)
@@ -47,7 +57,7 @@ const MovieDetailsScreen: React.FC = () => {
     );
   }
 
-  if (loading || !movieInfo) return <CenterLoader />;
+  if (loading || !newMovieInfo) return <CenterLoader />;
   return (
     <>
       <IonPopover isOpen={popOver} onDidDismiss={() => setPopOver(false)}>
@@ -58,16 +68,16 @@ const MovieDetailsScreen: React.FC = () => {
         />
       </IonPopover>
 
-      <MainBackground ImgUrl={movieInfo.poster_path} />
+      <MainBackground ImgUrl={newMovieInfo.poster_path} />
       <MakeTitleBgTransparent>
         <Trailer
-          trailerUrl={movieInfo.videos.results[0]?.key}
-          backDrop={movieInfo.backdrop_path}
+          trailerUrl={newMovieInfo.videos.results[0]?.key}
+          backDrop={newMovieInfo.backdrop_path}
         />
-        <TitleBox movieInfo={movieInfo} onClick={closeDetailsModal} />
+        <TitleBox movieInfo={newMovieInfo} onClick={closeDetailsModal} />
         <Content>
           {matchOrWatched}
-          <p>{movieInfo.overview}</p>
+          <p>{newMovieInfo.overview}</p>
         </Content>
       </MakeTitleBgTransparent>
       <VoteButtonGroup

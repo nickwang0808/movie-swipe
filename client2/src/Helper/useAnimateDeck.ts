@@ -1,7 +1,7 @@
 import { animate, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
 import voteMovieToDB from "../firebase/firestoreOperations/voteMovieToDB";
-import { IPopulatedResult } from "../MovieTypes";
+import { IMovieDetailsForDetailsExtended } from "../MovieTypes/IDetialsScreen";
 import { voteMovie } from "../redux/MovieList/MovieListReducer";
 import { store } from "../store";
 export default function useAnimateDeck() {
@@ -46,7 +46,10 @@ export default function useAnimateDeck() {
     });
   };
 
-  const VoteWithAnimation = (isLike: boolean, movie: IPopulatedResult) => {
+  const VoteWithAnimation = (
+    isLike: boolean,
+    movie: IMovieDetailsForDetailsExtended
+  ) => {
     voteMovieToDB(isLike, movie); // let this run in sub thread
     animate(xMotionValue, isLike ? screenWidth : -screenWidth, {
       type: "tween",

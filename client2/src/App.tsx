@@ -31,9 +31,8 @@ import BottomNavIcon3 from "./Assets/svg/BottomaNavIcon3.svg";
 import Badge from "./comp/Misc/Badge";
 import FilterMenu from "./comp/Misc/FilterMenu/FilterMenu";
 import { CenterLoader } from "./comp/Misc/LoadingSpinner";
-import useFriendsListener from "./firebase/FirestoreListeners/useFriendsListener";
-import useProfileListener from "./firebase/FirestoreListeners/useProfileListener";
-import useVotedMovieListener from "./firebase/FirestoreListeners/useVotedListener";
+import useAllListener from "./firebase/FirestoreListeners/useAllListener";
+import useNotificationListener from "./firebase/FirestoreListeners/useNotificationListener";
 import useGetWIndowsSizing from "./Helper/useGetWIndowsSizing";
 import { fetchDetailsThunk } from "./redux/DetailsScreenState/fetchDetailsThunk";
 import fetchMovie from "./redux/MovieList/fetchMovieThunk";
@@ -49,9 +48,8 @@ import { IAppState } from "./store";
 
 const App: React.FC = () => {
   useGetWIndowsSizing();
-  useProfileListener();
-  useVotedMovieListener();
-  useFriendsListener();
+  useAllListener();
+  useNotificationListener();
 
   const {
     Liked,
@@ -60,7 +58,6 @@ const App: React.FC = () => {
     inviteCount,
     movieToShow,
     dispatch,
-    trailerToShow,
   } = useAppHelper(); // all logics are here
 
   console.log(process.env.NODE_ENV);
@@ -80,7 +77,7 @@ const App: React.FC = () => {
         </IonContent>
       </IonModal>
 
-      <TrailerModalScreen />
+      {"videos" in movieList[0] && <TrailerModalScreen />}
 
       <IonReactRouter>
         <FilterMenu /> {/* side menu */}
@@ -154,9 +151,7 @@ function useAppHelper() {
     (state: IAppState) => state.friends.received?.length
   );
 
-  const { movieToShow, trailerToShow } = useSelector(
-    (state: IAppState) => state.detailsState
-  );
+  const { movieToShow } = useSelector((state: IAppState) => state.detailsState);
 
   useEffect(() => {
     if (movieList.length < 5 && DisLiked && Liked && Watched) {
@@ -176,6 +171,5 @@ function useAppHelper() {
     inviteCount,
     movieToShow,
     dispatch,
-    trailerToShow,
   };
 }

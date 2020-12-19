@@ -30,7 +30,6 @@ export interface IAdditionalMovieInfo extends IMovieDetails {
   release_dates: ReleaseDates;
   videos: Videos;
 }
-export interface IPopulatedResult extends IAdditionalMovieInfo {}
 
 export interface IVotedMovies extends IAdditionalMovieInfo, IProfileDetails {
   uid: string;

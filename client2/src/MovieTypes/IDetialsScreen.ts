@@ -1,4 +1,4 @@
-export interface IMovieDetailsForDetailsScreen {
+export interface IMovieDetailsForDetailsExtended {
   adult: boolean;
   backdrop_path: string;
   belongs_to_collection: null;

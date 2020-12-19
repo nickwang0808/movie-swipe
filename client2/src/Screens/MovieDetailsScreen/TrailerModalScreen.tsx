@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/macro";
 import getTrailerUrl from "../../Helper/getTrailerUrl";
-import { IPopulatedResult } from "../../MovieTypes";
+import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
 import { setTrailerToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
 import { IAppState } from "../../store";
 
@@ -14,7 +14,8 @@ export default function TrailerModalScreen() {
   );
   const youtubeVidKey = useSelector(
     (state: IAppState) =>
-      (state.movieList.movieList[0] as IPopulatedResult).videos.results.find(
+      (state.movieList
+        .movieList[0] as IMovieDetailsForDetailsExtended)?.videos.results.find(
         (elem) => elem.key
       )?.key
   );
@@ -34,6 +35,7 @@ export default function TrailerModalScreen() {
             allowFullScreen={true}
             src={getTrailerUrl(youtubeVidKey as string)}
             title="trailer_vid"
+            allow="autoplay"
           />
         </TrailerWrapper>
       </IonPage>

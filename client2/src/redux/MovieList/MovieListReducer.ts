@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IFetchedMovieListResult, IPopulatedResult } from "../../MovieTypes";
+import { IFetchedMovieListResult } from "../../MovieTypes";
+import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
 import fetchMovie from "./fetchMovieThunk";
 import { populateMovieDetailsThunk } from "./populateMovieDetailsThunk";
 
 interface IMovieListState {
-  movieList: Array<IFetchedMovieListResult | IPopulatedResult>;
+  movieList: Array<IFetchedMovieListResult | IMovieDetailsForDetailsExtended>;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   pageNum: number;
@@ -51,7 +52,7 @@ const movieListSlice = createSlice({
 
     builder.addCase(
       populateMovieDetailsThunk.fulfilled,
-      (state, action: PayloadAction<IPopulatedResult>) => {
+      (state, action: PayloadAction<IMovieDetailsForDetailsExtended>) => {
         state.status = "succeeded";
         state.movieList[0] = action.payload;
       }
