@@ -1,19 +1,12 @@
 import { menuController } from "@ionic/core";
-import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
 import Logo from "../../Assets/svg/Logo";
 import FilterButton from "../../comp/Buttons/FilterButton";
-import MainBackground from "../../comp/Layout/MainBackground";
 
-interface IProps {
-  imgUrl: string;
-}
-
-export default function MainScreenMisc({ imgUrl }: IProps) {
+export default function MainScreenMisc() {
   return (
     <>
-      <MainBackground ImgUrl={imgUrl} />
       <StyledMotionDiv
       // animate={{ opacity: 1, paddingTop: "0rem" }}
       // initial={{ opacity: 0, paddingTop: "2rem" }}
@@ -29,7 +22,7 @@ export default function MainScreenMisc({ imgUrl }: IProps) {
   );
 }
 
-const StyledMotionDiv = styled(motion.div)`
+const StyledMotionDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

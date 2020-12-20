@@ -17,6 +17,7 @@ import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import MatchNotification from "../../comp/Modals/MatchedNotification/MatchNotification";
 import useNotificationListener from "../../firebase/FirestoreListeners/useNotificationListener";
 import parseCerts from "../../Helper/parseCerts";
+import baseUrl from "../../Helper/TmdbBaseUrl";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
 import useMatchModalControl from "../../Helper/useMatchModalControl";
 import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
@@ -62,7 +63,7 @@ export default function MainScreen() {
     return <CenterLoader />;
   return (
     <>
-      <IonContent fullscreen>
+      <IonContentWithBG bg={movieList[0]?.poster_path || ""} fullscreen>
         {notification && (
           <MatchNotification
             movie={notification}
@@ -70,7 +71,7 @@ export default function MainScreen() {
           />
         )}
 
-        <MainScreenMisc imgUrl={movieList[0]?.poster_path || ""} />
+        <MainScreenMisc />
         <SliderBlock type="like" backgroundSlide={backgroundSlide} />
         <SliderBlock type="dislike" backgroundSlide={backgroundSlide} />
         <SlideInThumb type="like" thumbX={thumbX} thumbOpacity={thumbOpacity} />
@@ -160,7 +161,7 @@ export default function MainScreen() {
             })
             .reverse()}
         </DeckWrapper>
-      </IonContent>
+      </IonContentWithBG>
 
       <IonFooter>
         <VoteButtonGroupV2
@@ -182,4 +183,21 @@ export const StyledMotionDiv = styled(motion.div)`
   margin: 0 auto;
   left: 0;
   right: 0;
+`;
+
+export const IonContentWithBG = styled(IonContent)<{ bg: string }>`
+  /* --background: url(${(props) => baseUrl + props.bg}); */
+
+  &::part(background) {
+    background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.6),
+      rgba(255, 255, 255, 0.6)
+    ),url(${(props) => baseUrl + props.bg});
+
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    background-position: center;
+    transform: scale(2);
+  }
 `;

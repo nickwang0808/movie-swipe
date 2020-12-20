@@ -1,6 +1,5 @@
 import {
   IonApp,
-  IonContent,
   IonIcon,
   IonLabel,
   IonModal,
@@ -70,9 +69,7 @@ const App: React.FC = () => {
         isOpen={Boolean(movieToShow)}
         onWillPresent={() => dispatch(fetchDetailsThunk())}
       >
-        <IonContent>
-          <MovieDetailsScreen />
-        </IonContent>
+        <MovieDetailsScreen />
       </IonModal>
 
       {"videos" in movieList[0] && <TrailerModalScreen />}
