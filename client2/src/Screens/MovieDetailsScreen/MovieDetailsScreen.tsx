@@ -5,11 +5,13 @@ import styled from "styled-components";
 import VoteButtonGroupV2 from "../../comp/ButtonGroups/VoteButtonGroupV2";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import WatchedWithWho from "../../comp/Modals/WatchedWithWho";
+import Casts from "../../comp/MovieDetailsComp/Casts";
 import MatchedWatchedWithBanner from "../../comp/MovieDetailsComp/MatchWatchBanner/MatchedWatchedWithBanner";
 import Providers from "../../comp/MovieDetailsComp/Providers";
 import TitleBox from "../../comp/MovieDetailsComp/TitleBox";
 import Trailer from "../../comp/MovieDetailsComp/Trailer";
 import watchedMovie from "../../firebase/firestoreOperations/watchedMovie";
+import parseProviderLogos from "../../Helper/parseProviderLogo";
 import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
 import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
@@ -69,7 +71,6 @@ const MovieDetailsScreen: React.FC = () => {
             matches={liked?.matchedWith as IProfileDetails[]}
           />
         </IonPopover>
-
         <Trailer
           trailerUrl={newMovieInfo.videos.results[0]?.key}
           backDrop={newMovieInfo.backdrop_path}
@@ -79,7 +80,11 @@ const MovieDetailsScreen: React.FC = () => {
           {matchOrWatched}
           <p>{newMovieInfo.overview}</p>
         </div>
-        <Providers providers={["test"]} />
+        <Casts casts={newMovieInfo.credits.cast} />
+        <Providers
+          providers={parseProviderLogos(newMovieInfo["watch/providers"])}
+        />
+        <div className="ion-margin-bottom" />?
       </BGContentWithFadeMask>
 
       <IonFooter className="ion-margin-top">
