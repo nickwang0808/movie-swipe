@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { fetchDetailsThunk } from "./fetchDetailsThunk";
 interface IState {
   movieToShow: number | null;
-  movieInfo: IMovieDetailsForDetailsExtended | null;
+  movieInfo: IExtendedMovieDetails | null;
   loading: boolean;
   error: string | null;
   trailerToShow: number | null;

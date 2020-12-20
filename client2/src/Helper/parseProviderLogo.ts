@@ -1,4 +1,4 @@
-import { WatchProviders } from "../MovieTypes/IDetialsScreen";
+import { WatchProviders } from "../MovieTypes/ExtendedMovieDetails";
 
 export default function parseProviderLogos(
   provider: WatchProviders | null | undefined

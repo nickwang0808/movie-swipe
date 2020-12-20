@@ -12,7 +12,7 @@ import TitleBox from "../../comp/MovieDetailsComp/TitleBox";
 import Trailer from "../../comp/MovieDetailsComp/Trailer";
 import watchedMovie from "../../firebase/firestoreOperations/watchedMovie";
 import parseProviderLogos from "../../Helper/parseProviderLogo";
-import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import { IAppState, store } from "../../store";
@@ -28,7 +28,7 @@ const MovieDetailsScreen: React.FC = () => {
   let newMovieInfo;
   if (movieToShow === store.getState().movieList.movieList[0].id) {
     newMovieInfo = store.getState().movieList
-      .movieList[0] as IMovieDetailsForDetailsExtended;
+      .movieList[0] as IExtendedMovieDetails;
   } else {
     newMovieInfo = movieInfo;
   }

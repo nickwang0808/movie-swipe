@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { baseUrlLogo } from "../../Helper/TmdbBaseUrl";
-import { Cast } from "../../MovieTypes/IDetialsScreen";
+import { Cast } from "../../MovieTypes/ExtendedMovieDetails";
 import { Title } from "./Providers";
 
 interface IProps {

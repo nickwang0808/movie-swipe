@@ -3,7 +3,7 @@ import styled, { css } from "styled-components/macro";
 import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import { IVotedMovies } from "../../MovieTypes";
-import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 import MatchTag from "../Misc/MatchTag";
@@ -11,7 +11,7 @@ import Ratings from "../Misc/Ratings";
 import WatchedTag from "../Misc/WatchedTag";
 
 interface ILikedMovieInMyList {
-  movie: IVotedMovies | IMovieDetailsForDetailsExtended;
+  movie: IVotedMovies | IExtendedMovieDetails;
   matched?: IProfileDetails[];
   watched?: IProfileDetails[];
   notify: boolean;

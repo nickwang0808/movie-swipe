@@ -1,14 +1,15 @@
-import { IFetchedMovieListResult, IPopularMovies } from "../../MovieTypes";
-import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
+import {
+  IFetchedMovieListResult,
+  IPopularMovies,
+} from "../../MovieTypes/FetchedMoviesTypes";
 import { movieListTypes } from "../Profile/profileReducer";
 
 export default async function fetchAndFilterMovies(
   pageNum: number,
   VotedMovies: number[] | null,
   genrePreference: number[],
-  currentMovieList: Array<
-    IFetchedMovieListResult | IMovieDetailsForDetailsExtended
-  >,
+  currentMovieList: Array<IFetchedMovieListResult | IExtendedMovieDetails>,
   movieListTypePref?: movieListTypes
 ) {
   const localVoted = GetLocalVoted();

@@ -20,7 +20,10 @@ import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
 import useMatchModalControl from "../../Helper/useMatchModalControl";
-import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import {
+  Genre,
+  IExtendedMovieDetails,
+} from "../../MovieTypes/ExtendedMovieDetails";
 import {
   setModalToShow,
   setTrailerToShow,
@@ -46,7 +49,7 @@ export default function MainScreen() {
 
   const handleVote = (isLike: boolean, movie = movieList[0]) => {
     if ("release_dates" in movieList[0]) {
-      VoteWithAnimation(isLike, movie as IMovieDetailsForDetailsExtended);
+      VoteWithAnimation(isLike, movie as IExtendedMovieDetails);
     }
   };
 
@@ -150,7 +153,9 @@ export default function MainScreen() {
                         ? {
                             certs: parseCerts(movie.release_dates),
                             runTime: movie.runtime,
-                            genreIds: movie.genres.map((elem) => elem.id),
+                            genreIds: movie.genres.map(
+                              (elem: Genre) => elem.id
+                            ),
                             year: String(movie.release_date).slice(0, 4),
                           }
                         : undefined

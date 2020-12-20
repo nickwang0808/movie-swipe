@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IFetchedMovieListResult } from "../../MovieTypes";
+import { IFetchedMovieListResult } from "../../MovieTypes/FetchedMoviesTypes";
 import { IAppDispatch, IAppState } from "../../store";
 import fetchAndFilterMovies from "./fetchAndFilterMovies";
 
