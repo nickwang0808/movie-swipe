@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import { auth } from "../../firebase/config";
+import useGetWIndowsSizing from "../../Helper/useGetWIndowsSizing";
 import { userNotSigned, userSignedIn } from "../../redux/Auth/AuthReducer";
 import { IAppState } from "../../store";
 import SignInScreen from "./SignInScreen";
+// import OnBoardScreenOne from "../OnBoarding/OnBoardScreenOne";
 
 export default function AuthChecker({
   children,
@@ -13,6 +15,7 @@ export default function AuthChecker({
 }) {
   const dispatch = useDispatch();
 
+  useGetWIndowsSizing();
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -28,6 +31,7 @@ export default function AuthChecker({
 
   const authState = useSelector((state: IAppState) => state.auth);
   if (!authState.isLoaded) return <CenterLoader />;
+  // if (!authState.authenticated) return <OnBoardScreenOne />;
   if (!authState.authenticated) return <SignInScreen />;
   return <>{children}</>;
 }
