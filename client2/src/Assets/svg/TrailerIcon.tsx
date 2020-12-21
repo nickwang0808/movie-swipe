@@ -9,29 +9,22 @@ export default function TrailerIcon() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect
-        x="1"
-        y="1"
-        width="31"
-        height="20"
-        stroke="black"
-        stroke-width="2"
-      />
-      <line x1="2" y1="5" x2="33" y2="5" stroke="black" stroke-width="2" />
+      <rect x="1" y="1" width="31" height="20" stroke="black" strokeWidth="2" />
+      <line x1="2" y1="5" x2="33" y2="5" stroke="black" strokeWidth="2" />
       <path
         d="M19.0267 11L13.3333 13.7393L13.3333 8.26072L19.0267 11Z"
         fill="black"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
-      <line x1="2" y1="17" x2="33" y2="17" stroke="black" stroke-width="2" />
+      <line x1="2" y1="17" x2="33" y2="17" stroke="black" strokeWidth="2" />
       <line
         x1="17.6665"
         y1="17"
         x2="17.6665"
         y2="21"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <line
         x1="9.6665"
@@ -39,7 +32,7 @@ export default function TrailerIcon() {
         x2="9.6665"
         y2="21"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <line
         x1="25.6665"
@@ -47,7 +40,7 @@ export default function TrailerIcon() {
         x2="25.6665"
         y2="21"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <line
         x1="17.6665"
@@ -55,7 +48,7 @@ export default function TrailerIcon() {
         x2="17.6665"
         y2="5"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <line
         x1="9.6665"
@@ -63,7 +56,7 @@ export default function TrailerIcon() {
         x2="9.6665"
         y2="5"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <line
         x1="25.6665"
@@ -71,7 +64,7 @@ export default function TrailerIcon() {
         x2="25.6665"
         y2="5"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
     </svg>
   );

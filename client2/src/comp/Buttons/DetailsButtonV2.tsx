@@ -6,9 +6,14 @@ import TrailerIcon from "../../Assets/svg/TrailerIcon";
 interface IProps {
   isDetails?: boolean;
   onClick: () => void;
+  disabled?: boolean;
 }
 
-export default function DetailsButtonV2({ isDetails = true, onClick }: IProps) {
+export default function DetailsButtonV2({
+  isDetails = true,
+  onClick,
+  disabled = false,
+}: IProps) {
   const details = (
     <>
       <DetailsIcon />
@@ -24,7 +29,7 @@ export default function DetailsButtonV2({ isDetails = true, onClick }: IProps) {
   );
 
   return (
-    <StyledButton onClick={onClick}>
+    <StyledButton onClick={onClick} disabled={disabled}>
       {isDetails ? details : trailer}
     </StyledButton>
   );

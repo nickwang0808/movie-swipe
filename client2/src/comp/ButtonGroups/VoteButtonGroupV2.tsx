@@ -11,6 +11,8 @@ interface IProps {
   forceActiveDislikeButton?: boolean;
   handleDetails: () => void;
   handleTrailer: () => void;
+  disableDetails?: boolean;
+  disableTrailer?: boolean;
 }
 
 export default function VoteButtonGroupV2({
@@ -20,12 +22,18 @@ export default function VoteButtonGroupV2({
   forceActiveLikeButton = false,
   handleDetails,
   handleTrailer,
+  disableDetails = false,
+  disableTrailer = false,
 }: IProps) {
   return (
     <StyledContainer>
       <VoteDownButtonV2 onClick={handleDislike} />
-      <DetailsButtonV2 onClick={handleDetails} />
-      <DetailsButtonV2 onClick={handleTrailer} isDetails={false} />
+      <DetailsButtonV2 onClick={handleDetails} disabled={disableDetails} />
+      <DetailsButtonV2
+        onClick={handleTrailer}
+        isDetails={false}
+        disabled={disableTrailer}
+      />
       <VoteUpButtonV2 onClick={handleLike} />
     </StyledContainer>
   );

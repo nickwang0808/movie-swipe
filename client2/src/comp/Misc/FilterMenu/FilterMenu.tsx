@@ -100,10 +100,10 @@ export default function FilterMenu() {
           <IonListHeader>
             <IonLabel>Catagories</IonLabel>
           </IonListHeader>
-          {genreList.movie.map((genre) => {
+          {genreList.movie.map((genre, i) => {
             return (
               <GenreSelection
-                key={genre.id}
+                key={genre.id + i}
                 id={genre.id}
                 name={genre.name}
                 setChecked={setChecked}
