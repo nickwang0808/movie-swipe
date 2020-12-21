@@ -1,6 +1,7 @@
 import React from "react";
-import { CircularProgressbar } from "react-circular-progressbar";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import styled from "styled-components/macro";
 
 interface iProps {
   number: number;
@@ -8,8 +9,22 @@ interface iProps {
 
 export default function CircleDial({ number }: iProps) {
   return (
-    <div>
-      <CircularProgressbar value={number} maxValue={1} text={String(number)} />;
-    </div>
+    <StyledDiv>
+      <CircularProgressbar
+        value={number}
+        text={String(number)}
+        styles={buildStyles({
+          pathColor: `rgba(62, 152, 199, 1)`,
+          textColor: "#f88",
+          trailColor: "#d6d6d6",
+          backgroundColor: "#3e98c7",
+        })}
+      />
+      ;
+    </StyledDiv>
   );
 }
+
+const StyledDiv = styled.div`
+  /* control the size here */
+`;
