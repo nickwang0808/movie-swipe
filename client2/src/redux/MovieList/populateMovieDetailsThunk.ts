@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
-import { IAppDispatch, IAppState } from "../../store";
+import { IAppDispatch, IAppState, store } from "../../store";
 
 export const populateMovieDetailsThunk = createAsyncThunk<
   IExtendedMovieDetails,
@@ -20,7 +20,9 @@ export const populateMovieDetailsThunk = createAsyncThunk<
 
 async function fetchAdditionalMovieDetails(movieId: number) {
   const REACT_APP_TMDB_KEY = process.env.REACT_APP_TMDB_KEY;
-  const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${REACT_APP_TMDB_KEY}&language=en-US&append_to_response=videos%2Crelease_dates%2Cwatch%2Fproviders%2Ccredits`;
+  const { type } = store.getState().movieList;
+  // const url = `https://api.themoviedb.org/3/${type}/${movieId}?api_key=${REACT_APP_TMDB_KEY}&language=en-US&append_to_response=videos%2Crelease_dates%2Cwatch%2Fproviders%2Ccredits`;
+  const url = `https://api.themoviedb.org/3/${type}/${movieId}?api_key=${REACT_APP_TMDB_KEY}&language=en-US&append_to_response=videos%2Cwatch%2Fproviders%2Ccredits`;
   const response = (await fetch(url).then((res) =>
     res.json()
   )) as IExtendedMovieDetails;

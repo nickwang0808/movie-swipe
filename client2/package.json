@@ -22,6 +22,7 @@
     "framer-motion": "^2.9.4",
     "ionicons": "^5.0.0",
     "react": "^16.13.0",
+    "react-circular-progressbar": "^2.0.3",
     "react-dom": "^16.13.0",
     "react-hook-form": "^6.13.1",
     "react-redux": "^7.2.2",

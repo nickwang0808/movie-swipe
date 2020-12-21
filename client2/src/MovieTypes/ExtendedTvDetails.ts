@@ -1,6 +1,6 @@
 import { Credits, Videos, WatchProviders } from "./ExtendedMovieDetails";
 
-export interface ITvDetails {
+export interface IExtendedTvDetails {
   backdrop_path: string | null;
   // created_by: object[];
   episode_run_time: number[];
@@ -22,7 +22,7 @@ export interface ITvDetails {
   original_name: string;
   overview: string;
   popularity: number;
-  poster_path: string | null;
+  poster_path: string;
   // production_companies: object[];
   // production_countries: object[];
   seasons: TvSeasons[];

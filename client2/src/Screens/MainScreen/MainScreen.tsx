@@ -105,7 +105,7 @@ export default function MainScreen() {
                     }}
                     layout={toggleLayout}
                   >
-                    <MainPoster imgUrl={movie.poster_path} />
+                    <MainPoster imgUrl={movie.poster_path as string} />
                   </StyledMotionDiv>
                 );
 

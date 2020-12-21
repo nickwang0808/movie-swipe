@@ -1,14 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
+import { IExtendedTvDetails } from "../../MovieTypes/ExtendedTvDetails";
 import { IFetchedMovieListResult } from "../../MovieTypes/FetchedMoviesTypes";
+import { ITvListResults } from "../../MovieTypes/FetchedTvTypes";
 import fetchMovie from "./fetchMovieThunk";
 import { populateMovieDetailsThunk } from "./populateMovieDetailsThunk";
 
 interface IMovieListState {
-  movieList: Array<IFetchedMovieListResult | IExtendedMovieDetails>;
+  movieList: Array<
+    | IFetchedMovieListResult
+    | IExtendedMovieDetails
+    | ITvListResults
+    | IExtendedTvDetails
+  >;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   pageNum: number;
+  type: "tv" | "movie";
 }
 
 const initialState: IMovieListState = {
@@ -16,6 +24,7 @@ const initialState: IMovieListState = {
   error: null,
   status: "idle",
   pageNum: 1, // pageNum is for next fetch action, not current pageNum
+  type: "movie",
 };
 
 const movieListSlice = createSlice({

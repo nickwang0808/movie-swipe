@@ -1,15 +1,23 @@
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
+import { IExtendedTvDetails } from "../../MovieTypes/ExtendedTvDetails";
 import {
   IFetchedMovieListResult,
   IPopularMovies,
 } from "../../MovieTypes/FetchedMoviesTypes";
+import { ITvListResults } from "../../MovieTypes/FetchedTvTypes";
+import { store } from "../../store";
 import { movieListTypes } from "../Profile/profileReducer";
 
 export default async function fetchAndFilterMovies(
   pageNum: number,
   VotedMovies: number[] | null,
   genrePreference: number[],
-  currentMovieList: Array<IFetchedMovieListResult | IExtendedMovieDetails>,
+  currentMovieList: Array<
+    | IFetchedMovieListResult
+    | IExtendedMovieDetails
+    | ITvListResults
+    | IExtendedTvDetails
+  >,
   movieListTypePref?: movieListTypes
 ) {
   const localVoted = GetLocalVoted();
@@ -51,7 +59,8 @@ async function fetchPopularMovies(
   movieListTypePref: movieListTypes = "popular"
 ) {
   const REACT_APP_TMDB_KEY = process.env.REACT_APP_TMDB_KEY;
-  const url = `https://api.themoviedb.org/3/movie/${movieListTypePref}?api_key=${REACT_APP_TMDB_KEY}&language=en-US&page=${pageNum}`;
+  const { type } = store.getState().movieList;
+  const url = `https://api.themoviedb.org/3/${type}/${movieListTypePref}?api_key=${REACT_APP_TMDB_KEY}&language=en-US&page=${pageNum}`;
   const response: IPopularMovies = await fetch(url).then((res) => res.json());
   return response;
 }

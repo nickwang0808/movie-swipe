@@ -5,7 +5,7 @@ export interface IFetchedTvList {
   total_pages: number;
 }
 export interface ITvListResults {
-  poster_path: string | null;
+  poster_path: string;
   popularity: number;
   id: number;
   backdrop_path: string | null;
