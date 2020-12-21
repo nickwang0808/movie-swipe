@@ -1,20 +1,78 @@
 import * as functions from "firebase-functions";
-import { db, LikedMovieWithMatches } from ".";
+import { arrayUnion, db } from ".";
+import { collectionName } from "../../../client2/src/firebase/names";
+import {
+  IVotedMovies,
+  IVotedMTvs,
+} from "../../../client2/src/MovieTypes/index";
+import arrayChunks from "./HelperFunctions/ArrayChunks";
+import extractProfile from "./HelperFunctions/extractProfile";
 
 export const findAllMatches = functions.https.onCall(async (data, context) => {
   if (context.auth) {
-    const myUid = context.auth.uid;
-    const friendUid = data.friendUid;
-    const myLikes = data.myLikes;
+    const friendUid = data.friendUid as string;
+    const myUid = data.uid as string;
+    const myMovieIds = data.movieIds as number[];
 
-    const friendsLike = await getFriendLikes(friendUid);
-    if (friendsLike.length === 0) return;
+    const likeChunks = arrayChunks(myMovieIds, 10);
 
-    const matchedMovie = checkMatches(myLikes, friendsLike);
-    if (matchedMovie.length === 0) return;
+    db.runTransaction(async (t) => {
+      const allMatchedDocs: (IVotedMTvs | IVotedMovies)[] = [];
+      // get all matched movie docs
+      await Promise.all(
+        likeChunks.map(async (chunk) => {
+          const query = db
+            .collectionGroup(collectionName.Liked)
+            .where("movieId", "in", chunk);
 
-    await updateMatch(myUid, friendUid, matchedMovie);
-    await updateMatch(friendUid, myUid, matchedMovie);
+          const docs = await t.get(query);
+          docs.forEach((doc) => {
+            allMatchedDocs.push(doc.data() as IVotedMTvs | IVotedMovies);
+          });
+          return;
+        })
+      );
+
+      if (allMatchedDocs.length === 0) return;
+
+      // get my profile and friend profile
+      const myProfile = (
+        await t.get(db.collection(collectionName.User).doc(myUid))
+      ).data();
+      const friendProfile = extractProfile(allMatchedDocs[0]);
+
+      // start adding each other in matches
+      await Promise.all(
+        allMatchedDocs.map(async (matchedDoc) => {
+          t.update(
+            db
+              .collection(collectionName.User)
+              .doc(friendUid)
+              .collection(collectionName.Liked)
+              .doc(String(matchedDoc.id)),
+            {
+              matchedWith: arrayUnion(myProfile),
+              notify: true,
+              timeMatched: Date.now(),
+            }
+          );
+          t.update(
+            db
+              .collection(collectionName.User)
+              .doc(myUid)
+              .collection(collectionName.Liked)
+              .doc(String(matchedDoc.id)),
+            {
+              matchedWith: arrayUnion(friendProfile),
+              notify: true,
+              timeMatched: Date.now(),
+            }
+          );
+
+          return;
+        })
+      );
+    });
 
     return;
   } else {
@@ -24,53 +82,3 @@ export const findAllMatches = functions.https.onCall(async (data, context) => {
     );
   }
 });
-
-async function updateMatch(
-  userId: string,
-  friendId: string,
-  movieList: number[]
-) {
-  const userRef = db
-    .collection("Users")
-    .doc(userId)
-    .collection("User_Details")
-    .doc("Liked_Movies");
-
-  let liked_movies_matches: LikedMovieWithMatches[] = (
-    await userRef.get()
-  ).data()?.liked_movies_matches;
-
-  await Promise.all(
-    movieList.map(async (movieId) => {
-      const foundIndex = liked_movies_matches.findIndex(
-        (elem) => elem.movieId === movieId
-      );
-      liked_movies_matches[foundIndex].matches.push(friendId);
-      liked_movies_matches[foundIndex].match_time = Date.now();
-      return;
-    })
-  );
-
-  userRef.update({ liked_movies_matches });
-}
-
-function checkMatches(myLikes: number[], friendLikes: number[]) {
-  let tempArray: number[] = [];
-  myLikes.forEach((myLike) => {
-    if (friendLikes.includes(myLike)) {
-      tempArray.push(myLike);
-    }
-    return;
-  });
-  return tempArray;
-}
-
-async function getFriendLikes(uid: string) {
-  const userRef = db
-    .collection("Users")
-    .doc(uid)
-    .collection("User_Details")
-    .doc("Liked_Movies");
-  const friendLikes: number[] = (await userRef.get()).data()?.liked_movies;
-  return friendLikes;
-}

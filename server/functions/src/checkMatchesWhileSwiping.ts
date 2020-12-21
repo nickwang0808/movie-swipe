@@ -1,5 +1,7 @@
 import * as functions from "firebase-functions";
-import { arrayUnion, collectionName, db, IVotedMovies } from ".";
+import { arrayUnion, db } from ".";
+import { collectionName } from "../../../client2/src/firebase/names";
+import { IVotedMovies } from "../../../client2/src/MovieTypes";
 import extractProfile from "./HelperFunctions/extractProfile";
 
 export const checkMatchesWhileSwiping = functions.firestore
