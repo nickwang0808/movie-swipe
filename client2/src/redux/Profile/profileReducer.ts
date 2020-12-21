@@ -14,9 +14,29 @@ export const movieListTypesObj = [
   { name: "Now Playing", value: "now_playing" },
 ];
 
+export type tvListTypes = "top_rated" | "popular" | "on_the_air";
+
+export const tvListTypesObj = [
+  { name: "Top Rated", value: "top_rated" },
+  { name: "Popular", value: "popular" },
+  { name: "On The Air", value: "on_the_air" },
+];
+
+export interface SelectMovies {
+  media: "movie";
+  catagories: movieListTypes;
+}
+
+export interface SelectTvs {
+  media: "tv";
+  catagories: tvListTypes;
+}
+
+export type IMediaPref = SelectMovies | SelectTvs;
+
 export interface IProfileDetails extends IUserAuth {
   genrePreference: number[];
-  movieListTypePref: movieListTypes;
+  mediaListTypePref: IMediaPref;
 }
 
 interface IProfile {

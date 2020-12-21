@@ -1,16 +1,12 @@
 import { IonItem, IonLabel, IonRadio } from "@ionic/react";
 import React from "react";
-import { movieListTypes } from "../../../redux/Profile/profileReducer";
 
-interface IMovieListSelection {
+interface IProps {
   name: string;
-  value: movieListTypes;
+  value: string;
 }
 
-export default function MovieListSelection({
-  name,
-  value,
-}: IMovieListSelection) {
+export default function MovieListSelection({ name, value }: IProps) {
   return (
     <IonItem>
       <IonRadio slot="start" color="dark" mode="md" value={value} />

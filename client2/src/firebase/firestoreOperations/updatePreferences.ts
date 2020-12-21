@@ -1,7 +1,7 @@
 import { ResetPageNum } from "../../redux/MovieList/MovieListReducer";
 import {
+  IMediaPref,
   IProfileDetails,
-  movieListTypes,
 } from "../../redux/Profile/profileReducer";
 import { store } from "../../store";
 import { db } from "../config";
@@ -9,10 +9,12 @@ import { collectionName } from "../names";
 
 export default async function updatePreferences(
   newGenre: number[],
-  newMovieListType: movieListTypes
+  newMediaListType: IMediaPref
 ) {
-  const { genrePreference, movieListTypePref } = store.getState().profile
-    .profile as IProfileDetails;
+  const {
+    genrePreference,
+    mediaListTypePref: movieListTypePref,
+  } = store.getState().profile.profile as IProfileDetails;
 
   if (!genrePreference || !movieListTypePref) return;
 
@@ -21,7 +23,10 @@ export default async function updatePreferences(
     JSON.stringify(newGenre.sort()) !==
     JSON.stringify(genrePreference.slice().sort());
   // compare movielist type
-  const moviePrefChanged = movieListTypePref !== newMovieListType;
+  const moviePrefChanged = compareMediaType(
+    movieListTypePref,
+    newMediaListType
+  );
 
   if (genreChanged || moviePrefChanged) {
     const uid = store.getState().auth.user?.uid as string;
@@ -35,7 +40,7 @@ export default async function updatePreferences(
     }
     if (moviePrefChanged) {
       batch.update(userRef, {
-        movieListTypePref: newMovieListType,
+        mediaListTypePref: newMediaListType,
       });
     }
     store.dispatch(ResetPageNum());
@@ -44,4 +49,14 @@ export default async function updatePreferences(
   }
 
   return;
+}
+
+function compareMediaType(oldPref: IMediaPref, newPref: IMediaPref) {
+  if (
+    oldPref.catagories === newPref.catagories &&
+    oldPref.media === newPref.media
+  ) {
+    return false;
+  }
+  return true;
 }

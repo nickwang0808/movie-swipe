@@ -16,7 +16,6 @@ interface IMovieListState {
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   pageNum: number;
-  type: "tv" | "movie";
 }
 
 const initialState: IMovieListState = {
@@ -24,7 +23,6 @@ const initialState: IMovieListState = {
   error: null,
   status: "idle",
   pageNum: 1, // pageNum is for next fetch action, not current pageNum
-  type: "movie",
 };
 
 const movieListSlice = createSlice({

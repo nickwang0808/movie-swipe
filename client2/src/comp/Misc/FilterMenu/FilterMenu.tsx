@@ -12,10 +12,17 @@ import {
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import updatePreferences from "../../../firebase/firestoreOperations/updatePreferences";
+import {
+  objectifyFilterSelection,
+  StringifyFilterSelection,
+} from "../../../Helper/StringifyFilterSelection";
 import { genreList } from "../../../Helper/variables";
 import {
-  movieListTypes,
+  IMediaPref,
   movieListTypesObj,
+  SelectMovies,
+  SelectTvs,
+  tvListTypesObj,
 } from "../../../redux/Profile/profileReducer";
 import { IAppState } from "../../../store";
 import GenreSelection from "./genreSection";
@@ -27,9 +34,9 @@ export default function FilterMenu() {
   );
 
   const movieListTypePref = useSelector(
-    (state: IAppState) => state.profile.profile?.movieListTypePref
-  ) as movieListTypes;
-  const [listType, setListType] = useState<movieListTypes>(
+    (state: IAppState) => state.profile.profile?.mediaListTypePref
+  ) as IMediaPref;
+  const [mediaType, setMediaType] = useState<IMediaPref>(
     movieListTypePref || undefined
   );
 
@@ -38,7 +45,7 @@ export default function FilterMenu() {
       swipeGesture={false}
       contentId="main"
       side="end"
-      onIonWillClose={() => updatePreferences(checked, listType)}
+      onIonWillClose={() => updatePreferences(checked, mediaType)}
     >
       <IonHeader mode="md">
         <IonToolbar color="light">
@@ -48,19 +55,43 @@ export default function FilterMenu() {
       <IonContent>
         <IonList>
           <IonListHeader>
-            <IonLabel>Movie List</IonLabel>
+            <IonLabel>Media List</IonLabel>
           </IonListHeader>
 
           <IonRadioGroup
-            value={listType}
-            onIonChange={(e) => setListType(e.detail.value)}
+            value={StringifyFilterSelection(mediaType)}
+            onIonChange={(e) =>
+              setMediaType(objectifyFilterSelection(e.detail.value))
+            }
           >
-            {movieListTypesObj.map((list) => {
+            <IonListHeader>
+              <IonLabel>Movies</IonLabel>
+            </IonListHeader>
+            {movieListTypesObj.map((movieList) => {
               return (
                 <MovieListSelection
-                  key={list.value}
-                  name={list.name}
-                  value={list.value as movieListTypes}
+                  key={movieList.value + "movie"}
+                  name={movieList.name}
+                  value={StringifyFilterSelection({
+                    media: "movie",
+                    catagories: movieList.value,
+                  } as SelectMovies)}
+                />
+              );
+            })}
+
+            <IonListHeader>
+              <IonLabel>Tv Shows</IonLabel>
+            </IonListHeader>
+            {tvListTypesObj.map((tvList) => {
+              return (
+                <MovieListSelection
+                  key={tvList.value + "tv"}
+                  name={tvList.name}
+                  value={StringifyFilterSelection({
+                    media: "tv",
+                    catagories: tvList.value,
+                  } as SelectTvs)}
                 />
               );
             })}
