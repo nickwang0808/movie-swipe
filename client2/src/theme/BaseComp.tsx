@@ -8,7 +8,7 @@ export const Btn = styled.div`
   height: 5rem;
   border: 2px solid var(--dark);
   text-align: center;
-  border-radius: 5rem;
+  border-radius: 5px;
   color: #000000;
   background-color: rgba(0, 0, 0, 0);
   cursor: pointer;

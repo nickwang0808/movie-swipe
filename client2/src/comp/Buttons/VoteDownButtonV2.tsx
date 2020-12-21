@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 import ArrowSquare from "../../Assets/svg/ArrowSquare";
-import ThumbUpForButton from "../../Assets/svg/ThumbUpForButton";
+import ThumbDownForButton from "../../Assets/svg/ThumbDownForButton";
 
 interface IProps {
   onClick: () => void;
@@ -11,9 +11,7 @@ export default function VoteDownButtonV2({ onClick }: IProps) {
   return (
     <div>
       <StyledWrapper onClick={onClick}>
-        <ArrowSquare />
-
-        <ThumbUpForButton />
+        <ThumbDownForButton />
       </StyledWrapper>
     </div>
   );
@@ -22,30 +20,17 @@ export default function VoteDownButtonV2({ onClick }: IProps) {
 const StyledWrapper = styled.button`
   position: relative;
   outline: none !important;
-  border: none;
-  background: transparent;
-  padding: 0;
-  margin-top: 4px; /* button is off horizontal center for some reason */
+  background: none;
 
-  & svg:first-of-type {
-    transform: rotate(180deg);
-  }
-
-  &:active svg:first-of-type path {
-    fill: var(--highlight);
-  }
+  width: 48px;
+  height: 46px;
+  margin-right: 0.5rem;
 
   & svg:last-of-type {
-    transform: rotate(180deg);
-    position: absolute;
-    fill: var(--negative);
-    left: 50%;
-    margin-left: -11px;
-    top: 50%;
-    margin-top: -11px;
+    fill: var(--dark);
   }
 
   &:active svg:last-of-type path {
-    fill: black;
+    fill: var(--negative);
   }
 `;
