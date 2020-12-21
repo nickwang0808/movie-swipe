@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/macro";
 import getTrailerUrl from "../../Helper/getTrailerUrl";
-import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { setTrailerToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
 import { IAppState } from "../../store";
 
@@ -15,7 +15,7 @@ export default function TrailerModalScreen() {
   const youtubeVidKey = useSelector(
     (state: IAppState) =>
       (state.movieList
-        .movieList[0] as IMovieDetailsForDetailsExtended)?.videos.results.find(
+        .movieList[0] as IExtendedMovieDetails)?.videos.results.find(
         (elem) => elem.key
       )?.key
   );

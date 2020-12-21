@@ -107,6 +107,14 @@ a {
   --poster_width: calc(var(--poster_height) * 0.665);
   --border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
+  --poster-height-onboarding: calc(
+    (
+        var(--global-window-inner-height) - var(--header) - var(--vote) -
+          var(--nav) - 2rem
+      ) * 0.65
+  );
+  --poster-width-onboarding: calc(var(--poster-height-onboarding) * 0.65);
+
   /* --ion-color-header: linear-gradient(
     266.71deg,
     #29323c 11.43%,

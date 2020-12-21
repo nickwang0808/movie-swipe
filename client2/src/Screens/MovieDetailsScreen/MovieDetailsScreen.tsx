@@ -1,19 +1,22 @@
-import { IonPopover } from "@ionic/react";
+import { IonFooter, IonPopover } from "@ionic/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components/macro";
-import VoteButtonGroup from "../../comp/ButtonGroups/VoteButtonGroup";
-import MainBackground from "../../comp/Layout/MainBackground";
+import styled from "styled-components";
+import VoteButtonGroupV2 from "../../comp/ButtonGroups/VoteButtonGroupV2";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import WatchedWithWho from "../../comp/Modals/WatchedWithWho";
+import Casts from "../../comp/MovieDetailsComp/Casts";
 import MatchedWatchedWithBanner from "../../comp/MovieDetailsComp/MatchWatchBanner/MatchedWatchedWithBanner";
+import Providers from "../../comp/MovieDetailsComp/Providers";
 import TitleBox from "../../comp/MovieDetailsComp/TitleBox";
 import Trailer from "../../comp/MovieDetailsComp/Trailer";
 import watchedMovie from "../../firebase/firestoreOperations/watchedMovie";
-import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import parseProviderLogos from "../../Helper/parseProviderLogo";
+import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import { IAppState, store } from "../../store";
+import { IonContentWithBG } from "../MainScreen/MainScreen";
 
 const MovieDetailsScreen: React.FC = () => {
   const dispatch = useDispatch();
@@ -25,7 +28,7 @@ const MovieDetailsScreen: React.FC = () => {
   let newMovieInfo;
   if (movieToShow === store.getState().movieList.movieList[0].id) {
     newMovieInfo = store.getState().movieList
-      .movieList[0] as IMovieDetailsForDetailsExtended;
+      .movieList[0] as IExtendedMovieDetails;
   } else {
     newMovieInfo = movieInfo;
   }
@@ -60,50 +63,47 @@ const MovieDetailsScreen: React.FC = () => {
   if (loading || !newMovieInfo) return <CenterLoader />;
   return (
     <>
-      <IonPopover isOpen={popOver} onDidDismiss={() => setPopOver(false)}>
-        <WatchedWithWho
-          handleWatched={handleWatched}
-          closePopUp={() => setPopOver(false)}
-          matches={liked?.matchedWith as IProfileDetails[]}
-        />
-      </IonPopover>
-
-      <MainBackground ImgUrl={newMovieInfo.poster_path} />
-      <MakeTitleBgTransparent>
+      <BGContentWithFadeMask fullscreen bg={newMovieInfo.poster_path}>
+        <IonPopover isOpen={popOver} onDidDismiss={() => setPopOver(false)}>
+          <WatchedWithWho
+            handleWatched={handleWatched}
+            closePopUp={() => setPopOver(false)}
+            matches={liked?.matchedWith as IProfileDetails[]}
+          />
+        </IonPopover>
         <Trailer
           trailerUrl={newMovieInfo.videos.results[0]?.key}
           backDrop={newMovieInfo.backdrop_path}
         />
         <TitleBox movieInfo={newMovieInfo} onClick={closeDetailsModal} />
-        <Content>
+        <div className="ion-padding-horizontal ion-padding-bottom">
           {matchOrWatched}
           <p>{newMovieInfo.overview}</p>
-        </Content>
-      </MakeTitleBgTransparent>
-      <VoteButtonGroup
-        MiddleButtonText="Back"
-        handleLike={() => console.log("like")}
-        handleDislike={() => console.log("dislike")}
-        handleClickMiddleButton={closeDetailsModal}
-      />
+        </div>
+        <Casts casts={newMovieInfo.credits.cast} />
+        <Providers
+          providers={parseProviderLogos(newMovieInfo["watch/providers"])}
+        />
+        <div className="ion-margin-bottom" />?
+      </BGContentWithFadeMask>
+
+      <IonFooter className="ion-margin-top">
+        <VoteButtonGroupV2
+          handleLike={() => console.log("like")}
+          handleDislike={() => console.log("dislike")}
+          handleDetails={closeDetailsModal}
+          handleTrailer={() => {}}
+        />
+        <div className="ion-margin-vertical" />
+      </IonFooter>
     </>
   );
 };
 
 export default MovieDetailsScreen;
 
-const MakeTitleBgTransparent = styled.div`
-  padding-bottom: calc(var(--nav) + 7rem);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-y: auto;
-
-  mask-image: linear-gradient(to top, transparent 110px, black 140px);
-`;
-
-const Content = styled.div`
-  padding: 0 2rem calc(var(--nav) + 7rem) 2rem;
+const BGContentWithFadeMask = styled(IonContentWithBG)`
+  &::part(scroll) {
+    mask-image: linear-gradient(0deg, transparent 60px, black 100px);
+  }
 `;

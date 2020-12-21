@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components/macro";
 import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
-import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 import Ratings from "../Misc/Ratings";
 
 interface IProps {
-  movieInfo: IMovieDetailsForDetailsExtended;
+  movieInfo: IExtendedMovieDetails;
   onClick: () => void;
 }
 

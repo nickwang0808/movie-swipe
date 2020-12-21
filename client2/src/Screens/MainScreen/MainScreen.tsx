@@ -17,9 +17,13 @@ import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import MatchNotification from "../../comp/Modals/MatchedNotification/MatchNotification";
 import useNotificationListener from "../../firebase/FirestoreListeners/useNotificationListener";
 import parseCerts from "../../Helper/parseCerts";
+import baseUrl from "../../Helper/TmdbBaseUrl";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
 import useMatchModalControl from "../../Helper/useMatchModalControl";
-import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import {
+  Genre,
+  IExtendedMovieDetails,
+} from "../../MovieTypes/ExtendedMovieDetails";
 import {
   setModalToShow,
   setTrailerToShow,
@@ -45,7 +49,7 @@ export default function MainScreen() {
 
   const handleVote = (isLike: boolean, movie = movieList[0]) => {
     if ("release_dates" in movieList[0]) {
-      VoteWithAnimation(isLike, movie as IMovieDetailsForDetailsExtended);
+      VoteWithAnimation(isLike, movie as IExtendedMovieDetails);
     }
   };
 
@@ -62,7 +66,7 @@ export default function MainScreen() {
     return <CenterLoader />;
   return (
     <>
-      <IonContent fullscreen>
+      <IonContentWithBG bg={movieList[0]?.poster_path || ""} fullscreen>
         {notification && (
           <MatchNotification
             movie={notification}
@@ -70,7 +74,7 @@ export default function MainScreen() {
           />
         )}
 
-        <MainScreenMisc imgUrl={movieList[0]?.poster_path || ""} />
+        <MainScreenMisc />
         <SliderBlock type="like" backgroundSlide={backgroundSlide} />
         <SliderBlock type="dislike" backgroundSlide={backgroundSlide} />
         <SlideInThumb type="like" thumbX={thumbX} thumbOpacity={thumbOpacity} />
@@ -149,7 +153,9 @@ export default function MainScreen() {
                         ? {
                             certs: parseCerts(movie.release_dates),
                             runTime: movie.runtime,
-                            genreIds: movie.genres.map((elem) => elem.id),
+                            genreIds: movie.genres.map(
+                              (elem: Genre) => elem.id
+                            ),
                             year: String(movie.release_date).slice(0, 4),
                           }
                         : undefined
@@ -160,7 +166,7 @@ export default function MainScreen() {
             })
             .reverse()}
         </DeckWrapper>
-      </IonContent>
+      </IonContentWithBG>
 
       <IonFooter>
         <VoteButtonGroupV2
@@ -182,4 +188,21 @@ export const StyledMotionDiv = styled(motion.div)`
   margin: 0 auto;
   left: 0;
   right: 0;
+`;
+
+export const IonContentWithBG = styled(IonContent)<{ bg: string }>`
+  /* --background: url(${(props) => baseUrl + props.bg}); */
+
+  &::part(background) {
+    background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.6),
+      rgba(255, 255, 255, 0.6)
+    ),url(${(props) => baseUrl + props.bg});
+
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    background-position: center;
+    transform: scale(2);
+  }
 `;

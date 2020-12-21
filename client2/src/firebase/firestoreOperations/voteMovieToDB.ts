@@ -1,11 +1,11 @@
-import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { store } from "../../store";
 import { db } from "../config";
 import { collectionName } from "../names";
 
 export default function voteMovieToDB(
   isLike: boolean,
-  movie: IMovieDetailsForDetailsExtended
+  movie: IExtendedMovieDetails
 ) {
   const uid = store.getState().auth.user?.uid as string;
   const profile = store.getState().profile.profile;

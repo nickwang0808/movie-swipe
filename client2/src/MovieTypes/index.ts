@@ -1,37 +1,7 @@
 import { IProfileDetails } from "../redux/Profile/profileReducer";
-import { ReleaseDates, Videos } from "./IDetialsScreen";
-import { IMovieDetails } from "./IGetMovieDetails";
+import { IExtendedMovieDetails } from "./ExtendedMovieDetails";
 
-export interface IPopularMovies {
-  page: number;
-  total_results: number;
-  total_pages: number;
-  results: IFetchedMovieListResult[];
-}
-
-export interface IFetchedMovieListResult {
-  popularity: number;
-  vote_count: number;
-  video: boolean;
-  poster_path: string;
-  id: number;
-  adult: boolean;
-  backdrop_path: string;
-  original_title: string;
-  genre_ids: number[];
-  title: string;
-  vote_average: number;
-  overview: string;
-  release_date: Date;
-}
-
-export interface IAdditionalMovieInfo extends IMovieDetails {
-  genre_ids: number[];
-  release_dates: ReleaseDates;
-  videos: Videos;
-}
-
-export interface IVotedMovies extends IAdditionalMovieInfo, IProfileDetails {
+interface IVotedAttributes {
   uid: string;
   isLike: boolean;
   matchedWith: IProfileDetails[];
@@ -40,15 +10,14 @@ export interface IVotedMovies extends IAdditionalMovieInfo, IProfileDetails {
   notify: boolean;
 }
 
-export interface IWatchedMovies extends IVotedMovies {
+interface IWatchedAttributes {
   watchedWith: IProfileDetails[];
   timeWatched: number;
 }
 
-/* 
-match: [
+export interface IVotedMovies
+  extends IExtendedMovieDetails,
+    IProfileDetails,
+    IVotedAttributes {}
 
-  top_rated:
-]
-
- */
+export interface IWatchedMovies extends IVotedMovies, IWatchedAttributes {}

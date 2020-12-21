@@ -1,4 +1,4 @@
-import { ReleaseDates } from "../MovieTypes/IDetialsScreen";
+import { ReleaseDates } from "../MovieTypes/ExtendedMovieDetails";
 
 export default function parseCerts(data: ReleaseDates) {
   const found = data.results.find((elem) => elem.iso_3166_1 === "US");

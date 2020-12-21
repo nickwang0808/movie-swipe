@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import fetchVidActorProvider from "../../Helper/fetchVidActorProvider";
-import { IMovieDetailsForDetailsExtended } from "../../MovieTypes/IDetialsScreen";
+import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { IAppState } from "../../store";
 
 export const fetchDetailsThunk = createAsyncThunk<
-  IMovieDetailsForDetailsExtended,
+  IExtendedMovieDetails,
   undefined,
   {
     state: IAppState;
@@ -16,7 +16,7 @@ export const fetchDetailsThunk = createAsyncThunk<
     const movieId = getState().detailsState.movieToShow as number;
     const result = (await fetchVidActorProvider(
       movieId
-    )) as IMovieDetailsForDetailsExtended;
+    )) as IExtendedMovieDetails;
 
     return result;
   },
