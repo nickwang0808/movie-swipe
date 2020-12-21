@@ -16,7 +16,13 @@ export default function Casts({ casts }: IProps) {
       <Wrapper>
         {casts.map((cast) => {
           if (!cast.profile_path) return null;
-          return <img src={baseUrlLogo + cast.profile_path} alt="casts" />;
+          return (
+            <img
+              src={baseUrlLogo + cast.profile_path}
+              alt="casts"
+              key={cast.profile_path}
+            />
+          );
         })}
       </Wrapper>
     </div>

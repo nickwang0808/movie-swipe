@@ -13,7 +13,7 @@ export default function Providers({ providers }: IProps) {
       <Title>Available On:</Title>
       <Wrapper>
         {providers.map((logo) => {
-          return <img src={baseUrlLogo + logo} alt="providers" />;
+          return <img src={baseUrlLogo + logo} alt="providers" key={logo} />;
         })}
       </Wrapper>
     </div>
