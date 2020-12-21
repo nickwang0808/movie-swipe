@@ -11,8 +11,6 @@ export default function VoteUpButtonV2({ onClick }: IProps) {
   return (
     <div>
       <StyledWrapper onClick={onClick}>
-        <ArrowSquare />
-
         <ThumbUpForButton />
       </StyledWrapper>
     </div>
@@ -22,25 +20,17 @@ export default function VoteUpButtonV2({ onClick }: IProps) {
 const StyledWrapper = styled.button`
   position: relative;
   outline: none !important;
-  border: none;
-  background: transparent;
-  padding: 0;
-  margin-top: 4px; /* button is off horizontal center for some reason */
+  background: none;
 
-  &:active svg:first-of-type path {
-    fill: var(--highlight);
-  }
+  width: 48px;
+  height: 46px;
+  margin-left: 0.5rem;
 
   & svg:last-of-type {
-    position: absolute;
-    fill: var(--positive);
-    left: 50%;
-    margin-left: -13.5px;
-    top: 50%;
-    margin-top: -14px;
+    fill: var(--dark);
   }
 
   &:active svg:last-of-type path {
-    fill: black;
+    fill: var(--positive);
   }
 `;

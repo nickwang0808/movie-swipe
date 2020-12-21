@@ -12,14 +12,14 @@ export default function DetailsButtonV2({ isDetails = true, onClick }: IProps) {
   const details = (
     <>
       <DetailsIcon />
-      <span>Details</span>
+      {/* <span>Details</span> */}
     </>
   );
 
   const trailer = (
     <>
       <TrailerIcon />
-      <span>Trailer</span>
+      {/* <span>Trailer</span> */}
     </>
   );
 
@@ -33,39 +33,19 @@ export default function DetailsButtonV2({ isDetails = true, onClick }: IProps) {
 const StyledButton = styled.button`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 
-  width: 69px;
+  width: 48px;
   height: 48px;
-
-  border: 2px solid #000000;
-  box-sizing: border-box;
-  border-radius: 4px;
+  margin: 0 0.5em;
 
   outline: none !important;
   background: transparent;
-
-  &:active {
-    border-color: var(--highlight);
-  }
 
   &:active * {
     fill: var(--highlight);
     color: var(--highlight);
   }
 
-  & svg {
-    margin-left: 2px;
-    margin-top: 2px;
-  }
-
-  & > span {
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 16px;
-    text-align: center;
-    letter-spacing: 0.5px;
-  }
 `;

@@ -37,7 +37,5 @@ const StyledContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   height: 48px;
-  margin: auto;
-  min-width: 300px;
-  max-width: 400px;
+  margin: 0 1rem;
 `;

@@ -32,7 +32,7 @@ const FilterIconWrapper = styled.div`
   }
 
   & svg {
-    margin: 2.5rem 2.5rem 2rem 1rem;
+    margin: 2.5rem 2rem 2rem 1rem;
   }
 
   &:active {
