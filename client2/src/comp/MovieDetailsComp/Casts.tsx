@@ -25,8 +25,8 @@ export default function Casts({ casts }: IProps) {
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, 50px);
-  gap: 4px;
+  grid-template-columns: repeat(auto-fit, 48px);
+  gap: 1rem;
 
   & img {
     height: auto;

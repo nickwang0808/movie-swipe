@@ -28,16 +28,16 @@ export const Title = styled.h3.attrs({
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, 50px);
-  gap: 4px;
+  grid-template-columns: repeat(auto-fit, 48px);
+  gap: 1rem;
 
   & img {
     height: auto;
     width: 50px;
 
-    background: #ffffff;
-    border: 3px solid #000000;
+    background: var(--light);
+    // border: 2px solid var(--dark);
     box-sizing: border-box;
-    border-radius: 7px;
+    border-radius: 5px;
   }
 `;

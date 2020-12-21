@@ -2,7 +2,7 @@
   z-index: 1000;
   position: absolute;
   width: 90vw;
-  height: calc(100vh - var(--nav));
+  height: calc(var(--global-window-inner-height) - var(--nav));
   right: 0;
   background-color: var(--light);
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2), 0px 10px 16px rgba(0, 0, 0, 0.3);

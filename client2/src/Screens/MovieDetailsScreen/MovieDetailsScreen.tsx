@@ -80,10 +80,10 @@ const MovieDetailsScreen: React.FC = () => {
           {matchOrWatched}
           <p>{newMovieInfo.overview}</p>
         </div>
-        <Casts casts={newMovieInfo.credits.cast} />
         <Providers
           providers={parseProviderLogos(newMovieInfo["watch/providers"])}
         />
+        <Casts casts={newMovieInfo.credits.cast} />
         <div className="ion-margin-bottom" />?
       </BGContentWithFadeMask>
 
