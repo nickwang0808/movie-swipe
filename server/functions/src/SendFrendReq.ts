@@ -1,7 +1,6 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
-import { db } from ".";
-import { collectionName } from "../../../client2/src/firebase/names";
+import { collectionName, db } from ".";
 
 export const sendFriendReq = functions.https.onCall(async (data, context) => {
   if (context.auth) {

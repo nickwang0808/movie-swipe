@@ -1,9 +1,7 @@
 import * as functions from "firebase-functions";
-import { db } from ".";
-import { collectionName } from "../../../client2/src/firebase/names";
-import { IWatchedMovies } from "../../../client2/src/MovieTypes";
-import { IProfileDetails } from "../../../client2/src/redux/Profile/profileReducer";
+import { collectionName, db } from ".";
 import extractProfile from "./HelperFunctions/extractProfile";
+import { IProfileDetails, IWatchedMovies } from "./MovieTypes";
 
 // export const handleWatched = functions.firestore
 //   .document(`${collectionName.User}/{uid}/${collectionName.Watched}/{movieId}`)

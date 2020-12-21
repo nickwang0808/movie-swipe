@@ -1,17 +1,13 @@
 import * as functions from "firebase-functions";
-import { arrayUnion, db } from ".";
-import { collectionName } from "../../../client2/src/firebase/names";
-import {
-  IVotedMovies,
-  IVotedMTvs,
-} from "../../../client2/src/MovieTypes/index";
+import { arrayUnion, collectionName, db } from ".";
 import arrayChunks from "./HelperFunctions/ArrayChunks";
 import extractProfile from "./HelperFunctions/extractProfile";
+import { IVotedMovies, IVotedMTvs } from "./MovieTypes";
 
 export const findAllMatches = functions.https.onCall(async (data, context) => {
   if (context.auth) {
     const friendUid = data.friendUid as string;
-    const myUid = data.uid as string;
+    const myUid = context.auth.uid;
     const myMovieIds = data.movieIds as number[];
 
     const likeChunks = arrayChunks(myMovieIds, 10);

@@ -1,4 +1,4 @@
-import { IVotedMovies, IVotedMTvs } from "../../../../client2/src/MovieTypes";
+import { IVotedMovies, IVotedMTvs } from "../MovieTypes";
 
 export default function extractProfile(data: IVotedMovies | IVotedMTvs) {
   const {

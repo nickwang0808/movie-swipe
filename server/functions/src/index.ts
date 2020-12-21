@@ -17,3 +17,17 @@ export const db = admin.firestore();
 export const adminAuth = admin.auth;
 export const arrayUnion = admin.firestore.FieldValue.arrayUnion;
 export const arrayRemove = admin.firestore.FieldValue.arrayRemove;
+
+export const enum collectionName {
+  User = "Users",
+
+  Liked = "Liked",
+  Disliked = "Disliked",
+  Watched = "Watched",
+
+  Friends = "Friends",
+  Received = "Received",
+  Sent = "Sent",
+
+  Notifications = "Notification",
+}

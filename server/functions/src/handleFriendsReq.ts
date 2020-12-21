@@ -1,7 +1,6 @@
 import * as functions from "firebase-functions";
-import { arrayRemove, db } from ".";
-import { collectionName } from "../../../client2/src/firebase/names";
-import { IProfileDetails } from "../../../client2/src/redux/Profile/profileReducer";
+import { arrayRemove, collectionName, db } from ".";
+import { IProfileDetails } from "./MovieTypes";
 
 export const acceptRequest = functions.firestore
   .document("Users/{myUid}/Friends/{friendUid}")
