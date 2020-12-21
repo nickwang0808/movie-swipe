@@ -1,5 +1,5 @@
 import { store } from "../../store";
-import { db } from "../config";
+import { cloudFn, db } from "../config";
 import { collectionName } from "../names";
 
 // let cloud function handle the other side of update
@@ -24,4 +24,13 @@ export default async function acceptFriend(friendUid: string) {
 
     t.delete(inviterDocRef);
   });
+
+  const movieIds = store.getState().voted.Liked?.map((elem) => elem.id);
+
+  if (movieIds && movieIds.length > 0) {
+    cloudFn.httpsCallable("findAllMatches")({
+      friendUid,
+      movieIds,
+    });
+  }
 }
