@@ -73,7 +73,7 @@ const MovieDetailsScreen: React.FC = () => {
         </IonPopover>
         <Trailer
           trailerUrl={newMovieInfo.videos.results[0]?.key}
-          backDrop={newMovieInfo.backdrop_path}
+          backDrop={newMovieInfo.backdrop_path || ""}
         />
         <TitleBox movieInfo={newMovieInfo} onClick={closeDetailsModal} />
         <div className="ion-padding-horizontal ion-padding-bottom">

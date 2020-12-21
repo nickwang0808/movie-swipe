@@ -3,11 +3,12 @@ import styled from "styled-components/macro";
 import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
+import { IExtendedTvDetails } from "../../MovieTypes/ExtendedTvDetails";
 import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 import Ratings from "../Misc/Ratings";
 
 interface IProps {
-  movieInfo: IExtendedMovieDetails;
+  movieInfo: IExtendedMovieDetails | IExtendedTvDetails;
   onClick: () => void;
 }
 
@@ -25,16 +26,24 @@ export default function TitleBox({ movieInfo, onClick }: IProps) {
       <StyledPoster url={movieInfo.poster_path} />
 
       <TitleWrapper>
-        <h1>{movieInfo.title}</h1>
+        <h1>{"title" in movieInfo ? movieInfo.title : movieInfo.name}</h1>
       </TitleWrapper>
 
       <Ratings rating={movieInfo.vote_average} />
 
       <GenreRunTimeYear
-        certs={parseCerts(movieInfo.release_dates)}
-        runTime={movieInfo.runtime}
+        certs={
+          "release_dates" in movieInfo
+            ? parseCerts(movieInfo.release_dates)
+            : undefined
+        }
+        runTime={"runtime" in movieInfo ? movieInfo.runtime : undefined}
         genreIds={movieInfo.genres.map((elem) => elem.id)}
-        year={String(movieInfo.release_date).slice(0, 4)}
+        year={
+          "release_date" in movieInfo
+            ? String(movieInfo.release_date).slice(0, 4)
+            : movieInfo.last_air_date.slice(0, 4)
+        }
       />
     </Wrapper>
   );

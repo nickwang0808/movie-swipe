@@ -1,5 +1,6 @@
 import { IProfileDetails } from "../redux/Profile/profileReducer";
 import { IExtendedMovieDetails } from "./ExtendedMovieDetails";
+import { IExtendedTvDetails } from "./ExtendedTvDetails";
 
 interface IVotedAttributes {
   uid: string;
@@ -17,6 +18,11 @@ interface IWatchedAttributes {
 
 export interface IVotedMovies
   extends IExtendedMovieDetails,
+    IProfileDetails,
+    IVotedAttributes {}
+
+export interface IVotedMTvs
+  extends IExtendedTvDetails,
     IProfileDetails,
     IVotedAttributes {}
 

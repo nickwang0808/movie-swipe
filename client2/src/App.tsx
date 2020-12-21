@@ -153,7 +153,7 @@ function useAppHelper() {
       dispatch(fetchMovie());
     }
     if (movieList.length > 0) {
-      if ("release_dates" in movieList[0] === false) {
+      if ("videos" in movieList[0] === false) {
         dispatch(populateMovieDetailsThunk());
       }
     }

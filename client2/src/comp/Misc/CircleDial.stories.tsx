@@ -13,5 +13,5 @@ const Template: Story<ComponentProps<typeof CircleDial>> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  number: 70,
+  number: 7,
 };

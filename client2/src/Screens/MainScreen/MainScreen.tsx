@@ -48,7 +48,7 @@ export default function MainScreen() {
    = useAnimateDeck();
 
   const handleVote = (isLike: boolean, movie = movieList[0]) => {
-    if ("release_dates" in movieList[0]) {
+    if ("videos" in movieList[0]) {
       VoteWithAnimation(isLike, movie as IExtendedMovieDetails);
     }
   };
@@ -149,15 +149,22 @@ export default function MainScreen() {
                     imgUrl={movie.poster_path}
                     showAdditionalInfo
                     additionalInfo={
-                      "release_dates" in movie
-                        ? {
-                            certs: parseCerts(movie.release_dates),
-                            runTime: movie.runtime,
-                            genreIds: movie.genres.map(
-                              (elem: Genre) => elem.id
-                            ),
-                            year: String(movie.release_date).slice(0, 4),
-                          }
+                      "videos" in movie
+                        ? "release_dates" in movie // only movies has this field
+                          ? {
+                              certs: parseCerts(movie.release_dates),
+                              runTime: movie.runtime,
+                              genreIds: movie.genres.map(
+                                (elem: Genre) => elem.id
+                              ),
+                              year: String(movie.release_date).slice(0, 4),
+                            }
+                          : {
+                              genreIds: movie.genres.map(
+                                (elem: Genre) => elem.id
+                              ),
+                              year: movie.last_air_date.slice(0, 4),
+                            }
                         : undefined
                     }
                   />

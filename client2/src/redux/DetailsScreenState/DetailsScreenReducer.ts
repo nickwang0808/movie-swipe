@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
+import { IExtendedTvDetails } from "../../MovieTypes/ExtendedTvDetails";
 import { fetchDetailsThunk } from "./fetchDetailsThunk";
 interface IState {
   movieToShow: number | null;
-  movieInfo: IExtendedMovieDetails | null;
+  movieInfo: IExtendedMovieDetails | IExtendedTvDetails | null;
   loading: boolean;
   error: string | null;
   trailerToShow: number | null;

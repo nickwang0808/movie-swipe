@@ -35,6 +35,7 @@ export default function FilterMenu() {
 
   return (
     <IonMenu
+      swipeGesture={false}
       contentId="main"
       side="end"
       onIonWillClose={() => updatePreferences(checked, listType)}

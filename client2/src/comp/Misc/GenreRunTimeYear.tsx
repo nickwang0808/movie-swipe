@@ -5,8 +5,8 @@ import genreMaker from "../../Helper/genreMaker";
 interface IProps {
   genreIds?: number[];
   year?: string;
-  runTime: number;
-  certs: string;
+  runTime?: number;
+  certs?: string;
 }
 
 export default function GenreRunTimeYear({
@@ -15,12 +15,24 @@ export default function GenreRunTimeYear({
   runTime,
   certs,
 }: IProps) {
-  return (
-    <Wrapper>
-      {genreIds && <h3>{genreMaker(genreIds)}</h3>}
-      <h3>{`${certs} | ${runTime}min | ${year}`}</h3>
-    </Wrapper>
-  );
+  let comp;
+  if (!certs && !runTime) {
+    comp = (
+      <>
+        {genreIds && <h3>{genreMaker(genreIds)}</h3>}
+        <h3>{`${year}`}</h3>
+      </>
+    );
+  } else {
+    comp = (
+      <>
+        {genreIds && <h3>{genreMaker(genreIds)}</h3>}
+        <h3>{`${certs + " |"} ${runTime + "min |"} ${year}`}</h3>
+      </>
+    );
+  }
+
+  return <Wrapper>{comp}</Wrapper>;
 }
 
 const Wrapper = styled.div`
