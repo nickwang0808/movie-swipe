@@ -19,7 +19,7 @@ export const findAllMatches = functions.https.onCall(async (data, context) => {
         likeChunks.map(async (chunk) => {
           const query = db
             .collectionGroup(collectionName.Liked)
-            .where("movieId", "in", chunk);
+            .where("id", "in", chunk);
 
           const docs = await t.get(query);
           docs.forEach((doc) => {
