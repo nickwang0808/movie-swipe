@@ -3,25 +3,30 @@ import fetchVidActorProvider from "../../Helper/fetchVidActorProvider";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { IAppState } from "../../store";
 
+interface mediaToFind {
+  id: number;
+  type: "tv" | "movie";
+}
+
 export const fetchDetailsThunk = createAsyncThunk<
   IExtendedMovieDetails,
-  undefined,
+  mediaToFind,
   {
     state: IAppState;
   }
 >(
   "/details/fetchDetails",
-  async (_, { getState }) => {
+  async ({ id, type }) => {
     console.log("fetchDetails");
-    const movieId = getState().detailsState.movieToShow as number;
     const result = (await fetchVidActorProvider(
-      movieId
+      id,
+      type
     )) as IExtendedMovieDetails;
 
     return result;
   },
   {
-    condition: (_, { getState }) => {
+    condition: (mediaToFind, { getState }) => {
       const { movieInfo, movieToShow } = getState().detailsState;
       const { id } = getState().movieList.movieList[0];
       if (!movieToShow) return false;

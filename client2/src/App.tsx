@@ -33,7 +33,6 @@ import { CenterLoader } from "./comp/Misc/LoadingSpinner";
 import useAllListener from "./firebase/FirestoreListeners/useAllListener";
 import useNotificationListener from "./firebase/FirestoreListeners/useNotificationListener";
 import useGetWIndowsSizing from "./Helper/useGetWIndowsSizing";
-import { fetchDetailsThunk } from "./redux/DetailsScreenState/fetchDetailsThunk";
 import fetchMovie from "./redux/MovieList/fetchMovieThunk";
 import { populateMovieDetailsThunk } from "./redux/MovieList/populateMovieDetailsThunk";
 import MainScreen from "./Screens/MainScreen/MainScreen";
@@ -67,7 +66,7 @@ const App: React.FC = () => {
     <IonApp>
       <IonModal
         isOpen={Boolean(movieToShow)}
-        onWillPresent={() => dispatch(fetchDetailsThunk())}
+        // onWillPresent={() => dispatch(fetchDetailsThunk())}
       >
         <MovieDetailsScreen />
       </IonModal>
