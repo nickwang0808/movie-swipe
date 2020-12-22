@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components/macro";
+import styled from "styled-components/macro";
 import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import { IVotedMovies, IVotedMTvs } from "../../MovieTypes";
@@ -28,12 +28,11 @@ export default function WatchListItem({
     <>
       <Wrapper onClick={onClick}>
         <PosterThumbnail
-          notify={notify}
           src={`${baseUrl}${movie.poster_path}`}
           alt="Post Image"
         />
         <div style={{ width: "100%" }}>
-          {matched && matched?.length > 0 && <MatchTag />}
+          {matched && matched?.length > 0 && <MatchTag isNew={movie.notify} />}
 
           <StyledTitleContainer>
             <h2>{"release_date" in movie ? movie.title : movie.name}</h2>
@@ -76,15 +75,10 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const PosterThumbnail = styled.img<{ notify: boolean }>`
+const PosterThumbnail = styled.img`
   height: 110px;
   width: 73px;
   margin: 0 2em 0 0;
-  ${(props) =>
-    props.notify &&
-    css`
-      border: 2px solid red;
-    `}
 `;
 
 const StyledTitleContainer = styled.div`

@@ -1,17 +1,35 @@
 import React from "react";
 import styled from "styled-components/macro";
 
-export default function MatchTag() {
+interface IProps {
+  isNew?: boolean;
+}
+
+export default function MatchTag({ isNew = false }: IProps) {
   return (
-    <Wrapper>
-      <ForceSkew>
-        <div>MATCHED!</div>
-      </ForceSkew>
-    </Wrapper>
+    <StyledFlexBox>
+      {isNew && (
+        <RedTagWrapper>
+          <ForceSkew>
+            <div>New</div>
+          </ForceSkew>
+        </RedTagWrapper>
+      )}
+
+      <TagWrapper>
+        <ForceSkew>
+          <div>MATCHED!</div>
+        </ForceSkew>
+      </TagWrapper>
+    </StyledFlexBox>
   );
 }
 
-const Wrapper = styled.div`
+const StyledFlexBox = styled.div`
+  display: flex;
+`;
+
+const TagWrapper = styled.div`
   padding: 0.2em 1rem 0.1rem 1rem;
   background-color: var(--positive);
   font-size: 1.4rem;
@@ -23,5 +41,15 @@ const Wrapper = styled.div`
 `;
 
 const ForceSkew = styled.div`
+  /* return the text to normal */
   transform: skewX(15deg);
+`;
+
+const RedTagWrapper = styled(TagWrapper)`
+  background-color: var(--highlight);
+  margin-right: 4px;
+
+  & div {
+    color: var(--light);
+  }
 `;
