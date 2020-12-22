@@ -75,7 +75,7 @@ const App: React.FC = () => {
       {"videos" in movieList[0] && <TrailerModalScreen />}
 
       <IonReactRouter>
-        <FilterMenu /> {/* side menu */}
+        {movieList && <FilterMenu />} {/* side menu */}
         <IonTabs>
           <IonTabBar slot="bottom">
             <IonTabButton tab="Watch_List" href="/mylist">

@@ -181,6 +181,8 @@ export default function MainScreen() {
           handleDislike={() => handleVote(false)}
           handleDetails={() => dispatch(setModalToShow(movieList[0].id))}
           handleTrailer={() => dispatch(setTrailerToShow(movieList[0].id))}
+          disableDetails={!("videos" in movieList[0])}
+          disableTrailer={!("videos" in movieList[0])}
         />
         <div className="ion-margin" />
       </IonFooter>
