@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { baseUrlLogo } from "../../Helper/TmdbBaseUrl";
+import { Btn } from "../../theme/BaseComp";
 
 interface IProps {
   providers: string[] | null;
@@ -16,6 +17,16 @@ export default function Providers({ providers }: IProps) {
           return <img src={baseUrlLogo + logo} alt="providers" key={logo} />;
         })}
       </Wrapper>
+      <p className="ion-margin-vertical">
+        To stream, rent or buy this media, visit TMDB
+      </p>
+      <Btn
+        onClick={() => {
+          /* go to tmdb affiliate link */
+        }}
+      >
+        TMDB
+      </Btn>
     </div>
   );
 }
@@ -28,15 +39,10 @@ export const Title = styled.h3.attrs({
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, 48px);
+  grid-template-columns: repeat(auto-fit, 52px);
   gap: 1rem;
 
   & img {
-    height: auto;
-    width: 50px;
-
-    background: var(--light);
-    // border: 2px solid var(--dark);
     box-sizing: border-box;
     border-radius: 5px;
   }

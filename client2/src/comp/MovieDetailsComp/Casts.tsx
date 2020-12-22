@@ -16,7 +16,7 @@ export default function Casts({ casts }: IProps) {
       <Wrapper>
         {casts.map((cast) => {
           if (!cast.profile_path) return null;
-          return <CastCard cast={cast} />;
+          return <CastCard key={cast.id} cast={cast} />;
         })}
       </Wrapper>
     </div>
