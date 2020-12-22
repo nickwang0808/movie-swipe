@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { baseUrlLogo } from "../../Helper/TmdbBaseUrl";
 import { Cast } from "../../MovieTypes/ExtendedMovieDetails";
+import CastCard from "./CastCard";
 import { Title } from "./Providers";
 
 interface IProps {
@@ -16,13 +16,7 @@ export default function Casts({ casts }: IProps) {
       <Wrapper>
         {casts.map((cast) => {
           if (!cast.profile_path) return null;
-          return (
-            <img
-              src={baseUrlLogo + cast.profile_path}
-              alt="casts"
-              key={cast.profile_path}
-            />
-          );
+          return <CastCard cast={cast} />;
         })}
       </Wrapper>
     </div>
@@ -30,17 +24,6 @@ export default function Casts({ casts }: IProps) {
 }
 
 const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 48px);
-  gap: 1rem;
-
-  & img {
-    height: auto;
-    width: 50px;
-
-    background: #ffffff;
-    /* border: 3px solid #000000; */
-    box-sizing: border-box;
-    border-radius: 7px;
-  }
+  display: flex;
+  overflow-x: auto;
 `;
