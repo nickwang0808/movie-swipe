@@ -35,6 +35,10 @@ const movieListSlice = createSlice({
     ResetPageNum: (state) => {
       state.pageNum = 1;
     },
+    clearMovieList: (state) => {
+      state.status = "idle";
+      state.movieList = [];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchMovie.pending, (state) => {
@@ -78,5 +82,9 @@ const movieListSlice = createSlice({
   },
 });
 
-export const { voteMovie, ResetPageNum } = movieListSlice.actions;
+export const {
+  voteMovie,
+  ResetPageNum,
+  clearMovieList,
+} = movieListSlice.actions;
 export default movieListSlice.reducer;

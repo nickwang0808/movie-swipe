@@ -1,4 +1,7 @@
-import { ResetPageNum } from "../../redux/MovieList/MovieListReducer";
+import {
+  clearMovieList,
+  ResetPageNum,
+} from "../../redux/MovieList/MovieListReducer";
 import {
   IMediaPref,
   IProfileDetails,
@@ -43,9 +46,10 @@ export default async function updatePreferences(
         mediaListTypePref: newMediaListType,
       });
     }
-    store.dispatch(ResetPageNum());
     await batch.commit();
-    window.location.reload();
+    store.dispatch(ResetPageNum());
+    store.dispatch(clearMovieList());
+    // window.location.reload();
   }
 
   return;
