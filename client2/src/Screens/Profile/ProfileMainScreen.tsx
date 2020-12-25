@@ -15,6 +15,10 @@ export default function ProfileMainScreen() {
     (state: IAppState) => state.auth.user
   ) as IUserAuth;
 
+  const inviteCount = useSelector(
+    (state: IAppState) => state.friends.received?.length
+  ) as number;
+
   const handleSignOut = async () => {
     await auth.signOut();
     window.location.reload();
@@ -29,6 +33,7 @@ export default function ProfileMainScreen() {
             <ProfileItem
               title="Friends"
               action={() => history.push("/profile/friend")}
+              notify={inviteCount > 0 ? inviteCount : undefined}
             />
             <ProfileItem
               title="About Movie Sync"
