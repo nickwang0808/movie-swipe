@@ -27,7 +27,7 @@ export default function GenreRunTimeYear({
     comp = (
       <>
         {genreIds && <h3>{genreMaker(genreIds)}</h3>}
-        <h3>{`${certs + " |"} ${runTime + "min |"} ${year}`}</h3>
+        <h3>{`${certs + " •"} ${runTime + "min •"} ${year}`}</h3>
       </>
     );
   }

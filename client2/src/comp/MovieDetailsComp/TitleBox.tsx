@@ -1,10 +1,18 @@
 import React from "react";
 import styled from "styled-components/macro";
 import baseUrl from "../../Helper/TmdbBaseUrl";
+import parseCerts from "../../Helper/parseCerts";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { IExtendedTvDetails } from "../../MovieTypes/ExtendedTvDetails";
 import Divider from "../Misc/Divider";
 import RatingWIthMeta from "../Misc/RatingWIthMeta";
+import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
+interface IProps {
+  movieInfo: IExtendedMovieDetails | IExtendedTvDetails;
+  dark?: boolean;
+  alignToBottom?: boolean;
+}
+
 
 interface IProps {
   movieInfo: IExtendedMovieDetails | IExtendedTvDetails;
@@ -17,8 +25,20 @@ export default function TitleBox({ movieInfo, onClick }: IProps) {
       <StyledPoster url={movieInfo.poster_path} />
 
       <TitleWrapper>
-        <h1>{"title" in movieInfo ? movieInfo.title : movieInfo.name}</h1>
-        <StyledTagLine>{movieInfo.tagline}</StyledTagLine>
+        <StyledH1>{"title" in movieInfo ? movieInfo.title : movieInfo.name}</StyledH1>
+        <GenreRunTimeYear
+        certs={
+          "release_dates" in movieInfo
+            ? parseCerts(movieInfo.release_dates)
+            : undefined
+        }
+        runTime={"runtime" in movieInfo ? movieInfo.runtime : undefined}
+        year={
+          "release_date" in movieInfo
+            ? String(movieInfo.release_date).slice(0, 4)
+            : movieInfo.last_air_date.slice(0, 4)
+        }
+      />
       </TitleWrapper>
 
       <Divider />
@@ -61,6 +81,11 @@ const StyledTagLine = styled.p`
   font-weight: normal;
   font-size: 12px;
   line-height: 125%;
+`;
+
+const StyledH1 = styled.h1`
+margin-bottom: 0;
+padding-bottom: 0;
 `;
 
 const TitleWrapper = styled.div`

@@ -11,26 +11,41 @@ export default function VoteDownButtonV2({ onClick }: IProps) {
   return (
     <div>
       <StyledWrapper onClick={onClick}>
-        <ThumbDownForButton />
+       <ArrowSquare />
+       <ThumbDownForButton />
       </StyledWrapper>
     </div>
   );
 }
 
 const StyledWrapper = styled.button`
-  position: relative;
-  outline: none !important;
-  background: none;
+position: relative;
+outline: none !important;
+border: none;
+background: transparent;
+padding: 0;
+margin-top: 4px; /* button is off horizontal center for some reason */
+margin-right: 0.5rem;
 
-  width: 48px;
-  height: 46px;
-  margin-right: 0.5rem;
 
-  & svg:last-of-type {
-    fill: var(--dark);
-  }
+& svg:first-of-type {
+  transform: rotate(180deg);
+}
 
-  &:active svg:last-of-type path {
-    fill: var(--negative);
-  }
+&:active svg:first-of-type path {
+  fill: var(--highlight);
+}
+
+& svg:last-of-type {
+  position: absolute;
+  fill: var(--negative);
+  left: 50%;
+  margin-left: -11px;
+  top: 50%;
+  margin-top: -11px;
+}
+
+&:active svg:last-of-type path {
+  fill: black;
+}
 `;

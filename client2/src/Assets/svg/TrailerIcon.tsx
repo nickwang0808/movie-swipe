@@ -2,50 +2,18 @@ import React from "react";
 
 export default function TrailerIcon() {
   return (
-    <svg
-      width="48"
-      height="32"
-      viewBox="0 0 48 32"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M46 2H2V30H46V2ZM0 0V32H48V0H0Z"
-      />
-      <path fillRule="evenodd" clipRule="evenodd" d="M48 9H2V7H48V9Z" />
-      <path d="M30.1271 15.3716C30.8823 15.735 30.8823 16.8105 30.1271 17.1738L20.3427 21.8814C19.6788 22.2008 18.9091 21.717 18.9091 20.9802V11.5652C18.9091 10.8285 19.6788 10.3447 20.3427 10.6641L30.1271 15.3716Z" />
-      <path fillRule="evenodd" clipRule="evenodd" d="M48 26H2V24H48V26Z" />
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M24.2422 30.5455V24.7273H26.2422V30.5455H24.2422Z"
-      />
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M12.6058 30.5455V24.7273H14.6058V30.5455H12.6058Z"
-      />
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M35.8785 30.5455V24.7273H37.8785V30.5455H35.8785Z"
-      />
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M24.2422 7.27273V1.45455H26.2422V7.27273H24.2422Z"
-      />
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M12.6058 7.27273V1.45455L14.6058 1.45455V7.27273H12.6058Z"
-      />
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M35.8785 7.27273V1.45455H37.8785V7.27273H35.8785Z"
-      />
-    </svg>
+    <svg width="39" height="26" viewBox="0 0 39 26" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M37.375 1.625H1.625V24.375H37.375V1.625ZM0 0V26H39V0H0Z" />
+<path fill-rule="evenodd" clip-rule="evenodd" d="M39 7.3125H1.625V5.6875H39V7.3125Z" />
+<path d="M24.4782 12.4894C25.0919 12.7847 25.0919 13.6585 24.4782 13.9538L16.5284 17.7786C15.989 18.0381 15.3637 17.6451 15.3637 17.0464V9.39672C15.3637 8.79812 15.989 8.40503 16.5284 8.66456L24.4782 12.4894Z" />
+<path fill-rule="evenodd" clip-rule="evenodd" d="M39 21.125H1.625V19.5H39V21.125Z"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19.6968 24.8182V20.0909H21.3218V24.8182H19.6968Z"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.2422 24.8182V20.0909H11.8672V24.8182H10.2422Z" />
+<path fill-rule="evenodd" clip-rule="evenodd" d="M29.1513 24.8182V20.0909H30.7763V24.8182H29.1513Z" />
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19.6968 5.90909V1.18182H21.3218V5.90909H19.6968Z"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.2422 5.90909V1.18182L11.8672 1.18182V5.90909H10.2422Z"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M29.1513 5.90909V1.18182H30.7763V5.90909H29.1513Z"/>
+</svg>
+
   );
 }
