@@ -10,6 +10,7 @@ import MatchedWatchedWithBanner from "../../comp/MovieDetailsComp/MatchWatchBann
 import Providers from "../../comp/MovieDetailsComp/Providers";
 import TitleBox from "../../comp/MovieDetailsComp/TitleBox";
 import Trailer from "../../comp/MovieDetailsComp/Trailer";
+import updateVote from "../../firebase/firestoreOperations/updateVote";
 import watchedMovie from "../../firebase/firestoreOperations/watchedMovie";
 import parseProviderLogos, {
   parseProviderLink,
@@ -33,6 +34,9 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
   const liked = useSelector((state: IAppState) =>
     state.voted.Liked?.find((elem) => elem.id === movieToShow)
   );
+  const disliked = useSelector((state: IAppState) =>
+    state.voted.DisLiked?.find((elem) => elem.id === movieToShow)
+  );
   const watched = useSelector((state: IAppState) =>
     state.voted.Watched?.find((elem) => elem.id === movieToShow)
   );
@@ -50,9 +54,10 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
     newMovieInfo = liked;
   } else if (movieToShow === watched?.id) {
     newMovieInfo = watched;
+  } else if (movieToShow === disliked?.id) {
+    newMovieInfo = disliked;
   } else {
-    // dispatch(fetchDetailsThunk({id: movieToShow}))
-    // TODO: do the actual fetching here
+    // fetch data
     newMovieInfo = null;
   }
 
@@ -64,10 +69,16 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
   const closeDetailsModal = () => dispatch(setModalToShow(null));
 
   const handleVoteWithDelay = (isLike: boolean) => {
-    closeDetailsModal();
-    setTimeout(() => {
-      handleVote(isLike);
-    }, 200);
+    if (!liked && !disliked) {
+      closeDetailsModal();
+      setTimeout(() => {
+        handleVote(isLike);
+      }, 200);
+    } else {
+      // perform update preference
+      console.log("update vote");
+      if (movieToShow) updateVote(movieToShow, isLike);
+    }
   };
 
   let matchOrWatched;
@@ -117,6 +128,10 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
           handleDislike={() => handleVoteWithDelay(false)}
           handleDetails={closeDetailsModal}
           handleTrailer={() => {}}
+          showBackButton
+          handleBack={closeDetailsModal}
+          forceActiveLikeButton={Boolean(liked)}
+          forceActiveDislikeButton={Boolean(disliked)}
         />
         <div className="ion-margin-vertical" />
       </IonFooter>
