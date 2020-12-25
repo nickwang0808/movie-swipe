@@ -1,25 +1,25 @@
 import { IonSpinner } from "@ionic/react";
-import React, { ComponentProps } from "react";
+import React from "react";
 import styled from "styled-components/macro";
-import circularRating from "../../Assets/svg/circularRating.svg";
 import baseUrl from "../../Helper/TmdbBaseUrl";
-import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
+import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
+import { IExtendedTvDetails } from "../../MovieTypes/ExtendedTvDetails";
+import RatingWIthMeta from "../Misc/RatingWIthMeta";
 
 interface IProps {
   imgUrl: string;
   showAdditionalInfo?: boolean;
-  additionalInfo?: ComponentProps<typeof GenreRunTimeYear>;
+  movieInfo?: IExtendedMovieDetails | IExtendedTvDetails;
 }
 
 export default function MainPoster({
   imgUrl,
-  additionalInfo,
+  movieInfo,
   showAdditionalInfo = false,
 }: IProps) {
-  const additionalInfoElem = additionalInfo ? (
+  const additionalInfoElem = movieInfo ? (
     <>
-      <img src={circularRating} alt="rating" />
-      <GenreRunTimeYear {...additionalInfo} />
+      <RatingWIthMeta movieInfo={movieInfo} alignToBottom />
     </>
   ) : (
     <StyledSpinner name="crescent" color="light" />
@@ -71,6 +71,7 @@ const AdditionALInfoWrapper = styled.div`
   display: flex;
   align-items: flex-end;
   padding-bottom: 12px;
+  padding-left: 8px;
 
   height: 75px;
   background: linear-gradient(

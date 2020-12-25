@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components/macro";
-import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { IExtendedTvDetails } from "../../MovieTypes/ExtendedTvDetails";
-import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
-import Ratings from "../Misc/Ratings";
+import Divider from "../Misc/Divider";
+import RatingWIthMeta from "../Misc/RatingWIthMeta";
 
 interface IProps {
   movieInfo: IExtendedMovieDetails | IExtendedTvDetails;
@@ -14,40 +13,26 @@ interface IProps {
 
 export default function TitleBox({ movieInfo, onClick }: IProps) {
   return (
-    <Wrapper
-      // animate={{ opacity: 1, paddingTop: "0rem" }}
-      // initial={{ opacity: 0, paddingTop: "2rem" }}
-      // transition={{
-      //   duration: 0.5,
-      //   ease: [0.16, 1, 0.3, 1],
-      // }}
-      onClick={onClick}
-    >
+    <Wrapper onClick={onClick}>
       <StyledPoster url={movieInfo.poster_path} />
 
       <TitleWrapper>
         <h1>{"title" in movieInfo ? movieInfo.title : movieInfo.name}</h1>
+        <StyledTagLine>{movieInfo.tagline}</StyledTagLine>
       </TitleWrapper>
 
-      <Ratings rating={movieInfo.vote_average} />
+      <Divider />
 
-      <GenreRunTimeYear
-        certs={
-          "release_dates" in movieInfo
-            ? parseCerts(movieInfo.release_dates)
-            : undefined
-        }
-        runTime={"runtime" in movieInfo ? movieInfo.runtime : undefined}
-        genreIds={movieInfo.genres.map((elem) => elem.id)}
-        year={
-          "release_date" in movieInfo
-            ? String(movieInfo.release_date).slice(0, 4)
-            : movieInfo.last_air_date.slice(0, 4)
-        }
-      />
+      <RatingWIthMeta movieInfo={movieInfo} />
     </Wrapper>
   );
 }
+
+const StyledMetaDataWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+`;
 
 const StyledPoster = styled.div<{ url: string }>`
   width: var(--poster_width);
@@ -70,6 +55,12 @@ const StyledPoster = styled.div<{ url: string }>`
       rgba(255, 255, 255, 0.2) 100%
     ),
     url(${(props) => baseUrl + props.url});
+`;
+
+const StyledTagLine = styled.p`
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 125%;
 `;
 
 const TitleWrapper = styled.div`

@@ -16,14 +16,10 @@ import SliderBlock from "../../comp/Deck/SliderBlock";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import MatchNotification from "../../comp/Modals/MatchedNotification/MatchNotification";
 import useNotificationListener from "../../firebase/FirestoreListeners/useNotificationListener";
-import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
 import useMatchModalControl from "../../Helper/useMatchModalControl";
-import {
-  Genre,
-  IExtendedMovieDetails,
-} from "../../MovieTypes/ExtendedMovieDetails";
+import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import {
   setModalToShow,
   setTrailerToShow,
@@ -148,25 +144,7 @@ export default function MainScreen() {
                   <MainPoster
                     imgUrl={movie.poster_path}
                     showAdditionalInfo
-                    additionalInfo={
-                      "videos" in movie
-                        ? "release_dates" in movie // only movies has this field
-                          ? {
-                              certs: parseCerts(movie.release_dates),
-                              runTime: movie.runtime,
-                              genreIds: movie.genres.map(
-                                (elem: Genre) => elem.id
-                              ),
-                              year: String(movie.release_date).slice(0, 4),
-                            }
-                          : {
-                              genreIds: movie.genres.map(
-                                (elem: Genre) => elem.id
-                              ),
-                              year: movie.last_air_date.slice(0, 4),
-                            }
-                        : undefined
-                    }
+                    movieInfo={"videos" in movie ? movie : undefined}
                   />
                 </StyledMotionDiv>
               );

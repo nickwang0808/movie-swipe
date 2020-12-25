@@ -25,7 +25,7 @@ const {
 Default.args = {
   imgUrl: "/4ZocdxnOO6q2UbdKye2wgofLFhB.jpg",
   showAdditionalInfo: true,
-  additionalInfo: {
+  movieInfo: {
     // @ts-ignore
     certs: parseCerts(release_dates),
     // @ts-ignore

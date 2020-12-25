@@ -36,6 +36,6 @@ export default function GenreRunTimeYear({
 }
 
 const Wrapper = styled.div`
-  opacity: 0.7;
+  /* opacity: 0.7; */
   letter-spacing: 0.5px;
 `;
