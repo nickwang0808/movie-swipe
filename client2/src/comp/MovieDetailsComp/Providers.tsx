@@ -5,9 +5,10 @@ import { Btn } from "../../theme/BaseComp";
 
 interface IProps {
   providers: string[] | null;
+  providerLink: string | null;
 }
 
-export default function Providers({ providers }: IProps) {
+export default function Providers({ providers, providerLink }: IProps) {
   if (!providers) return null;
   return (
     <div className="ion-padding">
@@ -23,6 +24,7 @@ export default function Providers({ providers }: IProps) {
       <Btn
         onClick={() => {
           /* go to tmdb affiliate link */
+          providerLink && window.open(providerLink);
         }}
       >
         TMDB

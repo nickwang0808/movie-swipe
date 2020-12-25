@@ -11,8 +11,9 @@ import Providers from "../../comp/MovieDetailsComp/Providers";
 import TitleBox from "../../comp/MovieDetailsComp/TitleBox";
 import Trailer from "../../comp/MovieDetailsComp/Trailer";
 import watchedMovie from "../../firebase/firestoreOperations/watchedMovie";
-import parseProviderLogos from "../../Helper/parseProviderLogo";
-import useAnimateDeck from "../../Helper/useAnimateDeck";
+import parseProviderLogos, {
+  parseProviderLink,
+} from "../../Helper/parseProviderLogo";
 import { IVotedMovies, IWatchedMovies } from "../../MovieTypes";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
@@ -62,8 +63,6 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
 
   const closeDetailsModal = () => dispatch(setModalToShow(null));
 
-  const { VoteWithAnimation } = useAnimateDeck();
-
   const handleVoteWithDelay = (isLike: boolean) => {
     closeDetailsModal();
     setTimeout(() => {
@@ -106,6 +105,7 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
         </div>
         <Providers
           providers={parseProviderLogos(newMovieInfo["watch/providers"])}
+          providerLink={parseProviderLink(newMovieInfo["watch/providers"])}
         />
         <Casts casts={newMovieInfo.credits.cast} />
         <div className="ion-margin-bottom" />?

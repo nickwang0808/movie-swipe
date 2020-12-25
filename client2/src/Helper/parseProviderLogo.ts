@@ -17,3 +17,14 @@ export default function parseProviderLogos(
     return null;
   }
 }
+
+export function parseProviderLink(provider: WatchProviders | null | undefined) {
+  try {
+    if (!provider) return null;
+
+    const usProvider = provider.results?.US;
+    return usProvider.link;
+  } catch {
+    return null;
+  }
+}
