@@ -47,7 +47,6 @@ export default function MainScreen({ animationControls, handleVote }: IProps) {
     setStartPosition,
     startPosition,
     swipeDistance,
-    VoteWithAnimation,
     thumbMotionValue,
     thumbOpacity,
     thumbOpacityMotionValue,

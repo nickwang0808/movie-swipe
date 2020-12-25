@@ -11,7 +11,7 @@ import declineFriend from "../../firebase/firestoreOperations/declineFriend";
 import { IAppState } from "../../store";
 
 export default function FriendsScreen() {
-  const { friends, sent, received } = useSelector(
+  const { friends, received } = useSelector(
     (state: IAppState) => state.friends
   );
 

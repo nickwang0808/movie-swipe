@@ -51,14 +51,7 @@ const App: React.FC = () => {
   useAllListener();
   useNotificationListener();
 
-  const {
-    Liked,
-    movieList,
-    status,
-    inviteCount,
-    movieToShow,
-    dispatch,
-  } = useAppHelper(); // all logics are here
+  const { Liked, movieList, status, inviteCount, movieToShow } = useAppHelper(); // all logics are here
 
   const animationControlObj = useAnimateDeck();
 
