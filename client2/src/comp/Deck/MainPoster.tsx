@@ -4,7 +4,8 @@ import styled from "styled-components/macro";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { IExtendedTvDetails } from "../../MovieTypes/ExtendedTvDetails";
-import RatingWIthMeta from "../Misc/RatingWIthMeta";
+import CircleDial from "../Misc/CircleDial";
+import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 
 interface IProps {
   imgUrl: string;
@@ -19,7 +20,10 @@ export default function MainPoster({
 }: IProps) {
   const additionalInfoElem = movieInfo ? (
     <>
-      <RatingWIthMeta movieInfo={movieInfo} alignToBottom />
+      <StyledMetaDataWrapper>
+        <CircleDial number={movieInfo.vote_average * 10} />
+        <GenreRunTimeYear genreIds={movieInfo.genres.map((elem) => elem.id)} />
+      </StyledMetaDataWrapper>
     </>
   ) : (
     <StyledSpinner name="crescent" color="light" />
@@ -35,6 +39,11 @@ export default function MainPoster({
     </Wrapper>
   );
 }
+
+const StyledMetaDataWrapper = styled.div`
+  display: flex;
+  margin-top: 16px;
+`;
 
 const Wrapper = styled.div<{ imgUrl: string }>`
   position: absolute;

@@ -3,8 +3,9 @@ import styled from "styled-components/macro";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import { IVotedMovies, IVotedMTvs } from "../../MovieTypes";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
+import CircleDial from "../Misc/CircleDial";
+import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 import MatchTag from "../Misc/MatchTag";
-import RatingWIthMeta from "../Misc/RatingWIthMeta";
 import WatchedTag from "../Misc/WatchedTag";
 
 interface ILikedMovieInMyList {
@@ -44,12 +45,20 @@ export default function WatchListItem({
             />
           )}
 
-          <RatingWIthMeta movieInfo={movie} />
+          <StyledMetaDataWrapper>
+            <CircleDial number={movie.vote_average * 10} />
+            <GenreRunTimeYear genreIds={movie.genres.map((elem) => elem.id)} />
+          </StyledMetaDataWrapper>
         </div>
       </Wrapper>
     </>
   );
 }
+
+const StyledMetaDataWrapper = styled.div`
+  display: flex;
+  margin-top: 16px;
+`;
 
 const Wrapper = styled.div`
   display: flex;

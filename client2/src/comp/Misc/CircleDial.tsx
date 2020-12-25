@@ -8,10 +8,9 @@ import styled from "styled-components/macro";
 
 interface iProps {
   number: number;
-  dark?: boolean;
 }
 
-export default function CircleDial({ number, dark = true }: iProps) {
+export default function CircleDial({ number }: iProps) {
   let color: string;
   if (number < 25) {
     color = "#d01f00";
@@ -24,12 +23,11 @@ export default function CircleDial({ number, dark = true }: iProps) {
   }
 
   return (
-    <StyledDiv dark={dark}>
+    <StyledDiv>
       <CircularProgressbarWithChildren
         value={number}
-        // text={String(number)}
-        background={dark}
-        backgroundPadding={8}
+        // background={true}
+        // backgroundPadding={8}
         strokeWidth={8}
         styles={buildStyles({
           pathColor: color,
@@ -45,7 +43,7 @@ export default function CircleDial({ number, dark = true }: iProps) {
   );
 }
 
-const StyledDiv = styled.div<{ dark: boolean }>`
+const StyledDiv = styled.div`
   /* control the size here */
   height: 34px;
   width: 34px;
@@ -55,6 +53,6 @@ const StyledDiv = styled.div<{ dark: boolean }>`
   & div {
     font-weight: 500;
     font-size: 12px;
-    color: ${(props) => (props.dark ? "white" : "black")};
+    color: black};
   }
 `;
