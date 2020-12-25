@@ -56,4 +56,11 @@ const StyledWrapper = styled.button<{ forceActive: boolean }>`
         fill: black;
       `}
   }
+  & svg:first-of-type path {
+    ${(props) =>
+      props.forceActive &&
+      css`
+        fill: var(--highlight);
+      `}
+  }
 `;
