@@ -40,17 +40,32 @@ const StyledButton = styled.button`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-grow: 1;
+  height: 44px;
+  margin: 0 0.5rem;
 
-  width: 48px;
-  height: 48px;
-  margin: 0 0.5em;
+  border: 2px solid #000000;
+  box-sizing: border-box;
+  border-radius: 4px;
 
   outline: none !important;
   background: transparent;
+
+  &:active {
+    border-color: var(--highlight);
+  }
 
   &:active * {
     fill: var(--highlight);
     color: var(--highlight);
   }
 
+  & > span {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
 `;

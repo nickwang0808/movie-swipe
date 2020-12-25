@@ -141,6 +141,6 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
 
 const BGContentWithFadeMask = styled(IonContentWithBG)`
   &::part(scroll) {
-    mask-image: linear-gradient(0deg, transparent 50px, black 70px);
+    mask-image: linear-gradient(0deg, transparent 70px, black 110px);
   }
 `;

@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components/macro";
+import ArrowSquare from "../../Assets/svg/ArrowSquare";
 import ThumbUpForButton from "../../Assets/svg/ThumbUpForButton";
 
 interface IProps {
@@ -14,6 +15,7 @@ export default function VoteUpButtonV2({
   return (
     <div>
       <StyledWrapper forceActive={forceActive} onClick={onClick}>
+        <ArrowSquare />
         <ThumbUpForButton />
       </StyledWrapper>
     </div>
@@ -23,25 +25,35 @@ export default function VoteUpButtonV2({
 const StyledWrapper = styled.button<{ forceActive: boolean }>`
   position: relative;
   outline: none !important;
-  background: none;
+  /* background: none; */
 
-  width: 48px;
-  height: 46px;
+  background: transparent;
+  padding: 0;
+  margin-top: 4px; /* button is off horizontal center for some reason */
   margin-left: 0.5rem;
 
+  &:active svg:first-of-type path {
+    fill: var(--highlight);
+  }
+
   & svg:last-of-type {
-    fill: var(--dark);
+    position: absolute;
+    fill: var(--positive);
+    left: 50%;
+    margin-left: -13.5px;
+    top: 50%;
+    margin-top: -14px;
   }
 
   &:active svg:last-of-type path {
-    fill: var(--positive);
+    fill: black;
   }
 
   & svg:last-of-type path {
     ${(props) =>
       props.forceActive &&
       css`
-        fill: var(--positive);
+        fill: black;
       `}
   }
 `;

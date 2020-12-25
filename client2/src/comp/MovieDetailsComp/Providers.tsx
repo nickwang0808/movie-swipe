@@ -37,6 +37,7 @@ export const Title = styled.h3.attrs({
   className: "ion-margin-vertical",
 })`
   font-weight: bold;
+  font-size: 2rem;
 `;
 
 const Wrapper = styled.div`

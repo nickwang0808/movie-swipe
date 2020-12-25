@@ -6,5 +6,5 @@ export default function Divider() {
 }
 
 const StyledHr = styled.hr`
-  border-top: 1px solid #9e9e9e;
+  border-top: 1px solid rgba(0,0,0,0.1);
 `;

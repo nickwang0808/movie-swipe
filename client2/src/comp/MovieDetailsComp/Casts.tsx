@@ -12,7 +12,7 @@ export default function Casts({ casts }: IProps) {
   if (!casts) return null;
   return (
     <div className="ion-padding-horizontal">
-      <Title>Casts: </Title>
+      <Title>Cast</Title>
       <Wrapper>
         {casts.map((cast) => {
           if (!cast.profile_path) return null;

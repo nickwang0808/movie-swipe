@@ -66,10 +66,6 @@ export default function FilterMenu() {
       </IonHeader>
       <IonContent>
         <IonList>
-          <IonListHeader>
-            <IonLabel>Media List</IonLabel>
-          </IonListHeader>
-
           <IonRadioGroup
             value={StringifyFilterSelection(mediaType)}
             onIonChange={(e) =>
@@ -93,7 +89,7 @@ export default function FilterMenu() {
             })}
 
             <IonListHeader>
-              <IonLabel>Tv Shows</IonLabel>
+              <IonLabel>TV Shows</IonLabel>
             </IonListHeader>
             {tvListTypesObj.map((tvList) => {
               return (
@@ -110,7 +106,7 @@ export default function FilterMenu() {
           </IonRadioGroup>
 
           <IonListHeader>
-            <IonLabel>Catagories</IonLabel>
+            <IonLabel>Categories</IonLabel>
           </IonListHeader>
           {genreList.movie.map((genre, i) => {
             return (

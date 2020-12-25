@@ -55,7 +55,7 @@ export default function SignInScreen() {
   return (
     <>
       <IonPage>
-        <MainHeader title="Register / log in" />
+        <MainHeader title="Register / Log In" />
         <IonContent className="ion-padding">
           <p className="ion-text-center">
             Create a free MovieSync account so you and your friends can finally
