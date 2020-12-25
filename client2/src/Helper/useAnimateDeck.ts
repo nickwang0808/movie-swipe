@@ -69,7 +69,6 @@ export default function useAnimateDeck() {
     thumbOpacityMotionValue,
     thumbOpacity,
     VoteWithAnimation,
-    screenWidth,
     startPosition,
     setStartPosition,
     swipeDistance,

@@ -12,6 +12,7 @@ import TitleBox from "../../comp/MovieDetailsComp/TitleBox";
 import Trailer from "../../comp/MovieDetailsComp/Trailer";
 import watchedMovie from "../../firebase/firestoreOperations/watchedMovie";
 import parseProviderLogos from "../../Helper/parseProviderLogo";
+import useAnimateDeck from "../../Helper/useAnimateDeck";
 import { IVotedMovies, IWatchedMovies } from "../../MovieTypes";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
@@ -19,7 +20,11 @@ import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import { IAppState, store } from "../../store";
 import { IonContentWithBG } from "../MainScreen/MainScreen";
 
-const MovieDetailsScreen: React.FC = () => {
+interface IProps {
+  handleVote: (arg: boolean) => void;
+}
+
+export default function MovieDetailsScreen({ handleVote }: IProps) {
   const dispatch = useDispatch();
   const { movieToShow, loading, movieInfo } = useSelector(
     (state: IAppState) => state.detailsState
@@ -56,6 +61,15 @@ const MovieDetailsScreen: React.FC = () => {
     watchedMovie(matchedWithIds, movieToShow as number);
 
   const closeDetailsModal = () => dispatch(setModalToShow(null));
+
+  const { VoteWithAnimation } = useAnimateDeck();
+
+  const handleVoteWithDelay = (isLike: boolean) => {
+    closeDetailsModal();
+    setTimeout(() => {
+      handleVote(isLike);
+    }, 200);
+  };
 
   let matchOrWatched;
   if ((liked && liked.matchedWith.length > 0) || watched) {
@@ -99,8 +113,8 @@ const MovieDetailsScreen: React.FC = () => {
 
       <IonFooter className="ion-margin-top">
         <VoteButtonGroupV2
-          handleLike={() => console.log("like")}
-          handleDislike={() => console.log("dislike")}
+          handleLike={() => handleVoteWithDelay(true)}
+          handleDislike={() => handleVoteWithDelay(false)}
           handleDetails={closeDetailsModal}
           handleTrailer={() => {}}
         />
@@ -108,12 +122,10 @@ const MovieDetailsScreen: React.FC = () => {
       </IonFooter>
     </>
   );
-};
-
-export default MovieDetailsScreen;
+}
 
 const BGContentWithFadeMask = styled(IonContentWithBG)`
   &::part(scroll) {
-    mask-image: linear-gradient(0deg, transparent 60px, black 100px);
+    mask-image: linear-gradient(0deg, transparent 50px, black 70px);
   }
 `;

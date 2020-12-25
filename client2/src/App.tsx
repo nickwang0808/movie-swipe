@@ -32,7 +32,9 @@ import FilterMenu from "./comp/Misc/FilterMenu/FilterMenu";
 import { CenterLoader } from "./comp/Misc/LoadingSpinner";
 import useAllListener from "./firebase/FirestoreListeners/useAllListener";
 import useNotificationListener from "./firebase/FirestoreListeners/useNotificationListener";
+import useAnimateDeck from "./Helper/useAnimateDeck";
 import useGetWIndowsSizing from "./Helper/useGetWIndowsSizing";
+import { IExtendedMovieDetails } from "./MovieTypes/ExtendedMovieDetails";
 import fetchMovie from "./redux/MovieList/fetchMovieThunk";
 import { populateMovieDetailsThunk } from "./redux/MovieList/populateMovieDetailsThunk";
 import MainScreen from "./Screens/MainScreen/MainScreen";
@@ -58,6 +60,17 @@ const App: React.FC = () => {
     dispatch,
   } = useAppHelper(); // all logics are here
 
+  const animationControlObj = useAnimateDeck();
+
+  const handleVote = (isLike: boolean, movie = movieList[0]) => {
+    if ("videos" in movieList[0]) {
+      animationControlObj.VoteWithAnimation(
+        isLike,
+        movie as IExtendedMovieDetails
+      );
+    }
+  };
+
   if (status === "failed")
     return <h2>Something Wrong happened, refresh or restart the App</h2>;
   if (movieList.length === 0 && (status === "loading" || status === "idle"))
@@ -68,7 +81,7 @@ const App: React.FC = () => {
         isOpen={Boolean(movieToShow)}
         // onWillPresent={() => dispatch(fetchDetailsThunk())}
       >
-        <MovieDetailsScreen />
+        <MovieDetailsScreen handleVote={handleVote} />
       </IonModal>
 
       {"videos" in movieList[0] && <TrailerModalScreen />}
@@ -103,7 +116,10 @@ const App: React.FC = () => {
               path="/home"
               render={() => (
                 <IonPage>
-                  <MainScreen />
+                  <MainScreen
+                    animationControls={animationControlObj}
+                    handleVote={handleVote}
+                  />
                 </IonPage>
               )}
             />

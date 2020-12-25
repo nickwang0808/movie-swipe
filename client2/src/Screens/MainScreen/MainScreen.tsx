@@ -19,7 +19,6 @@ import useNotificationListener from "../../firebase/FirestoreListeners/useNotifi
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import useAnimateDeck from "../../Helper/useAnimateDeck";
 import useMatchModalControl from "../../Helper/useMatchModalControl";
-import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import {
   setModalToShow,
   setTrailerToShow,
@@ -27,7 +26,12 @@ import {
 import { IAppState } from "../../store";
 import MainScreenMisc from "./MainScreenMisc";
 
-export default function MainScreen() {
+interface IProps {
+  animationControls: ReturnType<typeof useAnimateDeck>;
+  handleVote: (arg: boolean) => void;
+}
+
+export default function MainScreen({ animationControls, handleVote }: IProps) {
   // const _ = useTimeOutStateChange();
   const dispatch = useDispatch();
   const { movieList, status, error } = useSelector(
@@ -39,15 +43,19 @@ export default function MainScreen() {
 
   const { delNotificationHOF } = useMatchModalControl(notification);
 
-  // prettier-ignore
-  const {setStartPosition,startPosition,swipeDistance,VoteWithAnimation,thumbMotionValue,thumbOpacity,thumbOpacityMotionValue,thumbX,xMotionValue,likeSlider,backgroundSlide,}
-   = useAnimateDeck();
-
-  const handleVote = (isLike: boolean, movie = movieList[0]) => {
-    if ("videos" in movieList[0]) {
-      VoteWithAnimation(isLike, movie as IExtendedMovieDetails);
-    }
-  };
+  const {
+    setStartPosition,
+    startPosition,
+    swipeDistance,
+    VoteWithAnimation,
+    thumbMotionValue,
+    thumbOpacity,
+    thumbOpacityMotionValue,
+    thumbX,
+    xMotionValue,
+    likeSlider,
+    backgroundSlide,
+  } = animationControls;
 
   useNotificationListener();
 
