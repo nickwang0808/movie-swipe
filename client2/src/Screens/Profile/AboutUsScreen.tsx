@@ -22,7 +22,9 @@ export default function AboutUs() {
         <Separator />
         <SubContent>
           <h2 className="ion-margin-bottom">Need to chat?</h2>
-          <Btn>Hello@Movie-Sync.com</Btn>
+          <Btn onClick={() => window.open("mailto:hello@movie-sync.com")}>
+            Hello@Movie-Sync.com
+          </Btn>
         </SubContent>
         <SubContent>
           <h2 className="ion-margin-bottom">Contributions</h2>

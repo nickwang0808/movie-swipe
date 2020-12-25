@@ -1,6 +1,11 @@
+import { menuController } from "@ionic/core";
 import {
+  IonButton,
+  IonButtons,
   IonContent,
+  IonFooter,
   IonHeader,
+  IonIcon,
   IonLabel,
   IonList,
   IonListHeader,
@@ -11,6 +16,7 @@ import {
 } from "@ionic/react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
 import updatePreferences from "../../../firebase/firestoreOperations/updatePreferences";
 import {
   objectifyFilterSelection,
@@ -25,6 +31,7 @@ import {
   tvListTypesObj,
 } from "../../../redux/Profile/profileReducer";
 import { IAppState } from "../../../store";
+import { Btn } from "../../../theme/BaseComp";
 import GenreSelection from "./genreSection";
 import MovieListSelection from "./MovieListSelection";
 
@@ -50,6 +57,11 @@ export default function FilterMenu() {
       <IonHeader mode="md">
         <IonToolbar color="light">
           <IonTitle>Refine Suggestions</IonTitle>
+          <IonButtons slot="primary">
+            <IonButton onClick={() => menuController.close()}>
+              <IonIcon name="close" />
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -115,6 +127,15 @@ export default function FilterMenu() {
           })}
         </IonList>
       </IonContent>
+      <IonFooter>
+        <StyledSaveButtonWrapper>
+          <Btn onClick={() => menuController.close()}>Save</Btn>
+        </StyledSaveButtonWrapper>
+      </IonFooter>
     </IonMenu>
   );
 }
+
+const StyledSaveButtonWrapper = styled.div`
+  padding: 0 1rem 1rem 1rem;
+`;
