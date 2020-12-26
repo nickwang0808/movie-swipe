@@ -1,4 +1,4 @@
-import { IVotedMovies } from "../../MovieTypes";
+import { IVotedMovies, IVotedMTvs } from "../../MovieTypes";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import { store } from "../../store";
 import { cloudFn, db } from "../config";
@@ -19,8 +19,9 @@ export default async function watchedMovie(
     // const likedMovie = (await t.get(likedRef)).data() as IVotedMovies;
 
     const likedMovie =
-      store.getState().voted.Liked?.find((elem) => elem.id === movieId) ||
-      ((await t.get(likedRef)).data() as IVotedMovies);
+      (store.getState().voted.Liked as Array<IVotedMovies | IVotedMTvs>).find(
+        (elem) => elem.id === movieId
+      ) || ((await t.get(likedRef)).data() as IVotedMovies);
 
     // filter all matches in liked movie based on watchedWith
     const watchedWith = parseMatchToWatched(

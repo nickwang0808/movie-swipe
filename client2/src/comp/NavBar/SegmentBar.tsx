@@ -1,6 +1,8 @@
 import { IonLabel, IonSegment, IonSegmentButton } from "@ionic/react";
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components/macro";
+import { IAppState } from "../../store";
 
 interface IProps {
   setView: (arg: "liked" | "watched") => void;
@@ -8,6 +10,8 @@ interface IProps {
 }
 
 export default function SegmentBar({ setView, view }: IProps) {
+  const { Watched, Liked } = useSelector((state: IAppState) => state.voted);
+
   return (
     <>
       <StyledSegment
@@ -19,10 +23,10 @@ export default function SegmentBar({ setView, view }: IProps) {
         }}
       >
         <StyledSegButton value="liked">
-          <IonLabel>My Movies</IonLabel>
+          <IonLabel>{`My Movies (${Liked && Liked.length})`}</IonLabel>
         </StyledSegButton>
         <StyledSegButton value="watched">
-          <IonLabel>Watched</IonLabel>
+          <IonLabel>{`Watched (${Watched && Watched.length})`}</IonLabel>
         </StyledSegButton>
       </StyledSegment>
     </>
