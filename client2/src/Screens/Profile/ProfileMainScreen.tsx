@@ -1,9 +1,10 @@
 import { IonContent, IonPage } from "@ionic/react";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import MainHeader from "../../comp/Layout/MainHeader";
 import ProfileItem from "../../comp/ListItem/ProfileItem";
+import DeleteAccountModal from "../../comp/Modals/DeleteAccountModal";
 import { auth } from "../../firebase/config";
 import { IUserAuth } from "../../redux/Auth/AuthReducer";
 import { IAppState } from "../../store";
@@ -24,9 +25,16 @@ export default function ProfileMainScreen() {
     window.location.reload();
   };
 
+  const [showDelAccountModal, setShowDelAccountModal] = useState(false);
+
   if (!isAnonymous) {
     return (
       <>
+        <DeleteAccountModal
+          closeAction={() => setShowDelAccountModal(false)}
+          showPopOver={showDelAccountModal}
+        />
+
         <IonPage>
           <MainHeader title="Profile" disableBackButton />
           <IonContent>
@@ -48,7 +56,10 @@ export default function ProfileMainScreen() {
               title={`Sign Out (${displayName || email || uid})`}
               action={handleSignOut}
             />
-            <ProfileItem title="Delete Account" action={handleSignOut} />
+            <ProfileItem
+              title="Delete Account"
+              action={() => setShowDelAccountModal(true)}
+            />
           </IonContent>
         </IonPage>
       </>

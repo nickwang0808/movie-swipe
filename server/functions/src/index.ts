@@ -6,10 +6,11 @@ admin.initializeApp({
 });
 // export { changeLikeToDislike } from "./changeLikeToDislike";
 export { checkMatchesWhileSwiping } from "./checkMatchesWhileSwiping";
+export { deleteFriend } from "./deleteFriend";
 // export { deleteAccount } from "./deleteAccount";
 // export { deleteAllAccount } from "./DeleteAllAccount";
 export { findAllMatches } from "./findAllMatches";
-export { acceptRequest, deleteFriend } from "./handleFriendsReq";
+export { acceptRequest } from "./handleFriendsReq";
 export { handleWatched } from "./handleWatched";
 export { sendFriendReq } from "./SendFrendReq";
 

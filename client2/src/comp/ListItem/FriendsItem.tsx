@@ -1,16 +1,18 @@
 import React from "react";
 import styled from "styled-components/macro";
 import TrashCan from "../../Assets/svg/TrashCan";
+import { IProfileDetails } from "../../redux/Profile/profileReducer";
 
 interface IListViewButton {
-  name: React.ReactNode;
+  friend: IProfileDetails;
+  deleteFriend: (arg: IProfileDetails) => void;
 }
 
-export default function FriendsItem({ name }: IListViewButton) {
+export default function FriendsItem({ friend, deleteFriend }: IListViewButton) {
   return (
     <Wrapper>
-      {name}
-      <TrashCan onClick={() => console.log("Delete")} />
+      {friend.displayName || friend.email || friend.uid}
+      <TrashCan onClick={() => deleteFriend(friend)} />
     </Wrapper>
   );
 }

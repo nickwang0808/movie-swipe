@@ -1,38 +1,34 @@
 import { IonPopover } from "@ionic/react";
 import React from "react";
 import styled from "styled-components";
-import deleteFriend from "../../firebase/firestoreOperations/deleteFriend";
-import { IProfileDetails } from "../../redux/Profile/profileReducer";
+import { auth } from "../../firebase/config";
 import { Btn } from "../../theme/BaseComp";
 
 interface IProps {
   closeAction: () => void;
   showPopOver: boolean;
-  friend: IProfileDetails | null;
 }
 
-export default function DeleteFriendModal({
+export default function DeleteAccountModal({
   closeAction,
   showPopOver,
-  friend,
 }: IProps) {
-  if (!friend) return null;
+  const handleDeleteAccount = async () => {
+    await auth.currentUser?.delete();
+    window.location.reload();
+  };
+
   return (
     <IonPopover isOpen={showPopOver} onDidDismiss={() => closeAction()}>
-      <h1>Delete Friend</h1>
+      <h1>Delete Your Account</h1>
       <StyledBodyWrapper>
         <p>
-          You are about to delete your friend&nbsp;
-          <strong>{friend.displayName || friend.email}</strong>. are you sure?
+          You are about to delete your account. All your matches, friends and
+          associated data will be removed. Thanks for joining us!
         </p>
         <DeleteButtonWrapper>
-          <StyledButton
-            onClick={() => {
-              deleteFriend(friend.uid);
-              closeAction();
-            }}
-          >
-            Delete Friend
+          <StyledButton onClick={handleDeleteAccount}>
+            Delete Account
           </StyledButton>
         </DeleteButtonWrapper>
       </StyledBodyWrapper>
