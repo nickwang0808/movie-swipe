@@ -5,7 +5,7 @@ import { collectionName } from "../names";
 
 export default async function updateVote(
   movieId: number | string,
-  isLike: boolean
+  isLike: boolean // change to
 ) {
   const uid = store.getState().auth.user?.uid as string;
   const destinationCollection = isLike
@@ -17,22 +17,30 @@ export default async function updateVote(
     .collection(isLike ? collectionName.Disliked : collectionName.Liked)
     .doc(String(movieId));
 
-  await db.runTransaction(async (t) => {
-    const movieInfo = (await t.get(docRef)).data() as IVotedMovies | IVotedMTvs;
-    t.delete(docRef);
+  // retrieve the data
+  const { DisLiked, Liked } = store.getState().voted;
 
-    t.set(
-      db
-        .collection(collectionName.User)
-        .doc(uid)
-        .collection(destinationCollection)
-        .doc(String(movieId)),
-      {
-        ...movieInfo,
-        matchedWith: [],
-      }
-    );
-  });
+  let movieInfo: IVotedMovies | IVotedMTvs;
+  if (isLike) {
+    const found = DisLiked?.find((elem) => elem.id === Number(movieId));
+    if (!found) return;
+    movieInfo = found;
+  } else {
+    const found = Liked?.find((elem) => elem.id === Number(movieId));
+    if (!found) return;
+    movieInfo = found;
+  }
 
+  await db
+    .collection(collectionName.User)
+    .doc(uid)
+    .collection(destinationCollection)
+    .doc(String(movieId))
+    .set({
+      ...movieInfo,
+      matchedWith: [],
+    });
+
+  docRef.delete();
   return;
 }
