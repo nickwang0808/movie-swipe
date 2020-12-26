@@ -1,8 +1,8 @@
-import { IVotedMovies } from "../MovieTypes";
+import { IVotedMovies, IVotedMTvs } from "../MovieTypes";
 
 export default function sortByLikedAndMatched(
-  a: IVotedMovies,
-  b: IVotedMovies
+  a: IVotedMovies | IVotedMTvs,
+  b: IVotedMovies | IVotedMTvs
 ) {
   if (!a.timeMatched && !b.timeMatched) {
     // compare like time

@@ -7,6 +7,7 @@ import WatchListEmpty from "../../comp/Misc/WatchListEmpty";
 import SegmentBar from "../../comp/NavBar/SegmentBar";
 import removeNotification from "../../firebase/firestoreOperations/removeNotification";
 import sortByLikedAndMatched from "../../Helper/sortByLikedAndMatched";
+import { IWatchedMovies, IWatchedTvs } from "../../MovieTypes";
 import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
 import { IAppState } from "../../store";
 
@@ -37,7 +38,7 @@ export default function WatchList() {
 
   const watchedView =
     Watched && Watched.length > 0 ? (
-      Watched.map((movie) => (
+      (Watched as (IWatchedMovies | IWatchedTvs)[]).map((movie) => (
         <WatchListItem
           onClick={() => dispatch(setModalToShow(movie.id))}
           key={movie.id}

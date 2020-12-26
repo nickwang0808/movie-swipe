@@ -2,11 +2,16 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import baseUrl from "../../Helper/TmdbBaseUrl";
-import { IVotedMovies, IVotedMTvs } from "../../MovieTypes";
+import {
+  IVotedMovies,
+  IVotedMTvs,
+  IWatchedMovies,
+  IWatchedTvs,
+} from "../../MovieTypes";
 import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
 
 interface IProps {
-  movie: IVotedMovies | IVotedMTvs;
+  movie: IVotedMovies | IVotedMTvs | IWatchedMovies | IWatchedTvs;
 }
 
 export default function SmallWatchListItem({ movie }: IProps) {

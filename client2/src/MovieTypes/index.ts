@@ -27,3 +27,4 @@ export interface IVotedMTvs
     IVotedAttributes {}
 
 export interface IWatchedMovies extends IVotedMovies, IWatchedAttributes {}
+export interface IWatchedTvs extends IVotedMTvs, IWatchedAttributes {}

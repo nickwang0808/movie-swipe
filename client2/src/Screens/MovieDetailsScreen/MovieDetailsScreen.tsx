@@ -15,7 +15,12 @@ import watchedMovie from "../../firebase/firestoreOperations/watchedMovie";
 import parseProviderLogos, {
   parseProviderLink,
 } from "../../Helper/parseProviderLogo";
-import { IVotedMovies, IWatchedMovies } from "../../MovieTypes";
+import {
+  IVotedMovies,
+  IVotedMTvs,
+  IWatchedMovies,
+  IWatchedTvs,
+} from "../../MovieTypes";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
@@ -32,20 +37,28 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
     (state: IAppState) => state.detailsState
   );
   const liked = useSelector((state: IAppState) =>
-    state.voted.Liked?.find((elem) => elem.id === movieToShow)
+    (state.voted.Liked as (IVotedMovies | IVotedMTvs)[]).find(
+      (elem) => elem.id === movieToShow
+    )
   );
   const disliked = useSelector((state: IAppState) =>
-    state.voted.DisLiked?.find((elem) => elem.id === movieToShow)
+    (state.voted.DisLiked as (IVotedMovies | IVotedMTvs)[]).find(
+      (elem) => elem.id === movieToShow
+    )
   );
   const watched = useSelector((state: IAppState) =>
-    state.voted.Watched?.find((elem) => elem.id === movieToShow)
+    (state.voted.Watched as (IWatchedMovies | IWatchedTvs)[]).find(
+      (elem) => elem.id === movieToShow
+    )
   );
 
   // pull data from movie list first, if no data then pull from refetched list
   let newMovieInfo:
     | IExtendedMovieDetails
-    | IVotedMovies
     | IWatchedMovies
+    | IWatchedTvs
+    | IVotedMovies
+    | IVotedMTvs
     | null;
   if (movieToShow === store.getState().movieList.movieList[0].id) {
     newMovieInfo = store.getState().movieList
