@@ -31,16 +31,22 @@ export default async function updateVote(
     movieInfo = found;
   }
 
-  await db
-    .collection(collectionName.User)
-    .doc(uid)
-    .collection(destinationCollection)
-    .doc(String(movieId))
-    .set({
+  const batch = db.batch();
+
+  batch.set(
+    db
+      .collection(collectionName.User)
+      .doc(uid)
+      .collection(destinationCollection)
+      .doc(String(movieId)),
+    {
       ...movieInfo,
       matchedWith: [],
-    });
+    }
+  );
 
-  docRef.delete();
+  batch.delete(docRef);
+
+  batch.commit();
   return;
 }
