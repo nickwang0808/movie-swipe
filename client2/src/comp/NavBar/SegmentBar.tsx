@@ -34,19 +34,18 @@ export default function SegmentBar({ setView, view }: IProps) {
 }
 
 const StyledSegment = styled(IonSegment)`
-  border-radius: 3rem;
+  border-radius: 3px;
   border: 1px solid black;
   --background: none;
   height: 5rem;
-  margin: 2rem 2rem 0;
+  margin: 1rem 1rem 0;
   width: unset;
-  position: sticky;
 `;
 
 const StyledSegButton = styled(IonSegmentButton)`
   --ion-background-color: var(--highlight);
   --color-checked: white;
-  --border-radius: 3rem;
+  --border-radius: 3px;
 
   & ion-label {
     font-size: 1.8rem;
