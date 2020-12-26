@@ -95,6 +95,7 @@ const AdditionALInfoWrapper = styled.div`
   align-items: flex-end;
   padding-bottom: 12px;
   padding-left: 8px;
+  color: white;
 
   height: 75px;
   background: linear-gradient(

@@ -12,7 +12,7 @@ export default function DislikedList() {
   if (!DisLiked) return null;
   return (
     <IonPage>
-      <MainHeader title="DisLiked Movies" />
+      <MainHeader title="Disliked Movies" />
       <IonContent>
         {(DisLiked as Array<IVotedMovies | IVotedMTvs>).map((movie) => {
           return <SmallWatchListItem movie={movie} key={movie.id} />;

@@ -132,7 +132,7 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
           providerLink={parseProviderLink(newMovieInfo["watch/providers"])}
         />
         <Casts casts={newMovieInfo.credits.cast} />
-        <div className="ion-margin-bottom" />?
+        <div className="ion-margin-bottom" />
       </BGContentWithFadeMask>
 
       <IonFooter className="ion-margin-top">
@@ -154,6 +154,6 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
 
 const BGContentWithFadeMask = styled(IonContentWithBG)`
   &::part(scroll) {
-    mask-image: linear-gradient(0deg, transparent 70px, black 110px);
+    mask-image: linear-gradient(0deg, transparent 60px, black 100px);
   }
 `;

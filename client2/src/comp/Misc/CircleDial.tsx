@@ -13,13 +13,13 @@ interface iProps {
 export default function CircleDial({ number }: iProps) {
   let color: string;
   if (number < 25) {
-    color = "#d01f00";
+    color = "#FF0000";
   } else if (number < 50) {
-    color = "#d0c200";
+    color = "#ED7200";
   } else if (number < 75) {
-    color = "#a3d000";
+    color = "#0085D0";
   } else {
-    color = "#00d023";
+    color = "#199935";
   }
 
   return (
@@ -38,7 +38,7 @@ export default function CircleDial({ number }: iProps) {
       >
         <div>{number}</div>
       </CircularProgressbarWithChildren>
-      ;
+      
     </StyledDiv>
   );
 }
@@ -51,8 +51,6 @@ const StyledDiv = styled.div`
   flex-shrink: 0;
 
   & div {
-    font-weight: 500;
-    font-size: 12px;
-    color: black};
+    font-size: 1.75rem;
   }
 `;

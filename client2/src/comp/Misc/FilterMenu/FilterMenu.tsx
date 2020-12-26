@@ -123,7 +123,7 @@ export default function FilterMenu() {
           })}
         </IonList>
       </IonContent>
-      <IonFooter>
+      <IonFooter mode="ios">
         <StyledSaveButtonWrapper>
           <Btn onClick={() => menuController.close()}>Save</Btn>
         </StyledSaveButtonWrapper>
@@ -133,5 +133,5 @@ export default function FilterMenu() {
 }
 
 const StyledSaveButtonWrapper = styled.div`
-  padding: 0 1rem 1rem 1rem;
+  padding: 1rem;
 `;

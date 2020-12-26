@@ -37,7 +37,7 @@ export default function VoteButtonGroupV2({
         forceActive={forceActiveDislikeButton}
       />
       {showBackButton ? (
-        <Btn onClick={handleBack}>Back</Btn>
+        <Btn onClick={handleBack}>Go Back</Btn>
       ) : (
         <>
           <DetailsButtonV2 onClick={handleDetails} disabled={disableDetails} />

@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components/macro";
-import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { IExtendedTvDetails } from "../../MovieTypes/ExtendedTvDetails";
 import CircleDial from "../Misc/CircleDial";
 import Divider from "../Misc/Divider";
-import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 interface IProps {
   movieInfo: IExtendedMovieDetails | IExtendedTvDetails;
   dark?: boolean;
@@ -27,22 +25,8 @@ export default function TitleBox({ movieInfo, onClick }: IProps) {
         <StyledH1>
           {"title" in movieInfo ? movieInfo.title : movieInfo.name}
         </StyledH1>
-        <GenreRunTimeYear
-          genreIds={movieInfo.genres.map((elem) => elem.id)}
-          certs={
-            "release_dates" in movieInfo
-              ? parseCerts(movieInfo.release_dates)
-              : undefined
-          }
-          runTime={"runtime" in movieInfo ? movieInfo.runtime : undefined}
-          year={
-            "release_date" in movieInfo
-              ? String(movieInfo.release_date).slice(0, 4)
-              : movieInfo.last_air_date.slice(0, 4)
-          }
-        />
+        <StyledTagLine>{movieInfo.tagline}</StyledTagLine>
       </TitleWrapper>
-
       <Divider />
 
       <StyledMetaDataWrapper>
@@ -62,7 +46,7 @@ const StyledPoster = styled.div<{ url: string }>`
   width: var(--poster_width);
   height: var(--poster_height);
   /* width: 113px;
-  height: 170px; */
+  height: 124px; */
   background-size: cover;
   background-position: center;
   position: absolute;
@@ -83,7 +67,7 @@ const StyledPoster = styled.div<{ url: string }>`
 
 const StyledTagLine = styled.p`
   font-weight: normal;
-  font-size: 12px;
+  font-size: 1.75rem;
   line-height: 125%;
 `;
 
