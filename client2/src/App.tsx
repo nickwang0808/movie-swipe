@@ -34,6 +34,7 @@ import useAllListener from "./firebase/FirestoreListeners/useAllListener";
 import useNotificationListener from "./firebase/FirestoreListeners/useNotificationListener";
 import useAnimateDeck from "./Helper/useAnimateDeck";
 import useGetWIndowsSizing from "./Helper/useGetWIndowsSizing";
+import { IVotedMovies, IVotedMTvs } from "./MovieTypes";
 import { IExtendedMovieDetails } from "./MovieTypes/ExtendedMovieDetails";
 import fetchMovie from "./redux/MovieList/fetchMovieThunk";
 import { populateMovieDetailsThunk } from "./redux/MovieList/populateMovieDetailsThunk";
@@ -41,6 +42,7 @@ import MainScreen from "./Screens/MainScreen/MainScreen";
 import MovieDetailsScreen from "./Screens/MovieDetailsScreen/MovieDetailsScreen";
 import TrailerModalScreen from "./Screens/MovieDetailsScreen/TrailerModalScreen";
 import AboutUs from "./Screens/Profile/AboutUsScreen";
+import DislikedList from "./Screens/Profile/DislikedList";
 import FriendsScreen from "./Screens/Profile/FriendsScreen";
 import ProfileMainScreen from "./Screens/Profile/ProfileMainScreen";
 import WatchList from "./Screens/WatchList/WatchList";
@@ -88,7 +90,11 @@ const App: React.FC = () => {
 
               <IonLabel>Watch List</IonLabel>
               <Badge
-                counter={Liked?.filter((elem) => elem.notify === true).length}
+                counter={
+                  (Liked as Array<IVotedMovies | IVotedMTvs>).filter(
+                    (elem) => elem.notify === true
+                  ).length
+                }
               />
             </IonTabButton>
 
@@ -133,6 +139,11 @@ const App: React.FC = () => {
               render={() => <FriendsScreen />}
             />
             <Route exact path="/profile/about" render={() => <AboutUs />} />
+            <Route
+              exact
+              path="/profile/disliked"
+              render={() => <DislikedList />}
+            />
           </IonRouterOutlet>
         </IonTabs>
       </IonReactRouter>

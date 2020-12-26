@@ -36,6 +36,10 @@ export default function ProfileMainScreen() {
               notify={inviteCount > 0 ? inviteCount : undefined}
             />
             <ProfileItem
+              title="DisLiked Movies"
+              action={() => history.push("/profile/disliked")}
+            />
+            <ProfileItem
               title="About Movie Sync"
               action={() => history.push("/profile/about")}
             />

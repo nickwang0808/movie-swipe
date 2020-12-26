@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IVotedMovies, IWatchedMovies } from "../../MovieTypes";
+import { IVotedMovies, IVotedMTvs, IWatchedMovies } from "../../MovieTypes";
 
 interface IVotedMovieReducer {
   isLoaded: boolean;
-  Liked: IVotedMovies[] | null;
-  DisLiked: IVotedMovies[] | null;
-  Watched: IWatchedMovies[] | null;
+  Liked: IVotedMovies[] | IVotedMTvs[] | null;
+  DisLiked: IVotedMovies[] | IVotedMTvs[] | null;
+  Watched: IVotedMovies[] | IVotedMTvs[] | null;
 }
 
 const initialState: IVotedMovieReducer = {
