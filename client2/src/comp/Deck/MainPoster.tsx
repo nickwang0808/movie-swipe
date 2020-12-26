@@ -1,6 +1,7 @@
 import { IonSpinner } from "@ionic/react";
 import React from "react";
 import styled from "styled-components/macro";
+import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { IExtendedTvDetails } from "../../MovieTypes/ExtendedTvDetails";
@@ -22,7 +23,20 @@ export default function MainPoster({
     <>
       <StyledMetaDataWrapper>
         <CircleDial number={movieInfo.vote_average * 10} />
-        <GenreRunTimeYear genreIds={movieInfo.genres.map((elem) => elem.id)} />
+        <GenreRunTimeYear
+          certs={
+            "release_dates" in movieInfo
+              ? parseCerts(movieInfo.release_dates)
+              : undefined
+          }
+          runTime={"runtime" in movieInfo ? movieInfo.runtime : undefined}
+          genreIds={movieInfo.genres.map((elem) => elem.id)}
+          year={
+            "release_date" in movieInfo
+              ? String(movieInfo.release_date).slice(0, 4)
+              : movieInfo.last_air_date.slice(0, 4)
+          }
+        />
       </StyledMetaDataWrapper>
     </>
   ) : (

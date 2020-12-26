@@ -28,6 +28,7 @@ export default function TitleBox({ movieInfo, onClick }: IProps) {
           {"title" in movieInfo ? movieInfo.title : movieInfo.name}
         </StyledH1>
         <GenreRunTimeYear
+          genreIds={movieInfo.genres.map((elem) => elem.id)}
           certs={
             "release_dates" in movieInfo
               ? parseCerts(movieInfo.release_dates)
@@ -46,7 +47,7 @@ export default function TitleBox({ movieInfo, onClick }: IProps) {
 
       <StyledMetaDataWrapper>
         <CircleDial number={movieInfo.vote_average * 10} />
-        <GenreRunTimeYear genreIds={movieInfo.genres.map((elem) => elem.id)} />
+        {/* <GenreRunTimeYear genreIds={movieInfo.genres.map((elem) => elem.id)} /> */}
       </StyledMetaDataWrapper>
     </Wrapper>
   );

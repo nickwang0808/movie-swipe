@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
+import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import { IVotedMovies, IVotedMTvs } from "../../MovieTypes";
 import { IProfileDetails } from "../../redux/Profile/profileReducer";
@@ -34,7 +35,20 @@ export default function WatchListItem({
 
           <StyledMetaDataWrapper>
             <CircleDial number={movie.vote_average * 10} />
-            <GenreRunTimeYear genreIds={movie.genres.map((elem) => elem.id)} />
+            <GenreRunTimeYear
+              certs={
+                "release_dates" in movie
+                  ? parseCerts(movie.release_dates)
+                  : undefined
+              }
+              runTime={"runtime" in movie ? movie.runtime : undefined}
+              genreIds={movie.genres.map((elem) => elem.id)}
+              year={
+                "release_date" in movie
+                  ? String(movie.release_date).slice(0, 4)
+                  : movie.last_air_date.slice(0, 4)
+              }
+            />
           </StyledMetaDataWrapper>
         </div>
       </Wrapper>
