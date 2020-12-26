@@ -23,6 +23,7 @@ firebase.initializeApp(firebaseConfig);
 //     .catch((err) => console.log(err));
 // }
 
+firebase.analytics();
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 export const cloudFn = firebase.functions();

@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components/macro";
+import parseCerts from "../../Helper/parseCerts";
 import baseUrl from "../../Helper/TmdbBaseUrl";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { IExtendedTvDetails } from "../../MovieTypes/ExtendedTvDetails";
 import CircleDial from "../Misc/CircleDial";
 import Divider from "../Misc/Divider";
+import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 interface IProps {
   movieInfo: IExtendedMovieDetails | IExtendedTvDetails;
   dark?: boolean;
@@ -25,13 +27,31 @@ export default function TitleBox({ movieInfo, onClick }: IProps) {
         <StyledH1>
           {"title" in movieInfo ? movieInfo.title : movieInfo.name}
         </StyledH1>
-        <StyledTagLine>{movieInfo.tagline}</StyledTagLine>
+
+        {movieInfo.tagline && (
+          <>
+            <StyledTagLine>{movieInfo.tagline}</StyledTagLine>
+            <Divider />
+          </>
+        )}
       </TitleWrapper>
-      <Divider />
 
       <StyledMetaDataWrapper>
         <CircleDial number={movieInfo.vote_average * 10} />
-        {/* <GenreRunTimeYear genreIds={movieInfo.genres.map((elem) => elem.id)} /> */}
+        <GenreRunTimeYear
+          certs={
+            "release_dates" in movieInfo
+              ? parseCerts(movieInfo.release_dates)
+              : undefined
+          }
+          runTime={"runtime" in movieInfo ? movieInfo.runtime : undefined}
+          genreIds={movieInfo.genres.map((elem) => elem.id)}
+          year={
+            "release_date" in movieInfo
+              ? String(movieInfo.release_date).slice(0, 4)
+              : movieInfo.last_air_date.slice(0, 4)
+          }
+        />
       </StyledMetaDataWrapper>
     </Wrapper>
   );
@@ -39,7 +59,7 @@ export default function TitleBox({ movieInfo, onClick }: IProps) {
 
 const StyledMetaDataWrapper = styled.div`
   display: flex;
-  margin-top: 16px;
+  /* margin-top: 16px; */
 `;
 
 const StyledPoster = styled.div<{ url: string }>`
@@ -52,6 +72,7 @@ const StyledPoster = styled.div<{ url: string }>`
   position: absolute;
   left: 2rem;
   top: -4em;
+  /* top: 1em; */
   right: 0;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3), 0px 10px 20px rgba(0, 0, 0, 0.3);
   z-index: 5;
