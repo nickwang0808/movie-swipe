@@ -57,7 +57,7 @@ export default function WatchListItem({
 
 const StyledMetaDataWrapper = styled.div`
   display: flex;
-  margin-top: 16px;
+  margin-top: 0.5rem;
 `;
 
 const Wrapper = styled.div`

@@ -28,7 +28,7 @@ export default function SmallWatchListItem({ movie }: IProps) {
 
 const Wrapper = styled.div`
   display: flex;
-  padding: 2em;
+  padding: 1em 2em;
   border-bottom: var(--border-bottom);
   position: relative;
 `;

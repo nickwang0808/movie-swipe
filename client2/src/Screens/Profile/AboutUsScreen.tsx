@@ -7,16 +7,13 @@ import { Btn } from "../../theme/BaseComp";
 export default function AboutUs() {
   return (
     <IonPage>
-      <MainHeader title="About Movie Sync" />
+      <MainHeader title="About Movie-Sync" />
       <IonContent>
         <SubContent>
           <p>
-            MovieSync is an easy way to find something new for you and your
-            friends to watch together, finally.
-          </p>
-          <p className="ion-margin-top">
-            It's developed by Nick Wang (NickWangTech.com) and designed by
-            Trevor Wernisch (No-Tec.com).
+            Movie-Sync is an easy way to find something new for you and your
+            friends to watch together, finally.</p><br/><p> Simply invite a friend you want to watch movies or shows with
+              and you'll be notified when you've both liked a movie!
           </p>
         </SubContent>
         <Separator />
@@ -26,17 +23,23 @@ export default function AboutUs() {
             Hello@Movie-Sync.com
           </Btn>
         </SubContent>
+        <Separator />
         <SubContent>
           <h2 className="ion-margin-bottom">Contributions</h2>
           <img
             src={
-              "https://www.themoviedb.org/assets/2/v4/logos/v2/blue_long_2-9665a76b1ae401a510ec1e0ca40ddcb3b0cfe45f1d51b77a308fea0845885648.svg"
+              "https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg"
             }
             alt="tmdb logo"
+            width="64px"
           />
           <p>
             This product uses the TMDb API but is not endorsed or certified by
             TMDb.
+          </p>
+          <p className="ion-margin-top">
+            Movie-Sync is from developer Nick Wang (NickWangTech.com) and designer
+            Trevor Wernisch (No-Tec.com).
           </p>
         </SubContent>
       </IonContent>

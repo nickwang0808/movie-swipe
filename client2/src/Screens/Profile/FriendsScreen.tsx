@@ -20,7 +20,7 @@ export default function FriendsScreen() {
       <MainHeader title="Friends" />
       <IonContent>
         <p className="ion-margin">
-          We'll let you know when you and your friends both want to watch
+          Simply invite a friend below, and we'll let you know when you both want to watch
           something!
         </p>
 

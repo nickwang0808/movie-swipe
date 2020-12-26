@@ -19,15 +19,15 @@ export default function GenreRunTimeYear({
   if (!certs && !runTime) {
     comp = (
       <>
-        {genreIds && <h3>{genreMaker(genreIds)}</h3>}
         <h3>{`${year}`}</h3>
+        {genreIds && <h3>{genreMaker(genreIds)}</h3>}
       </>
     );
   } else {
     comp = (
       <>
-        {genreIds && <h3>{genreMaker(genreIds)}</h3>}
         <h3>{`${certs + " •"} ${runTime + "min •"} ${year}`}</h3>
+        {genreIds && <h3>{genreMaker(genreIds)}</h3>}
       </>
     );
   }
