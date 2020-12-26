@@ -6,21 +6,16 @@ import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import CircleDial from "../Misc/CircleDial";
 import GenreRunTimeYear from "../Misc/GenreRunTimeYear";
 import MatchTag from "../Misc/MatchTag";
-import WatchedTag from "../Misc/WatchedTag";
 
 interface ILikedMovieInMyList {
   movie: IVotedMovies | IVotedMTvs;
   matched?: IProfileDetails[];
-  watched?: IProfileDetails[];
-  notify: boolean;
   onClick: () => void;
 }
 
 export default function WatchListItem({
   movie,
   matched,
-  watched,
-  notify,
   onClick,
 }: ILikedMovieInMyList) {
   return (
@@ -36,14 +31,6 @@ export default function WatchListItem({
           <StyledTitleContainer>
             <h2>{"release_date" in movie ? movie.title : movie.name}</h2>
           </StyledTitleContainer>
-
-          {watched && (
-            <WatchedTag
-              name={watched.map(
-                (elem) => elem.displayName || elem.email || elem.uid
-              )}
-            />
-          )}
 
           <StyledMetaDataWrapper>
             <CircleDial number={movie.vote_average * 10} />

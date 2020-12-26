@@ -2,6 +2,7 @@ import { IonContent } from "@ionic/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MainHeader from "../../comp/Layout/MainHeader";
+import SmallWatchListItem from "../../comp/ListItem/SmallWatchListItem";
 import WatchListItem from "../../comp/ListItem/WatchListItem";
 import WatchListEmpty from "../../comp/Misc/WatchListEmpty";
 import SegmentBar from "../../comp/NavBar/SegmentBar";
@@ -29,7 +30,6 @@ export default function WatchList() {
             key={movie.id}
             movie={movie}
             matched={movie.matchedWith || []}
-            notify={movie.notify}
           />
         ))
     ) : (
@@ -39,13 +39,7 @@ export default function WatchList() {
   const watchedView =
     Watched && Watched.length > 0 ? (
       (Watched as (IWatchedMovies | IWatchedTvs)[]).map((movie) => (
-        <WatchListItem
-          onClick={() => dispatch(setModalToShow(movie.id))}
-          key={movie.id}
-          movie={movie}
-          watched={movie.watchedWith}
-          notify={false}
-        />
+        <SmallWatchListItem movie={movie} />
       ))
     ) : (
       <WatchListEmpty type="watch" />

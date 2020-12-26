@@ -9,6 +9,7 @@ import {
   IWatchedTvs,
 } from "../../MovieTypes";
 import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
+import WatchedTag from "../Misc/WatchedTag";
 
 interface IProps {
   movie: IVotedMovies | IVotedMTvs | IWatchedMovies | IWatchedTvs;
@@ -19,9 +20,19 @@ export default function SmallWatchListItem({ movie }: IProps) {
   return (
     <Wrapper onClick={() => dispatch(setModalToShow(movie.id))}>
       <PosterThumbnail src={baseUrl + movie.poster_path} />
-      <StyledTitleContainer>
-        <h2>{"release_date" in movie ? movie.title : movie.name}</h2>
-      </StyledTitleContainer>
+      <div style={{ width: "100%" }}>
+        <StyledTitleContainer>
+          <h2>{"release_date" in movie ? movie.title : movie.name}</h2>
+        </StyledTitleContainer>
+
+        {"watchedWith" in movie && (
+          <WatchedTag
+            name={movie.watchedWith.map(
+              (elem) => elem.displayName || elem.email || elem.uid
+            )}
+          />
+        )}
+      </div>
     </Wrapper>
   );
 }
