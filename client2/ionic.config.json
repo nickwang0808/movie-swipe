@@ -1,7 +1,0 @@
-{
-  "name": "client2",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
