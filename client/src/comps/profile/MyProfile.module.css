@@ -1,0 +1,43 @@
+.settings_container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+}
+
+.title_bold {
+  margin: 2rem;
+}
+
+.container_inset {
+  margin: 0 2rem;
+}
+
+.invite_input_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.invite_input_container input {
+  flex-grow: 1;
+  margin-right: 2rem;
+  margin-bottom: 0rem;
+  min-width: 100px;
+  font-size: 2rem;
+}
+
+.error {
+  margin: 1rem 0;
+  color: #ff0000;
+}
+
+.success {
+  margin: 1rem 0;
+  color: #1a8e1a;
+}
+
+.container_logo_tmdb svg {
+  height: 4rem;
+}

@@ -1,28 +1,23 @@
+import { IonApp, IonRouterOutlet } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import AuthChecker from "./Screens/Auth/AuthChecker";
+import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { store } from "./store";
+import Store from "./store";
 
-const render = () => {
-  const App = require("./App").default;
-
-  ReactDOM.render(
-    <Provider store={store}>
-      <AuthChecker>
-        <App />
-      </AuthChecker>
-    </Provider>,
-    document.getElementById("root")
-  );
-};
-
-render();
-
-if (process.env.NODE_ENV === "development" && module.hot) {
-  module.hot.accept("./App", render);
-}
+ReactDOM.render(
+  <Store>
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <App />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  </Store>,
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -1,0 +1,107 @@
+.login_container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  margin: 2rem;
+}
+
+.firebaseUi {
+  min-width: 250px;
+}
+
+.btn_login_google {
+  background-color: #ce4b35;
+  border: 0px;
+  color: #fff;
+  height: 6rem;
+  width: inherit;
+  margin: 3rem 0;
+}
+
+.btn_login_google:active {
+  background-color: #a73f2d;
+  color: var(--light);
+}
+
+.login_container form {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+}
+
+label {
+  font-size: 2rem;
+  padding-bottom: 1rem;
+}
+
+input {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  color: #0b0728;
+  border-radius: 4px;
+  border: 1px solid var(--dark);
+}
+
+input:focus {
+  outline: none !important;
+  border: 1px solid var(--highlight);
+}
+
+.login_container .email {
+  margin-top: 3rem;
+  width: 100%;
+  background-color: #f0f0f0;
+}
+
+.login_container .email form button:first-of-type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  border: 2px solid var(--dark);
+  background-color: transparent;
+  text-align: center;
+  border-radius: 30px;
+  color: #000000;
+  cursor: pointer;
+  margin: auto;
+  font-weight: 600;
+  font-size: 2rem;
+  width: fit-content;
+  margin: 2rem auto;
+  padding: 0 3rem;
+  outline: none;
+}
+
+.login_container .email form button:first-of-type:active {
+  border-color: var(--highlight);
+  color: var(--highlight);
+}
+
+.login_container .email form button:nth-of-type(2n) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  background-color: transparent;
+  text-align: center;
+  color: var(--highlight);
+  cursor: pointer;
+  margin: auto;
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 2rem;
+  border: 0;
+  outline: none;
+  text-decoration: underline;
+}
+
+.error {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 2rem 1rem 0 1rem;
+  color: var(--negative);
+}

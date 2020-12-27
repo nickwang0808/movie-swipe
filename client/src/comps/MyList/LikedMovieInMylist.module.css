@@ -1,0 +1,76 @@
+.flex_row {
+  display: flex;
+  padding: 2em;
+  border-bottom: var(--border-bottom);
+  position: relative;
+}
+
+.matched_watchlist {
+  padding: 0.2em 1rem 0.1rem 1rem;
+  background-color: var(--positive);
+  font-size: 1.4rem;
+  font-weight: 600;
+  border-radius: 0.3rem;
+  transform: skewX(-15deg);
+  width: fit-content;
+  margin-bottom: 0.5rem;
+}
+
+.forceSkew {
+  transform: skewX(15deg);
+}
+
+.flex_row_rating {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 0.75em;
+}
+
+.poster {
+  height: 110px;
+  width: 73px;
+  margin: 0 2em 0 0;
+}
+
+.details_likedtitle {
+  padding: 0 0 0.75em 0;
+  font-weight: 600;
+}
+
+.details_rating {
+  width: 100%;
+}
+
+.details_tags {
+  opacity: 0.7;
+  letter-spacing: 0.5px;
+}
+
+.watched_watchlist {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid var(--gray);
+  border-top: 1px solid var(--gray);
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 1rem 0;
+}
+
+.watched_watchlist p {
+  font-size: 1.6rem;
+  margin-left: 1rem;
+  line-height: 2rem;
+}
+
+.newmatch_anim {
+  position: absolute;
+  top: 0;
+  width: 30%;
+  bottom: 0;
+  left: -40%;
+  background-color: var(--positive);
+  transform: skewX(-15deg);
+  z-index: 5;
+}

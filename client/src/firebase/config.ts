@@ -1,5 +1,5 @@
+import * as firebase from "firebase/app";
 import "firebase/analytics";
-import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/functions";
@@ -16,14 +16,6 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-// if (process.env.NODE_ENV === "production") {
-//   firebase
-//     .firestore()
-//     .enablePersistence()
-//     .catch((err) => console.log(err));
-// }
-
-firebase.analytics();
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 export const cloudFn = firebase.functions();
@@ -31,10 +23,6 @@ export const cloudFn = firebase.functions();
 export const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
 export const arrayRemove = firebase.firestore.FieldValue.arrayRemove;
 
-firebase.firestore().useEmulator("35.220.182.160", 8080);
-firebase.auth().useEmulator("http://35.220.182.160:9099/");
-firebase.functions().useEmulator("35.220.182.160", 5001);
-
-// firebase.firestore().useEmulator("127.0.0.1", 8080);
-// firebase.auth().useEmulator("http://127.0.0.1:9099/");
-// firebase.functions().useEmulator("localhost", 5001);
+// firebase.firestore().settings({ host: "localhost:8080", ssl: false });
+// firebase.auth().useEmulator("http://localhost:9099/");
+// firebase.functions().useFunctionsEmulator("http://35.241.124.138:5001");

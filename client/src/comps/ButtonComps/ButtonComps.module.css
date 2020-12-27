@@ -1,0 +1,218 @@
+/* VOTING */
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  border: 2px solid var(--dark);
+  text-align: center;
+  border-radius: 5rem;
+  color: #000000;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  margin: auto 0;
+  padding: 0 3rem;
+  /* line-height: 5rem; */
+  font-weight: 600;
+  font-size: 2rem;
+  outline: none;
+}
+
+.secondary {
+  border: none;
+}
+
+.btn:disabled {
+  opacity: 0.3;
+}
+
+.btn_up,
+.btn_down {
+  background-color: var(--dark);
+}
+
+.btn_up svg {
+  fill: var(--positive);
+}
+
+.btn_down svg {
+  fill: var(--negative);
+}
+
+.btn_up:active,
+.btn_down:active {
+  background-color: var(--highlight);
+  border-color: var(--highlight);
+}
+
+.btn_forceActive {
+  background-color: var(--highlight);
+  border-color: var(--highlight);
+}
+
+.btn_forceActive svg {
+  fill: var(--dark);
+}
+
+.btn:active {
+  border-color: var(--highlight);
+  color: var(--highlight);
+}
+
+.btn_up:active svg,
+.btn_down:active svg {
+  fill: var(--dark);
+}
+
+.btn_details {
+  width: 100%;
+}
+
+.container_invitebtns .btn {
+  width: fit-content;
+  margin-right: 1rem;
+  padding: 0 2rem;
+}
+
+.container_invitebtns .container_votebtn {
+  margin: 0;
+}
+
+.container_invitebtns {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin: 1rem 0;
+  width: 17rem;
+}
+
+.btn_Back {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.btn_Back svg {
+  fill: var(--light);
+}
+
+.container_votebtn {
+  margin: 0 2rem;
+  height: 100%;
+  display: flex;
+  background: transparent;
+}
+
+.container_detailsbtn {
+  height: 100%;
+  display: flex;
+  flex-grow: 1;
+}
+
+.btn_details:active,
+.btn_outline:active,
+.btn:active {
+  border-color: var(--highlight);
+  color: var(--highlight);
+}
+
+/* FILTER */
+
+.btn_filter {
+  cursor: pointer;
+  fill: var(--dark);
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
+}
+
+.btn_filter svg {
+  margin: 2.5rem 2.5rem 2rem 1rem;
+}
+
+.btn_filter:active {
+  fill: var(--highlight);
+  color: var(--highlight);
+}
+
+/* CLOSE */
+
+.btn_close {
+  fill: var(--light);
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 70px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+}
+
+.btn_close:active {
+  fill: var(--highlight);
+}
+
+/* STREAMING SERVICES */
+
+.btn_streamingservice {
+  border-radius: 3px;
+  background-color: var(--light);
+  width: 96px;
+  height: 44px;
+  margin: 1em 1em 1em 0;
+  cursor: pointer;
+}
+
+.on {
+  border: 2px solid var(--dark);
+}
+
+.off {
+  border: 2px solid var(--transparent);
+}
+
+/* LIST VIEW */
+
+.btn_listview,
+.btn_listviewFriend {
+  padding-left: 2rem;
+  font-size: 2em;
+  height: 6rem;
+  line-height: 6rem;
+  border-bottom: var(--border-bottom);
+  cursor: pointer;
+}
+
+.btn_listviewFriend {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn_listviewFriend .trash {
+  fill: var(--negative);
+  height: 4.5rem;
+  padding-right: 3rem;
+}
+
+.btn_listviewFriend .trash:active {
+  fill: var(--highlight);
+}
+
+.btn_listviewUser {
+  padding: 2rem 0 0 2rem;
+  font-size: 2em;
+  cursor: pointer;
+  border-bottom: var(--border-bottom);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 2rem;
+  overflow-wrap: anywhere;
+}
+
+.btn_listview:active {
+  background-color: var(--gray);
+}
