@@ -101,11 +101,12 @@ const StyledIonContent = styled(IonContent)`
 `;
 
 const Wrapper = styled.div.attrs({
-  className: "ion-padding",
+  className: "ion-padding-horizontal",
 })`
+  padding-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: calc(var(--global-window-inner-height) - 4rem);
+  height: calc(var(--global-window-inner-height) - 2rem);
 `;

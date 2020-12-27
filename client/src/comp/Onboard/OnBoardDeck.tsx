@@ -18,12 +18,12 @@ export default function OnBoardDeck() {
       <StyledCard
         imgUrl={posterUrl[1]}
         key="1"
-        style={{ transform: "scale(0.85)", marginTop: "6rem" }}
+        style={{ transform: "scale(0.85)", top: "30px" }}
       />
       <StyledCard
         imgUrl={posterUrl[2]}
         key="2"
-        style={{ transform: "scale(0.9)", marginTop: "4rem" }}
+        style={{ transform: "scale(0.9)", top: "20px" }}
       />
     </Wrapper>
   );

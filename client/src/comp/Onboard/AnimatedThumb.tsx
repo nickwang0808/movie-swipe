@@ -44,8 +44,8 @@ const StyledThumb = styled(motion.div).attrs({
 })`
   z-index: 1000;
   position: absolute;
-  top: 150px;
-  bottom: 0;
+  top: 25%;
+  /* bottom: 0; */
   height: 128px;
   left: 50%;
   transform: translateX(-50%);
