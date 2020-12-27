@@ -160,7 +160,7 @@ export default function MainScreen({ animationControls, handleVote }: IProps) {
         </DeckWrapper>
       </IonContentWithBG>
 
-      <IonFooter>
+      <IonFooter mode="ios">
         <VoteButtonGroupV2
           handleLike={() => handleVote(true)}
           handleDislike={() => handleVote(false)}

@@ -135,7 +135,7 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
         <div className="ion-margin-bottom" />
       </BGContentWithFadeMask>
 
-      <IonFooter className="ion-margin-top">
+      <IonFooter className="ion-margin-top" mode="ios">
         <VoteButtonGroupV2
           handleLike={() => handleVoteWithDelay(true)}
           handleDislike={() => handleVoteWithDelay(false)}
