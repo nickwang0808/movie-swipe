@@ -39,7 +39,7 @@ export default function FriendsScreen() {
           </p>
 
           {received && received.length > 0 && (
-            <SubContent title="Requests">
+            <SubContent title="Friend Requests">
               {received.map((user) => {
                 return (
                   <PendingInviteItem

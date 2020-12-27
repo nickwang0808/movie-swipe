@@ -18,7 +18,7 @@ export default function MatchTag({ isNew = false }: IProps) {
 
       <TagWrapper>
         <ForceSkew>
-          <div>MATCHED!</div>
+          <div>Matched</div>
         </ForceSkew>
       </TagWrapper>
     </StyledFlexBox>

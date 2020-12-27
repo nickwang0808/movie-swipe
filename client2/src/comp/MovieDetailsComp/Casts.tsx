@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Cast } from "../../MovieTypes/ExtendedMovieDetails";
 import CastCard from "./CastCard";
 import { Title } from "./Providers";
+import DividerTall from "../Misc/DividerTall";
+
 
 interface IProps {
   casts: Cast[] | null;
@@ -12,6 +14,7 @@ export default function Casts({ casts }: IProps) {
   if (!casts) return null;
   return (
     <div className="ion-padding-horizontal">
+      <DividerTall/>
       <Title>Cast</Title>
       <Wrapper>
         {casts.map((cast) => {
