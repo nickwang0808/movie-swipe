@@ -177,6 +177,9 @@ function useAppHelper() {
   const inviteCount = useSelector(
     (state: IAppState) => state.friends.received?.length
   );
+  const mediaListTypePref = useSelector(
+    (state: IAppState) => state.profile.profile?.mediaListTypePref
+  );
 
   const { movieToShow } = useSelector((state: IAppState) => state.detailsState);
 
@@ -185,7 +188,7 @@ function useAppHelper() {
       dispatch(fetchMovie());
     }
     if (movieList.length > 0) {
-      if ("videos" in movieList[0] === false) {
+      if ("videos" in movieList[0] === false && mediaListTypePref) {
         dispatch(populateMovieDetailsThunk());
       }
     }
