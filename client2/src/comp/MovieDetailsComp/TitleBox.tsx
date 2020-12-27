@@ -24,17 +24,17 @@ export default function TitleBox({ movieInfo, onClick }: IProps) {
       <StyledPoster url={movieInfo.poster_path} />
 
       <TitleWrapper>
-        <StyledH1>
+        <h1>
           {"title" in movieInfo ? movieInfo.title : movieInfo.name}
-        </StyledH1>
+        </h1>
 
         {movieInfo.tagline && (
           <>
             <StyledTagLine>{movieInfo.tagline}</StyledTagLine>
-            <Divider />
           </>
         )}
       </TitleWrapper>
+      {/* <Divider /> */}
 
       <StyledMetaDataWrapper>
         <CircleDial number={movieInfo.vote_average * 10} />
@@ -59,7 +59,7 @@ export default function TitleBox({ movieInfo, onClick }: IProps) {
 
 const StyledMetaDataWrapper = styled.div`
   display: flex;
-  /* margin-top: 16px; */
+  margin-top: 16px;
 `;
 
 const StyledPoster = styled.div<{ url: string }>`
@@ -71,7 +71,7 @@ const StyledPoster = styled.div<{ url: string }>`
   background-position: center;
   position: absolute;
   left: 2rem;
-  top: -4em;
+  top: -2em;
   /* top: 1em; */
   right: 0;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3), 0px 10px 20px rgba(0, 0, 0, 0.3);
@@ -90,20 +90,15 @@ const StyledTagLine = styled.p`
   font-weight: normal;
   font-size: 1.75rem;
   line-height: 125%;
-`;
-
-const StyledH1 = styled.h1`
-  margin-bottom: 0;
-  padding-bottom: 0;
+  padding-top: 0.5rem;
 `;
 
 const TitleWrapper = styled.div`
-  padding: 1em 0;
+  padding: 0 ;
   font-weight: 600;
 
   & h1 {
-    padding-left: 0;
-    padding: 1rem 0;
+    padding: 1rem 0 0 0;
     color: var(--dark);
     box-shadow: none;
     background: rgba(0, 0, 0, 0);
@@ -114,7 +109,7 @@ const Wrapper = styled.div`
   padding: 0 2rem;
   position: relative;
   padding-left: calc(var(--poster_width) + 4rem);
-  padding-bottom: 3rem;
+  // padding-bottom: 3rem;
   min-height: calc(var(--poster_height) - 4rem);
   background-color: rgba(0, 0, 0, 0);
 `;

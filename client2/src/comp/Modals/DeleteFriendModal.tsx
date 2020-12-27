@@ -19,10 +19,10 @@ export default function DeleteFriendModal({
   if (!friend) return null;
   return (
     <IonPopover isOpen={showPopOver} onDidDismiss={() => closeAction()}>
-      <h1>Delete Friend</h1>
+      <h1>Remove Friend</h1>
       <StyledBodyWrapper>
         <p>
-          You are about to delete your friend&nbsp;
+          You are about to remove your friend&nbsp;
           <strong>{friend.displayName || friend.email}</strong>. are you sure?
         </p>
         <DeleteButtonWrapper>
@@ -32,7 +32,7 @@ export default function DeleteFriendModal({
               closeAction();
             }}
           >
-            Delete Friend
+            Remove Friend
           </StyledButton>
         </DeleteButtonWrapper>
       </StyledBodyWrapper>

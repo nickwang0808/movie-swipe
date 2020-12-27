@@ -45,7 +45,8 @@ const StyledSegment = styled(IonSegment)`
 const StyledSegButton = styled(IonSegmentButton)`
   --ion-background-color: var(--highlight);
   --color-checked: white;
-  --border-radius: 3px;
+  --border-radius: 2px;
+  margin: 1px;
 
   & ion-label {
     font-size: 1.8rem;

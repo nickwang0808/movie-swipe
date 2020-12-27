@@ -116,6 +116,8 @@ const AdditionALInfoWrapper = styled.div`
 
   & h3 {
     color: white;
+    word-break: break-word;
+
   }
 
   & img {

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import { baseUrlLogo } from "../../Helper/TmdbBaseUrl";
 import { Btn } from "../../theme/BaseComp";
+import DividerTall from "../Misc/DividerTall";
 
 interface IProps {
   providers: string[] | null;
@@ -12,6 +13,7 @@ export default function Providers({ providers, providerLink }: IProps) {
   if (!providers) return null;
   return (
     <div className="ion-padding">
+      <DividerTall/>
       <Title>Available On:</Title>
       <Wrapper>
         {providers.map((logo) => {

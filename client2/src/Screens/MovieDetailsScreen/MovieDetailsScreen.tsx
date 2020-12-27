@@ -2,6 +2,7 @@ import { IonFooter, IonPopover } from "@ionic/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import DividerTall from "../../comp/Misc/DividerTall";
 import VoteButtonGroupV2 from "../../comp/ButtonGroups/VoteButtonGroupV2";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import WatchedWithWho from "../../comp/Modals/WatchedWithWho";
@@ -97,13 +98,14 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
   let matchOrWatched;
   if ((liked && liked.matchedWith.length > 0) || watched) {
     matchOrWatched = (
+      <><DividerTall />
       <MatchedWatchedWithBanner
         openPopOver={() => setPopOver(true)}
         matches={liked?.matchedWith}
         watchedWith={watched?.watchedWith}
         movieId={movieToShow as number}
-        handleWatched={handleWatched}
-      />
+        handleWatched={handleWatched} />
+        </>
     );
   }
 
@@ -123,8 +125,9 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
           backDrop={newMovieInfo.backdrop_path || ""}
         />
         <TitleBox movieInfo={newMovieInfo} onClick={closeDetailsModal} />
-        <div className="ion-padding-horizontal ion-padding-bottom">
+        <div className="ion-padding-horizontal">
           {matchOrWatched}
+          <DividerTall/>
           <p>{newMovieInfo.overview}</p>
         </div>
         <Providers
