@@ -14,7 +14,7 @@ export default function newUserDBInit(user: IUserAuth) {
           ...user,
           genrePreference: genrePreference.sort(), // sort it to for the update compare function
           mediaListTypePref: {
-            media: "tv",
+            media: "movie",
             catagories: "popular",
           },
         };
@@ -44,7 +44,7 @@ export async function newAnonUserDBInit(uid: string) {
             ...user,
             genrePreference: genrePreference.sort(), // sort it to for the update compare function
             mediaListTypePref: {
-              media: "tv",
+              media: "movie",
               catagories: "popular",
             },
           };

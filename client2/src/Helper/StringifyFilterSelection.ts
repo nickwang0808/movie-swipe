@@ -5,7 +5,7 @@ export function StringifyFilterSelection(input: SelectTvs | SelectMovies) {
     const stringify = `${input.media},${input.catagories}`;
     return stringify;
   } catch {
-    return "tv,popular";
+    return "movie,popular";
   }
 }
 export function objectifyFilterSelection(

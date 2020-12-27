@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import { auth } from "../../firebase/config";
 import useGetWIndowsSizing from "../../Helper/useGetWIndowsSizing";
@@ -32,6 +33,11 @@ export default function AuthChecker({
   const authState = useSelector((state: IAppState) => state.auth);
 
   const [showLogin, setShowLogin] = useState(false);
+  const [innerWidth, setInnerWidth] = useState<number>();
+
+  useLayoutEffect(() => {
+    setInnerWidth(window.innerWidth);
+  }, []);
 
   let screen;
   if (!showLogin) {
@@ -41,7 +47,34 @@ export default function AuthChecker({
   }
 
   if (!authState.isLoaded) return <CenterLoader />;
-  // if (!authState.authenticated) return <OnBoardScreenOne />;
+  if (innerWidth && innerWidth > 599) return <ScreenSize />;
   if (!authState.authenticated) return screen;
   return <>{children}</>;
 }
+
+function ScreenSize() {
+  return (
+    <StyledDiv>
+      <p>
+        Movie Sync only works on mobile, please hit F12 and turn on mobile mode
+        or use a mobile device. We are a 2 man team design + dev, so give us a
+        break! :).
+      </p>
+    </StyledDiv>
+  );
+}
+const StyledDiv = styled.div`
+  height: 100vh;
+  width: 100vw;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & p {
+    font-size: 4rem;
+    font-weight: 500;
+    line-height: 6rem;
+    padding: 0 2rem;
+  }
+`;

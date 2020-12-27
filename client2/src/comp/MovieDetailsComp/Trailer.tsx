@@ -22,17 +22,7 @@ export default function Trailer({ trailerUrl, backDrop }: IProps) {
     );
   }
 
-  return (
-    <TrailerWrapper
-    // animate={{ opacity: 1 }}
-    // initial={{ opacity: 0 }}
-    // transition={{
-    //   duration: 1,
-    // }}
-    >
-      {asset}
-    </TrailerWrapper>
-  );
+  return <TrailerWrapper>{asset}</TrailerWrapper>;
 }
 
 const TrailerWrapper = styled.div`
@@ -46,6 +36,7 @@ const TrailerWrapper = styled.div`
     top: 0;
     width: 100%;
     height: calc(56vw);
+    max-height: 35vh;
     border: 0;
   }
 `;
