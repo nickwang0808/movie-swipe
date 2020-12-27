@@ -1,8 +1,0 @@
-.card_container {
-  position: absolute;
-  width: 100vw;
-  height: var(--poster-height);
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-}
