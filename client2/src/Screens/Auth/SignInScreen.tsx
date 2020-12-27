@@ -1,55 +1,104 @@
-import { IonContent, IonPage } from "@ionic/react";
+import { IonContent, IonPage, isPlatform } from "@ionic/react";
 import firebase from "firebase/app";
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import styled from "styled-components/macro";
 import MainHeader from "../../comp/Layout/MainHeader";
 import { auth } from "../../firebase/config";
-import newUserDBInit from "../../Helper/newUserDBInit";
+import newUserDBInit, { userInfoUpgrade } from "../../Helper/newUserDBInit";
 import { signInError } from "../../redux/Auth/AuthReducer";
 import { Btn } from "../../theme/BaseComp";
 import SignInForm from "./SignInForm";
 
+const isMobileWeb = isPlatform("mobileweb");
+const isDeskTop = isPlatform("desktop");
+
 export default function SignInScreen() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const isAnonymous = auth.currentUser?.isAnonymous;
 
   const loginWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth
-      .signInWithPopup(provider)
-      .then((result) => {
-        if (result.user) {
-          const {
-            displayName,
-            email,
-            isAnonymous,
-            photoURL,
-            uid,
-          } = result.user;
-          newUserDBInit({ displayName, email, isAnonymous, photoURL, uid });
-        }
-      })
-      .catch((err) => dispatch(signInError(err)));
+
+    if (
+      isAnonymous &&
+      auth.currentUser !== null &&
+      (isMobileWeb || isDeskTop)
+    ) {
+      auth.currentUser
+        .linkWithPopup(provider)
+        .then(function (result) {
+          // Accounts successfully linked.
+          var credential = result.credential;
+          var user = result.user;
+          // ...
+        })
+        .catch(function (error) {
+          // Handle Errors here.
+          // ...
+        });
+    } else {
+      auth
+        .signInWithPopup(provider)
+        .then((result) => {
+          if (result.user) {
+            const {
+              displayName,
+              email,
+              isAnonymous,
+              photoURL,
+              uid,
+            } = result.user;
+            newUserDBInit({ displayName, email, isAnonymous, photoURL, uid });
+          }
+        })
+        .catch((err) => dispatch(signInError(err)));
+    }
   };
 
   const handleSignInEmail = (email: string, password: string) => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        newUserDBInit({
-          displayName: email,
-          email,
-          isAnonymous: false,
-          photoURL: "",
-          uid: result.user?.uid as string,
+    if (
+      isAnonymous &&
+      auth.currentUser !== null &&
+      (isMobileWeb || isDeskTop)
+    ) {
+      const credential = firebase.auth.EmailAuthProvider.credential(
+        email,
+        password
+      );
+      auth.currentUser
+        .linkWithCredential(credential)
+        .then(async (usercred) => {
+          var user = usercred.user;
+          if (user) {
+            await userInfoUpgrade(user.email as string, user.email as string);
+            window.location.reload();
+          }
+        })
+        .catch(function (error) {
+          console.log("Account linking error", error);
         });
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorMessage = error.message;
-        console.log(errorMessage);
-        // setError(errorMessage);
-      });
+    } else {
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((result) => {
+          newUserDBInit({
+            displayName: email,
+            email,
+            isAnonymous: false,
+            photoURL: "",
+            uid: result.user?.uid as string,
+          });
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          const errorMessage = error.message;
+          console.log(errorMessage);
+          // setError(errorMessage);
+        });
+    }
   };
 
   return (

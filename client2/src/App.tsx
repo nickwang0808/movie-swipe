@@ -30,6 +30,7 @@ import BottomNavIcon3 from "./Assets/svg/BottomaNavIcon3.svg";
 import Badge from "./comp/Misc/Badge";
 import FilterMenu from "./comp/Misc/FilterMenu/FilterMenu";
 import { CenterLoader } from "./comp/Misc/LoadingSpinner";
+import { auth } from "./firebase/config";
 import useAllListener from "./firebase/FirestoreListeners/useAllListener";
 import useNotificationListener from "./firebase/FirestoreListeners/useNotificationListener";
 import useAnimateDeck from "./Helper/useAnimateDeck";
@@ -38,6 +39,7 @@ import { IVotedMovies, IVotedMTvs } from "./MovieTypes";
 import { IExtendedMovieDetails } from "./MovieTypes/ExtendedMovieDetails";
 import fetchMovie from "./redux/MovieList/fetchMovieThunk";
 import { populateMovieDetailsThunk } from "./redux/MovieList/populateMovieDetailsThunk";
+import SignInScreen from "./Screens/Auth/SignInScreen";
 import MainScreen from "./Screens/MainScreen/MainScreen";
 import MovieDetailsScreen from "./Screens/MovieDetailsScreen/MovieDetailsScreen";
 import TrailerModalScreen from "./Screens/MovieDetailsScreen/TrailerModalScreen";
@@ -143,6 +145,17 @@ const App: React.FC = () => {
               exact
               path="/profile/disliked"
               render={() => <DislikedList />}
+            />
+            <Route
+              exact
+              path="/profile/login"
+              render={() =>
+                auth.currentUser?.isAnonymous ? (
+                  <SignInScreen />
+                ) : (
+                  <Redirect to="/profile" />
+                )
+              }
             />
           </IonRouterOutlet>
         </IonTabs>

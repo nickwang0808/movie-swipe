@@ -1,8 +1,12 @@
 import { SelectMovies, SelectTvs } from "../redux/Profile/profileReducer";
 
 export function StringifyFilterSelection(input: SelectTvs | SelectMovies) {
-  const stringify = `${input.media},${input.catagories}`;
-  return stringify;
+  try {
+    const stringify = `${input.media},${input.catagories}`;
+    return stringify;
+  } catch {
+    return "tv,popular";
+  }
 }
 export function objectifyFilterSelection(
   input: string

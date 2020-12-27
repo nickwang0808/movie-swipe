@@ -15,8 +15,16 @@ export default function OnBoardDeck() {
       <AnimatedThumb />
 
       <StyledMotionCard imgUrl={posterUrl[0]} key="0" />
-      <StyledCard imgUrl={posterUrl[1]} key="1" />
-      <StyledCard imgUrl={posterUrl[2]} key="2" />
+      <StyledCard
+        imgUrl={posterUrl[1]}
+        key="1"
+        style={{ transform: "scale(0.85)", marginTop: "6rem" }}
+      />
+      <StyledCard
+        imgUrl={posterUrl[2]}
+        key="2"
+        style={{ transform: "scale(0.9)", marginTop: "4rem" }}
+      />
     </Wrapper>
   );
 }
@@ -34,6 +42,8 @@ const CardBase = css`
   position: absolute;
   top: 0px;
 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
   background-position: center;
   background-size: cover;
 `;
@@ -50,9 +60,15 @@ const StyledMotionCard = styled(motion.div).attrs({
 })<{ imgUrl: string }>`
   ${CardBase}
   background-image: url(${(props) => baseUrl + props.imgUrl});
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5),
+    0px 11px 36px rgba(63, 44, 44, 0.5);
+
+z-index: 100;
+  
 `;
 
 const StyledCard = styled.div<{ imgUrl: string }>`
   ${CardBase}
   background-image: url(${(props) => baseUrl + props.imgUrl});
+
 `;

@@ -66,15 +66,31 @@ export default function ProfileMainScreen() {
     );
   } else {
     return (
-      <IonPage>
-        <MainHeader title="Profile" disableBackButton />
-        <IonContent>
-          <ProfileItem title="SignIn or Register" />
-          <ProfileItem title="About Movie Sync" />
-          <Separator />
-          <ProfileItem title="Delete Account" />
-        </IonContent>
-      </IonPage>
+      <>
+        <DeleteAccountModal
+          closeAction={() => setShowDelAccountModal(false)}
+          showPopOver={showDelAccountModal}
+        />
+
+        <IonPage>
+          <MainHeader title="Profile" disableBackButton />
+          <IonContent>
+            <ProfileItem
+              title="SignIn or Register"
+              action={() => history.push("/profile/login")}
+            />
+            <ProfileItem
+              title="About Movie Sync"
+              action={() => history.push("/profile/about")}
+            />
+            <Separator />
+            <ProfileItem
+              title="Delete Account"
+              action={() => setShowDelAccountModal(true)}
+            />
+          </IonContent>
+        </IonPage>
+      </>
     );
   }
 }
