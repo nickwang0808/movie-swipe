@@ -211,7 +211,12 @@ ion-title {
 /* unable to use this in styled comp for some reason */
 ion-tab-button {
   --color-selected: var(--highlight);
+  --color: black;
   font-size: 1.8rem;
   font-weight: 600;
   --ripple-color: var(--highlight);
+}
+
+ion-tab-bar {
+  height: 57px;
 }
