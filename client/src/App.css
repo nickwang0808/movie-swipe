@@ -114,6 +114,8 @@ a {
       ) * 0.65
   );
   --poster-width-onboarding: calc(var(--poster-height-onboarding) * 0.65);
+
+  --ion-color-primary: var(--highlight);
 }
 
 .loader {

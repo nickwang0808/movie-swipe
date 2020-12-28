@@ -2,16 +2,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components/macro";
 import SolidThumbUp from "../../../Assets/svg/SolidThumbUp";
+import watchedMovie from "../../../firebase/firestoreOperations/watchedMovie";
 import { IProfileDetails } from "../../../redux/Profile/profileReducer";
 import { Btn } from "../../../theme/BaseComp";
+import WatchedWithWho from "../../Modals/WatchedWithWho";
 import Matches from "./Matches";
 
 interface IProps {
   matches?: IProfileDetails[];
   watchedWith?: IProfileDetails[];
   movieId: string | number;
-  openPopOver: () => void;
-  handleWatched: (arg: string[]) => void;
 }
 
 const Ease = [0.16, 1, 0.3, 1];
@@ -20,9 +20,10 @@ export default function MatchedWatchedWithBanner({
   matches,
   watchedWith,
   movieId,
-  openPopOver,
-  handleWatched,
 }: IProps) {
+  const handleWatched = (matchedWithIds: string[]) =>
+    watchedMovie(matchedWithIds, movieId as number);
+
   return (
     <>
       <AnimatePresence>
@@ -63,21 +64,25 @@ export default function MatchedWatchedWithBanner({
             {matches && <Matches matches={matches} />}
           </Wrapper>
         </div>
-        {matches && (
-          <StyledButton
-            key="watchedButton" // don't remove this
-            // disabled={disabledWatchedButton}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.5, ease: Ease }}
-            onClick={() => {
-              matches.length > 1
-                ? openPopOver()
-                : handleWatched([matches[0].uid]);
-            }}
-          >
-            {matches.length > 1 ? "Watched with..." : "We've watched this!"}
-          </StyledButton>
-        )}
+        {matches &&
+          (matches.length > 1 ? (
+            <WatchedWithWho
+              handleWatched={handleWatched}
+              matches={matches as IProfileDetails[]}
+            />
+          ) : (
+            <StyledButton
+              key="watchedButton" // don't remove this
+              // disabled={disabledWatchedButton}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.5, ease: Ease }}
+              onClick={() => {
+                handleWatched([matches[0].uid]);
+              }}
+            >
+              {matches.length > 1 ? "Watched with..." : "We've watched this!"}
+            </StyledButton>
+          ))}
       </AnimatePresence>
     </>
   );

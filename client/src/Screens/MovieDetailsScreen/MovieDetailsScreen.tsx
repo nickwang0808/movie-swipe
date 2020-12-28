@@ -1,18 +1,16 @@
-import { IonFooter, IonPopover } from "@ionic/react";
-import React, { useState } from "react";
+import { IonFooter } from "@ionic/react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import DividerTall from "../../comp/Misc/DividerTall";
 import VoteButtonGroupV2 from "../../comp/ButtonGroups/VoteButtonGroupV2";
+import DividerTall from "../../comp/Misc/DividerTall";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
-import WatchedWithWho from "../../comp/Modals/WatchedWithWho";
 import Casts from "../../comp/MovieDetailsComp/Casts";
 import MatchedWatchedWithBanner from "../../comp/MovieDetailsComp/MatchWatchBanner/MatchedWatchedWithBanner";
 import Providers from "../../comp/MovieDetailsComp/Providers";
 import TitleBox from "../../comp/MovieDetailsComp/TitleBox";
 import Trailer from "../../comp/MovieDetailsComp/Trailer";
 import updateVote from "../../firebase/firestoreOperations/updateVote";
-import watchedMovie from "../../firebase/firestoreOperations/watchedMovie";
 import parseProviderLogos, {
   parseProviderLink,
 } from "../../Helper/parseProviderLogo";
@@ -24,7 +22,6 @@ import {
 } from "../../MovieTypes";
 import { IExtendedMovieDetails } from "../../MovieTypes/ExtendedMovieDetails";
 import { setModalToShow } from "../../redux/DetailsScreenState/DetailsScreenReducer";
-import { IProfileDetails } from "../../redux/Profile/profileReducer";
 import { IAppState, store } from "../../store";
 import { IonContentWithBG } from "../MainScreen/MainScreen";
 
@@ -75,11 +72,6 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
     newMovieInfo = null;
   }
 
-  const [popOver, setPopOver] = useState(false);
-
-  const handleWatched = (matchedWithIds: string[]) =>
-    watchedMovie(matchedWithIds, movieToShow as number);
-
   const closeDetailsModal = () => dispatch(setModalToShow(null));
 
   const handleVoteWithDelay = (isLike: boolean) => {
@@ -98,14 +90,14 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
   let matchOrWatched;
   if ((liked && liked.matchedWith.length > 0) || watched) {
     matchOrWatched = (
-      <><DividerTall />
-      <MatchedWatchedWithBanner
-        openPopOver={() => setPopOver(true)}
-        matches={liked?.matchedWith}
-        watchedWith={watched?.watchedWith}
-        movieId={movieToShow as number}
-        handleWatched={handleWatched} />
-        </>
+      <>
+        <DividerTall />
+        <MatchedWatchedWithBanner
+          matches={liked?.matchedWith}
+          watchedWith={watched?.watchedWith}
+          movieId={movieToShow as number}
+        />
+      </>
     );
   }
 
@@ -113,13 +105,6 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
   return (
     <>
       <BGContentWithFadeMask fullscreen bg={newMovieInfo.poster_path}>
-        <IonPopover isOpen={popOver} onDidDismiss={() => setPopOver(false)}>
-          <WatchedWithWho
-            handleWatched={handleWatched}
-            closePopUp={() => setPopOver(false)}
-            matches={liked?.matchedWith as IProfileDetails[]}
-          />
-        </IonPopover>
         <Trailer
           trailerUrl={newMovieInfo.videos.results[0]?.key}
           backDrop={newMovieInfo.backdrop_path || ""}
@@ -127,7 +112,7 @@ export default function MovieDetailsScreen({ handleVote }: IProps) {
         <TitleBox movieInfo={newMovieInfo} onClick={closeDetailsModal} />
         <div className="ion-padding-horizontal">
           {matchOrWatched}
-          <DividerTall/>
+          <DividerTall />
           <p>{newMovieInfo.overview}</p>
         </div>
         <Providers
