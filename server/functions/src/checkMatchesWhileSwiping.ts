@@ -3,8 +3,9 @@ import { arrayUnion, collectionName, db } from ".";
 import extractProfile from "./HelperFunctions/extractProfile";
 import { IVotedMovies } from "./MovieTypes";
 
-export const checkMatchesWhileSwiping = functions.firestore
-  .document(
+export const checkMatchesWhileSwiping = functions
+  .runWith({ maxInstances: 50 })
+  .firestore.document(
     `${collectionName.User}/{myUid}/${collectionName.Liked}/{likedMovie}`
   )
   .onCreate(async (snap, context) => {

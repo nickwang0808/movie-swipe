@@ -1,8 +1,9 @@
 import * as functions from "firebase-functions";
 import { collectionName, db } from ".";
 
-export const deleteFriend = functions.firestore
-  .document("Users/{myUid}/Friends/{friendUid}")
+export const deleteFriend = functions
+  .runWith({ maxInstances: 50 })
+  .firestore.document("Users/{myUid}/Friends/{friendUid}")
   .onDelete(async (snap, context) => {
     console.log("test");
     const friendUid = context.params.friendUid as string;

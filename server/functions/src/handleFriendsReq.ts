@@ -2,8 +2,9 @@ import * as functions from "firebase-functions";
 import { collectionName, db } from ".";
 import { IProfileDetails } from "./MovieTypes";
 
-export const acceptRequest = functions.firestore
-  .document("Users/{myUid}/Friends/{friendUid}")
+export const acceptRequest = functions
+  .runWith({ maxInstances: 50 })
+  .firestore.document("Users/{myUid}/Friends/{friendUid}")
   .onCreate(async (snap, context) => {
     console.log("test");
     const userToUpdate = snap.data() as IProfileDetails;

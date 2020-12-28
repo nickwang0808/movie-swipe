@@ -1,8 +1,9 @@
 import * as functions from "firebase-functions";
 import { adminAuth } from "./index";
 
-export const deleteAllAccount = functions.https.onCall(
-  async (data, context) => {
+export const deleteAllAccount = functions
+  .runWith({ maxInstances: 50 })
+  .https.onCall(async (data, context) => {
     if (context.auth) {
       // List batch of users, 1000 at a time.
       adminAuth()
@@ -25,5 +26,4 @@ export const deleteAllAccount = functions.https.onCall(
         "The function must be called while authenticated."
       );
     }
-  }
-);
+  });
