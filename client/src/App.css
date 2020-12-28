@@ -114,21 +114,7 @@ a {
       ) * 0.65
   );
   --poster-width-onboarding: calc(var(--poster-height-onboarding) * 0.65);
-
-  /* --ion-color-header: linear-gradient(
-    266.71deg,
-    #29323c 11.43%,
-    #485563 89.74%
-  ); */
 }
-
-/* .ion-color-header {
-  --ion-color-base: var(--ion-color-header);
-}
-
-ion-title {
-  font-weight: 600;
-} */
 
 .loader {
   height: 80px;
@@ -160,55 +146,12 @@ ion-title {
   fill: linear-gradient(266.71deg, #29323c 11.43%, #485563 89.74%);
 }
 
-/* SMALL MODIFIERS */
-
-/* .marginBottom2 {
-  margin-bottom: 2rem;
-} */
-
-/* .marginTop2 {
-  margin-top: 2rem;
-} */
-
-/* .marginTop6 {
-  margin-top: 6rem;
-} */
-
-/* .marginSides2 {
-  margin-left: 2rem;
-  margin-right: 2rem;
-} */
-
-/* .container_subcontent {
-  margin-bottom: 2rem;
-} */
-
 .listview_separator_full {
   height: 1rem;
   width: 100vw;
   background-color: var(--gray);
 }
 
-/* can't do this in styled component, polyfill for now */
-/* .Bottom_nav_active,
-.Bottom_nav_active * {
-  color: var(--highlight);
-  fill: var(--highlight);
-} */
-
-/* .top_nav_active {
-  background-color: var(--highlight);
-  display: flex;
-  color: var(--light) !important;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  border-radius: 23px;
-  margin: 1px;
-  height: calc(100% - 2px);
-} */
-
-/* unable to use this in styled comp for some reason */
 ion-tab-button {
   --color-selected: var(--highlight);
   --color: black;
