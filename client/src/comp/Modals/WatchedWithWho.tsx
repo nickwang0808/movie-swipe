@@ -19,8 +19,8 @@ IWatchedWithWho) {
       <IonSelect
         value=""
         multiple={true}
-        cancelText="close"
-        okText="Okay!"
+        cancelText="Cancel"
+        okText="Confirm"
         onIonChange={(e) => {
           const uids = e.detail.value as string[];
           if (uids.length > 0) {
@@ -29,7 +29,7 @@ IWatchedWithWho) {
         }}
       >
         {matches.map((match) => (
-          <IonSelectOption value={match.uid}>
+          <IonSelectOption color="secondary" value={match.uid}>
             {match.displayName || match.email || match.uid}
           </IonSelectOption>
         ))}

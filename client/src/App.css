@@ -116,6 +116,7 @@ a {
   --poster-width-onboarding: calc(var(--poster-height-onboarding) * 0.65);
 
   --ion-color-primary: var(--highlight);
+  --ion-color-secondary: var(--dark);
 }
 
 .loader {
@@ -164,4 +165,12 @@ ion-tab-button {
 
 ion-tab-bar {
   height: 57px;
+}
+
+.select-interface-option[aria-checked="true"]
+  .alert-checkbox-icon.sc-ion-alert-md,
+.select-interface-option[aria-checked="true"]
+  .alert-checkbox-icon.sc-ion-alert-ios {
+  border-color: var(--dark);
+  background: var(--dark);
 }
