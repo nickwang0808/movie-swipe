@@ -2,10 +2,11 @@ import {
   IonContent,
   IonFooter,
   useIonViewDidEnter,
+  useIonViewWillEnter,
   useIonViewWillLeave,
 } from "@ionic/react";
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import VoteButtonGroupV2 from "../../comp/ButtonGroups/VoteButtonGroupV2";
@@ -44,13 +45,13 @@ export default function MainScreen({ animationControls, handleVote }: IProps) {
 
   const { delNotificationHOF } = useMatchModalControl(notification);
 
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     if (movieList.length > 0) {
       if ("videos" in movieList[0] === false) {
         dispatch(populateMovieDetailsThunk());
       }
     }
-  }, [movieList, dispatch]);
+  });
 
   const {
     setStartPosition,

@@ -20,10 +20,10 @@ export default function AuthChecker({
 
   useGetWIndowsSizing();
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(async (user) => {
       if (user) {
         const { displayName, email, isAnonymous, photoURL, uid } = user;
-        newUserDBInit(user);
+        await newUserDBInit({ displayName, email, isAnonymous, photoURL, uid });
         dispatch(
           userSignedIn({ displayName, email, isAnonymous, photoURL, uid })
         );

@@ -5,23 +5,25 @@ import { IUserAuth, signInError } from "../redux/Auth/AuthReducer";
 import { IProfileDetails } from "../redux/Profile/profileReducer";
 import { store } from "../store";
 
-export default function newUserDBInit(user: IUserAuth) {
+export default async function newUserDBInit(user: IUserAuth) {
   const docRef = db.collection(collectionName.User).doc(user.uid);
-  db.runTransaction(async (t) => {
-    const doc = await t.get(docRef);
-    if (!doc.exists) {
-      const profile: IProfileDetails = {
-        ...user,
-        genrePreference: genrePreference.sort(), // sort it to for the update compare function
-        mediaListTypePref: {
-          media: "movie",
-          catagories: "popular",
-        },
-      };
-      // proceed
-      t.set(docRef, profile);
-    }
-  }).catch((err) => store.dispatch(signInError(err)));
+  await db
+    .runTransaction(async (t) => {
+      const doc = await t.get(docRef);
+      if (!doc.exists) {
+        const profile: IProfileDetails = {
+          ...user,
+          genrePreference: genrePreference.sort(), // sort it to for the update compare function
+          mediaListTypePref: {
+            media: "movie",
+            catagories: "popular",
+          },
+        };
+
+        t.set(docRef, profile);
+      }
+    })
+    .catch((err) => store.dispatch(signInError(err)));
 }
 
 export async function newAnonUserDBInit(uid: string) {
