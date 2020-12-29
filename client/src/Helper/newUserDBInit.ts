@@ -7,21 +7,20 @@ import { store } from "../store";
 
 export default function newUserDBInit(user: IUserAuth) {
   const docRef = db.collection(collectionName.User).doc(user.uid);
-  db.runTransaction((transactions) => {
-    return transactions.get(docRef).then((doc) => {
-      if (!doc.exists) {
-        const profile: IProfileDetails = {
-          ...user,
-          genrePreference: genrePreference.sort(), // sort it to for the update compare function
-          mediaListTypePref: {
-            media: "movie",
-            catagories: "popular",
-          },
-        };
-        // proceed
-        docRef.set(profile);
-      }
-    });
+  db.runTransaction(async (t) => {
+    const doc = await t.get(docRef);
+    if (!doc.exists) {
+      const profile: IProfileDetails = {
+        ...user,
+        genrePreference: genrePreference.sort(), // sort it to for the update compare function
+        mediaListTypePref: {
+          media: "movie",
+          catagories: "popular",
+        },
+      };
+      // proceed
+      t.set(docRef, profile);
+    }
   }).catch((err) => store.dispatch(signInError(err)));
 }
 

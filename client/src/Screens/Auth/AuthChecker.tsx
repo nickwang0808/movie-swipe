@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { CenterLoader } from "../../comp/Misc/LoadingSpinner";
 import { auth } from "../../firebase/config";
+import newUserDBInit from "../../Helper/newUserDBInit";
 import useGetWIndowsSizing from "../../Helper/useGetWIndowsSizing";
 import { userNotSigned, userSignedIn } from "../../redux/Auth/AuthReducer";
 import { IAppState } from "../../store";
@@ -22,6 +23,7 @@ export default function AuthChecker({
     auth.onAuthStateChanged((user) => {
       if (user) {
         const { displayName, email, isAnonymous, photoURL, uid } = user;
+        newUserDBInit(user);
         dispatch(
           userSignedIn({ displayName, email, isAnonymous, photoURL, uid })
         );

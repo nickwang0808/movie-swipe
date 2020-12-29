@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Movie Sync</string>
+    <string name="title_activity_main">Movie Sync</string>
+    <string name="package_name">movie.sync</string>
+    <string name="custom_url_scheme">movie.sync</string>
+</resources>

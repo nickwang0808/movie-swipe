@@ -1,0 +1,21 @@
+{
+  "appId": "movie.sync",
+  "appName": "Movie Sync",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    },
+    "CapacitorFirebaseAuth": {
+      "providers": ["google.com", "twitter.com", "facebook.com", "phone"],
+      "languageCode": "en",
+      "nativeAuth": false,
+      "permissions": {
+        "google": ["profile"]
+      }
+    }
+  },
+  "cordova": {}
+}
