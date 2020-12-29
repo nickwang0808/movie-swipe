@@ -1,4 +1,5 @@
 import { IonApp, IonContent, isPlatform } from "@ionic/react";
+import { cfaSignIn } from "capacitor-firebase-auth";
 import firebase from "firebase/app";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -25,22 +26,16 @@ export default function OnBoardScreenOne({ setShowLogin }: IProps) {
   };
 
   const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth
-      .signInWithPopup(provider)
-      .then((result) => {
-        if (result.user) {
-          const {
-            displayName,
-            email,
-            isAnonymous,
-            photoURL,
-            uid,
-          } = result.user;
+    try {
+      cfaSignIn("google.com").subscribe((user: firebase.User) => {
+        if (user) {
+          const { displayName, email, isAnonymous, photoURL, uid } = user;
           newUserDBInit({ displayName, email, isAnonymous, photoURL, uid });
         }
-      })
-      .catch((err) => dispatch(signInError(err)));
+      });
+    } catch (err) {
+      dispatch(signInError(err));
+    }
   };
 
   return (

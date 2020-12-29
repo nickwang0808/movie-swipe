@@ -5,7 +5,7 @@ import {
   useIonViewWillLeave,
 } from "@ionic/react";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import VoteButtonGroupV2 from "../../comp/ButtonGroups/VoteButtonGroupV2";
@@ -23,6 +23,7 @@ import {
   setModalToShow,
   setTrailerToShow,
 } from "../../redux/DetailsScreenState/DetailsScreenReducer";
+import { populateMovieDetailsThunk } from "../../redux/MovieList/populateMovieDetailsThunk";
 import { IAppState } from "../../store";
 import MainScreenMisc from "./MainScreenMisc";
 
@@ -42,6 +43,14 @@ export default function MainScreen({ animationControls, handleVote }: IProps) {
   );
 
   const { delNotificationHOF } = useMatchModalControl(notification);
+
+  useEffect(() => {
+    if (movieList.length > 0) {
+      if ("videos" in movieList[0] === false) {
+        dispatch(populateMovieDetailsThunk());
+      }
+    }
+  }, [movieList, dispatch]);
 
   const {
     setStartPosition,
