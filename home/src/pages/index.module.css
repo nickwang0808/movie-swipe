@@ -1,3 +1,7 @@
+body a {
+  text-decoration: none;
+}
+
 .container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -154,6 +158,8 @@
           box-sizing: border-box;
   border-radius: 30px;
   font-size: 16px;
+  text-decoration: none;
+  color: black;
 }
 
 .contact:hover {

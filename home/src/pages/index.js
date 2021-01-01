@@ -35,11 +35,13 @@ export default function Home() {
             }
           >
             Get it on
-            <img src="googleplay.png" alt="google play icoc" />
+            <img src="googleplay.png" alt="google play icon" />
           </div>
         </div>
         <div className={style.footer}>
-          <div className={style.contact}>Say Hello</div>
+          <a className={style.contact} href="mailto:hello@movie-sync.com">
+            Say Hello
+          </a>
           <div className={style.links}>
             <Link className={style.links} href="terms">
               Terms of Use and Privacy Policy
