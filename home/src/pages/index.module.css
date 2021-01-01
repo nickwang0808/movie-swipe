@@ -64,6 +64,7 @@
   color: white;
   width: 287px;
   font-size: 20px;
+  text-decoration: none;
 }
 
 .button + div {
@@ -173,4 +174,3 @@
           align-items: center;
   text-align: center;
 }
-/*# sourceMappingURL=index.module.css.map */
