@@ -37,6 +37,7 @@ import useAnimateDeck from "./Helper/useAnimateDeck";
 import useGetWIndowsSizing from "./Helper/useGetWIndowsSizing";
 import { IVotedMovies, IVotedMTvs } from "./MovieTypes";
 import { IExtendedMovieDetails } from "./MovieTypes/ExtendedMovieDetails";
+import { setModalToShow } from "./redux/DetailsScreenState/DetailsScreenReducer";
 import fetchMovie from "./redux/MovieList/fetchMovieThunk";
 import { populateMovieDetailsThunk } from "./redux/MovieList/populateMovieDetailsThunk";
 import SignInScreen from "./Screens/Auth/SignInScreen";
@@ -54,7 +55,7 @@ const App: React.FC = () => {
   useGetWIndowsSizing();
   useAllListener();
   useNotificationListener();
-
+  const dispatch = useDispatch();
   const { Liked, movieList, status, inviteCount, movieToShow } = useAppHelper(); // all logics are here
 
   const animationControlObj = useAnimateDeck();
@@ -76,7 +77,7 @@ const App: React.FC = () => {
     <IonApp>
       <IonModal
         isOpen={Boolean(movieToShow)}
-        // onWillPresent={() => dispatch(fetchDetailsThunk())}
+        onDidDismiss={() => dispatch(setModalToShow(null))}
       >
         <MovieDetailsScreen handleVote={handleVote} />
       </IonModal>

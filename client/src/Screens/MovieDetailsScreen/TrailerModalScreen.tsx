@@ -21,7 +21,11 @@ export default function TrailerModalScreen() {
   );
 
   return (
-    <StyledModal showBackdrop isOpen={Boolean(trailerToShow)}>
+    <StyledModal
+      showBackdrop
+      isOpen={Boolean(trailerToShow)}
+      onDidDismiss={() => dispatch(setTrailerToShow(null))}
+    >
       <IonPage
         onClick={(e) => {
           if (e.target === e.currentTarget) {
