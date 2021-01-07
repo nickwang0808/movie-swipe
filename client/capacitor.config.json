@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "movie.sync",
   "appName": "Movie Sync",
   "bundledWebRuntime": false,
   "npmClient": "npm",
@@ -13,7 +13,7 @@
       "languageCode": "en",
       "nativeAuth": false,
       "permissions": {
-        "google": ["profile", "https://www.googleapis.com/auth/drive"]
+        "google": ["profile"]
       }
     }
   },

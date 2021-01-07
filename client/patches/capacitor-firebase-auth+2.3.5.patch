@@ -1,0 +1,151 @@
+diff --git a/node_modules/capacitor-firebase-auth/README.MD b/node_modules/capacitor-firebase-auth/README.MD
+index c92df1d..ed42d35 100644
+--- a/node_modules/capacitor-firebase-auth/README.MD
++++ b/node_modules/capacitor-firebase-auth/README.MD
+@@ -382,7 +382,7 @@ cfaSignInPhoneOnCodeReceived().subscribe(
+ Suggestion for web authentication code to iOS, the ```verificationCode`` must be provided by the user, please see [Firebase documentation](https://firebase.google.com/docs/auth/web/phone-auth#sign-in-the-user-with-the-verification-code) for better options.
+ ```typescript
+ 
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ import 'firebase/auth';
+ 
+ const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
+@@ -401,7 +401,7 @@ the token and secret are returned for use with Twitter User API.
+ #### Sign in
+ 
+ ```typescript
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ import {cfaSignIn, SignInResult} from 'capacitor-firebase-auth/alternative'; import {SignInResult} from './definitions';
+ 
+ cfaSignIn('twitter.com').subscribe(
+@@ -415,7 +415,7 @@ cfaSignIn('twitter.com').subscribe(
+ #### Sign In using direct twitter method
+ 
+ ```typescript
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ import {cfaSignInTwitter, TwitterSignInResult} from 'capacitor-firebase-auth/alternative'; import {SignInResult} from './definitions';
+ 
+ cfaSignInTwitter().subscribe(
+diff --git a/node_modules/capacitor-firebase-auth/dist/esm/alternative/alternative.d.ts b/node_modules/capacitor-firebase-auth/dist/esm/alternative/alternative.d.ts
+index 20e0da0..ff49110 100644
+--- a/node_modules/capacitor-firebase-auth/dist/esm/alternative/alternative.d.ts
++++ b/node_modules/capacitor-firebase-auth/dist/esm/alternative/alternative.d.ts
+@@ -1,6 +1,6 @@
+ import { Observable } from 'rxjs';
+ import 'firebase/auth';
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ import { AppleSignInResult, FacebookSignInResult, GoogleSignInResult, PhoneSignInResult, SignInOptions, SignInResult, TwitterSignInResult } from '../definitions';
+ /**
+  * Call the sign in method on native layer and sign in on web layer with retrieved credentials.
+diff --git a/node_modules/capacitor-firebase-auth/dist/esm/alternative/alternative.js b/node_modules/capacitor-firebase-auth/dist/esm/alternative/alternative.js
+index f1afb78..69656aa 100644
+--- a/node_modules/capacitor-firebase-auth/dist/esm/alternative/alternative.js
++++ b/node_modules/capacitor-firebase-auth/dist/esm/alternative/alternative.js
+@@ -1,7 +1,7 @@
+ import { Plugins } from '@capacitor/core';
+ import { Observable, throwError } from 'rxjs';
+ import 'firebase/auth';
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ // @ts-ignore
+ const plugin = Plugins.CapacitorFirebaseAuth;
+ /**
+diff --git a/node_modules/capacitor-firebase-auth/dist/esm/definitions.js b/node_modules/capacitor-firebase-auth/dist/esm/definitions.js
+index effeab3..56a5a01 100644
+--- a/node_modules/capacitor-firebase-auth/dist/esm/definitions.js
++++ b/node_modules/capacitor-firebase-auth/dist/esm/definitions.js
+@@ -1,4 +1,4 @@
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ import 'firebase/auth';
+ export class GoogleSignInResult {
+     constructor(idToken) {
+diff --git a/node_modules/capacitor-firebase-auth/dist/esm/facades.d.ts b/node_modules/capacitor-firebase-auth/dist/esm/facades.d.ts
+index 487fa5c..1cd7ae8 100644
+--- a/node_modules/capacitor-firebase-auth/dist/esm/facades.d.ts
++++ b/node_modules/capacitor-firebase-auth/dist/esm/facades.d.ts
+@@ -1,4 +1,4 @@
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ import 'firebase/auth';
+ import { Observable } from 'rxjs';
+ import { SignInOptions } from './definitions';
+diff --git a/node_modules/capacitor-firebase-auth/dist/esm/facades.js b/node_modules/capacitor-firebase-auth/dist/esm/facades.js
+index 6e2171d..a236650 100644
+--- a/node_modules/capacitor-firebase-auth/dist/esm/facades.js
++++ b/node_modules/capacitor-firebase-auth/dist/esm/facades.js
+@@ -1,5 +1,5 @@
+ import { Capacitor, Plugins, registerWebPlugin } from '@capacitor/core';
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ import 'firebase/auth';
+ import { Observable, throwError } from 'rxjs';
+ import { CapacitorFirebaseAuth } from './web';
+diff --git a/node_modules/capacitor-firebase-auth/dist/esm/operators.d.ts b/node_modules/capacitor-firebase-auth/dist/esm/operators.d.ts
+index ae2491b..9aacd09 100644
+--- a/node_modules/capacitor-firebase-auth/dist/esm/operators.d.ts
++++ b/node_modules/capacitor-firebase-auth/dist/esm/operators.d.ts
+@@ -1,6 +1,6 @@
+ import { User, UserInfo } from 'firebase/app';
+ import { Observable, UnaryFunction } from 'rxjs';
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ /**
+  * Operator to map firebase.User to firebase.UserInfo.
+  *
+diff --git a/node_modules/capacitor-firebase-auth/dist/esm/providers/facebook.provider.js b/node_modules/capacitor-firebase-auth/dist/esm/providers/facebook.provider.js
+index 4f4863a..d97c48a 100644
+--- a/node_modules/capacitor-firebase-auth/dist/esm/providers/facebook.provider.js
++++ b/node_modules/capacitor-firebase-auth/dist/esm/providers/facebook.provider.js
+@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
+         step((generator = generator.apply(thisArg, _arguments || [])).next());
+     });
+ };
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ import 'firebase/auth';
+ import { FacebookSignInResult } from '../definitions';
+ export const facebookSignInWeb = () => __awaiter(void 0, void 0, void 0, function* () {
+diff --git a/node_modules/capacitor-firebase-auth/dist/esm/providers/google.provider.js b/node_modules/capacitor-firebase-auth/dist/esm/providers/google.provider.js
+index 4ccbe57..1bc38e6 100644
+--- a/node_modules/capacitor-firebase-auth/dist/esm/providers/google.provider.js
++++ b/node_modules/capacitor-firebase-auth/dist/esm/providers/google.provider.js
+@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
+         step((generator = generator.apply(thisArg, _arguments || [])).next());
+     });
+ };
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ import 'firebase/auth';
+ import { GoogleSignInResult } from '../definitions';
+ export const googleSignInWeb = () => __awaiter(void 0, void 0, void 0, function* () {
+diff --git a/node_modules/capacitor-firebase-auth/dist/esm/providers/twitter.provider.js b/node_modules/capacitor-firebase-auth/dist/esm/providers/twitter.provider.js
+index aa866c7..0b181ab 100644
+--- a/node_modules/capacitor-firebase-auth/dist/esm/providers/twitter.provider.js
++++ b/node_modules/capacitor-firebase-auth/dist/esm/providers/twitter.provider.js
+@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
+         step((generator = generator.apply(thisArg, _arguments || [])).next());
+     });
+ };
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ import 'firebase/auth';
+ import { TwitterSignInResult } from '../definitions';
+ export const twitterSignInWeb = () => __awaiter(void 0, void 0, void 0, function* () {
+diff --git a/node_modules/capacitor-firebase-auth/dist/esm/web.js b/node_modules/capacitor-firebase-auth/dist/esm/web.js
+index c37ee1d..42fa9ad 100644
+--- a/node_modules/capacitor-firebase-auth/dist/esm/web.js
++++ b/node_modules/capacitor-firebase-auth/dist/esm/web.js
+@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
+     });
+ };
+ import { registerWebPlugin, WebPlugin } from '@capacitor/core';
+-import * as firebase from 'firebase/app';
++import firebase from 'firebase/app';
+ import 'firebase/auth';
+ import { facebookSignInWeb } from './providers/facebook.provider';
+ import { googleSignInWeb } from './providers/google.provider';

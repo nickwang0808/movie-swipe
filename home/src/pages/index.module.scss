@@ -1,3 +1,7 @@
+body a {
+  text-decoration: none;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -41,6 +45,9 @@
   color: white;
   width: 287px;
   font-size: 20px;
+
+  text-decoration: none;
+
   & + div {
     margin-top: 24px;
     margin-bottom: 24px;
@@ -102,6 +109,9 @@
   box-sizing: border-box;
   border-radius: 30px;
   font-size: 16px;
+
+  text-decoration: none;
+  color: black;
 }
 
 .contact:hover {

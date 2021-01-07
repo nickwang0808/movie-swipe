@@ -1,78 +1,94 @@
 import * as functions from "firebase-functions";
-import { db, LikedMovieWithMatches } from ".";
+import { arrayUnion, collectionName, db } from ".";
+import arrayChunks from "./HelperFunctions/ArrayChunks";
+import extractProfile from "./HelperFunctions/extractProfile";
+import { IVotedMovies, IVotedMTvs } from "./MovieTypes";
 
-const findAllMatches = functions.https.onCall(async (data, context) => {
-  if (context.auth) {
-    const myUid = context.auth.uid;
-    const friendUid = data.friendUid;
-    const myLikes = data.myLikes;
+export const findAllMatches = functions
+  .runWith({ maxInstances: 50 })
+  .https.onCall(async (data, context) => {
+    if (context.auth) {
+      const friendUid = data.friendUid as string;
+      const myUid = context.auth.uid;
+      const myMovieIds = data.movieIds as number[];
 
-    const friendsLike = await getFriendLikes(friendUid);
-    if (friendsLike.length === 0) return;
+      const likeChunks = arrayChunks(myMovieIds, 10);
 
-    const matchedMovie = checkMatches(myLikes, friendsLike);
-    if (matchedMovie.length === 0) return;
+      console.log({
+        friendUid,
+        myUid,
+        myMovieIds,
+        likeChunks,
+      });
 
-    await updateMatch(myUid, friendUid, matchedMovie);
-    await updateMatch(friendUid, myUid, matchedMovie);
+      await db.runTransaction(async (t) => {
+        const allMatchedDocs: (IVotedMTvs | IVotedMovies)[] = [];
+        // get all matched movie docs
+        await Promise.all(
+          likeChunks.map(async (chunk) => {
+            const query = db
+              .collectionGroup(collectionName.Liked)
+              .where("id", "in", chunk);
 
-    return;
-  } else {
-    throw new functions.https.HttpsError(
-      "failed-precondition",
-      "The function must be called while authenticated."
-    );
-  }
-});
+            const docs = await t.get(query);
+            docs.forEach((doc) => {
+              allMatchedDocs.push(doc.data() as IVotedMTvs | IVotedMovies);
+            });
+            return;
+          })
+        );
 
-export default findAllMatches;
+        if (allMatchedDocs.length === 0) {
+          console.log("no match found");
+          return;
+        }
 
-async function updateMatch(
-  userId: string,
-  friendId: string,
-  movieList: number[]
-) {
-  const userRef = db
-    .collection("Users")
-    .doc(userId)
-    .collection("User_Details")
-    .doc("Liked_Movies");
+        console.log("match found");
+        // get my profile and friend profile
+        const myProfile = (
+          await t.get(db.collection(collectionName.User).doc(myUid))
+        ).data();
+        const friendProfile = extractProfile(allMatchedDocs[0]);
 
-  let liked_movies_matches: LikedMovieWithMatches[] = (
-    await userRef.get()
-  ).data()?.liked_movies_matches;
+        // start adding each other in matches
+        console.log("start writing matches to record");
+        await Promise.all(
+          allMatchedDocs.map(async (matchedDoc) => {
+            t.update(
+              db
+                .collection(collectionName.User)
+                .doc(friendUid)
+                .collection(collectionName.Liked)
+                .doc(String(matchedDoc.id)),
+              {
+                matchedWith: arrayUnion(myProfile),
+                notify: true,
+                timeMatched: Date.now(),
+              }
+            );
+            t.update(
+              db
+                .collection(collectionName.User)
+                .doc(myUid)
+                .collection(collectionName.Liked)
+                .doc(String(matchedDoc.id)),
+              {
+                matchedWith: arrayUnion(friendProfile),
+                notify: true,
+                timeMatched: Date.now(),
+              }
+            );
 
-  await Promise.all(
-    movieList.map(async (movieId) => {
-      const foundIndex = liked_movies_matches.findIndex(
-        (elem) => elem.movieId === movieId
-      );
-      liked_movies_matches[foundIndex].matches.push(friendId);
-      liked_movies_matches[foundIndex].match_time = Date.now();
+            return;
+          })
+        );
+      });
+
       return;
-    })
-  );
-
-  userRef.update({ liked_movies_matches });
-}
-
-function checkMatches(myLikes: number[], friendLikes: number[]) {
-  let tempArray: number[] = [];
-  myLikes.forEach((myLike) => {
-    if (friendLikes.includes(myLike)) {
-      tempArray.push(myLike);
+    } else {
+      throw new functions.https.HttpsError(
+        "failed-precondition",
+        "The function must be called while authenticated."
+      );
     }
-    return;
   });
-  return tempArray;
-}
-
-async function getFriendLikes(uid: string) {
-  const userRef = db
-    .collection("Users")
-    .doc(uid)
-    .collection("User_Details")
-    .doc("Liked_Movies");
-  const friendLikes: number[] = (await userRef.get()).data()?.liked_movies;
-  return friendLikes;
-}

@@ -8,17 +8,33 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:207672176585:android:f5604a6f8c9d03cc67c218",
+        "mobilesdk_app_id": "1:207672176585:android:3ba7fbf3b7d9dc4a67c218",
         "android_client_info": {
-          "package_name": "io.ionic.starter"
+          "package_name": "movie.sync"
         }
       },
       "oauth_client": [
         {
-          "client_id": "207672176585-frccqpf9ll71titjkdlho1av6fsitj0t.apps.googleusercontent.com",
+          "client_id": "207672176585-2pgtsc7jr80jih0g5741v5bh1g48aad0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "io.ionic.starter",
+            "package_name": "movie.sync",
+            "certificate_hash": "f77c646339cf2c65dc4a9e5e7a73b647a3c36ee1"
+          }
+        },
+        {
+          "client_id": "207672176585-itnk68hp6klc9s134gbdiqd7or2dtq19.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "movie.sync",
+            "certificate_hash": "3b7265856cb3f77bec2abd408e3424955fdd1fac"
+          }
+        },
+        {
+          "client_id": "207672176585-r6ehrnl6n23o5goav5ac6ofhr72inm2s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "movie.sync",
             "certificate_hash": "118ea6a449efaa5699ba2b9e3edf550688e9db1f"
           }
         },

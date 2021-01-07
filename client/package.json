@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@capacitor/android": "^2.4.2",
-    "@capacitor/core": "2.4.2",
-    "@capacitor/ios": "^2.4.2",
+    "@capacitor/android": "^2.4.4",
+    "@capacitor/core": "2.4.4",
     "@ionic/react": "^5.0.7",
     "@ionic/react-router": "^5.0.7",
+    "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^8.0.3",
@@ -15,24 +15,38 @@
     "@types/node": "^12.12.24",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
+    "@types/react-redux": "^7.1.11",
     "@types/react-router": "^5.1.4",
     "@types/react-router-dom": "^5.1.3",
-    "capacitor-firebase-auth": "^2.3.2",
-    "firebase": "^7.24.0",
+    "@types/styled-components": "^5.1.7",
+    "capacitor-firebase-auth": "^2.3.5",
+    "firebase": "^8.1.2",
     "framer-motion": "^2.9.4",
     "ionicons": "^5.0.0",
     "react": "^16.13.0",
+    "react-circular-progressbar": "^2.0.3",
     "react-dom": "^16.13.0",
-    "react-firebaseui": "^4.1.0",
+    "react-hook-form": "^6.13.1",
+    "react-redux": "^7.2.2",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.0",
+    "redux": "^4.0.5",
+    "styled-components": "^5.2.1",
     "typescript": "3.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public",
+    "lint:css": "stylelint './src/**/*.tsx'",
+    "host": "http-server build -p 8100 --proxy http://localhost:8100?",
+    "postinstall": "patch-package",
+    "testdeploy": "npm run build && firebase hosting:channel:deploy test",
+    "deploy": "npm run build && firebase deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -50,9 +64,18 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "2.4.2",
-    "cordova-res": "^0.15.2",
-    "react-scripts": "3.4.0"
+    "@capacitor/cli": "2.4.4",
+    "@storybook/addon-actions": "^6.1.10",
+    "@storybook/addon-essentials": "^6.1.10",
+    "@storybook/addon-links": "^6.1.10",
+    "@storybook/node-logger": "^6.1.10",
+    "@storybook/preset-create-react-app": "^3.1.5",
+    "@storybook/react": "^6.1.10",
+    "patch-package": "^6.2.2",
+    "stylelint": "^13.8.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.10.0"
   },
   "description": "An Ionic project"
 }
