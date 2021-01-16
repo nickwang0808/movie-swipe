@@ -1,3 +1,7 @@
+body a {
+  text-decoration: none;
+}
+
 .container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -64,6 +68,7 @@
   color: white;
   width: 287px;
   font-size: 20px;
+  text-decoration: none;
 }
 
 .button + div {
@@ -153,6 +158,8 @@
           box-sizing: border-box;
   border-radius: 30px;
   font-size: 16px;
+  text-decoration: none;
+  color: black;
 }
 
 .contact:hover {
@@ -173,4 +180,3 @@
           align-items: center;
   text-align: center;
 }
-/*# sourceMappingURL=index.module.css.map */

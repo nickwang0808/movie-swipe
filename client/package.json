@@ -46,7 +46,7 @@
     "host": "http-server build -p 8100 --proxy http://localhost:8100?",
     "postinstall": "patch-package",
     "testdeploy": "npm run build && firebase hosting:channel:deploy test",
-    "deploy": "npm run build && firebase hosting deploy"
+    "deploy": "npm run build && firebase deploy"
   },
   "eslintConfig": {
     "extends": "react-app"

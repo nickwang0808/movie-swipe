@@ -21,21 +21,31 @@ export default function Home() {
             <Card2 />
             <Card3 />
           </div>
-          <div className={style.button}>
-            <a href="https://app.movie-sync.com">Start Swiping</a>
-          </div>
+          <a className={style.button} href="https://app.movie-sync.com">
+            Start Swiping
+          </a>
           {/* <div>(Must use mobile device)</div> */}
           <OR />
 
-          <div className={style.get_it}>
+          <div
+            className={style.get_it}
+            onClick={() =>
+              (window.location =
+                "https://play.google.com/store/apps/details?id=movie.sync")
+            }
+          >
             Get it on
-            <img src="googleplay.png" alt="google play icoc" />
+            <img src="googleplay.png" alt="google play icon" />
           </div>
         </div>
         <div className={style.footer}>
-          <div className={style.contact}>Say Hello</div>
+          <a className={style.contact} href="mailto:hello@movie-sync.com">
+            Say Hello
+          </a>
           <div className={style.links}>
-            <Link href="terms">Terms of Use and Privacy Policy</Link>
+            <Link className={style.links} href="terms">
+              Terms of Use and Privacy Policy
+            </Link>
             <span> © Fox & Grey LLC, 2020</span>
           </div>
         </div>

@@ -14,7 +14,14 @@ export const findAllMatches = functions
 
       const likeChunks = arrayChunks(myMovieIds, 10);
 
-      db.runTransaction(async (t) => {
+      console.log({
+        friendUid,
+        myUid,
+        myMovieIds,
+        likeChunks,
+      });
+
+      await db.runTransaction(async (t) => {
         const allMatchedDocs: (IVotedMTvs | IVotedMovies)[] = [];
         // get all matched movie docs
         await Promise.all(
@@ -31,8 +38,12 @@ export const findAllMatches = functions
           })
         );
 
-        if (allMatchedDocs.length === 0) return;
+        if (allMatchedDocs.length === 0) {
+          console.log("no match found");
+          return;
+        }
 
+        console.log("match found");
         // get my profile and friend profile
         const myProfile = (
           await t.get(db.collection(collectionName.User).doc(myUid))
@@ -40,6 +51,7 @@ export const findAllMatches = functions
         const friendProfile = extractProfile(allMatchedDocs[0]);
 
         // start adding each other in matches
+        console.log("start writing matches to record");
         await Promise.all(
           allMatchedDocs.map(async (matchedDoc) => {
             t.update(
